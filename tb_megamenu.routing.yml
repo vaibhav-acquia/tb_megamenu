@@ -4,4 +4,4 @@ tb_megamenu.admin:
     _title: 'TB Mega Menu'
     _controller: '\Drupal\tb_megamenu\Controller\AdminController::adminPage'
   requirements:
-    _permission: 'access content'
+    _permission: 'administer tb_megamenu'
