@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\tb_megamenu\Controller\AdminController.
+ * Contains \Drupal\tb_megamenu\Controller\TBMegaMenuAdminController.
  */
 
 namespace Drupal\tb_megamenu\Controller;
@@ -10,10 +10,10 @@ namespace Drupal\tb_megamenu\Controller;
 use Drupal\Core\Controller\ControllerBase;
 use Symfony\Component\HttpFoundation\Request;
 
-class AdminController extends ControllerBase {
+class TBMegaMenuAdminController extends ControllerBase {
   
   /**
-   * Presents an administrative comment listing.
+   * The settings form.
    *
    * @param \Symfony\Component\HttpFoundation\Request $request
    *   The request of the page.
@@ -21,14 +21,8 @@ class AdminController extends ControllerBase {
    *   The type of the overview form ('approval' or 'new') default to 'new'.
    *
    * @return array
-   *   Then comment multiple delete confirmation form or the comments overview
-   *   administration form.
    */
   public function adminPage(Request $request, $type = 'new') {
-    //return $this->formBuilder->getForm('\Drupal\comment\Form\CommentAdminOverview', $type);
-    $element = array(
-      '#markup' => 'Hello, world',
-    );
-    return $element;
+    return $this->formBuilder->getForm('\Drupal\tb_megamenu\Form\TBMegaMenuAdminForm', $type);
   }
 }

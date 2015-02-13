@@ -8,7 +8,7 @@
  * Implements hook_schema().
  */
 function tb_megamenu_schema() {
-  $schema['tb_megamenu'] = array(
+  $schema['tb_megamenus'] = array(
     'fields' => array(
       'menu_name' => array(
         'type' => 'varchar',
