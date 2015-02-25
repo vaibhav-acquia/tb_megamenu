@@ -7,22 +7,45 @@
 
 namespace Drupal\tb_megamenu\Controller;
 
+use Drupal\Core\Url;
 use Drupal\Core\Controller\ControllerBase;
 use Symfony\Component\HttpFoundation\Request;
 
 class TBMegaMenuAdminController extends ControllerBase {
   
-  /**
-   * The settings form.
-   *
-   * @param \Symfony\Component\HttpFoundation\Request $request
-   *   The request of the page.
-   * @param string $type
-   *   The type of the overview form ('approval' or 'new') default to 'new'.
-   *
-   * @return array
-   */
-  public function adminPage(Request $request, $type = 'new') {
-    return $this->formBuilder->getForm('\Drupal\tb_megamenu\Form\TBMegaMenuAdminForm', $type);
+  public function listMegaMenus() {
+    $menus = menu_ui_get_menus();
+    $rows = array();
+    foreach ($menus as $name => $title) {
+      $row = array();
+      $row[] = $name;
+      $row[] = $title;
+      $dropbuttons = array(
+        '#type' => 'operations',
+        '#links' => array(
+          'config' => array(
+            'url' => new Url('entity.menu.edit_form', array('menu' => $name)),
+            'title' => 'Config'
+          ),
+          'edit' => array(
+            'url' => new Url('entity.menu.edit_form', array('menu' => $name)),
+            'title' => 'Edit links'
+          ),
+        )
+      );
+      $row[] = drupal_render($dropbuttons); 
+      $rows[] = $row;
+    }
+    
+    $header = array(t('Menu Name'), t('Menu Title'));
+    $header[] = array('data' => t('Operations'), 'colspan' => 2);
+    $table = array(
+      '#theme' => 'table',
+      '#header' => $header,
+      '#rows' => $rows,
+      '#empty' => t('No MegaMenu block available. <a href="@link">Add MegaMenu Block</a>.', array('@link' => new Url('entity.menu.add_form'))),
+      '#attributes' => array('id' => 'tb_megamenu'),
+    );
+    return $table;
   }
 }
