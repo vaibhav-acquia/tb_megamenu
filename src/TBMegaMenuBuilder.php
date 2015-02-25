@@ -17,9 +17,10 @@ class TBMegaMenuBuilder {
    * @return array
    */
   public function getMegaMenus() {
-    $query = db_select('menu_custom', 'm');
+    $query = db_select('menu_tree', 'm');
     $query->leftJoin('tb_megamenus', 't', 't.menu_name = m.menu_name');
-    $query->fields('m');
+    $query->fields('m', array('menu_name', 'title'));
+    $query->distinct();
     $menus = $query->execute()->fetchAll();
     return $menus;
   }
