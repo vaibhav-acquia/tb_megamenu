@@ -2,6 +2,15 @@ tb_megamenu.admin:
   path: '/admin/structure/tb-megamenu'
   defaults:
     _title: 'TB Mega Menu'
-    _controller: '\Drupal\tb_megamenu\Controller\AdminController::adminPage'
+    _controller: '\Drupal\tb_megamenu\Controller\TBMegaMenuAdminController::listMegaMenus'
   requirements:
     _permission: 'administer tb_megamenu'
+
+tb_megamenu.admin.item:
+  path: '/admin/structure/tb-megamenu/{item}'
+  defaults:
+    _title: 'Config TB Mega Menu'
+    _form: '\Drupal\tb_megamenu\Form\TBMegaMenuAdminItemForm'
+  requirements:
+    _permission: 'administer tb_megamenu'
+
