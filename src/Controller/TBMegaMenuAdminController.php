@@ -9,22 +9,32 @@ namespace Drupal\tb_megamenu\Controller;
 
 use Drupal\Core\Url;
 use Drupal\Core\Controller\ControllerBase;
-use Symfony\Component\HttpFoundation\Request;
 
 class TBMegaMenuAdminController extends ControllerBase {
   
+  /**
+   * This is page callback. Listing mega menus.
+   */
   public function listMegaMenus() {
+    /**
+     * Get menus.
+     */
     $menus = menu_ui_get_menus();
+    
+    /**
+     *  Prepare data for each row.
+     */
     $rows = array();
     foreach ($menus as $name => $title) {
-      $row = array();
-      $row[] = $name;
-      $row[] = $title;
+      $row = array(
+        'menu-name' => $name,
+        'menu-title' => $title
+      );
       $dropbuttons = array(
         '#type' => 'operations',
         '#links' => array(
           'config' => array(
-            'url' => new Url('entity.menu.edit_form', array('menu' => $name)),
+            'url' => new Url('tb_megamenu.admin.configure', array('menu_name' => $name)),
             'title' => 'Config'
           ),
           'edit' => array(
@@ -33,12 +43,19 @@ class TBMegaMenuAdminController extends ControllerBase {
           ),
         )
       );
-      $row[] = drupal_render($dropbuttons); 
+      $row['menu-operations'] = array('data' => $dropbuttons);
       $rows[] = $row;
     }
+
+    /**
+     *  Prepare label for headers.
+     */
+    $header = array(
+      'menu-name' => t('Menu Name'), 
+      'menu-title' => t('Menu Title'),
+      'menu-operations' => t('Operations')
+    );
     
-    $header = array(t('Menu Name'), t('Menu Title'));
-    $header[] = array('data' => t('Operations'), 'colspan' => 2);
     $table = array(
       '#theme' => 'table',
       '#header' => $header,

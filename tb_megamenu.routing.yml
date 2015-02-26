@@ -6,11 +6,11 @@ tb_megamenu.admin:
   requirements:
     _permission: 'administer tb_megamenu'
 
-tb_megamenu.admin.item:
-  path: '/admin/structure/tb-megamenu/{item}'
+tb_megamenu.admin.configure:
+  path: '/admin/structure/tb-megamenu/{menu_name}'
   defaults:
     _title: 'Config TB Mega Menu'
-    _form: '\Drupal\tb_megamenu\Form\TBMegaMenuAdminItemForm'
+    _form: '\Drupal\tb_megamenu\Form\TBMegaMenuAdminConfigureForm'
   requirements:
     _permission: 'administer tb_megamenu'
 

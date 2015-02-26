@@ -12,16 +12,12 @@ namespace Drupal\tb_megamenu;
 class TBMegaMenuBuilder {
   
   /**
-   * Get all of MegaMenus.
+   * Check library is existed.
    * 
-   * @return array
+   * @param string $module
+   * @param string $name
    */
-  public function getMegaMenus() {
-    $query = db_select('menu_tree', 'm');
-    $query->leftJoin('tb_megamenus', 't', 't.menu_name = m.menu_name');
-    $query->fields('m', array('menu_name', 'title'));
-    $query->distinct();
-    $menus = $query->execute()->fetchAll();
-    return $menus;
+  public static function checkLibrary($module, $name) {
+    
   }
 }
