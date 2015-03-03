@@ -7,7 +7,7 @@ tb_megamenu.admin:
     _permission: 'administer tb_megamenu'
 
 tb_megamenu.admin.configure:
-  path: '/admin/structure/tb-megamenu/{menu_name}'
+  path: '/admin/structure/tb-megamenu/{menu_names}'
   defaults:
     _title: 'Config TB Mega Menu'
     _form: '\Drupal\tb_megamenu\Form\TBMegaMenuAdminConfigureForm'
