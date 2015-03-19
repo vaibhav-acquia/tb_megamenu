@@ -16,14 +16,9 @@ class TBMegaMenuAdminController extends ControllerBase {
    * This is page callback. Listing mega menus.
    */
   public function listMegaMenus() {
-    /**
-     * Get menus.
-     */
+    // Get menus.
     $menus = menu_ui_get_menus();
-    
-    /**
-     *  Prepare data for each row.
-     */
+    // Prepare data for each row.
     $rows = array();
     foreach ($menus as $name => $title) {
       $row = array(
@@ -46,10 +41,7 @@ class TBMegaMenuAdminController extends ControllerBase {
       $row['menu-operations'] = array('data' => $dropbuttons);
       $rows[] = $row;
     }
-
-    /**
-     *  Prepare label for headers.
-     */
+    // Prepare label for headers.
     $header = array(
       'menu-name' => t('Menu Name'), 
       'menu-title' => t('Menu Title'),
