@@ -23,12 +23,6 @@ function tb_megamenu_schema() {
         'type' => 'text',
         'not null' => FALSE,
       ),
-      'language' => array(
-        'type' => 'varchar',
-        'length' => '12',
-        'not null' => TRUE,
-        'default' => '',
-      ),
     ),
     'primary key' => array('menu_name', 'language'),
   );
