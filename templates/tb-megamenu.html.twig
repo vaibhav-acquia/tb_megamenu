@@ -1,0 +1,12 @@
+<div {{ attributes }} class="{{ classes }}">
+  {% if section == 'frontend' %}
+    <button data-target=".nav-collapse" data-toggle="collapse" class="btn btn-navbar tb-megamenu-button" type="button">
+      <i class="fa fa-reorder"></i>
+    </button>
+    <div class="nav-collapse {{ block_config['always-show-submenu'] ? ' always-show' : '' }}">
+  {% endif %}
+  {{ content }}
+  {% if section == 'frontend' %}
+    </div>
+  {% endif %}
+</div>
