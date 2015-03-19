@@ -24,27 +24,20 @@ class TBMegaMenuAdminConfigureForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state, $menu_names = '') {
+  public function buildForm(array $form, FormStateInterface $form_state, $menu_name = '') {
     // Add library font-awesome.
     $form['#attached']['library'][] = 'tb_megamenu/form.font-awesome';
     // Add library chosen.
     $form['#attached']['library'][] = 'tb_megamenu/form.chosen';
-    
-    // Preparing variable in JS for form.configure-inline.
-//    $clean_url = \Drupal::config('clean_url');
-    $form['#attached']['drupalSettings']['tb_megamenu']['clean_url'] = 'testing';
-    $form['#attached']['library'][] = 'tb_megamenu/form.configure-inline';
-    
     // Add a custom library.
     $form['#attached']['library'][] = 'tb_megamenu/form.configure-megamenu';
-    
-//    if (!empty($menu_names)) {
-//      $form['tb_megamenu'] = array(
-//        '#markup' => theme('tb_megamenu_backend', array(
-//          'menu_name' => $menu_names[0],
-//        )),
-//      );
-//    }
+
+    if (!empty($menu_name)) {
+      $form['tb_megamenu'] = array(
+        '#theme' => 'tb_megamenu_backend',
+        '#menu_name' => $menu_name,
+      );
+    }
     return $form;
   }
 
