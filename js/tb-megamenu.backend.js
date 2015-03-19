@@ -1,6 +1,7 @@
 Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
 
 (function ($, Drupal, drupalSettings) {
+  "use strict";
   Drupal.behaviors.tbMegaMenuBackendAction = {
     attach: function (context) {
       $('select[name="tb-megamenu-animation"]').change(function() {
@@ -16,6 +17,9 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
         disable_search_threshold : 15,
         allow_single_deselect: true
       });
+      if (drupalSettings.TBMegaMenu.menu_name !== undefined) {
+        $("#tb-megamenu-admin-mm-container").megamenuAdmin({menu_name: drupalSettings.TBMegaMenu.menu_name});
+      }
     }
   };
 })(jQuery, Drupal, drupalSettings);

@@ -1,21 +1,21 @@
 Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
 
-!function ($) {
+!function ($, Drupal, drupalSettings) {
   var currentSelected = null,
   megamenu, nav_items, nav_subs, nav_cols, nav_all;
   Drupal.TBMegaMenu.lockedAjax = false;
 
   Drupal.TBMegaMenu.lockAjax = function() {
     Drupal.TBMegaMenu.lockedAjax = true;
-  }
+  };
 
   Drupal.TBMegaMenu.isLockedAjax = function() {
     return Drupal.TBMegaMenu.lockedAjax;
-  }
+  };
   
   Drupal.TBMegaMenu.releaseAjax = function() {
     Drupal.TBMegaMenu.lockedAjax = false;
-  }
+  };
   
   $.fn.megamenuAdmin = function (options) {
     var defaultOptions = {};
@@ -104,8 +104,8 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     }
     if (sub.length == 0 || sub.css('display') == 'none') {
       if (sub.length == 0) {
-        var column = Drupal.TBMegaMenu.TBElementsCounter['column'] + 1;
-        Drupal.TBMegaMenu.TBElementsCounter['column'] ++;
+        //console.log(drupalSettings.TBMegaMenu);
+        var column = ++drupalSettings.TBMegaMenu.TBElementsCounter['column'];
         sub = $('<div class="tb-megamenu-submenu nav-child dropdown-menu mega-dropdown-menu"><div class="row-fluid"><div id=tb-megamenu-column-' + column + ' class="span12" data-width="12"><div class="mega-inner"></div></div></div></div>').appendTo(liitem);
         bindEvents (sub.find ('[class*="span"]'));
         liitem.addClass ('mega');
@@ -133,7 +133,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       liitem.removeClass('dropdown dropdown-submenu mega');
     }
     update_toolbox ();
-  }
+  };
 
   actions.toggleAutoArrow = function() {
     var toggle = $('.toolitem-auto-arrow');
@@ -146,7 +146,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       update_toggle (toggle, 1);
       toggle.attr('data-auto-arrow', 1);
     }
-  }
+  };
 
   actions.toggleAlwayShowSubmenu = function() {
     var toggle = $('.toolitem-always-show-submenu');
@@ -159,7 +159,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       update_toggle (toggle, 1);
       toggle.attr('data-always-show-submenu', 1);
     }      
-  }
+  };
 
   actions.showBlockTitle = function() {
     if (!currentSelected) return ;
@@ -178,7 +178,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       $('#tb-megamenu-admin-mm-tb #toolbox-loading').show();
       callAjax({'action': 'load_block', 'block_key': value, 'id': currentSelected.attr('id'), 'showblocktitle': parseInt(currentSelected.attr('data-showblocktitle'))});
     }
-  }
+  };
 
   actions.toggleGroup = function () {
     if (!currentSelected) return ;
@@ -203,7 +203,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       rebindEvents(sub);
     }
     update_toolbox ();
-  }
+  };
 
   actions.hideWhenCollapse = function () {
     if (!currentSelected) {
@@ -232,7 +232,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       }
     }
     update_toolbox ();
-  }
+  };
 
   actions.alignment = function () {
     var liitem = currentSelected.closest ('li');
@@ -248,7 +248,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     }
     liitem.attr('data-alignsub', actions.datas.align);
     update_toolbox ();
-  }
+  };
 
   actions.moveItemsLeft = function () {
     if (!currentSelected) {
@@ -288,7 +288,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       $col.find('ul:first').remove();
     }
     update_toolbox ();
-  }
+  };
 
   actions.moveItemsRight = function () {
     if (!currentSelected) {
@@ -332,20 +332,20 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       $col.find('ul:first').remove();
     }
     show_toolbox (currentSelected);
-  }
+  };
 
   actions.addRow = function () {
     if (!currentSelected) {
       return ;
     }
-    var column = Drupal.TBMegaMenu.TBElementsCounter['column'] + 1;
-    Drupal.TBMegaMenu.TBElementsCounter['column'] ++;
+    //console.log(drupalSettings.TBMegaMenu);
+    var column = ++drupalSettings.TBMegaMenu.TBElementsCounter['column'];
     var $row = $('<div class="row-fluid"><div id=tb-megamenu-column-' + column + ' class="span12"><div class="mega-inner"></div></div></div>').appendTo(currentSelected.find('[class*="row"]:first').parent()),
     $col = $row.children();
     bindEvents ($col);
     currentSelected = null;
     show_toolbox ($col);
-  }
+  };
 
   actions.addColumn = function () {
     if (!currentSelected) {
@@ -355,8 +355,8 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     var colcount = $cols.length + 1;
     var colwidths = defaultColumnsWidth (colcount);
 
-    var column = Drupal.TBMegaMenu.TBElementsCounter['column'] + 1;
-    Drupal.TBMegaMenu.TBElementsCounter['column'] ++;
+    //console.log(drupalSettings.TBMegaMenu);
+    var column = ++drupalSettings.TBMegaMenu.TBElementsCounter['column'];
 
     var $col = $('<div id=tb-megamenu-column-' + column + '><div class="mega-inner"></div></div>');
     if (actions.datas.addfirst) { 
@@ -371,7 +371,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       $(this).removeClass ('span'+$(this).attr('data-width')).addClass('span'+colwidths[i]).attr('data-width', colwidths[i]);
     });
     show_toolbox ($col);
-  }
+  };
 
   actions.removeColumn = function () {
     if (!currentSelected) {
@@ -418,7 +418,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       }
       show_toolbox ($(nextActiveCol));
     }
-  }
+  };
 
   actions.resetConfig = function (options) {
     if(Drupal.TBMegaMenu.isLockedAjax()) {
@@ -447,7 +447,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
         Drupal.TBMegaMenu.releaseAjax();
       }
     });
-  }
+  };
 
   actions.saveConfig = function (options) {
     if(Drupal.TBMegaMenu.isLockedAjax()) {
@@ -539,11 +539,11 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
         Drupal.TBMegaMenu.releaseAjax();
       }
     });
-  }
+  };
 
   toolbox_type = function () {
     return currentSelected ? currentSelected.hasClass ('nav-child') ? 'sub' : (currentSelected[0].tagName == 'DIV' ? 'col':'item') : false;
-  }
+  };
 
   hide_toolbox = function (show_intro) {
     $('#tb-megamenu-admin-mm-tb .admin-toolbox').hide();
@@ -555,7 +555,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     } else {
       $('#tb-megamenu-admin-mm-intro').hide();
     }
-  }
+  };
 
   show_toolbox = function (selected) {
     if(!selected.hasClass('tb-megamenu-column') && !selected.hasClass('tb-megamenu-submenu')) {
@@ -585,7 +585,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     update_toolbox (type);
 
     $('#tb-megamenu-admin-mm-tb').show();
-  }
+  };
 
   update_toolbox = function (type) {
     if (!type) {
@@ -694,13 +694,13 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
         }  
         break;
     }
-  }
+  };
 
   update_toggle = function (toggle, val) {
     $input = toggle.find('input[value="'+val+'"]');
     $input.attr('checked', 'checked');
     $input.trigger ('update');
-  }
+  };
 
   apply_toolbox = function (input) {
     var name = $(input).attr('data-name'), 
@@ -787,7 +787,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       }
       break;
     }
-  }
+  };
   
   callAjax = function(data) {
     if(Drupal.TBMegaMenu.isLockedAjax()) {
@@ -825,7 +825,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     case '':
       break;
     }
-  }
+  };
   
   defaultColumnsWidth = function (count) {
     if (count < 1) {
@@ -839,7 +839,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     }
     widths[count - 1] = total - min*(count-1);
     return widths;
-  }
+  };
 
   bindEvents = function (els) {
     if (megamenu.data('nav_all')) 
@@ -864,20 +864,20 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       event.stopPropagation();        
       return false;
     });
-  }
+  };
 
   unbindEvents = function (els) {
     megamenu.data('nav_all', megamenu.data('nav_all').not(els));
     els.unbind('mouseover').unbind('mouseout').unbind('click');
-  }
+  };
 
   rebindEvents = function (els) {
     unbindEvents(els);
     bindEvents(els);
-  }
-}(jQuery);
+  };
+}(jQuery, Drupal, drupalSettings);
 
-!function($){
+!function($, Drupal, drupalSettings){
   $.extend(Drupal.TBMegaMenu, {
     prepare: function(){
       var panel = $('#jform_params_mm_type').closest ('.controls');
@@ -965,4 +965,4 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     Drupal.TBMegaMenu.initRadioGroup();
     Drupal.TBMegaMenu.prepare();
   });
-}(jQuery);
+}(jQuery, Drupal, drupalSettings);
