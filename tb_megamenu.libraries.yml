@@ -7,20 +7,20 @@ form.configure-megamenu:
       css/tb_megamenu.admin.css: {}
       css/tb_megamenu.backend.css: {}
   js:
-    js/tb-megamenu.backend.js: {}
-    js/tb-megamenu.object.js: {}
+    js/tb-megamenu.backend.js: { scope: footer }
+    js/tb-megamenu.object.js: { scope: footer }
   dependencies:
     - core/jquery
     - core/drupal
     - core/drupalSettings
 
 form.chosen:
-  version: 0.9.14
+  version: 1.1.0
   css:
     theme:
-      https://cdnjs.cloudflare.com/ajax/libs/chosen/0.9.14/chosen.min.css: { type: external }
+      https://cdnjs.cloudflare.com/ajax/libs/chosen/1.1.0/chosen.min.css: { type: external }
   js:
-    https://cdnjs.cloudflare.com/ajax/libs/chosen/0.9.14/chosen.jquery.min.js: { type: external, group: JS_LIBRARY }
+    https://cdnjs.cloudflare.com/ajax/libs/chosen/1.1.0/chosen.jquery.min.js: { type: external, group: JS_LIBRARY, scope: footer }
   dependencies:
     - core/jquery
 
@@ -29,11 +29,3 @@ form.font-awesome:
   css:
     theme:
       https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css: { type: external }
-
-form.configure-inline:
-  version: 1.x
-  js:
-    js/tb-megamenu.configure.inline.js: {}
-  dependencies:
-    - core/drupal
-    - core/drupalSettings
