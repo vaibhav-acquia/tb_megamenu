@@ -52,7 +52,7 @@ class TBMegaMenuAdminController extends ControllerBase {
       '#theme' => 'table',
       '#header' => $header,
       '#rows' => $rows,
-      '#empty' => t('No MegaMenu block available. <a href="@link">Add MegaMenu Block</a>.', array('@link' => new Url('entity.menu.add_form'))),
+      '#empty' => t('No MegaMenu block available. <a href="@link">Add Menu</a>.', array('@link' => \Drupal::url('entity.menu.add_form'))),
       '#attributes' => array('id' => 'tb_megamenu'),
     );
     return $table;
