@@ -29,3 +29,18 @@ form.font-awesome:
   css:
     theme:
       https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css: { type: external }
+      
+block_style.black:
+  css:
+    component:
+      css/styles/black.css: { basename: black.css }
+      
+block_style.blue:
+  css:
+    component:
+      css/styles/blue.css: { basename: blue.css }
+      
+block_style.green:
+  css:
+    component:
+      css/styles/green.css: { basename: green.css }
