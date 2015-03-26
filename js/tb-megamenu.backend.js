@@ -17,6 +17,8 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
         disable_search_threshold : 15,
         allow_single_deselect: true
       });
+      
+      /* Init TB Mega Menu. */
       if (drupalSettings.TBMegaMenu.menu_name !== undefined) {
         $("#tb-megamenu-admin-mm-container").megamenuAdmin({menu_name: drupalSettings.TBMegaMenu.menu_name});
       }
