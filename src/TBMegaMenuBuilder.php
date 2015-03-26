@@ -46,8 +46,42 @@ class TBMegaMenuBuilder {
     $query->addField('t', 'block_config');
     $query->condition('m.menu_name', $menu_name);
     $query->condition('m.langcode', \Drupal::languageManager()->getCurrentLanguage()->getId());
-    
     return $query->execute()->fetchObject();
+  }
+
+  public static function getMenuItem($menu_name, $mlid) {
+    $tree = $menu_items = \Drupal::menuTree()->load($menu_name, (new Menu\MenuTreeParameters)->onlyEnabledLinks());
+    // Need to review this.
+//    if (function_exists('i18n_menu_localize_tree')) {
+//      $tree = i18n_menu_localize_tree($tree);
+//    }
+    $item = self::findMenuItem($tree, $mlid);
+    return $item;
+  }
+
+  public static function findMenuItem($tree, $mlid) {
+//    foreach ($tree as $item) {
+//      if ($item['link']['mlid'] == $mlid) {
+//        return $item;
+//      }
+//      else {
+//        $result = self::findMenuItem($item['below'], $mlid);
+//        if ($result) {
+//          return $result;
+//        }
+//      }
+//    }
+    return NULL;
+  }
+
+  /**
+   * Load block.
+   * 
+   * @param string $pluginId
+   * @return array
+   */
+  public static function loadBlock($pluginId) {
+    return \Drupal::service('plugin.manager.block')->createInstance($pluginId);
   }
 
   /**
@@ -60,7 +94,7 @@ class TBMegaMenuBuilder {
     $menu = self::getMenus($menu_name);
     return $menu && isset($menu->menu_config) ? json_decode($menu->menu_config, true) : array();
   }
-  
+
   /**
    * Create the default attributes for the configuration of block.
    * 
@@ -84,6 +118,58 @@ class TBMegaMenuBuilder {
   }
 
   /**
+   * 
+   * @param type $submenu_config
+   */
+  public static function editSubMenuConfig(&$submenu_config) {
+    $attributes = array(
+      'width' => '',
+      'class' => '',
+      'group' => '',
+    );
+    foreach ($attributes as $attribute => $value) {
+      if (!isset($submenu_config[$attribute])) {
+        $submenu_config[$attribute] = $value;
+      }
+    }
+  }
+
+  /**
+   * 
+   * @param type $item_config
+   */
+  public static function editItemConfig(&$item_config) {
+    $attributes = array(
+      'xicon' => '',
+      'class' => '',
+      'caption' => '',
+      'alignsub' => '',
+      'group' => 0,
+      'hidewcol' => 0,
+      'hidesub' => 0
+    );
+    foreach ($attributes as $attribute => $value) {
+      if (!isset($item_config[$attribute])) {
+        $item_config[$attribute] = $value;
+      }
+    }
+  }
+
+  public static function editColumnConig(&$col_config) {
+    $attributes = array(
+      'width' => 12,
+      'class' => '',
+      'hidewcol' => 0,
+      'showblocktitle' => 0,
+    );
+    foreach ($attributes as $attribute => $value) {
+      if (!isset($col_config[$attribute])) {
+        $col_config[$attribute] = $value;
+      }
+    }
+  }
+
+  /**
    * Create block which using tb_megamenu.
    * 
    * @global array $tb_elements_counter
@@ -102,8 +188,21 @@ class TBMegaMenuBuilder {
     return $block;
   }
 
+  public static function getCounter($key) {
+    $value = &drupal_static($key, 0);
+    $value++;
+    global $tb_elements_counter;
+    if (!$tb_elements_counter) {
+      $tb_elements_counter = array();
+    }
+    $tb_elements_counter[$key] = $value;
+    return "tb-megamenu-$key-$value";
+  }
+
   /**
    * Get all of blocks in system without blocks which belong to TB Mega Menu.
+   * 
+   * In array, each element includes key which is PluginId and value which is label of block. 
    * 
    * @staticvar array $_blocks_array
    * @return array
@@ -115,10 +214,10 @@ class TBMegaMenuBuilder {
       $_blocks_array = array();
       foreach ($blocks as $block) {
         $dependencies = $block->getDependencies();
-        if (isset($dependencies['module'][0]) && $dependencies['module'][0] != 'tb_megamenu') {
+        $modules = array_values($dependencies['module']);
+        if (!in_array('tb_megamenu', $modules)) {
           $settings = $block->get('settings');
-          $idx = $dependencies['module'][0] . '--' . $settings['id'];
-          $_blocks_array[$idx] = $settings['label'];
+          $_blocks_array[$settings['id']] = $settings['label'];
         }
       }
       asort($_blocks_array);
@@ -133,7 +232,13 @@ class TBMegaMenuBuilder {
    * @return array
    */
   public static function createAnimationOptions($block_config) {
-    $animations = array('none' => t('None'), 'fading' => t('Fading'), 'slide' => t('Slide'), 'zoom' => t('Zoom'), 'elastic' => t('Elastic'));
+    $animations = array(
+      'none' => t('None'),
+      'fading' => t('Fading'),
+      'slide' => t('Slide'),
+      'zoom' => t('Zoom'),
+      'elastic' => t('Elastic')
+    );
     $options = array();
     foreach ($animations as $value => $title) {
       if ($value == $block_config['animation']) {
@@ -169,6 +274,130 @@ class TBMegaMenuBuilder {
       }
     }
     return array('#markup' => implode("\n", $options));
+  }
+
+  public static function buildPageTrail($menu_items) {
+    $trail = array();
+    foreach ($menu_items as $pluginId => $item) {
+      if ($item->inActiveTrail ||
+              ($item->link->getPluginDefinition()['route_name'] == '<front>')) {
+        $trail [$pluginId] = $item;
+      }
+
+      if ($item->subtree) {
+        $trail += self::buildPageTrail($item->subtree);
+      }
+    }
+    return $trail;
+  }
+
+  /**
+   * 
+   * @param array $items
+   * @param array $menu_config
+   * @param string $section
+   */
+  public static function syncConfigAll($items, &$menu_config, $section) {
+    foreach ($items as $item) {
+//      $mlid = $item['link']['mlid'];
+//      $item_config = isset($menu_config[$mlid]) ? $menu_config[$mlid] : array();
+//      if (!$item['link']['hidden'] && (!empty($item['below']) || !empty($item_config))) {
+//        self::syncConfig($item['below'], $item_config, $mlid, $section);
+//        $menu_config[$mlid] = $item_config;
+//        self::syncConfigAll($item['below'], $menu_config, $section);
+//      }
+    }
+  }
+
+  /**
+   * 
+   * @param array $items
+   * @param array $item_config
+   * @param string $plugin_id
+   * @param string $section
+   */
+  public static function syncConfig($items, &$item_config, $plugin_id, $section) {
+    if (empty($item_config['rows_content'])) {
+      $item_config['rows_content'] = array(0 => array(0 => array('col_content' => array(), 'col_config' => array())));
+      foreach ($items as $item) {
+        $mlid = $item['link']['mlid'];
+        if (!$item['link']['hidden']) {
+          $item_config['rows_content'][0][0]['col_content'][] = array(
+            'type' => 'menu_item',
+            'mlid' => $mlid,
+            'tb_item_config' => array(),
+            'weight' => $item['link']['weight'],
+          );
+        }
+      }
+      if (empty($item_config['rows_content'][0][0]['col_content'])) {
+        unset($item_config['rows_content'][0]);
+      }
+    }
+    else {
+      $hash = array();
+      foreach ($item_config['rows_content'] as $i => $row) {
+        foreach ($row as $j => $col) {
+          foreach ($col['col_content'] as $k => $tb_item) {
+            if ($tb_item['type'] == 'menu_item') {
+              $hash[$tb_item['mlid']] = array('row' => $i, 'col' => $j);
+              $existed = false;
+              foreach ($items as $item) {
+                if (!$item['link']['hidden'] && $tb_item['mlid'] == $item['link']['mlid']) {
+                  $item_config['rows_content'][$i][$j]['col_content'][$k]['weight'] = $item['link']['weight'];
+                  $existed = true;
+                  break;
+                }
+              }
+              if (!$existed) {
+                unset($item_config['rows_content'][$i][$j]['col_content'][$k]);
+                if (empty($item_config['rows_content'][$i][$j]['col_content'])) {
+                  unset($item_config['rows_content'][$i][$j]);
+                }
+                if (empty($item_config['rows_content'][$i])) {
+                  unset($item_config['rows_content'][$i]);
+                }
+              }
+            }
+            else {
+              if (!tb_megamenu_block_content_exists($tb_item['block_key'], $section)) {
+                unset($item_config['rows_content'][$i][$j]['col_content'][$k]);
+                if (empty($item_config['rows_content'][$i][$j]['col_content'])) {
+                  unset($item_config['rows_content'][$i][$j]);
+                }
+                if (empty($item_config['rows_content'][$i])) {
+                  unset($item_config['rows_content'][$i]);
+                }
+              }
+            }
+          }
+        }
+      }
+      $row = -1;
+      $col = -1;
+      foreach ($items as $item) {
+        $mlid = $item['link']['mlid'];
+        if (!$item['link']['hidden']) {
+          if (isset($hash[$mlid])) {
+            $row = $hash[$mlid]['row'];
+            $col = $hash[$mlid]['col'];
+            continue;
+          }
+          if ($row > -1) {
+            tb_megamenu_insert_tb_item($item_config, $row, $col, $item);
+          }
+          else {
+            $row = 0;
+            $col = 0;
+            while (isset($item_config['rows_content'][$row][$col]['col_content']) && $item_config['rows_content'][$row][$col]['col_content'][0]['type'] == 'block') {
+              $row++;
+            }
+            tb_megamenu_insert_tb_item($item_config, $row, $col, $item);
+            $item_config['rows_content'][$row][$col]['col_config'] = array();
+          }
+        }
+      }
+    }
   }
 
 }
