@@ -24,7 +24,7 @@ function tb_megamenu_schema() {
         'not null' => FALSE,
       ),
     ),
-    'primary key' => array('menu_name', 'language'),
+    'primary key' => array('menu_name'),
   );
   return $schema;
 }
