@@ -391,7 +391,6 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
 
     if ((type_menu && ((!$haspos && $allmenucols.length == 1) || ($haspos && $allmenucols.length == 0))) || $allcols.length == 1) {
       show_toolbox ($(currentSelected).closest('.tb-megamenu-item'));
-      console.log($(currentSelected).closest('.tb-megamenu-item'));
       currentSelected = $(currentSelected).closest('.tb-megamenu-item')
       currentSelected.find('.tb-megamenu-submenu').remove();
       
