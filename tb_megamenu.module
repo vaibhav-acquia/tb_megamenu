@@ -80,7 +80,7 @@ function tb_megamenu_theme($existing, $type, $theme, $path) {
   $items['tb_megamenu_block'] = array(
     'variables' => array(
       'menu_name' => NULL,
-      'block_key' => NULL,
+      'block_id' => NULL,
       'section' => 'frontend',
       'showblocktitle' => 1,
     )
@@ -95,14 +95,6 @@ function tb_megamenu_theme($existing, $type, $theme, $path) {
       'block_config' => NULL,
       'trail' => NULL,
       'section' => 'frontend',
-    )
-  );
-  $items['tb_megamenu_block'] = array(
-    'variables' => array(
-      'menu_name' => NULL,
-      'block_key' => NULL,
-      'section' => 'frontend',
-      'showblocktitle' => 1,
     )
   );
   $items['tb_megamenu_admin_settings'] = array(
@@ -190,7 +182,7 @@ function template_preprocess_tb_megamenu_column(&$vars) {
       }
     }
   }
-  
+
   $vars['attributes']['class'] = array();
   $vars['attributes']['class'][] = 'span' . $col_config['width'];
   $vars['attributes']['class'][] = 'mega-col-nav';
@@ -306,7 +298,7 @@ function template_preprocess_tb_megamenu(&$vars) {
   // TODO: what does this function to do ?
   //  $items_page = menu_tree_page_data($menu_name);
   //  $trail = tb_megamenu_build_page_trail($items_page);
-  
+
   $trail = TBMegaMenuBuilder::buildPageTrail($menu_items);
   $menu_config = TBMegaMenuBuilder::getMenuConfig($menu_name);
   $block_config = TBMegaMenuBuilder::getBlockConfig($menu_name);
@@ -375,7 +367,7 @@ function template_preprocess_tb_megamenu_backend(&$vars) {
   $vars['animation_options'] = TBMegaMenuBuilder::createAnimationOptions($block_config);
   $vars['style_options'] = TBMegaMenuBuilder::createStyleOptions($block_config);
   $vars['edit_links'] = \Drupal::url('entity.menu.edit_form', array('menu' => $menu_name));
-  
+
   // Attach this to init TB Mega Menu (Importance). 
   $vars['menu_content']['#attached']['drupalSettings']['TBMegaMenu']['menu_name'] = $menu_name;
 }
@@ -386,34 +378,36 @@ function template_preprocess_tb_megamenu_backend(&$vars) {
  * @param array $vars
  */
 function template_preprocess_tb_megamenu_block(&$vars) {
-  $block = TBMegaMenuBuilder::loadBlock($vars['block_key']);
- 
-  if ($block) {
-//    $definition = $block->getPluginDefinition();
-//    $plugin_id = $block->getPluginId();
-//    $content = $block->build();
-//    if (isset($vars['showblocktitle']) && $vars['showblocktitle']) {
-//      //$block->subject = empty($content['subject']) ? $block->title : $content['subject'];
-//      $block->subject = $definition['admin_label'];
-//    }
-//    else {
-//      $block->subject = "";
-//    }
-//    if (empty($content) && $vars['section'] == 'backend') {
-//      //$vars['content'] = tb_megamenu_get_block_title($vars['block_key']);
-//    }
-//    elseif ($content) {
-//      //$vars['content'] = theme("block", array('elements' => array('content' => $content['content'], '#children' => (is_array($content['content']) ? drupal_render($content['content']) : $content['content']), '#block' => $block)));
-//    }
-//    else {
-//      $vars['content'] = NULL;
-//    }
-//    $vars['attributes'] = new Attribute();
-//    $vars['attributes']['class'] = array();
-//    $vars['attributes']['class'][] = "tb-block";
-//    $vars['attributes']['class'][] = "tb-megamenu-block";
-//    $vars['attributes']['data-type'] = "block";
-//    $vars['attributes']['data-block'] = $plugin_id;
+  $entity_block = TBMegaMenuBuilder::loadEntityBlock($vars['block_id']);
+  if ($entity_block) {
+    $plugin = $entity_block->getPlugin();
+    $plugin_configuration = $plugin->getConfiguration();
+    $content = $plugin->build();
+    if ($content) {
+      if (empty($vars['showblocktitle'])) {
+        $plugin_configuration['label_display'] = '';
+      }
+      $vars['content'] = array(
+        '#theme' => 'block',
+        '#elements' => $elements = array(
+          '#configuration' => $plugin_configuration,
+          '#plugin_id' => $plugin->getPluginId(),
+          '#base_plugin_id' => $plugin->getBaseId(),
+          '#derivative_plugin_id' => $plugin->getDerivativeId(),
+          'content' => $content,
+          '#id' => $plugin_configuration['#id'],
+        )
+      );
+    }
+    elseif ($vars['section'] == 'backend') {
+      $vars['content'] = $plugin_configuration['label'];
+    }
+    $vars['attributes'] = new Attribute();
+    $vars['attributes']['class'] = array();
+    $vars['attributes']['class'][] = "tb-block";
+    $vars['attributes']['class'][] = "tb-megamenu-block";
+    $vars['attributes']['data-type'] = "block";
+    $vars['attributes']['data-block'] = $plugin->getPluginId();
   }
   else {
     $vars['content'] = NULL;
@@ -463,8 +457,9 @@ function template_preprocess_tb_megamenu_item(&$vars) {
   $item_config = isset($menu_config[$mlid]['item_config']) ? $menu_config[$mlid]['item_config'] : array();
   TBMegaMenuBuilder::editItemConfig($item_config);
   $vars['item_config'] = $item_config;
+
   if (!empty($menu_config[$mlid]['rows_content']) &&
-      ($vars['section'] == 'backend' || !$item_config['hidesub'])) {
+          ($vars['section'] == 'backend' || !$item_config['hidesub'])) {
 
     $vars['submenu'] = array(
       '#theme' => 'tb_megamenu_submenu',
