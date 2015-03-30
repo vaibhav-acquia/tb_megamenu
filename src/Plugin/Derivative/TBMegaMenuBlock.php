@@ -22,7 +22,6 @@ class TBMegaMenuBlock extends DeriverBase {
     foreach ($menus as $menu => $title) {
       $this->derivatives[$menu] = $base_plugin_definition;
       $this->derivatives[$menu]['admin_label'] = $title;
-      //$this->derivatives[$menu]['config_dependencies']['config'] = array($entity->getConfigDependencyName());
     }
     return $this->derivatives;
   }
