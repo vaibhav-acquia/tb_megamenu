@@ -77,11 +77,11 @@ class TBMegaMenuBuilder {
   /**
    * Load block.
    * 
-   * @param string $pluginId
+   * @param string $block_id
    * @return array
    */
-  public static function loadBlock($pluginId) {
-    return \Drupal::service('plugin.manager.block')->createInstance($pluginId);
+  public static function loadEntityBlock($block_id) {
+    return entity_load('block', $block_id);
   }
 
   /**
@@ -118,6 +118,7 @@ class TBMegaMenuBuilder {
   }
 
   /**
+   * Set the default values to configuration in Sub TB Megamenu if it's empty.
    * 
    * @param type $submenu_config
    */
@@ -135,8 +136,9 @@ class TBMegaMenuBuilder {
   }
 
   /**
+   * Set the default values to configuration in TB Megamenu item if it's empty.
    * 
-   * @param type $item_config
+   * @param array $item_config
    */
   public static function editItemConfig(&$item_config) {
     $attributes = array(
@@ -155,6 +157,11 @@ class TBMegaMenuBuilder {
     }
   }
 
+  /**
+   * Set the default values to configuration in columns if it's empty.
+   * 
+   * @param array $col_config
+   */
   public static function editColumnConig(&$col_config) {
     $attributes = array(
       'width' => 12,
@@ -210,14 +217,12 @@ class TBMegaMenuBuilder {
   public static function getAllBlocks() {
     static $_blocks_array = array();
     if (empty($_blocks_array)) {
-      $blocks = _block_rehash(\Drupal::configFactory()->get('system.theme')->get('default'));
+      // Get blocks which belong to the default theme.
+      $blocks = _block_rehash();
       $_blocks_array = array();
-      foreach ($blocks as $block) {
-        $dependencies = $block->getDependencies();
-        $modules = array_values($dependencies['module']);
-        if (!in_array('tb_megamenu', $modules)) {
-          $settings = $block->get('settings');
-          $_blocks_array[$settings['id']] = $settings['label'];
+      foreach ($blocks as $block_id => $block) {
+        if ($block->get('settings')['provider'] != 'tb_megamenu') {
+          $_blocks_array[$block_id] = $block->label();
         }
       }
       asort($_blocks_array);
@@ -280,7 +285,7 @@ class TBMegaMenuBuilder {
     $trail = array();
     foreach ($menu_items as $pluginId => $item) {
       if ($item->inActiveTrail ||
-              ($item->link->getPluginDefinition()['route_name'] == '<front>')) {
+         ($item->link->getPluginDefinition()['route_name'] == '<front>')) {
         $trail [$pluginId] = $item;
       }
 
@@ -399,5 +404,4 @@ class TBMegaMenuBuilder {
       }
     }
   }
-
 }
