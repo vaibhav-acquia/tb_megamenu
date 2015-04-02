@@ -51,10 +51,10 @@ class TBMegaMenuBuilder {
 
   public static function getMenuItem($menu_name, $mlid) {
     $tree = $menu_items = \Drupal::menuTree()->load($menu_name, (new Menu\MenuTreeParameters)->onlyEnabledLinks());
-    // Need to review this.
-//    if (function_exists('i18n_menu_localize_tree')) {
-//      $tree = i18n_menu_localize_tree($tree);
-//    }
+    //  Need to review this.
+    //  if (function_exists('i18n_menu_localize_tree')) {
+    //    $tree = i18n_menu_localize_tree($tree);
+    //  }
     $item = self::findMenuItem($tree, $mlid);
     return $item;
   }
@@ -81,7 +81,7 @@ class TBMegaMenuBuilder {
    * @return array
    */
   public static function loadEntityBlock($block_id) {
-    return entity_load('block', $block_id);
+    return \Drupal::entityManager()->getStorage('block')->load($block_id);
   }
 
   /**
@@ -162,7 +162,7 @@ class TBMegaMenuBuilder {
    * 
    * @param array $col_config
    */
-  public static function editColumnConig(&$col_config) {
+  public static function editColumnConfig(&$col_config) {
     $attributes = array(
       'width' => 12,
       'class' => '',
@@ -191,7 +191,7 @@ class TBMegaMenuBuilder {
       '#menu_name' => $menu_name,
       '#section' => 'backend'
     );
-    $block['#attached']['drupalSettings']['TBMegaMenu']['TBElementsCounter'] = json_encode($tb_elements_counter);
+    $block['#attached']['drupalSettings']['TBMegaMenu']['TBElementsCounter'] = $tb_elements_counter;
     return $block;
   }
 
