@@ -48,8 +48,8 @@
       <fieldset class="btn-group">
         <select class="toolcol-block toolbox-input toolbox-select input-medium" name="toolcol-block" data-name="block" data-placeholder="{{ 'Select Block'|t }}" style="width: 200px;">
           <option value=""></option>
-          {% for block in blocks_options %}
-            <option value="block_key"> {{ block }} </option>
+          {% for block_id, block in blocks_options %}
+            <option value="{{ block_id }}"> {{ block }} </option>
           {% endfor %}
         </select>
       </fieldset>
