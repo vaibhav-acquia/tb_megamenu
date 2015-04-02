@@ -13,4 +13,12 @@ tb_megamenu.admin.configure:
     _form: '\Drupal\tb_megamenu\Form\TBMegaMenuAdminConfigureForm'
   requirements:
     _permission: 'administer tb_megamenu'
+    
+tb_megamenu.admin.save:
+  path: '/admin/structure/tb-megamenu/save'
+  defaults:
+    _title: 'Save configuration of TB Mega Menu'
+    _controller: '\Drupal\tb_megamenu\Controller\TBMegaMenuAdminController::saveConfiguration'
+  requirements:
+    _permission: 'administer tb_megamenu'
 
