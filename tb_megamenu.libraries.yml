@@ -14,6 +14,23 @@ form.configure-megamenu:
     - core/drupal
     - core/drupalSettings
 
+theme.tb_megamenu:
+  version: 1.x
+  css:
+    theme:
+      https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css: { type: external }
+      css/tb_megamenu.bootstrap.css: {}
+      css/tb_megamenu.base.css: {}
+      css/tb_megamenu.default.css: {}
+      css/tb_megamenu.compatibility.css: {}
+  js:
+    js/tb-megamenu-frontend.js: { scope: footer }
+    js/tb-megamenu-touch.js: { scope: footer }
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupalSettings
+
 form.chosen:
   version: 1.1.0
   css:
@@ -29,17 +46,17 @@ form.font-awesome:
   css:
     theme:
       https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css: { type: external }
-      
+
 block_style.black:
   css:
     component:
       css/styles/black.css: { basename: black.css }
-      
+
 block_style.blue:
   css:
     component:
       css/styles/blue.css: { basename: blue.css }
-      
+
 block_style.green:
   css:
     component:
