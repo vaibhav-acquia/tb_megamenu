@@ -2,6 +2,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
 
 (function ($, Drupal, drupalSettings) {
   "use strict";
+  
   Drupal.behaviors.tbMegaMenuBackendAction = {
     attach: function (context) {
       $('select[name="tb-megamenu-animation"]').change(function() {
