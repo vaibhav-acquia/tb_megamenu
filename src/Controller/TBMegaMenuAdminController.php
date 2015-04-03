@@ -69,7 +69,6 @@ class TBMegaMenuAdminController extends ControllerBase {
       case 'load':
         $block = TBMegaMenuBuilder::renderBlock($_POST['menu_name']);
         return new Response(drupal_render($block));
-        break;
       case 'save':
         $menu_config = isset($_POST['menu_config']) ? $_POST['menu_config'] : NULL;
         $block_config = isset($_POST['block_config']) ? $_POST['block_config'] : NULL;
@@ -111,7 +110,6 @@ class TBMegaMenuAdminController extends ControllerBase {
           return new Response(json_encode(array('content' => $content, 'id' => $id)));
         }
         return new Response('');
-        break;
     }
     exit;
   }
