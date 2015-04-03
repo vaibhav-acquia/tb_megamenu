@@ -563,7 +563,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
 
   var show_toolbox = function(selected) {
     if (!selected.hasClass('tb-megamenu-column') && !selected.hasClass('tb-megamenu-submenu')) {
-      level = parseInt($(selected).parent().attr('data-level'));
+      var level = parseInt($(selected).parent().attr('data-level'));
       if (level > 1) {
         $("#toogle-group-wrapper").show();
         $("#toogle-break-column-wrapper").show();
@@ -702,7 +702,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
   };
 
   var update_toggle = function(toggle, val) {
-    $input = toggle.find('input[value="' + val + '"]');
+    var $input = toggle.find('input[value="' + val + '"]');
     /**
      * We use this function to set the check attribute.
      * For jquery 1.9 or higher, instead of $input.attr('checked', 'checked');
@@ -859,9 +859,9 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
 
     els.mouseover(function(event) {
       megamenu.data('nav_all').removeClass('hover');
-      $this = $(this);
+      var $this = $(this);
       clearTimeout(megamenu.attr('data-hovertimeout'));
-      megamenu.attr('data-hovertimeout', setTimeout("$this.addClass('hover')", 100));
+      megamenu.attr('data-hovertimeout', setTimeout(function () {$this.addClass('hover')}, 100));
       event.stopPropagation();
     });
     els.mouseout(function(event) {
