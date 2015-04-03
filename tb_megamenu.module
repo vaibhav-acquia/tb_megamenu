@@ -16,6 +16,7 @@ function tb_megamenu_theme($existing, $type, $theme, $path) {
       'menu_name' => NULL,
       'content' => NULL,
       'section' => 'frontend',
+      'block_theme' => \Drupal::config('system.theme')->get('default'),
     ),
   );
   $items['tb_megamenu_nav'] = array(
@@ -104,6 +105,7 @@ function tb_megamenu_theme($existing, $type, $theme, $path) {
     'variables' => array(
       'blocks' => NULL,
       'menu_name' => NULL,
+      'block_theme' => \Drupal::config('system.theme')->get('default'),
       'menu_content' => NULL,
     ),
     'path' => $path . '/templates/backend',
@@ -172,6 +174,7 @@ function template_preprocess_tb_megamenu_column(&$vars) {
         '#theme' => 'tb_megamenu_block',
         '#block_id' => $tb_item['block_id'],
         '#section' => $vars['section'],
+        '#block_theme' => $vars['block_theme'],
         '#showblocktitle' => $col_config['showblocktitle']
       );
       $vars['attributes']['data-showblocktitle'] = $col_config['showblocktitle'];
@@ -282,7 +285,8 @@ function template_preprocess_tb_megamenu_submenu(&$vars) {
  */
 function template_preprocess_tb_megamenu(&$vars) {
   $menu_name = $vars['menu_name'];
-//  if ($vars['section'] == 'backend') {
+  $theme = $vars['block_theme'];
+//  if ($vars['section'] == 'backend') {e
 //    //$items = tb_megamenu_get_tree($menu_name);
 //    $menu_items = \Drupal::menuTree()->load($menu_name, (new Menu\MenuTreeParameters)->onlyEnabledLinks());
 //  }
@@ -301,9 +305,9 @@ function template_preprocess_tb_megamenu(&$vars) {
   //  $trail = tb_megamenu_build_page_trail($items_page);
 
   $trail = TBMegaMenuBuilder::buildPageTrail($menu_items);
-  $menu_config = TBMegaMenuBuilder::getMenuConfig($menu_name);
-  $block_config = TBMegaMenuBuilder::getBlockConfig($menu_name);
-  TBMegaMenuBuilder::editBlockConfig($block_config);
+  $menu_config = TBMegaMenuBuilder::getMenuConfig($menu_name, $theme);
+  $block_config = TBMegaMenuBuilder::getBlockConfig($menu_name, $theme);
+  TBMegaMenuBuilder::editBlockConfig($block_config,);
   //TBMegaMenuBuilder::syncConfigAll($menu_items, $menu_config, $vars['section']);
   $vars['attributes'] = new Attribute();
   $vars['attributes']['class'] = array();
@@ -355,12 +359,13 @@ function template_preprocess_tb_megamenu(&$vars) {
  */
 function template_preprocess_tb_megamenu_backend(&$vars) {
   $menu_name = $vars['menu_name'];
-  $block_config = TBMegaMenuBuilder::getBlockConfig($menu_name);
+  $theme = $vars['block_theme'];
+  $block_config = TBMegaMenuBuilder::getBlockConfig($menu_name, $theme);
   TBMegaMenuBuilder::editBlockConfig($block_config);
-  $vars['menu_content'] = TBMegaMenuBuilder::renderBlock($menu_name);
+  $vars['menu_content'] = TBMegaMenuBuilder::renderBlock($menu_name, $theme);
   $vars['item_toolbox'] = array('#theme' => 'tb_megamenu_item_toolbox');
   $vars['submenu_toolbox'] = array('#theme' => 'tb_megamenu_submenu_toolbox');
-  $vars['column_toolbox'] = array(
+  $vars['column_toolbox'] = array(eme
     '#theme' => 'tb_megamenu_column_toolbox',
     '#blocks_options' => TBMegaMenuBuilder::getAllBlocks(),
   );

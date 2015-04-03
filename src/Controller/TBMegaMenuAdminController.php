@@ -67,28 +67,32 @@ class TBMegaMenuAdminController extends ControllerBase {
     $action = isset($_POST['action']) ? $_POST['action'] : NULL;
     switch ($action) {
       case 'load':
-        $block = TBMegaMenuBuilder::renderBlock($_POST['menu_name']);
+        $block = TBMegaMenuBuilder::renderBlock($_POST['menu_name'], $_POST['theme']);
         return new Response(drupal_render($block));
       case 'save':
         $menu_config = isset($_POST['menu_config']) ? $_POST['menu_config'] : NULL;
         $block_config = isset($_POST['block_config']) ? $_POST['block_config'] : NULL;
         $menu_name = isset($_POST['menu_name']) ? $_POST['menu_name'] : NULL;
+        $theme = isset($_POST['theme']) ? $_POST['theme'] : NULL;
         if ($menu_config && $menu_name) {
           $tb_megamenu = db_select('tb_megamenus', 't')
                   ->fields('t')
                   ->condition('menu_name', $menu_name)
+                  ->condition('theme', $theme)
                   ->execute()
                   ->fetchObject();
           if ($tb_megamenu) {
             db_update('tb_megamenus')
                     ->fields(array('menu_config' => $menu_config, 'block_config' => $block_config))
                     ->condition('menu_name', $menu_name)
+                    ->condition('theme', $theme)
                     ->execute();
           }
           else {
             db_insert('tb_megamenus')
               ->fields(array(
                 'menu_name' => $menu_name,
+                'theme' => $theme,
                 'block_config' => $block_config,
                 'menu_config' => $menu_config
               ))->execute();

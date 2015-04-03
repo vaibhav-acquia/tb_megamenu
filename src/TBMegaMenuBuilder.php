@@ -24,10 +24,11 @@ class TBMegaMenuBuilder {
   /**
    * Get the configuration of blocks.
    * @param string $menu_name
+   * @param string $theme
    * @return array
    */
-  public static function getBlockConfig($menu_name) {
-    $menu = self::getMenus($menu_name);
+  public static function getBlockConfig($menu_name, $theme) {
+    $menu = self::getMenus($menu_name, $theme);
     return $menu && isset($menu->block_config) ? json_decode($menu->block_config, true) : array();
   }
 
@@ -36,14 +37,16 @@ class TBMegaMenuBuilder {
    * 
    * @global stdClass $language
    * @param string $menu_name
+   * @param string $theme
    * @return array
    */
-  public static function getMenus($menu_name) {
+  public static function getMenus($menu_name, $theme) {
     $query = db_select('menu_link_content_data', 'm');
     $query->leftJoin('tb_megamenus', 't', 't.menu_name = m.menu_name');
     $query->fields('m');
     $query->addField('t', 'menu_config');
     $query->addField('t', 'block_config');
+    $query->condition('t.theme', $theme);
     $query->condition('m.menu_name', $menu_name);
     $query->condition('m.langcode', \Drupal::languageManager()->getCurrentLanguage()->getId());
     return $query->execute()->fetchObject();
@@ -88,10 +91,11 @@ class TBMegaMenuBuilder {
    * Get configuration of menu.
    * 
    * @param string $menu_name
+   * @param string $theme
    * @return stdClass
    */
-  public static function getMenuConfig($menu_name) {
-    $menu = self::getMenus($menu_name);
+  public static function getMenuConfig($menu_name, $theme) {
+    $menu = self::getMenus($menu_name, $theme);
     return $menu && isset($menu->menu_config) ? json_decode($menu->menu_config, true) : array();
   }
 
@@ -183,12 +187,13 @@ class TBMegaMenuBuilder {
    * @param string $menu_name
    * @return array
    */
-  public static function renderBlock($menu_name) {
+  public static function renderBlock($menu_name, $theme) {
     global $tb_elements_counter;
     $tb_elements_counter = array('column' => 0);
     $block = array(
       '#theme' => 'tb_megamenu',
       '#menu_name' => $menu_name,
+      '#block_theme' => $theme,
       '#section' => 'backend'
     );
     $block['#attached']['drupalSettings']['TBMegaMenu']['TBElementsCounter'] = $tb_elements_counter;
