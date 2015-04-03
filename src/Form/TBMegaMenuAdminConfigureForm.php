@@ -32,7 +32,7 @@ class TBMegaMenuAdminConfigureForm extends FormBase {
     // Add a custom library.
     $form['#attached']['library'][] = 'tb_megamenu/form.configure-megamenu';
     
-    $abs_url_config = \Drupal::url('tb_megamenu.admin.save', NULL, array('absolute' => TRUE));
+    $abs_url_config = \Drupal::url('tb_megamenu.admin.save', array(), array('absolute' => TRUE));
     $form['#attached']['drupalSettings']['TBMegaMenu']['saveConfigURL'] = $abs_url_config;
     if (!empty($menu_name)) {
       $form['tb_megamenu'] = array(
