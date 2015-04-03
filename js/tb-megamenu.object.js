@@ -544,11 +544,11 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     });
   };
 
-  toolbox_type = function() {
+  var toolbox_type = function() {
     return currentSelected ? currentSelected.hasClass('nav-child') ? 'sub' : (currentSelected[0].tagName == 'DIV' ? 'col' : 'item') : false;
   };
 
-  hide_toolbox = function(show_intro) {
+  var hide_toolbox = function(show_intro) {
     $('#tb-megamenu-admin-mm-tb .admin-toolbox').hide();
     currentSelected = null;
     if (megamenu && megamenu.data('nav_all'))
@@ -561,7 +561,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     }
   };
 
-  show_toolbox = function(selected) {
+  var show_toolbox = function(selected) {
     if (!selected.hasClass('tb-megamenu-column') && !selected.hasClass('tb-megamenu-submenu')) {
       level = parseInt($(selected).parent().attr('data-level'));
       if (level > 1) {
@@ -594,7 +594,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     $('#tb-megamenu-admin-mm-tb').show();
   };
 
-  update_toolbox = function(type) {
+  var update_toolbox = function(type) {
     if (!type) {
       type = toolbox_type();
     }
@@ -701,7 +701,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     }
   };
 
-  update_toggle = function(toggle, val) {
+  var update_toggle = function(toggle, val) {
     $input = toggle.find('input[value="' + val + '"]');
     /**
      * We use this function to set the check attribute.
@@ -711,7 +711,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     $input.trigger('update');
   };
 
-  apply_toolbox = function(input) {
+  var apply_toolbox = function(input) {
     var name = $(input).attr('data-name'),
             value = input.value,
             type = toolbox_type();
@@ -797,7 +797,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
         break;
     }
   };
-  callAjax = function(data) {
+  var callAjax = function(data) {
     if (Drupal.TBMegaMenu.isLockedAjax()) {
       window.setTimeout(function() {
         callAjax(data);
@@ -837,7 +837,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     }
   };
 
-  defaultColumnsWidth = function(count) {
+  var defaultColumnsWidth = function(count) {
     if (count < 1) {
       return null;
     }
@@ -851,7 +851,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     return widths;
   };
 
-  bindEvents = function(els) {
+  var bindEvents = function(els) {
     if (megamenu.data('nav_all'))
       megamenu.data('nav_all', megamenu.data('nav_all').add(els));
     else
@@ -875,18 +875,16 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     });
   };
 
-  unbindEvents = function(els) {
+  var unbindEvents = function(els) {
     megamenu.data('nav_all', megamenu.data('nav_all').not(els));
     els.unbind('mouseover').unbind('mouseout').unbind('click');
   };
 
-  rebindEvents = function(els) {
+  var rebindEvents = function(els) {
     unbindEvents(els);
     bindEvents(els);
   };
-})(jQuery, Drupal, drupalSettings);
 
-(function($, Drupal, drupalSettings) {
   $.extend(Drupal.TBMegaMenu, {
     prepare: function() {
       var panel = $('#jform_params_mm_type').closest('.controls');
