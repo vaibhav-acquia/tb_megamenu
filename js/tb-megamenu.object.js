@@ -516,7 +516,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       item_config['group'] = $this.attr('data-group') ? $this.attr('data-group') : "";
       item_config['hidewcol'] = $this.attr('data-hidewcol') ? $this.attr('data-hidewcol') : 1;
       item_config['hidesub'] = $this.attr('data-hidesub') ? $this.attr('data-hidesub') : 1;
-      config = {'rows_content': rows, 'submenu_config': submenu_config, 'item_config': item_config};
+      var config = {'rows_content': rows, 'submenu_config': submenu_config, 'item_config': item_config};
       menu_config[id] = config;
     });
     var block_config = {};
@@ -534,7 +534,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       data: {'action': 'save', 'menu_name': options['menu_name'], 'menu_config': JSON.stringify(menu_config), 'block_config': JSON.stringify(block_config)},
       complete: function(msg) {
         $('#tb-megamenu-admin-mm-tb #toolbox-loading').hide();
-        $div = $('<div id="console" class="clearfix"><div class="messages status"><h2 class="element-invisible">Status message</h2>' + Drupal.t("Saved config sucessfully!") + '</div></div>');
+        var $div = $('<div id="console" class="clearfix"><div class="messages status"><h2 class="element-invisible">Status message</h2>' + Drupal.t("Saved config sucessfully!") + '</div></div>');
         $('#tb-megamenu-admin-mm-tb #toolbox-message').html($div).show();
         window.setTimeout(function() {
           $('#tb-megamenu-admin-mm-tb #toolbox-message').html("").hide();
@@ -551,8 +551,9 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
   var hide_toolbox = function(show_intro) {
     $('#tb-megamenu-admin-mm-tb .admin-toolbox').hide();
     currentSelected = null;
-    if (megamenu && megamenu.data('nav_all'))
+    if (megamenu && megamenu.data('nav_all')) {
       megamenu.data('nav_all').removeClass('selected');
+    }
     megamenu.find('li').removeClass('open');
     if (show_intro) {
       $('#tb-megamenu-admin-mm-intro').show();
