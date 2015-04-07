@@ -2,7 +2,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
 
 (function($, Drupal, drupalSettings) {
   "use strict";
-  
+
   var currentSelected = null, megamenu, nav_items, nav_subs, nav_cols, nav_all;
   Drupal.TBMegaMenu.lockedAjax = false;
 
@@ -327,7 +327,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       $cols = $rows.children('[class*="span"]').filter(function() {
         return $(this).children('.mega-inner').children('.tb-megamenu-block').length == 0;
       }),
-              currentSelected = oldSelected;
+      currentSelected = oldSelected;
     }
     var $tocol = $($cols[colidx + 1]);
     var $ul = $tocol.find('.mega-inner ul.tb-megamenu-subnav:first');
@@ -436,7 +436,11 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     $.ajax({
       type: "POST",
       url: drupalSettings.TBMegaMenu.saveConfigURL,
-      data: {'action': 'load', 'menu_name': options['menu_name']},
+      data: {
+        'action': 'load', 
+        'theme': drupalSettings.TBMegaMenu.theme,
+        'menu_name': options['menu_name']
+      },
       complete: function(msg) {
         $('#tb-megamenu-admin-mm-container').html(msg.responseText).megamenuAdmin({'menu_name': options['menu_name']});
         $('#tb-megamenu-admin-mm-container').find('.mega-inner').children('span.close').click(function() {
@@ -460,8 +464,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       return;
     }
     Drupal.TBMegaMenu.lockAjax();
-    var menu_config = {},
-            items = megamenu.find('ul[class*="level"] > li');
+    var menu_config = {}, items = megamenu.find('ul[class*="level"] > li');
     items.each(function() {
       var $this = $(this),
               id = $this.attr('data-id'),
@@ -531,7 +534,13 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     $.ajax({
       type: "POST",
       url: drupalSettings.TBMegaMenu.saveConfigURL,
-      data: {'action': 'save', 'menu_name': options['menu_name'], 'menu_config': JSON.stringify(menu_config), 'block_config': JSON.stringify(block_config)},
+      data: {
+        'action': 'save', 
+        'theme': drupalSettings.TBMegaMenu.theme, 
+        'menu_name': options['menu_name'], 
+        'menu_config': JSON.stringify(menu_config), 
+        'block_config': JSON.stringify(block_config)
+      },
       complete: function(msg) {
         $('#tb-megamenu-admin-mm-tb #toolbox-loading').hide();
         var $div = $('<div id="console" class="clearfix"><div class="messages status"><h2 class="element-invisible">Status message</h2>' + Drupal.t("Saved config sucessfully!") + '</div></div>');

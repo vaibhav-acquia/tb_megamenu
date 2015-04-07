@@ -196,7 +196,6 @@ class TBMegaMenuBuilder {
       '#block_theme' => $theme,
       '#section' => 'backend'
     );
-    $block['#attached']['drupalSettings']['TBMegaMenu']['TBElementsCounter'] = $tb_elements_counter;
     return $block;
   }
 

@@ -174,7 +174,6 @@ function template_preprocess_tb_megamenu_column(&$vars) {
         '#theme' => 'tb_megamenu_block',
         '#block_id' => $tb_item['block_id'],
         '#section' => $vars['section'],
-        '#block_theme' => $vars['block_theme'],
         '#showblocktitle' => $col_config['showblocktitle']
       );
       $vars['attributes']['data-showblocktitle'] = $col_config['showblocktitle'];
@@ -286,7 +285,8 @@ function template_preprocess_tb_megamenu_submenu(&$vars) {
 function template_preprocess_tb_megamenu(&$vars) {
   $menu_name = $vars['menu_name'];
   $theme = $vars['block_theme'];
-//  if ($vars['section'] == 'backend') {e
+  $vars['#attached']['drupalSettings']['TBMegaMenu']['theme'] = $theme;
+//  if ($vars['section'] == 'backend') {
 //    //$items = tb_megamenu_get_tree($menu_name);
 //    $menu_items = \Drupal::menuTree()->load($menu_name, (new Menu\MenuTreeParameters)->onlyEnabledLinks());
 //  }
@@ -376,7 +376,10 @@ function template_preprocess_tb_megamenu_backend(&$vars) {
   $vars['edit_links'] = \Drupal::url('entity.menu.edit_form', array('menu' => $menu_name));
 
   // Attach this to init TB Mega Menu (Importance). 
-  $vars['menu_content']['#attached']['drupalSettings']['TBMegaMenu']['menu_name'] = $menu_name;
+  $vars['#attached']['drupalSettings']['TBMegaMenu']['menu_name'] = $menu_name;
+  
+  // Attach theme into client-side.
+  $vars['#attached']['drupalSettings']['TBMegaMenu']['theme'] = $theme;
 }
 
 /**
@@ -440,6 +443,7 @@ function template_preprocess_tb_megamenu_nav(&$vars) {
       );
     }
   }
+  
   $vars['attributes'] = new Attribute();
   $vars['attributes']['class'] = array();
   $vars['attributes']['class'][] = 'tb-megamenu-nav';
@@ -464,7 +468,7 @@ function template_preprocess_tb_megamenu_item(&$vars) {
   $vars['item_config'] = $item_config;
 
   if (!empty($menu_config[$mlid]['rows_content']) &&
-          ($vars['section'] == 'backend' || !$item_config['hidesub'])) {
+      ($vars['section'] == 'backend' || !$item_config['hidesub'])) {
 
     $vars['submenu'] = array(
       '#theme' => 'tb_megamenu_submenu',
@@ -537,4 +541,8 @@ function template_preprocess_tb_megamenu_item(&$vars) {
   if ($vars['section'] == 'backend') {
     $vars['attributes']['title'] = t("Menu Item");
   }
+  
+  
+  global $tb_elements_counter;
+  $vars['#attached']['drupalSettings']['TBMegaMenu']['TBElementsCounter'] = $tb_elements_counter;
 }
