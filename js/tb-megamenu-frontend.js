@@ -62,8 +62,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
               $this.data('hoverTimeout', setTimeout(function(){$this.addClass ('open');}, 100));  
             } else {
               clearTimeout ($this.data('hoverTimeout'));
-              $this.data('hoverTimeout', 
-              setTimeout(function(){$this.addClass ('open');}, 100));
+              $this.data('hoverTimeout', setTimeout(function(){$this.addClass ('open');}, 100));
             }
           },
           function(event) {
