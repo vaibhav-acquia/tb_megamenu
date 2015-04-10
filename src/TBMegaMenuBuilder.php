@@ -198,7 +198,15 @@ class TBMegaMenuBuilder {
     return $block;
   }
 
-  public static function getCounter($key, $number_columns){
+  /**
+   * Get Id of column.
+   * 
+   * @global int $tb_elements_counter
+   * @param string $key
+   * @param int $number_columns
+   * @return string
+   */
+  public static function getIdColumn($key, $number_columns){
     global $tb_elements_counter;
     if (!$tb_elements_counter) {
       $tb_elements_counter = $number_columns;
