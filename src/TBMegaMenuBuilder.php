@@ -112,7 +112,8 @@ class TBMegaMenuBuilder {
       'duration' => 400,
       'delay' => 200,
       'always-show-menu' => 1,
-      'off-canvas' => 0
+      'off-canvas' => 0,
+      'number-columns' => 0,
     );
     foreach ($attributes as $attribute => $value) {
       if (!isset($block_config[$attribute])) {
@@ -183,13 +184,11 @@ class TBMegaMenuBuilder {
   /**
    * Create block which using tb_megamenu.
    * 
-   * @global array $tb_elements_counter
    * @param string $menu_name
+   * @param string $theme
    * @return array
    */
   public static function renderBlock($menu_name, $theme) {
-    global $tb_elements_counter;
-    $tb_elements_counter = array('column' => 0);
     $block = array(
       '#theme' => 'tb_megamenu',
       '#menu_name' => $menu_name,
@@ -199,15 +198,14 @@ class TBMegaMenuBuilder {
     return $block;
   }
 
-  public static function getCounter($key) {
-    $value = &drupal_static($key, 0);
-    $value++;
+  public static function getCounter($key, $number_columns){
     global $tb_elements_counter;
     if (!$tb_elements_counter) {
-      $tb_elements_counter = array();
+      $tb_elements_counter = $number_columns;
     }
-    $tb_elements_counter[$key] = $value;
-    return "tb-megamenu-$key-$value";
+    $tb_elements_counter--;
+    $id_column = $number_columns - $tb_elements_counter;
+    return "tb-megamenu-$key-$id_column";
   }
 
   /**
