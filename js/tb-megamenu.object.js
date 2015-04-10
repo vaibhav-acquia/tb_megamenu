@@ -529,6 +529,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     block_config['style'] = $('select[name="tb-megamenu-style"]').val();
     block_config['auto-arrow'] = $('#tb-megamenu-admin-mm-intro .toolitem-auto-arrow').attr('data-auto-arrow');
     block_config['always-show-submenu'] = $('#tb-megamenu-admin-mm-intro .toolitem-always-show-submenu').attr('data-always-show-submenu');
+    block_config['number-columns'] = drupalSettings.TBMegaMenu.TBElementsCounter['column'];
     $('#tb-megamenu-admin-mm-tb #toolbox-message').html("").hide();
     $('#tb-megamenu-admin-mm-tb #toolbox-loading').show();
     $.ajax({
