@@ -49,15 +49,15 @@ form.font-awesome:
 
 block_style.black:
   css:
-    component:
-      css/styles/black.css: { basename: black.css }
+    theme:
+      css/styles/black.css: { weight: 20 }
 
 block_style.blue:
   css:
-    component:
-      css/styles/blue.css: { basename: blue.css }
+    theme:
+      css/styles/blue.css: { weight: 20 }
 
 block_style.green:
   css:
-    component:
-      css/styles/green.css: { basename: green.css }
+    theme:
+      css/styles/green.css: { weight: 20 }
