@@ -27,7 +27,6 @@ class TBMegaMenuBlock extends BlockBase {
    * {@inheritdoc}
    */
   public function build() {
-    // It's used to test.
     return array(
       '#theme' => 'tb_megamenu',
       '#menu_name' => $this->getDerivativeId(),
