@@ -486,7 +486,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
             var sub_level = parseInt($(this).attr('data-level'));
             if (sub_level == level + 1) {
               var ele = {};
-              ele['mlid'] = $(this).attr('data-id');
+              ele['plugin_id'] = $(this).attr('data-id');
               ele['type'] = $(this).attr('data-type');
               ele['tb_item_config'] = {};
               col['col_content'].push(ele);

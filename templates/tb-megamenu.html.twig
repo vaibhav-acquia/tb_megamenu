@@ -1,3 +1,6 @@
+{% if css_style is defined %}
+  {{ css_style }}
+{% endif %}
 <div {{ attributes }}>
   {% if section == 'frontend' %}
     <button data-target=".nav-collapse" data-toggle="collapse" class="btn btn-navbar tb-megamenu-button" type="button">
