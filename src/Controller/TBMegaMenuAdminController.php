@@ -114,6 +114,9 @@ class TBMegaMenuAdminController extends ControllerBase {
           return new Response(json_encode(array('content' => $content, 'id' => $id)));
         }
         return new Response('');
+        
+      default:
+        break;
     }
     exit;
   }
