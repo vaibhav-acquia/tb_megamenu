@@ -80,7 +80,6 @@ function tb_megamenu_theme($existing, $type, $theme, $path) {
   );
   $items['tb_megamenu_block'] = array(
     'variables' => array(
-      'menu_name' => NULL,
       'block_id' => NULL,
       'section' => 'frontend',
       'showblocktitle' => 1,
@@ -125,6 +124,11 @@ function tb_megamenu_theme($existing, $type, $theme, $path) {
   return $items;
 }
 
+/**
+ * Prepare variables for tb_megamenu_row.
+ * 
+ * @param array $vars variables are declared in theme.
+ */
 function template_preprocess_tb_megamenu_row(&$vars) {
   $row = $vars['row'];
   $vars['columns'] = array();
@@ -148,6 +152,11 @@ function template_preprocess_tb_megamenu_row(&$vars) {
   $vars['attributes']['class'][] = 'row-fluid';
 }
 
+/**
+ * Prepare variables for tb_megamenu_column.
+ * 
+ * @param array $vars variables are declared in theme.
+ */
 function template_preprocess_tb_megamenu_column(&$vars) {
   $col = $vars['col']['col_content'];
   $col_config = $vars['col']['col_config'];
@@ -208,9 +217,9 @@ function template_preprocess_tb_megamenu_column(&$vars) {
 }
 
 /**
- * Template preprocess theme tb_megamenu_subnav.
+ * Prepare variables for tb_megamenu_subnav.
  * 
- * @param type $vars
+ * @param array $vars variables are declared in theme.
  */
 function template_preprocess_tb_megamenu_subnav(&$vars) {
   $col = $vars['col'];
@@ -239,9 +248,9 @@ function template_preprocess_tb_megamenu_subnav(&$vars) {
 }
 
 /**
- * Template preprocess theme tb_megamenu_submenu.
+ * Prepare variables for tb_megamenu_submenu.
  * 
- * @param type $vars
+ * @param array $vars variables are declared in theme.
  */
 function template_preprocess_tb_megamenu_submenu(&$vars) {
   $parent = $vars['parent'];
@@ -286,7 +295,9 @@ function template_preprocess_tb_megamenu_submenu(&$vars) {
 }
 
 /**
- * Template preprocess tb_megamenu.
+ * Prepare variables for tb_megamenu.
+ * 
+ * @param array $vars variables are declared in theme.
  */
 function template_preprocess_tb_megamenu(&$vars) {
   $menu_name = $vars['menu_name'];
@@ -314,7 +325,7 @@ function template_preprocess_tb_megamenu(&$vars) {
   $menu_config = TBMegaMenuBuilder::getMenuConfig($menu_name, $theme);
   $block_config = TBMegaMenuBuilder::getBlockConfig($menu_name, $theme);
   TBMegaMenuBuilder::editBlockConfig($block_config);
-  TBMegaMenuBuilder::syncConfigAll($menu_items, $menu_config, $vars['section']);
+  //TBMegaMenuBuilder::syncConfigAll($menu_items, $menu_config, $vars['section']);
   $vars['#attached']['drupalSettings']['TBMegaMenu']['TBElementsCounter'] = array('column' => $block_config['number-columns']);
   
   $vars['attributes'] = new Attribute();
@@ -361,9 +372,9 @@ function template_preprocess_tb_megamenu(&$vars) {
 }
 
 /**
- * Template preprocess tb_megamenu_backend theme.
+ * Prepare variables for tb_megamenu_backend.
  * 
- * @param array $vars
+ * @param array $vars variables are declared in theme.
  */
 function template_preprocess_tb_megamenu_backend(&$vars) {
   $menu_name = $vars['menu_name'];
@@ -390,9 +401,9 @@ function template_preprocess_tb_megamenu_backend(&$vars) {
 }
 
 /**
- * Temlate preprocess tb_megamenu_block theme.
+ * Prepare variables for tb_megamenu_block.
  * 
- * @param array $vars
+ * @param array $vars variables are declared in theme.
  */
 function template_preprocess_tb_megamenu_block(&$vars) {
   $entity_block = TBMegaMenuBuilder::loadEntityBlock($vars['block_id']);
@@ -411,7 +422,7 @@ function template_preprocess_tb_megamenu_block(&$vars) {
         '#base_plugin_id' => $plugin->getBaseId(),
         '#derivative_plugin_id' => $plugin->getDerivativeId(),
         'content' => $content,
-        '#id' => $plugin_configuration['#id'],
+        '#id' => $plugin_configuration['id'],
       );
     }
     elseif ($vars['section'] == 'backend') {
@@ -431,7 +442,9 @@ function template_preprocess_tb_megamenu_block(&$vars) {
 }
 
 /**
- * Template preprocess_tb_megamenu_nav theme.
+ * Prepare variables for tb_megamenu_nav.
+ * 
+ * @param array $vars variables are declared in theme.
  */
 function template_preprocess_tb_megamenu_nav(&$vars) {
   $items = $vars['items'];
@@ -462,7 +475,9 @@ function template_preprocess_tb_megamenu_nav(&$vars) {
 }
 
 /**
- * Template preprocess tb_megamenu_item theme.
+ * Prepare variables for tb_megamenu_item.
+ * 
+ * @param array $vars variables are declared in theme.
  */
 function template_preprocess_tb_megamenu_item(&$vars) { 
   $level = $vars['level'];
