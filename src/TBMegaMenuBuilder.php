@@ -92,7 +92,7 @@ class TBMegaMenuBuilder {
    */
   public static function getMenuConfig($menu_name, $theme) {
     $menu = self::getMenus($menu_name, $theme);
-    return $menu && isset($menu->menu_config) ? json_decode($menu->menu_config, true) : array();
+    return isset($menu->menu_config) ? json_decode($menu->menu_config, TRUE) : array();
   }
 
   /**
@@ -109,7 +109,7 @@ class TBMegaMenuBuilder {
       'delay' => 200,
       'always-show-menu' => 1,
       'off-canvas' => 0,
-      'number-columns' => 0,
+      //'number-columns' => 0,
     );
     foreach ($attributes as $attribute => $value) {
       if (!isset($block_config[$attribute])) {
@@ -185,13 +185,12 @@ class TBMegaMenuBuilder {
    * @return array
    */
   public static function renderBlock($menu_name, $theme) {
-    $block = array(
+    return array(
       '#theme' => 'tb_megamenu',
       '#menu_name' => $menu_name,
       '#block_theme' => $theme,
       '#section' => 'backend'
     );
-    return $block;
   }
 
   /**
@@ -199,17 +198,17 @@ class TBMegaMenuBuilder {
    * 
    * @global int $tb_elements_counter
    * @param string $key
-   * @param int $number_columns
    * @return string
    */
-  public static function getIdColumn($key, $number_columns){
+  public static function getIdColumn($key) {
+    $value = &drupal_static($key, 0);
+    $value++;
     global $tb_elements_counter;
     if (!$tb_elements_counter) {
-      $tb_elements_counter = $number_columns;
+      $tb_elements_counter = array();
     }
-    $tb_elements_counter--;
-    $id_column = $number_columns - $tb_elements_counter;
-    return "tb-megamenu-$key-$id_column";
+    $tb_elements_counter[$key] = $value;
+    return "tb-megamenu-$key-$value";
   }
 
   /**
@@ -291,7 +290,7 @@ class TBMegaMenuBuilder {
     $trail = array();
     foreach ($menu_items as $pluginId => $item) {
       if ($item->inActiveTrail ||
-         ($item->link->getPluginDefinition()['route_name'] == '<front>' && \Drupal::service('path.matcher')->isFrontPage())) {
+              ($item->link->getPluginDefinition()['route_name'] == '<front>' && \Drupal::service('path.matcher')->isFrontPage())) {
         $trail [$pluginId] = $item;
       }
 
@@ -331,7 +330,7 @@ class TBMegaMenuBuilder {
         'col_content' => array(),
         'col_config' => array()
       );
-      
+
       foreach ($items as $plugin_id => $item) {
         if ($item->link->isEnabled()) {
           $item_config['rows_content'][0][0]['col_content'][] = array(
@@ -352,7 +351,10 @@ class TBMegaMenuBuilder {
         foreach ($row as $j => $col) {
           foreach ($col['col_content'] as $k => $tb_item) {
             if ($tb_item['type'] == 'menu_item') {
-              $hash[$tb_item['plugin_id']] = array('row' => $i, 'col' => $j);
+              $hash[$tb_item['plugin_id']] = array(
+                'row' => $i,
+                'col' => $j
+              );
               $existed = false;
               foreach ($items as $plugin_id => $item) {
                 if ($item->link->isEnabled() && $tb_item['plugin_id'] == $plugin_id) {
@@ -371,15 +373,13 @@ class TBMegaMenuBuilder {
                 }
               }
             }
-            else {
-              if (!self::IsBlockContentEmpty($tb_item['plugin_id'], $section)) {
-                unset($item_config['rows_content'][$i][$j]['col_content'][$k]);
-                if (empty($item_config['rows_content'][$i][$j]['col_content'])) {
-                  unset($item_config['rows_content'][$i][$j]);
-                }
-                if (empty($item_config['rows_content'][$i])) {
-                  unset($item_config['rows_content'][$i]);
-                }
+            else if (!self::IsBlockContentEmpty($tb_item['block_id'], $section)) {
+              unset($item_config['rows_content'][$i][$j]['col_content'][$k]);
+              if (empty($item_config['rows_content'][$i][$j]['col_content'])) {
+                unset($item_config['rows_content'][$i][$j]);
+              }
+              if (empty($item_config['rows_content'][$i])) {
+                unset($item_config['rows_content'][$i]);
               }
             }
           }
@@ -399,9 +399,9 @@ class TBMegaMenuBuilder {
           }
           else {
             $row = $col = 0;
-            while (isset($item_config['rows_content'][$row][$col]['col_content'][0]['type']) && 
-                   $item_config['rows_content'][$row][$col]['col_content'][0]['type'] == 'block') {
-              
+            while (isset($item_config['rows_content'][$row][$col]['col_content'][0]['type']) &&
+            $item_config['rows_content'][$row][$col]['col_content'][0]['type'] == 'block') {
+
               $row++;
             }
             self::InsertTBMenuItem($item_config, $row, $col, $item);
@@ -411,21 +411,50 @@ class TBMegaMenuBuilder {
       }
     }
   }
-  
+
+  /**
+   * Sync order of menu items between menu and tb_megamenus.
+   * 
+   * @param array $menu_config
+   */
+  public static function syncOrderMenus(&$menu_config) {
+    foreach ($menu_config as $mlid => $config) {
+      foreach ($config['rows_content'] as $rows_id => $row) {
+        $item_sorted = array();
+        // Get weight from items.
+        foreach ($row as $col) {
+          foreach ($col['col_content'] as $menu_item) {
+            if ($menu_item['type'] == 'menu_item') {
+              $item_sorted[$menu_item['weight']] = $menu_item;
+            }
+          }
+        }
+        ksort($item_sorted); // Sort menu by weight.megamenu
+        foreach ($row as $rid => $col) {
+          foreach ($col['col_content'] as $menu_item_id => $menu_item) {
+            if ($menu_item['type'] == 'menu_item') {
+              $menu_config[$mlid]['rows_content'][$rows_id][$rid]['col_content'][$menu_item_id] = array_shift($item_sorted);
+            }
+          }
+        }
+      }
+    }
+  }
+
   /**
    * 
-   * @param type $plugin_id
+   * @param type $block_id
    * @param type $section
    * @return boolean
    */
-  public static function IsBlockContentEmpty($plugin_id, $section) {
-    $entity_block = self::loadEntityBlock($plugin_id);
+  public static function IsBlockContentEmpty($block_id, $section) {
+    $entity_block = self::loadEntityBlock($block_id);
     if ($entity_block && ($entity_block->getPlugin()->build() || $section == 'backend')) {
-      return true;
+      return TRUE;
     }
-    return false;
+    return FALSE;
   }
-  
+
   /**
    * 
    * @param array $item_config
@@ -449,4 +478,5 @@ class TBMegaMenuBuilder {
       'tb_item_config' => array(),
     );
   }
+
 }
