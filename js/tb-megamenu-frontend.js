@@ -26,7 +26,8 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
   };
   
   Drupal.behaviors.tbMegaMenuAction = {
-    attach: function(context) {
+    attach: function(context, settings) {
+      
       $('.tb-megamenu-button', context).once('menuIstance', function () {
         var This = this;
         $(This).click(function() {

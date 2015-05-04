@@ -360,7 +360,6 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     var $cols = currentSelected.parent().children('[class*="span"]');
     var colcount = $cols.length + 1;
     var colwidths = defaultColumnsWidth(colcount);
-
     var column = ++drupalSettings.TBMegaMenu.TBElementsCounter['column'];
     var $col = $('<div id=tb-megamenu-column-' + column + '><div class="mega-inner"></div></div>');
     if (actions.datas.addfirst) {
@@ -482,7 +481,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
           col_config['hidewcol'] = $(this).attr('data-hidewcol') ? $(this).attr('data-hidewcol') : "";
           col_config['showblocktitle'] = $(this).attr('data-showblocktitle') ? $(this).attr('data-showblocktitle') : "1";
           var col = {'col_content': [], 'col_config': col_config};
-          $(this).find('ul[class*="level"] > li:first').each(function() {
+          $(this).find('ul[class*="level"] > li').each(function() {
             var sub_level = parseInt($(this).attr('data-level'));
             if (sub_level == level + 1) {
               var ele = {};
