@@ -25,9 +25,9 @@ class TBMegaMenuAdminConfigureForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state, $menu_name = '') {
-    // Add library font-awesome.
+    // Add font-awesome library.
     $form['#attached']['library'][] = 'tb_megamenu/form.font-awesome';
-    // Add library chosen.
+    // Add chosen library.
     $form['#attached']['library'][] = 'tb_megamenu/form.chosen';
     // Add a custom library.
     $form['#attached']['library'][] = 'tb_megamenu/form.configure-megamenu';
