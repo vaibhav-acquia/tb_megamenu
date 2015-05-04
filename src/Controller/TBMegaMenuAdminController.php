@@ -75,29 +75,44 @@ class TBMegaMenuAdminController extends ControllerBase {
         $menu_name = isset($_POST['menu_name']) ? $_POST['menu_name'] : NULL;
         $theme = isset($_POST['theme']) ? $_POST['theme'] : NULL;
         if ($menu_config && $menu_name) {
+          $menu_tree_parameters = (new MenuTreeParameters)->onlyEnabledLinks();
+          $menu_items = \Drupal::menuTree()->load($menu_name, $menu_tree_parameters);
+          TBMegaMenuBuilder::syncConfigAll($menu_items, $menu_config, 'backend');
+          TBMegaMenuBuilder::syncOrderMenus($menu_config);
           $tb_megamenu = db_select('tb_megamenus', 't')
-                  ->fields('t')
-                  ->condition('menu_name', $menu_name)
-                  ->condition('theme', $theme)
-                  ->execute()
-                  ->fetchObject();
-          if ($tb_megamenu) {
+                ->fields('t')
+                ->condition('menu_name', $menu_name)
+                ->condition('theme', $theme)
+                ->execute()->fetchObject();
+          if($tb_megamenu) {
             db_update('tb_megamenus')
-                    ->fields(array('menu_config' => $menu_config, 'block_config' => $block_config))
-                    ->condition('menu_name', $menu_name)
-                    ->condition('theme', $theme)
-                    ->execute();
+              ->fields(array(
+                'menu_config' => json_encode($menu_config), 
+                'block_config' => json_encode($block_config), 
+              ))
+              ->condition('menu_name', $menu_name)
+              ->condition('theme', $theme)
+              ->execute();
           }
           else {
             db_insert('tb_megamenus')
               ->fields(array(
                 'menu_name' => $menu_name,
-                'theme' => $theme,
-                'block_config' => $block_config,
-                'menu_config' => $menu_config
+                'block_config' => json_encode($block_config),
+                'menu_config' => json_encode($menu_config),
+                'theme' => $theme
               ))->execute();
           }
+          
+//          db_merge('tb_megamenus')
+//            ->key(array('menu_name' => $menu_name, 'theme' => $theme))
+//            ->fields(array(
+//              'block_config' => $block_config,
+//              'menu_config' => $menu_config,
+//            ))
+//            ->execute();
         }
+        
         break;
       case 'load_block':
         $block_id = isset($_POST['block_id']) ? $_POST['block_id'] : NULL;
