@@ -582,37 +582,14 @@ function tb_megamenu_update_megamenus(&$form, FormStateInterface $form_state) {
       $block_config = TBMegaMenuBuilder::getBlockConfig($menu_name, $theme);
       TBMegaMenuBuilder::syncConfigAll($menu_items, $menu_config, 'backend');
       TBMegaMenuBuilder::syncOrderMenus($menu_config);
-      $tb_megamenu = db_select('tb_megamenus', 't')
-                ->fields('t')
-                ->condition('menu_name', $menu_name)
-                ->condition('theme', $theme)
-                ->execute()->fetchObject();
-      if($tb_megamenu) {
-        db_update('tb_megamenus')
-          ->fields(array(
-            'menu_config' => json_encode($menu_config), 
-            'block_config' => json_encode($block_config), 
-          ))
-          ->condition('menu_name', $menu_name)
-          ->condition('theme', $theme)
-          ->execute();
-      }
-      else {
-        db_insert('tb_megamenus')
-          ->fields(array(
-            'menu_name' => $menu_name,
-            'block_config' => json_encode($block_config),
-            'menu_config' => json_encode($menu_config),
-            'theme' => $theme
-          ))->execute();
-      }
-//      db_merge('tb_megamenus')
-//        ->key(array('menu_name' => $menu_name, 'theme' => $theme))
-//        ->fields(array(
-//          'block_config' => $block_config,
-//          'menu_config' => $menu_config,
-//        ))
-//        ->execute();
+      
+      $merge = db_merge('tb_megamenus');
+      $result = $merge->key(array('menu_name' => $menu_name, 'theme' => $theme))
+                ->fields(array(
+                  'block_config' => json_encode($block_config),
+                  'menu_config' => json_encode($menu_config),
+                ))
+                ->execute();
     }
   }
 }

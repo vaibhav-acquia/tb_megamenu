@@ -67,57 +67,35 @@ class TBMegaMenuAdminController extends ControllerBase {
    */
   public function saveConfiguration() {
     $action = isset($_POST['action']) ? $_POST['action'] : NULL;
+    $result = '';
     switch ($action) {
       case 'load':
         $block = TBMegaMenuBuilder::renderBlock($_POST['menu_name'], $_POST['theme']);
-        return new Response(drupal_render($block));
+        $result = drupal_render($block);
+        break;
+      
       case 'save':
         $menu_config = isset($_POST['menu_config']) ? $_POST['menu_config'] : NULL;
         $block_config = isset($_POST['block_config']) ? $_POST['block_config'] : NULL;
         $menu_name = isset($_POST['menu_name']) ? $_POST['menu_name'] : NULL;
         $theme = isset($_POST['theme']) ? $_POST['theme'] : NULL;
         if ($menu_config && $menu_name) {
+          // Sync mega menu before store.
           $menu_tree_parameters = (new MenuTreeParameters)->onlyEnabledLinks();
           $menu_items = \Drupal::menuTree()->load($menu_name, $menu_tree_parameters);
           TBMegaMenuBuilder::syncConfigAll($menu_items, $menu_config, 'backend');
           TBMegaMenuBuilder::syncOrderMenus($menu_config);
-          
-          $tb_megamenu = db_select('tb_megamenus', 't')
-                ->fields('t')
-                ->condition('menu_name', $menu_name)
-                ->condition('theme', $theme)
-                ->execute()->fetchObject();
-          
-          if($tb_megamenu) {
-            db_update('tb_megamenus')
-              ->fields(array(
-                'menu_config' => $menu_config, 
-                'block_config' => $block_config, 
-              ))
-              ->condition('menu_name', $menu_name)
-              ->condition('theme', $theme)
-              ->execute();
-          }
-          else {
-            db_insert('tb_megamenus')
-              ->fields(array(
-                'menu_name' => $menu_name,
-                'block_config' => $block_config,
-                'menu_config' => $menu_config,
-                'theme' => $theme
-              ))->execute();
-          }
-          
-//          db_merge('tb_megamenus')
-//            ->key(array('menu_name' => $menu_name, 'theme' => $theme))
-//            ->fields(array(
-//              'block_config' => $block_config,
-//              'menu_config' => $menu_config,
-//            ))
-//            ->execute();
+
+          $merge = db_merge('tb_megamenus');
+          $result = $merge->key(array('menu_name' => $menu_name, 'theme' => $theme))
+                ->fields(array(
+                  'block_config' => json_encode($block_config),
+                  'menu_config' => json_encode($menu_config),
+                ))
+                ->execute();
         }
-        
         break;
+        
       case 'load_block':
         $block_id = isset($_POST['block_id']) ? $_POST['block_id'] : NULL;
         $id = isset($_POST['id']) ? $_POST['id'] : NULL;
@@ -130,14 +108,15 @@ class TBMegaMenuAdminController extends ControllerBase {
             '#showblocktitle' => $showblocktitle
           );
           $content = drupal_render($argument);
-          return new Response(json_encode(array('content' => $content, 'id' => $id)));
+          $result = json_encode(array('content' => $content, 'id' => $id));
         }
-        return new Response('');
+        break;
         
       default:
         break;
     }
-    exit;
+    
+    return new Response($result);
   }
   
   /**
