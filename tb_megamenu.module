@@ -17,7 +17,7 @@ function tb_megamenu_theme($existing, $type, $theme, $path) {
       'menu_name' => NULL,
       'content' => NULL,
       'section' => 'frontend',
-      'block_theme' => \Drupal::config('system.theme')->get('default'),
+      'block_theme' => \Drupal::config('system.theme')->get('default')
     ),
   );
   $items['tb_megamenu_nav'] = array(
@@ -177,7 +177,7 @@ function template_preprocess_tb_megamenu_column(&$vars) {
         '#menu_config' => $vars['menu_config'],
         '#block_config' => $vars['block_config'],
         '#trail' => $vars['trail'],
-        '#section' => $vars['section'],
+        '#section' => $vars['section']
       );
       break;
     }
@@ -207,14 +207,12 @@ function template_preprocess_tb_megamenu_column(&$vars) {
   }
   if (!empty($col_config['hidewcol'])) {
     $vars['attributes']['class'][] = $col_config['class'];
-  }
-  if ($col_config['hidewcol']) {
     $vars['attributes']['class'][] = 'hidden-collapse';
   }
   $vars['attributes']['data-class'] = $col_config['class'];
   $vars['attributes']['data-width'] = $col_config['width'];
   $vars['attributes']['data-hidewcol'] = $col_config['hidewcol'];
-  $vars['attributes']['id'] = TBMegaMenuBuilder::getIdColumn("column");
+  $vars['attributes']['id'] = TBMegaMenuBuilder::getIdColumn($vars['block_config']['number-columns']);
 }
 
 /**
@@ -327,7 +325,6 @@ function template_preprocess_tb_megamenu(&$vars) {
   $block_config = TBMegaMenuBuilder::getBlockConfig($menu_name, $theme);
   TBMegaMenuBuilder::editBlockConfig($block_config);
   TBMegaMenuBuilder::syncConfigAll($menu_items, $menu_config, $vars['section']);
-  
   $vars['attributes'] = new Attribute();
   $vars['attributes']['class'] = array();
   $theme_name = str_replace('_', '-', $vars['theme_hook_original']);
@@ -352,7 +349,7 @@ function template_preprocess_tb_megamenu(&$vars) {
     '#block_config' => $block_config,
     '#items' => $menu_items,
     '#trail' => $trail,
-    '#section' => $vars['section'],
+    '#section' => $vars['section']
   );
   if ($vars['section'] == 'frontend' && $block_config['animation'] != 'none') {
     $css = '<style media="all">';
@@ -618,4 +615,16 @@ function tb_megamenu_update_megamenus(&$form, FormStateInterface $form_state) {
 //        ->execute();
     }
   }
+}
+
+/**
+ * Attach the number of columns into JS.
+ */
+function tb_megamenu_attach_number_columns($childrens, $elements) {
+  $number_columns = &drupal_static('column');
+  $render_array['#attached']['drupalSettings']['TBMegaMenu'] = array(
+    'TBElementsCounter' => array('column' => $number_columns)
+  );
+  drupal_render($render_array);
+  return $childrens;
 }
