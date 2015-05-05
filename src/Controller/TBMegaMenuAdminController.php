@@ -139,5 +139,27 @@ class TBMegaMenuAdminController extends ControllerBase {
     }
     exit;
   }
+  
+  /**
+   * This is a menu page. To edit Mega Menu.
+   */
+  public function configMegaMenu($menu_name) {
+    // Add font-awesome library.
+    $page['#attached']['library'][] = 'tb_megamenu/form.font-awesome';
+    // Add chosen library.
+    $page['#attached']['library'][] = 'tb_megamenu/form.chosen';
+    // Add a custom library.
+    $page['#attached']['library'][] = 'tb_megamenu/form.configure-megamenu';
+    
+    $abs_url_config = \Drupal::url('tb_megamenu.admin.save', array(), array('absolute' => TRUE));
+    $page['#attached']['drupalSettings']['TBMegaMenu']['saveConfigURL'] = $abs_url_config;
+    if (!empty($menu_name)) {
+      $page['tb_megamenu'] = array(
+        '#theme' => 'tb_megamenu_backend',
+        '#menu_name' => $menu_name,
+      );
+    }
+    return $page;
+  }
 
 }
