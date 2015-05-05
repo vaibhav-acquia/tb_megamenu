@@ -30,7 +30,8 @@ class TBMegaMenuBlock extends BlockBase {
     return array(
       '#theme' => 'tb_megamenu',
       '#menu_name' => $this->getDerivativeId(),
-      '#attached' => array('library' => array('tb_megamenu/theme.tb_megamenu'))
+      '#attached' => array('library' => array('tb_megamenu/theme.tb_megamenu')),
+      '#post_render' => array('tb_megamenu_attach_number_columns')
     );
   }
 }
