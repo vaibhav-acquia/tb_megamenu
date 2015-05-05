@@ -466,8 +466,8 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     var menu_config = {}, items = megamenu.find('ul[class*="level"] > li');
     items.each(function() {
       var $this = $(this),
-              id = $this.attr('data-id'),
-              rows = [];
+          id = $this.attr('data-id'),
+          rows = [];
       var level = parseInt($this.attr('data-level'));
       var $sub = $this.find('.nav-child:first');
       var $rows = $sub.find('[class*="row"]:first').parent().children('[class*="row"]');
@@ -538,8 +538,8 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
         'action': 'save', 
         'theme': drupalSettings.TBMegaMenu.theme,
         'menu_name': options['menu_name'], 
-        'menu_config': JSON.stringify(menu_config), 
-        'block_config': JSON.stringify(block_config)
+        'menu_config': menu_config, 
+        'block_config': block_config
       },
       complete: function(msg) {
         $('#tb-megamenu-admin-mm-tb #toolbox-loading').hide();
