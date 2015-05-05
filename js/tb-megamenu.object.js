@@ -2,7 +2,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
 
 (function($, Drupal, drupalSettings) {
   "use strict";
-
+  
   var currentSelected = null, megamenu, nav_items, nav_subs, nav_cols, nav_all;
   Drupal.TBMegaMenu.lockedAjax = false;
 
@@ -105,8 +105,8 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       return;
     }
     if (sub.length == 0 || sub.css('display') == 'none') {
-      if (sub.length == 0) {        
-        var column = ++drupalSettings.TBMegaMenu.TBElementsCounter['column'];
+      if (sub.length == 0) {
+        var column = ++drupalSettings.TBMegaMenu.TBElementsCounter.column;
         sub = $('<div class="tb-megamenu-submenu nav-child dropdown-menu mega-dropdown-menu"><div class="row-fluid"><div id=tb-megamenu-column-' + column + ' class="span12" data-width="12"><div class="mega-inner"></div></div></div></div>').appendTo(liitem);
         bindEvents(sub.find('[class*="span"]'));
         liitem.addClass('mega');
@@ -345,7 +345,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     if (!currentSelected) {
       return;
     }
-    var column = ++drupalSettings.TBMegaMenu.TBElementsCounter['column'];
+    var column = ++drupalSettings.TBMegaMenu.TBElementsCounter.column;
     var $row = $('<div class="row-fluid"><div id=tb-megamenu-column-' + column + ' class="span12"><div class="mega-inner"></div></div></div>').appendTo(currentSelected.find('[class*="row"]:first').parent()),
         $col = $row.children();
     bindEvents($col);
@@ -360,7 +360,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     var $cols = currentSelected.parent().children('[class*="span"]');
     var colcount = $cols.length + 1;
     var colwidths = defaultColumnsWidth(colcount);
-    var column = ++drupalSettings.TBMegaMenu.TBElementsCounter['column'];
+    var column = ++drupalSettings.TBMegaMenu.TBElementsCounter.column;
     var $col = $('<div id=tb-megamenu-column-' + column + '><div class="mega-inner"></div></div>');
     if (actions.datas.addfirst) {
       $col.prependTo(currentSelected.parent());
@@ -528,7 +528,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     block_config['style'] = $('select[name="tb-megamenu-style"]').val();
     block_config['auto-arrow'] = $('#tb-megamenu-admin-mm-intro .toolitem-auto-arrow').attr('data-auto-arrow');
     block_config['always-show-submenu'] = $('#tb-megamenu-admin-mm-intro .toolitem-always-show-submenu').attr('data-always-show-submenu');
-    block_config['number-columns'] = drupalSettings.TBMegaMenu.TBElementsCounter['column'];
+    block_config['number-columns'] = drupalSettings.TBMegaMenu.TBElementsCounter.column;
     $('#tb-megamenu-admin-mm-tb #toolbox-message').html("").hide();
     $('#tb-megamenu-admin-mm-tb #toolbox-loading').show();
     $.ajax({
@@ -536,7 +536,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       url: drupalSettings.TBMegaMenu.saveConfigURL,
       data: {
         'action': 'save', 
-        'theme': drupalSettings.TBMegaMenu.theme, 
+        'theme': drupalSettings.TBMegaMenu.theme,
         'menu_name': options['menu_name'], 
         'menu_config': JSON.stringify(menu_config), 
         'block_config': JSON.stringify(block_config)
