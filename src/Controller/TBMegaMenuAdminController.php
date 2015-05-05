@@ -9,8 +9,10 @@ namespace Drupal\tb_megamenu\Controller;
 
 use Drupal\Core\Url;
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Menu\MenuTreeParameters;
 use Drupal\tb_megamenu\TBMegaMenuBuilder;
 use Symfony\Component\HttpFoundation\Response;
+
 
 class TBMegaMenuAdminController extends ControllerBase {
 
@@ -79,16 +81,18 @@ class TBMegaMenuAdminController extends ControllerBase {
           $menu_items = \Drupal::menuTree()->load($menu_name, $menu_tree_parameters);
           TBMegaMenuBuilder::syncConfigAll($menu_items, $menu_config, 'backend');
           TBMegaMenuBuilder::syncOrderMenus($menu_config);
+          
           $tb_megamenu = db_select('tb_megamenus', 't')
                 ->fields('t')
                 ->condition('menu_name', $menu_name)
                 ->condition('theme', $theme)
                 ->execute()->fetchObject();
+          
           if($tb_megamenu) {
             db_update('tb_megamenus')
               ->fields(array(
-                'menu_config' => json_encode($menu_config), 
-                'block_config' => json_encode($block_config), 
+                'menu_config' => $menu_config, 
+                'block_config' => $block_config, 
               ))
               ->condition('menu_name', $menu_name)
               ->condition('theme', $theme)
@@ -98,8 +102,8 @@ class TBMegaMenuAdminController extends ControllerBase {
             db_insert('tb_megamenus')
               ->fields(array(
                 'menu_name' => $menu_name,
-                'block_config' => json_encode($block_config),
-                'menu_config' => json_encode($menu_config),
+                'block_config' => $block_config,
+                'menu_config' => $menu_config,
                 'theme' => $theme
               ))->execute();
           }
