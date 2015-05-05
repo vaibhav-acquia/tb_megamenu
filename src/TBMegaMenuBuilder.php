@@ -109,7 +109,7 @@ class TBMegaMenuBuilder {
       'delay' => 200,
       'always-show-menu' => 1,
       'off-canvas' => 0,
-      //'number-columns' => 0,
+      'number-columns' => 0,
     );
     foreach ($attributes as $attribute => $value) {
       if (!isset($block_config[$attribute])) {
@@ -189,32 +189,32 @@ class TBMegaMenuBuilder {
       '#theme' => 'tb_megamenu',
       '#menu_name' => $menu_name,
       '#block_theme' => $theme,
-      '#section' => 'backend'
+      '#section' => 'backend',
+      '#post_render' => array('tb_megamenu_attach_number_columns')
     );
   }
 
+  
   /**
    * Get Id of column.
-   * 
-   * @global int $tb_elements_counter
-   * @param string $key
+   *
+   * @param int $number_columns
    * @return string
    */
-  public static function getIdColumn($key) {
-    $value = &drupal_static($key, 0);
-    $value++;
-    global $tb_elements_counter;
-    if (!$tb_elements_counter) {
-      $tb_elements_counter = array();
+  public static function getIdColumn($number_columns) {
+    $value = &drupal_static('column');
+    if (!isset($value)) {
+      $value = 1;
+    } elseif (!$number_columns || $value < $number_columns) {
+      $value++;
     }
-    $tb_elements_counter[$key] = $value;
-    return "tb-megamenu-$key-$value";
+    return "tb-megamenu-column-$value";
   }
 
   /**
    * Get all of blocks in system without blocks which belong to TB Mega Menu.
    * 
-   * In array, each element includes key which is PluginId and value which is label of block. 
+   * In array, each element includes key which is plugin_id and value which is label of block. 
    * 
    * @staticvar array $_blocks_array
    * @return array
