@@ -5,7 +5,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
   
   Drupal.TBMegaMenu.createTouchMenu = function(items) {
       items.children('a').each( function() {
-	var $item = $(this);
+        var $item = $(this);
         var tbitem = $(this).parent();
         $item.click( function(event){
           if ($item.hasClass('tb-megamenu-clicked')) {
@@ -57,6 +57,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       window.event.cancelBubble = true;
     }
   };
+  
   Drupal.behaviors.tbMegaMenuTouchAction = {
     attach: function(context) {
       var isTouch = 'ontouchstart' in window && !(/hp-tablet/gi).test(navigator.appVersion);
