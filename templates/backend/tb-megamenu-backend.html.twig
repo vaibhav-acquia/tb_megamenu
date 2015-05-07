@@ -28,7 +28,7 @@
                 </div>
               </fieldset>
             </li>
-            <li id="tb-megamenu-delay-wrapper" style="display: {{ block_config['animation'] ? 'none' : 'inline-block' }};" title="{{ 'Delay time of the animation - this field must be an integer.'|t }}">
+            <li id="tb-megamenu-delay-wrapper" style="display: {{ block_config['animation'] == 'none' ? 'none' : 'inline-block' }};" title="{{ 'Delay time of the animation - this field must be an integer.'|t }}">
               <label class="hasTip">{{ 'Delay (ms)'|t }}</label>
               <fieldset class="btn-group">
                 <div class="controls tb-controls">
