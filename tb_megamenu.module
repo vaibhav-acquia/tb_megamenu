@@ -275,6 +275,9 @@ function template_preprocess_tb_megamenu_submenu(&$vars) {
   }
   $vars['attributes'] = new Attribute();
   $vars['attributes']['class'] = array();
+  $theme_name = str_replace('_', '-', $vars['theme_hook_original']);
+  $vars['attributes']['class'][] = $theme_name;
+  
   if ($submenu_config['class'] != "") {
     $vars['attributes']['class'][] = $submenu_config['class'];
   }
