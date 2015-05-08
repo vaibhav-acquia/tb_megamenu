@@ -289,9 +289,10 @@ class TBMegaMenuBuilder {
   public static function buildPageTrail($menu_items) {
     $trail = array();
     foreach ($menu_items as $pluginId => $item) {
-      if ($item->inActiveTrail ||
-              ($item->link->getPluginDefinition()['route_name'] == '<front>' && \Drupal::service('path.matcher')->isFrontPage())) {
-        $trail [$pluginId] = $item;
+      $is_front = \Drupal::service('path.matcher')->isFrontPage();
+      $route_name = $item->link->getPluginDefinition()['route_name'];
+      if ($item->inActiveTrail || ($route_name == '<front>' && $is_front)) {
+        $trail[$pluginId] = $item;
       }
 
       if ($item->subtree) {

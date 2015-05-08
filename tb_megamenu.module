@@ -305,14 +305,10 @@ function template_preprocess_tb_megamenu(&$vars) {
   $menu_name = $vars['menu_name'];
   $theme = $vars['block_theme'];
   $vars['#attached']['drupalSettings']['TBMegaMenu']['theme'] = $theme;
-//  if ($vars['section'] == 'backend') {
-//    //$items = tb_megamenu_get_tree($menu_name);
-//    $menu_items = \Drupal::menuTree()->load($menu_name, (new Menu\MenuTreeParameters)->onlyEnabledLinks());
-//  }
-//  else {
-//    $menu_items = \Drupal::menuTree()->load($menu_name, (new Menu\MenuTreeParameters)->onlyEnabledLinks());
-//  }
-  $menu_items = \Drupal::menuTree()->load($menu_name, (new MenuTreeParameters)->onlyEnabledLinks());
+  $menu_tree = \Drupal::menuTree();
+  $menu_active_trail = \Drupal::service('menu.active_trail')->getActiveTrailIds($menu_name);
+  $parameters = (new MenuTreeParameters)->setActiveTrail($menu_active_trail)->onlyEnabledLinks();
+  $menu_items = $menu_tree->load($menu_name, $parameters); 
   /**
    * This function is old, we need to solve this later.
    * if (function_exists('i18n_menu_localize_tree')) {
@@ -597,14 +593,12 @@ function tb_megamenu_update_megamenus(&$form, FormStateInterface $form_state) {
 }
 
 /**
- * Implements hook_block_view_alter().
+ * Implements hook_block_view_BASE_BLOCK_ID_alter().
  */
-function tb_megamenu_block_view_alter(array &$build, \Drupal\Core\Block\BlockPluginInterface $block) {
-  if ($build['#configuration']['provider'] == 'tb_megamenu') {
-    $build['#contextual_links']['tb_megamenu']['route_parameters'] = array(
-      'menu_name' => $build['#derivative_plugin_id']
-    );
-  }
+function tb_megamenu_block_view_tb_megamenu_menu_block_alter(array &$build, \Drupal\Core\Block\BlockPluginInterface $block) {
+  $build['#contextual_links']['tb_megamenu']['route_parameters'] = array(
+    'menu_name' => $build['#derivative_plugin_id']
+  );
 }
 
 /**
