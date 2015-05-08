@@ -1,5 +1,3 @@
-tb_megamenu.admin:
-  title: 'TB Mega Menu'
-  description: 'List of megamenu items'
-  parent: system.admin_structure
-  route_name: tb_megamenu.admin
+tb_megamenu_configure:
+  title: 'Configure TB Megamenu'
+  route_name: tb_megamenu.admin.configure
