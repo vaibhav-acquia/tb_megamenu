@@ -64,20 +64,20 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
               $this.addClass('open');
             }, 100));
           },
-                  function (event) {
-                    var $this = $(this);
-                    if ($this.hasClass('mega')) {
-                      $this.addClass('animating');
-                      clearTimeout($this.data('animatingTimeout'));
-                      $this.data('animatingTimeout', setTimeout(function () {
-                        $this.removeClass('animating');
-                      }, mm_timeout));
-                    }
-                    clearTimeout($this.data('hoverTimeout'));
-                    $this.data('hoverTimeout', setTimeout(function () {
-                      $this.removeClass('open');
-                    }, 100));
-                  });
+            function (event) {
+              var $this = $(this);
+              if ($this.hasClass('mega')) {
+                $this.addClass('animating');
+                clearTimeout($this.data('animatingTimeout'));
+                $this.data('animatingTimeout', setTimeout(function () {
+                  $this.removeClass('animating');
+                }, mm_timeout));
+              }
+              clearTimeout($this.data('hoverTimeout'));
+              $this.data('hoverTimeout', setTimeout(function () {
+                $this.removeClass('open');
+              }, 100));
+            });
         });
       }
 

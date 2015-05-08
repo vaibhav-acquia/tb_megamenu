@@ -128,7 +128,7 @@
 
 /* Toolbox Actions ---- */
 .tb-megamenu-admin-mm-row .toolbox-actions-group {
-  bottom: 9px;
+  bottom: 28px;
   position: absolute;
   right: 20px;
 }
@@ -174,9 +174,10 @@
 
 /* Toolbar ---*/
 #tb-megamenu-admin fieldset {
-	padding: 0;
-	margin: 0;
-	border: 0;
+  background: none;
+  padding: 0;
+  margin: 0;
+  border: 0;
 }
 
 #tb-megamenu-admin-toolbar .btn-group {
@@ -350,8 +351,8 @@
   border: 1px solid #ccc;
   box-shadow: 0 0 3px #ffffff inset, 0 1px 1px rgba(0,0,0,0.1);
   font-size: 13px;
-  height: 30px;
-  line-height: 21px;
+/*  height: 30px;
+  line-height: 21px;*/
   padding: 4px 0 4px 8px;
   color: #555;
 }
