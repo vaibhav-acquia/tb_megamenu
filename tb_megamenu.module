@@ -591,9 +591,19 @@ function tb_megamenu_update_megamenus(&$form, FormStateInterface $form_state) {
                 ->fields(array(
                   'block_config' => json_encode($block_config),
                   'menu_config' => json_encode($menu_config),
-                ))
-                ->execute();
+                ))->execute();
     }
+  }
+}
+
+/**
+ * Implements hook_block_view_alter().
+ */
+function tb_megamenu_block_view_alter(array &$build, \Drupal\Core\Block\BlockPluginInterface $block) {
+  if ($build['#configuration']['provider'] == 'tb_megamenu') {
+    $build['#contextual_links']['tb_megamenu']['route_parameters'] = array(
+      'menu_name' => $build['#derivative_plugin_id']
+    );
   }
 }
 
