@@ -543,7 +543,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       },
       complete: function(msg) {
         $('#tb-megamenu-admin-mm-tb #toolbox-loading').hide();
-        var $div = $('<div id="console" class="clearfix"><div class="messages status"><h2 class="element-invisible">Status message</h2>' + Drupal.t("Saved config sucessfully!") + '</div></div>');
+        var $div = $('<div class="messages messages--status" role="contentinfo" aria-label="Status message"><h2 class="visually-hidden">Status message</h2>' + Drupal.t("Saved config sucessfully!") + '</div>');
         $('#tb-megamenu-admin-mm-tb #toolbox-message').html($div).show();
         window.setTimeout(function() {
           $('#tb-megamenu-admin-mm-tb #toolbox-message').html("").hide();
