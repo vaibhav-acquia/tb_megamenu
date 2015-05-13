@@ -13,6 +13,7 @@ form.configure-megamenu:
     - core/jquery
     - core/drupal
     - core/drupalSettings
+    - core/jquery.once
 
 theme.tb_megamenu:
   version: 1.x
@@ -30,6 +31,7 @@ theme.tb_megamenu:
     - core/jquery
     - core/drupal
     - core/drupalSettings
+    - core/jquery.once
 
 form.chosen:
   version: 1.1.0
