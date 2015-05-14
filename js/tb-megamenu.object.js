@@ -615,9 +615,11 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
         var liitem = currentSelected.closest('li'),
             liparent = liitem.parent().closest('li'),
             sub = liitem.find('.nav-child:first');
-        $('.toolitem-exclass').attr('value', liitem.attr('data-class') || '');
-        $('.toolitem-xicon').attr('value', liitem.attr('data-xicon') || '');
-        $('.toolitem-caption').attr('value', liitem.attr('data-caption') || '');
+        
+        $('.toolitem-exclass').val(liitem.attr('data-class'));
+        $('.toolitem-xicon').val(liitem.attr('data-xicon'));
+        $('.toolitem-caption').val(liitem.attr('data-caption'));
+        
         var toggle = $('.toolitem-sub');
         toggle.find('label').removeClass('active btn-success btn-danger btn-primary');
         if (parseInt(liitem.attr('data-group'))) {
