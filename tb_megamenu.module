@@ -596,8 +596,11 @@ function tb_megamenu_update_megamenus(&$form, FormStateInterface $form_state) {
  * Implements hook_block_view_BASE_BLOCK_ID_alter().
  */
 function tb_megamenu_block_view_tb_megamenu_menu_block_alter(array &$build, \Drupal\Core\Block\BlockPluginInterface $block) {
-  $build['#contextual_links']['tb_megamenu']['route_parameters'] = array(
+  $build['#contextual_links']['tb_megamenu_block']['route_parameters'] = array(
     'menu_name' => $build['#derivative_plugin_id']
+  );
+  $build['#contextual_links']['menu']['route_parameters'] = array(
+    'menu' => $build['#derivative_plugin_id']
   );
 }
 
@@ -606,6 +609,7 @@ function tb_megamenu_block_view_tb_megamenu_menu_block_alter(array &$build, \Dru
  */
 function tb_megamenu_attach_number_columns($childrens, $elements) {
   $number_columns = &drupal_static('column');
+  $render_array = array();
   $render_array['#attached']['drupalSettings']['TBMegaMenu'] = array(
     'TBElementsCounter' => array('column' => $number_columns)
   );
