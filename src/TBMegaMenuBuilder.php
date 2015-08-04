@@ -21,7 +21,7 @@ class TBMegaMenuBuilder {
    */
   public static function getBlockConfig($menu_name, $theme) {
     $menu = self::getMenus($menu_name, $theme);
-    return $menu && isset($menu->block_config) ? json_decode($menu->block_config, true) : array();
+    return isset($menu->block_config) ? json_decode($menu->block_config, true) : array();
   }
 
   /**
@@ -33,15 +33,12 @@ class TBMegaMenuBuilder {
    * @return array
    */
   public static function getMenus($menu_name, $theme) {
-    $query = db_select('menu_link_content_data', 'm');
+    $query = db_select('menu_tree', 'm');
     $query->leftJoin('tb_megamenus', 't', 't.menu_name = m.menu_name');
-    $query->fields('m');
-    $query->addField('t', 'menu_config');
-    $query->addField('t', 'block_config');
-    $query->condition('t.theme', $theme);
-    $query->condition('m.menu_name', $menu_name);
-    $query->condition('m.langcode', \Drupal::languageManager()->getCurrentLanguage()->getId());
-    return $query->execute()->fetchObject();
+    return $query->fields('t', array('menu_config', 'block_config'))
+            ->condition('t.theme', $theme)
+            ->condition('m.menu_name', $menu_name)
+            ->execute()->fetchObject();
   }
 
   public static function getMenuItem($menu_name, $plugin_id) {
@@ -101,21 +98,16 @@ class TBMegaMenuBuilder {
    * @param array $block_config
    */
   public static function editBlockConfig(&$block_config) {
-    $attributes = array(
+    $block_config += array(
       'animation' => 'none',
       'style' => '',
       'auto-arrow' => TRUE,
       'duration' => 400,
       'delay' => 200,
-      'always-show-menu' => 1,
+      'always-show-submenu' => TRUE,
       'off-canvas' => 0,
-      'number-columns' => 0,
+      'number-columns' => 0
     );
-    foreach ($attributes as $attribute => $value) {
-      if (!isset($block_config[$attribute])) {
-        $block_config[$attribute] = $value;
-      }
-    }
   }
 
   /**
@@ -124,16 +116,11 @@ class TBMegaMenuBuilder {
    * @param type $submenu_config
    */
   public static function editSubMenuConfig(&$submenu_config) {
-    $attributes = array(
+    $submenu_config += array(
       'width' => '',
       'class' => '',
       'group' => '',
     );
-    foreach ($attributes as $attribute => $value) {
-      if (!isset($submenu_config[$attribute])) {
-        $submenu_config[$attribute] = $value;
-      }
-    }
   }
 
   /**
@@ -194,7 +181,6 @@ class TBMegaMenuBuilder {
     );
   }
 
-  
   /**
    * Get Id of column.
    *
@@ -205,7 +191,8 @@ class TBMegaMenuBuilder {
     $value = &drupal_static('column');
     if (!isset($value)) {
       $value = 1;
-    } elseif (!$number_columns || $value < $number_columns) {
+    }
+    elseif (!$number_columns || $value < $number_columns) {
       $value++;
     }
     return "tb-megamenu-column-$value";
@@ -213,7 +200,6 @@ class TBMegaMenuBuilder {
 
   /**
    * Get all of blocks in system without blocks which belong to TB Mega Menu.
-   * 
    * In array, each element includes key which is plugin_id and value which is label of block. 
    * 
    * @staticvar array $_blocks_array
@@ -222,10 +208,15 @@ class TBMegaMenuBuilder {
   public static function getAllBlocks() {
     static $_blocks_array = array();
     if (empty($_blocks_array)) {
-      // Get blocks which belong to the default theme.
-      $blocks = _block_rehash();
-      $_blocks_array = array();
-      foreach ($blocks as $block_id => $block) {
+      // Get default theme for user.
+      $theme_default = \Drupal::config('system.theme')->get('default');
+      // Get storage handler of block.
+      $block_storage = \Drupal::entityManager()->getStorage('block');
+      // Get the enabled block in the default theme.
+      $entity_ids = $block_storage->getQuery()->condition('theme', $theme_default)->execute();
+      $entities = $block_storage->loadMultiple($entity_ids);
+      $_blocks_array = [];
+      foreach ($entities as $block_id => $block) {
         if ($block->get('settings')['provider'] != 'tb_megamenu') {
           $_blocks_array[$block_id] = $block->label();
         }
@@ -242,23 +233,13 @@ class TBMegaMenuBuilder {
    * @return array
    */
   public static function createAnimationOptions($block_config) {
-    $animations = array(
+    return array(
       'none' => t('None'),
       'fading' => t('Fading'),
       'slide' => t('Slide'),
       'zoom' => t('Zoom'),
       'elastic' => t('Elastic')
     );
-    $options = array();
-    foreach ($animations as $value => $title) {
-      if ($value == $block_config['animation']) {
-        $options[] = '<option value="' . $value . '" selected="selected">' . $title . '</option>';
-      }
-      else {
-        $options[] = '<option value="' . $value . '">' . $title . '</option>';
-      }
-    }
-    return array('#markup' => implode("\n", $options));
   }
 
   /**
@@ -268,22 +249,12 @@ class TBMegaMenuBuilder {
    * @return array
    */
   public static function createStyleOptions($block_config) {
-    $styles = array(
+    return array(
       '' => t('Default'),
       'black' => t('Black'),
       'blue' => t('Blue'),
       'green' => t('Green'),
     );
-    $options = array();
-    foreach ($styles as $value => $title) {
-      if ($value == $block_config['style']) {
-        $options[] = '<option value="' . $value . '" selected="selected">' . $title . '</option>';
-      }
-      else {
-        $options[] = '<option value="' . $value . '">' . $title . '</option>';
-      }
-    }
-    return array('#markup' => implode("\n", $options));
   }
 
   public static function buildPageTrail($menu_items) {
