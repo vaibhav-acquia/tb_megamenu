@@ -80,19 +80,20 @@ class TBMegaMenuAdminController extends ControllerBase {
         $menu_name = isset($_POST['menu_name']) ? $_POST['menu_name'] : NULL;
         $theme = isset($_POST['theme']) ? $_POST['theme'] : NULL;
         if ($menu_config && $menu_name) {
-          // Sync mega menu before store.
+          // This is parameter to load menu_tree with the enabled links.
           $menu_tree_parameters = (new MenuTreeParameters)->onlyEnabledLinks();
+          // Load menu items with condition.
           $menu_items = \Drupal::menuTree()->load($menu_name, $menu_tree_parameters);
+          // Sync mega menu before store.
           TBMegaMenuBuilder::syncConfigAll($menu_items, $menu_config, 'backend');
           TBMegaMenuBuilder::syncOrderMenus($menu_config);
-
+          
           $merge = db_merge('tb_megamenus');
           $result = $merge->key(array('menu_name' => $menu_name, 'theme' => $theme))
-                ->fields(array(
-                  'block_config' => json_encode($block_config),
-                  'menu_config' => json_encode($menu_config),
-                ))
-                ->execute();
+                          ->fields(array(
+                            'block_config' => json_encode($block_config),
+                            'menu_config' => json_encode($menu_config),
+                          ))->execute();
         }
         break;
         
