@@ -13,7 +13,9 @@
               <fieldset class="btn-group">
                 <div class="controls tb-controls">
                   <select name="tb-megamenu-style">
-                    {{ style_options }}
+                    {% for value, title in style_options %}
+                      <option value='{{ value }}' {{ block_config['style'] == value ? 'selected' : '' }}>{{ title }}</option>
+                    {% endfor %}
                   </select>
                 </div>
               </fieldset>
@@ -23,7 +25,9 @@
               <fieldset class="btn-group">
                 <div class="controls tb-controls">
                   <select name="tb-megamenu-animation">
-                    {{ animation_options }}
+                    {% for value, title in animation_options %}
+                      <option value='{{ value }}' {{ block_config['animation'] == value ? 'selected' : '' }}>{{ title }}</option>
+                    {% endfor %}
                   </select>
                 </div>
               </fieldset>
@@ -57,9 +61,9 @@
               <label class="hasTip" title="{{ 'Show or collapse submenus when browsing on small screens'|t }}">{{ 'Always show submenu'|t }}</label>
               <fieldset class="radio btn-group toolitem-always-show-submenu" data-always-show-submenu="{{ block_config['always-show-submenu'] }}">
                 <input type="radio" {{ block_config['always-show-submenu'] ? '' : 'checked="checked"' }} value="0" name="tb-megamenu-always-show-submenu" data-action="toggleAlwayShowSubmenu" class="toolbox-toggle" id="toggleAlwayShowSubmenu0">
-                <label for="toggleAlwayShowSubmenu0" class="btn {{ block_config['always-show-submenu'] ? '' : 'active btn-danger' }}" title="{{ 'Collapse submenus when browsing on small screens'|t }}">No</label>
+                <label for="toggleAlwayShowSubmenu0" class="btn {{ block_config['always-show-submenu'] ? '' : 'active btn-danger' }}" title="{{ 'Collapse submenus when browsing on small screens.'|t }}">{{ 'No'|t }}</label>
                 <input type="radio" {{ block_config['always-show-submenu'] ? 'checked="checked"' : '' }} value="1" name="tb-megamenu-always-show-submenu" data-action="toggleAlwayShowSubmenu" class="toolbox-toggle" id="toggleAlwayShowSubmenu1">
-                <label for="toggleAlwayShowSubmenu1" class="btn {{ block_config['always-show-submenu'] ? 'active btn-success' : '' }}" title="{{ 'Show submenus when browsing on small screens'|t }}">Yes</label>
+                <label for="toggleAlwayShowSubmenu1" class="btn {{ block_config['always-show-submenu'] ? 'active btn-success' : '' }}" title="{{ 'Show submenus when browsing on small screens.'|t }}">{{ 'Yes'|t }}</label>
               </fieldset>
             </li>
           </ul>
@@ -68,7 +72,6 @@
         {{ submenu_toolbox }}
         {{ column_toolbox }}
       </div>
-      
       <div class="toolbox-actions-group">
         <button class="btn btn-success toolbox-action toolbox-saveConfig" data-action="saveConfig"><i class="fa fa-save"></i> {{ 'Save'|t }}</button>
         <button class="btn btn-danger toolbox-action toolbox-resetConfig" data-action="resetConfig"><i class="fa fa-undo"></i> {{ 'Reset'|t }}</button>
