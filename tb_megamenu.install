@@ -12,12 +12,12 @@ function tb_megamenu_schema() {
     'fields' => array(
       'menu_name' => array(
         'type' => 'varchar',
-        'length' => 255,
+        'length' => 150,
         'not null' => TRUE,
       ),
       'theme' => array(
         'type' => 'varchar',
-        'length' => 255,
+        'length' => 100,
         'not null' => TRUE,
       ),
       'block_config' => array(
