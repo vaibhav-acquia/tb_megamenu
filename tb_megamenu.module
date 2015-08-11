@@ -126,7 +126,7 @@ function tb_megamenu_theme($existing, $type, $theme, $path) {
 
 /**
  * Prepare variables for tb_megamenu_row.
- * 
+ *
  * @param array $vars variables are declared in theme.
  */
 function template_preprocess_tb_megamenu_row(&$vars) {
@@ -154,13 +154,13 @@ function template_preprocess_tb_megamenu_row(&$vars) {
 
 /**
  * Prepare variables for tb_megamenu_column.
- * 
+ *
  * @param array $vars variables are declared in theme.
  */
 function template_preprocess_tb_megamenu_column(&$vars) {
   $col = $vars['col']['col_content'];
   $col_config = $vars['col']['col_config'];
-  
+
   TBMegaMenuBuilder::editColumnConfig($col_config);
   $vars['col_config'] = $col_config;
   $vars['close_button'] = FALSE;
@@ -217,7 +217,7 @@ function template_preprocess_tb_megamenu_column(&$vars) {
 
 /**
  * Prepare variables for tb_megamenu_subnav.
- * 
+ *
  * @param array $vars variables are declared in theme.
  */
 function template_preprocess_tb_megamenu_subnav(&$vars) {
@@ -248,7 +248,7 @@ function template_preprocess_tb_megamenu_subnav(&$vars) {
 
 /**
  * Prepare variables for tb_megamenu_submenu.
- * 
+ *
  * @param array $vars variables are declared in theme.
  */
 function template_preprocess_tb_megamenu_submenu(&$vars) {
@@ -277,7 +277,7 @@ function template_preprocess_tb_megamenu_submenu(&$vars) {
   $vars['attributes']['class'] = array();
   $theme_name = str_replace('_', '-', $vars['theme_hook_original']);
   $vars['attributes']['class'][] = $theme_name;
-  
+
   if ($submenu_config['class'] != "") {
     $vars['attributes']['class'][] = $submenu_config['class'];
   }
@@ -298,7 +298,7 @@ function template_preprocess_tb_megamenu_submenu(&$vars) {
 
 /**
  * Prepare variables for tb_megamenu.
- * 
+ *
  * @param array $vars variables are declared in theme.
  */
 function template_preprocess_tb_megamenu(&$vars) {
@@ -308,7 +308,7 @@ function template_preprocess_tb_megamenu(&$vars) {
   $menu_tree = \Drupal::menuTree();
   $menu_active_trail = \Drupal::service('menu.active_trail')->getActiveTrailIds($menu_name);
   $parameters = (new MenuTreeParameters)->setActiveTrail($menu_active_trail)->onlyEnabledLinks();
-  $menu_items = $menu_tree->load($menu_name, $parameters); 
+  $menu_items = $menu_tree->load($menu_name, $parameters);
   /**
    * This function is old, we need to solve this later.
    * if (function_exists('i18n_menu_localize_tree')) {
@@ -350,9 +350,7 @@ function template_preprocess_tb_megamenu(&$vars) {
     '#trail' => $trail,
     '#section' => $vars['section']
   );
-  if ($vars['section'] == 'frontend' && $block_config['animation'] != 'none') {
-    $css = '<style media="all">';
-    $css .= '.tb-megamenu.animate .mega > .mega-dropdown-menu, .tb-megamenu.animate.slide .mega > .mega-dropdown-menu > div {';
+  if ($vars['section'] == 'frontend' && $block_config['animation'] != 'none') {    
     $css .= '  transition-delay: ' . $block_config['delay'] . 'ms;';
     $css .= '  -webkit-transition-delay: ' . $block_config['delay'] . 'ms;';
     $css .= '  -ms-transition-delay: ' . $block_config['delay'] . 'ms;';
@@ -361,15 +359,13 @@ function template_preprocess_tb_megamenu(&$vars) {
     $css .= '  -webkit-transition-duration: ' . $block_config['duration'] . 'ms;';
     $css .= '  -ms-transition-duration: ' . $block_config['duration'] . 'ms;';
     $css .= '  -o-transition-duration: ' . $block_config['duration'] . 'ms;';
-    $css .= '}';
-    $css .= '</style>';
-    $vars['css_style'] = array('#markup' => $css);
+    $vars['css_style'] = $css;
   }
 }
 
 /**
  * Prepare variables for tb_megamenu_backend.
- * 
+ *
  * @param array $vars variables are declared in theme.
  */
 function template_preprocess_tb_megamenu_backend(&$vars) {
@@ -389,13 +385,13 @@ function template_preprocess_tb_megamenu_backend(&$vars) {
   $vars['style_options'] = TBMegaMenuBuilder::createStyleOptions($block_config);
   $vars['edit_links'] = \Drupal::url('entity.menu.edit_form', array('menu' => $menu_name));
 
-  // Attach this to init TB Mega Menu (Importance). 
+  // Attach this to init TB Mega Menu (Importance).
   $vars['#attached']['drupalSettings']['TBMegaMenu']['menu_name'] = $menu_name;
 }
 
 /**
  * Prepare variables for tb_megamenu_block.
- * 
+ *
  * @param array $vars variables are declared in theme.
  */
 function template_preprocess_tb_megamenu_block(&$vars) {
@@ -436,7 +432,7 @@ function template_preprocess_tb_megamenu_block(&$vars) {
 
 /**
  * Prepare variables for tb_megamenu_nav.
- * 
+ *
  * @param array $vars variables are declared in theme.
  */
 function template_preprocess_tb_megamenu_nav(&$vars) {
@@ -457,7 +453,7 @@ function template_preprocess_tb_megamenu_nav(&$vars) {
       );
     }
   }
-  
+
   $vars['attributes'] = new Attribute();
   $vars['attributes']['class'] = array();
   $theme_name = str_replace('_', '-', $vars['theme_hook_original']);
@@ -469,10 +465,10 @@ function template_preprocess_tb_megamenu_nav(&$vars) {
 
 /**
  * Prepare variables for tb_megamenu_item.
- * 
+ *
  * @param array $vars variables are declared in theme.
  */
-function template_preprocess_tb_megamenu_item(&$vars) { 
+function template_preprocess_tb_megamenu_item(&$vars) {
   $level = $vars['level'];
   $item = $vars['item'];
   $vars['link'] = $item->link->getPluginDefinition();
@@ -485,7 +481,7 @@ function template_preprocess_tb_megamenu_item(&$vars) {
   $vars['item_config'] = $item_config;
   if (!empty($menu_config[$plugin_id]['rows_content']) &&
       ($vars['section'] == 'backend' || !$item_config['hidesub'])) {
-    
+
     $vars['submenu'] = array(
       '#theme' => 'tb_megamenu_submenu',
       '#menu_name' => $vars['menu_name'],
@@ -581,7 +577,7 @@ function tb_megamenu_update_megamenus(&$form, FormStateInterface $form_state) {
       $block_config = TBMegaMenuBuilder::getBlockConfig($menu_name, $theme);
       TBMegaMenuBuilder::syncConfigAll($menu_items, $menu_config, 'backend');
       TBMegaMenuBuilder::syncOrderMenus($menu_config);
-      
+
       $merge = db_merge('tb_megamenus');
       $result = $merge->key(array('menu_name' => $menu_name, 'theme' => $theme))
                 ->fields(array(
