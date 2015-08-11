@@ -52,16 +52,15 @@ class TBMegaMenuAdminController extends ControllerBase {
       'menu-operations' => t('Operations')
     );
 
-    $table = array(
+    return array(
       '#theme' => 'table',
       '#header' => $header,
       '#rows' => $rows,
       '#empty' => t('No MegaMenu block available. <a href="@link">Add Menu</a>.', array('@link' => \Drupal::url('entity.menu.add_form'))),
       '#attributes' => array('id' => 'tb_megamenu'),
     );
-    return $table;
   }
-  
+
   /**
    * This is menu callback. Save configuration of TB Mega Menu.
    */
@@ -70,10 +69,12 @@ class TBMegaMenuAdminController extends ControllerBase {
     $result = '';
     switch ($action) {
       case 'load':
-        $block = TBMegaMenuBuilder::renderBlock($_POST['menu_name'], $_POST['theme']);
-        $result = drupal_render($block);
+        $renderable_array = TBMegaMenuBuilder::renderBlock($_POST['menu_name'], $_POST['theme']);
+        $result = \Drupal::service('renderer')
+          ->render($renderable_array)
+          ->__toString();
         break;
-      
+
       case 'save':
         $menu_config = isset($_POST['menu_config']) ? $_POST['menu_config'] : NULL;
         $block_config = isset($_POST['block_config']) ? $_POST['block_config'] : NULL;
@@ -87,39 +88,42 @@ class TBMegaMenuAdminController extends ControllerBase {
           // Sync mega menu before store.
           TBMegaMenuBuilder::syncConfigAll($menu_items, $menu_config, 'backend');
           TBMegaMenuBuilder::syncOrderMenus($menu_config);
-          
-          $merge = db_merge('tb_megamenus');
-          $result = $merge->key(array('menu_name' => $menu_name, 'theme' => $theme))
-                          ->fields(array(
-                            'block_config' => json_encode($block_config),
-                            'menu_config' => json_encode($menu_config),
-                          ))->execute();
+
+          $result = \Drupal::service('database')
+            ->merge('tb_megamenus')
+            ->key(array('menu_name' => $menu_name, 'theme' => $theme))
+            ->fields(array(
+              'block_config' => json_encode($block_config),
+              'menu_config' => json_encode($menu_config),
+            ))->execute();
         }
         break;
-        
+
       case 'load_block':
         $block_id = isset($_POST['block_id']) ? $_POST['block_id'] : NULL;
         $id = isset($_POST['id']) ? $_POST['id'] : NULL;
         $showblocktitle = isset($_POST['showblocktitle']) ? $_POST['showblocktitle'] : NULL;
         if ($block_id) {
-          $argument = array(
+          $render = array(
             '#theme' => 'tb_megamenu_block',
-            '#block_id' => $block_id, 
-            '#section' => 'backend', 
+            '#block_id' => $block_id,
+            '#section' => 'backend',
             '#showblocktitle' => $showblocktitle
           );
-          $content = drupal_render($argument);
+          $content = \Drupal::service('renderer')
+            ->render($render)
+            ->__toString();
           $result = json_encode(array('content' => $content, 'id' => $id));
         }
         break;
-        
+
       default:
         break;
     }
-    
+
     return new Response($result);
   }
-  
+
   /**
    * This is a menu page. To edit Mega Menu.
    */
@@ -130,7 +134,7 @@ class TBMegaMenuAdminController extends ControllerBase {
     $page['#attached']['library'][] = 'tb_megamenu/form.chosen';
     // Add a custom library.
     $page['#attached']['library'][] = 'tb_megamenu/form.configure-megamenu';
-    
+
     $abs_url_config = \Drupal::url('tb_megamenu.admin.save', array(), array('absolute' => TRUE));
     $page['#attached']['drupalSettings']['TBMegaMenu']['saveConfigURL'] = $abs_url_config;
     if (!empty($menu_name)) {

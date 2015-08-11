@@ -33,12 +33,13 @@ class TBMegaMenuBuilder {
    * @return array
    */
   public static function getMenus($menu_name, $theme) {
-    $query = db_select('menu_tree', 'm');
+    $query = \Drupal::service('database')->select('menu_tree', 'm');
     $query->leftJoin('tb_megamenus', 't', 't.menu_name = m.menu_name');
     return $query->fields('t', array('menu_config', 'block_config'))
             ->condition('t.theme', $theme)
             ->condition('m.menu_name', $menu_name)
-            ->execute()->fetchObject();
+            ->execute()
+            ->fetchObject();
   }
 
   public static function getMenuItem($menu_name, $plugin_id) {
