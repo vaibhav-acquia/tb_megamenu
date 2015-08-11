@@ -578,12 +578,14 @@ function tb_megamenu_update_megamenus(&$form, FormStateInterface $form_state) {
       TBMegaMenuBuilder::syncConfigAll($menu_items, $menu_config, 'backend');
       TBMegaMenuBuilder::syncOrderMenus($menu_config);
 
-      $merge = db_merge('tb_megamenus');
-      $result = $merge->key(array('menu_name' => $menu_name, 'theme' => $theme))
-                ->fields(array(
-                  'block_config' => json_encode($block_config),
-                  'menu_config' => json_encode($menu_config),
-                ))->execute();
+      // Using merge query.
+      \Drupal::service('database')
+        ->merge('tb_megamenus')
+        ->key(array('menu_name' => $menu_name, 'theme' => $theme))
+        ->fields(array(
+          'block_config' => json_encode($block_config),
+          'menu_config' => json_encode($menu_config),
+        ))->execute();
     }
   }
 }
@@ -609,6 +611,6 @@ function tb_megamenu_attach_number_columns($childrens, $elements) {
   $render_array['#attached']['drupalSettings']['TBMegaMenu'] = array(
     'TBElementsCounter' => array('column' => $number_columns)
   );
-  drupal_render($render_array);
+  \Drupal::service('renderer')->render($render_array);
   return $childrens;
 }
