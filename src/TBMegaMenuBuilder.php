@@ -396,13 +396,21 @@ class TBMegaMenuBuilder {
         $item_sorted = array();
         // Get weight from items.
         foreach ($row as $col) {
+          $num_order = 0;
           foreach ($col['col_content'] as $menu_item) {
             if ($menu_item['type'] == 'menu_item') {
-              $item_sorted[$menu_item['weight']] = $menu_item;
+              if (isset($item_sorted[$menu_item['weight']])) {
+                $item_sorted[$menu_item['weight'] . '_' . $num_order] = $menu_item;
+                $num_order++;
+              } else {
+                $item_sorted[$menu_item['weight']] = $menu_item;
+              }
             }
           }
         }
-        ksort($item_sorted); // Sort menu by weight.megamenu
+
+        ksort($item_sorted, SORT_STRING); // Sort menu by weight.megamenu
+
         foreach ($row as $rid => $col) {
           foreach ($col['col_content'] as $menu_item_id => $menu_item) {
             if ($menu_item['type'] == 'menu_item') {
