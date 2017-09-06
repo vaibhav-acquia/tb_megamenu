@@ -51,12 +51,15 @@ function tb_megamenu_update_7101(&$sandbox) {
     ),
   );
   db_add_field('tb_megamenus', 'language', $field, $keys_new);
+  // set all existing menus to current language
+  db_query("UPDATE {tb_megamenus} SET language = :language",
+      array(':language' => $GLOBALS['language']->language));
+  return t('Added language field and set all existing menus to current language');
+  
 }
 
 /**
- * Set all existing menus to current language.
+ * Deprecated update - rolled into 7101 to prevent possible data loss.
  */
 function tb_megamenu_update_7102(&$sandbox) {
-  db_query("UPDATE {tb_megamenus} SET language = '" . $GLOBALS['language']->language . "'");
-  return t('Set all existing menus to current language');
 }
