@@ -1,9 +1,11 @@
 Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
 
-(function ($) {
+(function ($, Drupal, drupalSettings) {
+  "use strict";
+  
   Drupal.TBMegaMenu.createTouchMenu = function(items) {
       items.children('a').each( function() {
-	var $item = $(this);
+        var $item = $(this);
         var tbitem = $(this).parent();
         $item.click( function(event){
           if ($item.hasClass('tb-megamenu-clicked')) {
@@ -45,7 +47,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
         });
      });
      */
-  }
+  };
   
   Drupal.TBMegaMenu.eventStopPropagation = function(event) {
     if (event.stopPropagation) {
@@ -54,7 +56,8 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     else if (window.event) {
       window.event.cancelBubble = true;
     }
-  }  
+  };
+  
   Drupal.behaviors.tbMegaMenuTouchAction = {
     attach: function(context) {
       var isTouch = 'ontouchstart' in window && !(/hp-tablet/gi).test(navigator.appVersion);
@@ -63,5 +66,5 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
         Drupal.TBMegaMenu.createTouchMenu($('.tb-megamenu ul.nav li.mega').has('.dropdown-menu'));
       }
     }
-  }
-})(jQuery);
+  };
+})(jQuery, Drupal, drupalSettings);
