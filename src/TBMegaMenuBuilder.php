@@ -412,10 +412,9 @@ class TBMegaMenuBuilder {
             }
             else {
               if ( empty($tb_item) ) {
-                // TODO: Figure out the correct handling of NULLs in columns.
-                continue;
+                unset($item_config['rows_content'][$i][$j]['col_content'][$k]);
               }
-              \Drupal::logger('tb_megamenu')->warning('Unknown / invalid column content: @content', [
+              \Drupal::logger('tb_megamenu')->warning('Unknown / invalid column content: <pre>@content</pre>', [
                  '@content' => print_r($tb_item, TRUE),
               ]);
             }
