@@ -249,7 +249,8 @@ function template_preprocess_tb_megamenu_subnav(array &$vars) {
     }
 
     $weight = $item->link->getWeight();
-    $vars['lis'][$weight] = [
+    $title = $item->link->getTitle();
+    $vars['lis'][$weight][$title] = [
       '#theme' => 'tb_megamenu_item',
       '#menu_name' => $vars['menu_name'],
       '#level' => $level + 1,
@@ -262,6 +263,17 @@ function template_preprocess_tb_megamenu_subnav(array &$vars) {
   }
   // Sort items by link weights as array keys.
   ksort($vars['lis']);
+//drupal_set_message("<pre>". print_r($vars['lis'],TRUE) . "</pre>");
+
+  // restructure to account for duplicate weights
+  $new_list = [];
+  foreach ($vars['lis'] as $weight_group) {
+    ksort($weight_group);
+    foreach($weight_group as $item) {
+      $new_list[] = $item;
+    }
+  }
+  $vars['lis'] = $new_list;
 
   $vars['attributes'] = new Attribute();
   $vars['attributes']['class'] = [];
@@ -473,7 +485,8 @@ function template_preprocess_tb_megamenu_nav(array &$vars) {
   foreach ($items as $item) {
     if ($item->link->isEnabled()) {
       $weight = $item->link->getWeight();
-      $vars['lis'][$weight] = [
+      $title = $item->link->getTitle();
+      $vars['lis'][$weight][$title] = [
         '#theme' => 'tb_megamenu_item',
         '#menu_name' => $vars['menu_name'],
         '#level' => $level + 1,
@@ -487,6 +500,16 @@ function template_preprocess_tb_megamenu_nav(array &$vars) {
   }
   // Sort items by link weights as array keys.
   ksort($vars['lis']);
+  // restructure to account for duplicate weights
+  $new_list = [];
+  foreach ($vars['lis'] as $weight_group) {
+    ksort($weight_group);
+    foreach($weight_group as $item) {
+      $new_list[] = $item;
+    }
+  }
+
+  $vars['lis'] = $new_list;
 
   $vars['attributes'] = new Attribute();
   $vars['attributes']['class'] = [];
