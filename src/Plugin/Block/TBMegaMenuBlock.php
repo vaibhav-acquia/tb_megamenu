@@ -28,7 +28,7 @@ class TBMegaMenuBlock extends BlockBase {
       '#post_render' => ['tb_megamenu_attach_number_columns'],
       '#cache' => [
         'contexts' => [
-          'url',
+          'route.menu_active_trails:'.$this->getDerivativeId()
         ]
       ]
     ];
