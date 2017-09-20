@@ -92,11 +92,11 @@ class MegaMenuAdd extends EntityForm {
     ];
     $form['block_config'] = [
       '#type' => 'value',
-      '#value' => NULL,
+      '#value' => [],
     ];
     $form['menu_config'] = [
       '#type' => 'value',
-      '#value' => NULL,
+      '#value' => [],
     ];
 
     // You will need additional form elements for your custom properties.
