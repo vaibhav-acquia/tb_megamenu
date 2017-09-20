@@ -26,6 +26,11 @@ class TBMegaMenuBlock extends BlockBase {
       '#menu_name' => $this->getDerivativeId(),
       '#attached' => ['library' => ['tb_megamenu/theme.tb_megamenu']],
       '#post_render' => ['tb_megamenu_attach_number_columns'],
+      '#cache' => [
+        'contexts' => [
+          'url',
+        ]
+      ]
     ];
   }
 
