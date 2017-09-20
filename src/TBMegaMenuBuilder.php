@@ -34,7 +34,7 @@ class TBMegaMenuBuilder {
    * @param string $theme
    *   The theme machine name.
    *
-   * @return \Drupal\tb_megamenu\Entity\MegaMenuConfigInterface
+   * @return \Drupal\tb_megamenu\MegaMenuConfigInterface
    *   The configuration entity for this menu.
    */
   public static function getMenus($menu_name, $theme) {
@@ -50,7 +50,7 @@ class TBMegaMenuBuilder {
    * @param string $plugin_id
    *   The menu item plugin id.
    *
-   * @return Drupal\Core\Menu\MenuLinkTreeElement
+   * @return \Drupal\Core\Menu\MenuLinkTreeElement
    *   The menu item element.
    */
   public static function getMenuItem($menu_name, $plugin_id) {
@@ -67,7 +67,7 @@ class TBMegaMenuBuilder {
    * @param mixed $plugin_id
    *   The item plugin id.
    *
-   * @return Drupal\Core\Menu\MenuLinkTreeElement
+   * @return \Drupal\Core\Menu\MenuLinkTreeElement
    *   The menu link element.
    */
   public static function findMenuItem($tree, $plugin_id) {
@@ -236,7 +236,7 @@ class TBMegaMenuBuilder {
    *
    * @staticvar array $_blocks_array
    *
-   * @return Drupal\Core\Entity\EntityTypeInterface[]
+   * @return \Drupal\Core\Entity\EntityTypeInterface[]
    *   An array of block entities or an empty array if none found.
    */
   public static function getAllBlocks() {
