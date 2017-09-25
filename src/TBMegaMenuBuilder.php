@@ -23,7 +23,7 @@ class TBMegaMenuBuilder {
    */
   public static function getBlockConfig($menu_name, $theme) {
     $menu = self::getMenus($menu_name, $theme);
-    return $menu->getBlockConfig();
+    return ($menu) ? $menu->getBlockConfig() : [];
   }
 
   /**
@@ -34,11 +34,19 @@ class TBMegaMenuBuilder {
    * @param string $theme
    *   The theme machine name.
    *
-   * @return \Drupal\tb_megamenu\MegaMenuConfigInterface
-   *   The configuration entity for this menu.
+   * @return \Drupal\tb_megamenu\MegaMenuConfigInterface|null
+   *   The configuration entity for this menu or NULL if not found.
    */
   public static function getMenus($menu_name, $theme) {
     $config = MegaMenuConfig::loadMenu($menu_name, $theme);
+    if ($config === NULL) {
+      \Drupal::logger('tb_megamenu')->warning(
+        t("Could not find TB Megamenu configuration for menu: @menu, theme: @theme", [
+          '@menu' => $menu_name,
+          '@theme' => $theme,
+        ]
+      ));
+    }
     return $config;
   }
 
@@ -108,7 +116,7 @@ class TBMegaMenuBuilder {
    */
   public static function getMenuConfig($menu_name, $theme) {
     $menu = self::getMenus($menu_name, $theme);
-    return isset($menu->menu_config) ? json_decode($menu->menu_config, TRUE) : [];
+    return isset($menu) ? $menu->getMenuConfig() : [];
   }
 
   /**
@@ -399,7 +407,7 @@ class TBMegaMenuBuilder {
                 }
               }
             }
-            elseif ($tb_item['type'] == 'block' && ! empty($tb_item['block_id'])) {
+            elseif ($tb_item['type'] == 'block' && !empty($tb_item['block_id'])) {
               if (!self::isBlockContentEmpty($tb_item['block_id'], $section)) {
                 unset($item_config['rows_content'][$i][$j]['col_content'][$k]);
                 if (empty($item_config['rows_content'][$i][$j]['col_content'])) {
@@ -411,7 +419,7 @@ class TBMegaMenuBuilder {
               }
             }
             else {
-              if ( empty($tb_item) ) {
+              if (empty($tb_item)) {
                 unset($item_config['rows_content'][$i][$j]['col_content'][$k]);
               }
               \Drupal::logger('tb_megamenu')->warning('Unknown / invalid column content: <pre>@content</pre>', [

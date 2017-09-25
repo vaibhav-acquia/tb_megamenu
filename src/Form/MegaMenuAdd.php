@@ -8,6 +8,7 @@ use Drupal\Core\Extension\ThemeHandlerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\tb_megamenu\Entity\MegaMenuConfig;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Component\Serialization\Json;
 
 /**
  * Form handler for adding MegaMenuConfig entities.
@@ -17,23 +18,23 @@ class MegaMenuAdd extends EntityForm {
   /**
    * The config factory service.
    *
-   * @var Drupal\Core\Config\ConfigFactoryInterface
+   * @var \Drupal\Core\Config\ConfigFactoryInterface
    */
   protected $config;
 
   /**
    * The theme handler service.
    *
-   * @var Drupal\Core\Extension\ThemeHandlerInterface
+   * @var \Drupal\Core\Extension\ThemeHandlerInterface
    */
   protected $themeHandler;
 
   /**
    * Constructs a MegaMenuAdd object.
    *
-   * @param Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   The configuration factory service.
-   * @param Drupal\Core\Extension\ThemeHandlerInterface $theme_handler
+   * @param \Drupal\Core\Extension\ThemeHandlerInterface $theme_handler
    *   The theme handler service.
    */
   public function __construct(ConfigFactoryInterface $config_factory, ThemeHandlerInterface $theme_handler) {
@@ -92,11 +93,11 @@ class MegaMenuAdd extends EntityForm {
     ];
     $form['block_config'] = [
       '#type' => 'value',
-      '#value' => [],
+      '#value' => Json::encode([]),
     ];
     $form['menu_config'] = [
       '#type' => 'value',
-      '#value' => [],
+        '#value' => Json::encode([]),
     ];
 
     // You will need additional form elements for your custom properties.

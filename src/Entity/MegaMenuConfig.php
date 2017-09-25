@@ -4,6 +4,7 @@ namespace Drupal\tb_megamenu\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBase;
 use Drupal\tb_megamenu\MegaMenuConfigInterface;
+use Drupal\Component\Serialization\Json;
 
 /**
  * Defines the Mega Menu Configuration entity.
@@ -98,7 +99,16 @@ class MegaMenuConfig extends ConfigEntityBase implements MegaMenuConfigInterface
    * @see \Drupal\tb_megamenu\MegaMenuConfigInterface::getBlockConfig()
    */
   public function getBlockConfig() {
-    return isset($this->block_config) ? json_decode($this->block_config, TRUE) : [];
+    if (is_array($this->block_config)) {
+      $this->setBlockConfig($this->block_config);
+      \Drupal::logger('tb_megamenu')->info("Converted block config array to json string.");
+    }
+    $config = isset($this->block_config) ? Json::decode($this->block_config) : [];
+    if ($config === NULL) {
+      \Drupal::logger('tb_megamenu')->warning("Could not decode block config json string for @id", ['@id' => $this->id]);
+      $config = [];
+    }
+    return $config;
   }
 
   /**
@@ -107,7 +117,16 @@ class MegaMenuConfig extends ConfigEntityBase implements MegaMenuConfigInterface
    * @see \Drupal\tb_megamenu\MegaMenuConfigInterface::getMenuConfig()
    */
   public function getMenuConfig() {
-    return isset($this->menu_config) ? json_decode($this->menu_config, TRUE) : [];
+    if (is_array($this->menu_config)) {
+      $this->setMenuConfig($this->menu_config);
+      \Drupal::logger('tb_megamenu')->info("Converted menu config array to json string.");
+    }
+    $config = isset($this->menu_config) ? Json::decode($this->menu_config) : [];
+    if ($config === NULL) {
+      \Drupal::logger('tb_megamenu')->warning("Could not decode menu config json string for @id", ['@id' => $this->id]);
+      $config = [];
+    }
+    return $config;
   }
 
   /**
@@ -116,7 +135,7 @@ class MegaMenuConfig extends ConfigEntityBase implements MegaMenuConfigInterface
    * @see \Drupal\tb_megamenu\MegaMenuConfigInterface::setBlockConfig()
    */
   public function setBlockConfig($blockConfig) {
-    $this->block_config = json_encode($blockConfig);
+    $this->block_config = Json::encode($blockConfig);
   }
 
   /**
@@ -125,7 +144,7 @@ class MegaMenuConfig extends ConfigEntityBase implements MegaMenuConfigInterface
    * @see \Drupal\tb_megamenu\MegaMenuConfigInterface::setMenuConfig()
    */
   public function setMenuConfig($menuConfig) {
-    $this->menu_config = json_encode($menuConfig);
+    $this->menu_config = Json::encode($menuConfig);
   }
 
   /**

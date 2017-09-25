@@ -44,7 +44,7 @@ interface MegaMenuConfigInterface extends ConfigEntityInterface {
   /**
    * Gets the json decoded menu configuration.
    *
-   * @return array|\stdClass
+   * @return array
    *   A class with properties for the menu configuration settings.
    */
   public function getMenuConfig();
