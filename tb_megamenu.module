@@ -11,6 +11,7 @@ use Drupal\Core\Menu\MenuTreeParameters;
 use Drupal\Core\Template\Attribute;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\tb_megamenu\Entity\MegaMenuConfig;
+use Drupal\Component\Serialization\Json;
 
 /**
  * Implements hook_theme().
@@ -234,11 +235,11 @@ function template_preprocess_tb_megamenu_subnav(array &$vars) {
   $vars['lis'] = [];
   foreach ($col as $tb_item) {
     $item = TBMegaMenuBuilder::getMenuItem($vars['menu_name'], $tb_item['plugin_id']);
-    if ( empty($tb_item)) {
+    if (empty($tb_item)) {
       // TODO: figure out how to handle NULLs in columns.
       continue;
     }
-    if ( $item->link == NULL) {
+    if ($item->link == NULL) {
       \Drupal::logger('tb_megamenu')->warning("Found null link in tb_item: @tb_item, menu: @menu, plugin_id: @plugin level: @level", [
         '@tb_item' => is_null($tb_item) ? "NULL" : print_r($tb_item, TRUE),
         '@menu' => $vars['menu_name'],
@@ -263,13 +264,11 @@ function template_preprocess_tb_megamenu_subnav(array &$vars) {
   }
   // Sort items by link weights as array keys.
   ksort($vars['lis']);
-//drupal_set_message("<pre>". print_r($vars['lis'],TRUE) . "</pre>");
-
-  // restructure to account for duplicate weights
+  // Restructure to account for duplicate weights.
   $new_list = [];
   foreach ($vars['lis'] as $weight_group) {
     ksort($weight_group);
-    foreach($weight_group as $item) {
+    foreach ($weight_group as $item) {
       $new_list[] = $item;
     }
   }
@@ -363,6 +362,7 @@ function template_preprocess_tb_megamenu(array &$vars) {
   $block_config = TBMegaMenuBuilder::getBlockConfig($menu_name, $theme);
   TBMegaMenuBuilder::editBlockConfig($block_config);
   TBMegaMenuBuilder::syncConfigAll($menu_items, $menu_config, $vars['section']);
+  $vars['block_config'] = $block_config;
   $vars['attributes'] = new Attribute();
   $vars['attributes']['class'] = [];
   $theme_name = str_replace('_', '-', $vars['theme_hook_original']);
@@ -500,11 +500,11 @@ function template_preprocess_tb_megamenu_nav(array &$vars) {
   }
   // Sort items by link weights as array keys.
   ksort($vars['lis']);
-  // restructure to account for duplicate weights
+  // Restructure to account for duplicate weights.
   $new_list = [];
   foreach ($vars['lis'] as $weight_group) {
     ksort($weight_group);
-    foreach($weight_group as $item) {
+    foreach ($weight_group as $item) {
       $new_list[] = $item;
     }
   }
@@ -633,8 +633,8 @@ function tb_megamenu_update_megamenus(&$form, FormStateInterface $form_state) {
         drupal_set_message(t("Cannot create a new config object in save!"));
         return;
       }
-      $config->block_config = json_encode($block_config);
-      $config->menu_config = json_encode($menu_config);
+      $config->block_config = Json::encode($block_config);
+      $config->menu_config = Json::encode($menu_config);
       $config->save();
     }
   }

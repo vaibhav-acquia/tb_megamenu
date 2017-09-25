@@ -4,6 +4,7 @@ namespace Drupal\tb_megamenu\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\tb_megamenu\TBMegaMenuBuilder;
 
 /**
  * Provides blocks which belong to TB Mega Menu.
@@ -14,6 +15,8 @@ use Drupal\Core\Form\FormStateInterface;
  *   category = @Translation("TB Mega Menu"),
  *   deriver = "Drupal\tb_megamenu\Plugin\Derivative\TBMegaMenuBlock",
  * )
+ * 
+ * TODO: Add injection
  */
 class TBMegaMenuBlock extends BlockBase {
 
@@ -21,16 +24,23 @@ class TBMegaMenuBlock extends BlockBase {
    * {@inheritdoc}
    */
   public function build() {
+    $menu_name = $this->getDerivativeId();
+    $theme_name = \Drupal::service('theme.manager')->getActiveTheme()->getName();
+    $menu = TBMegaMenuBuilder::getMenus($menu_name, $theme_name);
+    if ($menu === NULL) {
+      return [];
+    }
     return [
       '#theme' => 'tb_megamenu',
-      '#menu_name' => $this->getDerivativeId(),
+      '#menu_name' => $menu_name,
+      '#block_theme' => $theme_name,
       '#attached' => ['library' => ['tb_megamenu/theme.tb_megamenu']],
       '#post_render' => ['tb_megamenu_attach_number_columns'],
       '#cache' => [
         'contexts' => [
-          'route.menu_active_trails:'.$this->getDerivativeId()
-        ]
-      ]
+          'route.menu_active_trails:' . $this->getDerivativeId(),
+        ],
+      ],
     ];
   }
 
