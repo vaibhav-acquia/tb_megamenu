@@ -485,11 +485,12 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     $.ajax({
       type: "POST",
       url: drupalSettings.TBMegaMenu.saveConfigURL,
-      data: {
+      contentType: "application/json; charset=utf-8",
+      data: JSON.stringify({
         'action': 'load', 
         'theme': drupalSettings.TBMegaMenu.theme,
         'menu_name': options['menu_name']
-      },
+      }),
       complete: function(msg) {
         $('#tb-megamenu-admin-mm-container').html(msg.responseText).megamenuAdmin({'menu_name': options['menu_name']});
         $('#tb-megamenu-admin-mm-container').find('.mega-inner').children('span.close').click(function() {
@@ -584,20 +585,21 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     $.ajax({
       type: "POST",
       url: drupalSettings.TBMegaMenu.saveConfigURL,
-      data: {
+      contentType: "application/json; charset=utf-8",
+      data: JSON.stringify({
         'action': 'save', 
         'theme': drupalSettings.TBMegaMenu.theme,
         'menu_name': options['menu_name'], 
         'menu_config': menu_config, 
         'block_config': block_config
-      },
-      complete: function(msg) {
+      }),
+      complete: function(r) {
         $('#tb-megamenu-admin-mm-tb #toolbox-loading').hide();
-        var $div = $('<div class="messages messages--status" role="contentinfo" aria-label="Status message"><h2 class="visually-hidden">Status message</h2>' + Drupal.t("Saved config sucessfully!") + '</div>');
+        var $div = $('<div class="messages messages--status" role="contentinfo" aria-label="Status message"><h2 class="visually-hidden">Status message</h2>' + r.responseText + '</div>');
         $('#tb-megamenu-admin-mm-tb #toolbox-message').html($div).show();
         window.setTimeout(function() {
           $('#tb-megamenu-admin-mm-tb #toolbox-message').html("").hide();
-        }, 5000);
+        }, 7000);
         Drupal.TBMegaMenu.releaseAjax();
       }
     });
@@ -872,7 +874,8 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
         $.ajax({
           type: "POST",
           url: drupalSettings.TBMegaMenu.saveConfigURL,
-          data: data,
+          contentType: "application/json; charset=utf-8",
+          data: JSON.stringify(data),
           complete: function(msg) {
             var resp = $.parseJSON(msg.responseText);
             var content = resp.content ? resp.content : "";
