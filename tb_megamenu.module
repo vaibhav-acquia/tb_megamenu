@@ -419,7 +419,7 @@ function template_preprocess_tb_megamenu_backend(array &$vars) {
   $vars['submenu_toolbox'] = ['#theme' => 'tb_megamenu_submenu_toolbox'];
   $vars['column_toolbox'] = [
     '#theme' => 'tb_megamenu_column_toolbox',
-    '#blocks_options' => TBMegaMenuBuilder::getAllBlocks(),
+    '#blocks_options' => TBMegaMenuBuilder::getAllBlocks($theme),
   ];
   $vars['block_config'] = $block_config;
   $vars['animation_options'] = TBMegaMenuBuilder::createAnimationOptions($block_config);

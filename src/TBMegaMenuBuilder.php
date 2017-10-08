@@ -247,15 +247,13 @@ class TBMegaMenuBuilder {
    * @return \Drupal\Core\Entity\EntityTypeInterface[]
    *   An array of block entities or an empty array if none found.
    */
-  public static function getAllBlocks() {
+  public static function getAllBlocks($theme) {
     static $_blocks_array = [];
     if (empty($_blocks_array)) {
-      // Get default theme for user.
-      $theme_default = \Drupal::config('system.theme')->get('default');
       // Get storage handler of block.
       $block_storage = \Drupal::entityTypeManager()->getStorage('block');
       // Get the enabled block in the default theme.
-      $entity_ids = $block_storage->getQuery()->condition('theme', $theme_default)->execute();
+      $entity_ids = $block_storage->getQuery()->condition('theme', $theme)->execute();
       $entities = $block_storage->loadMultiple($entity_ids);
       $_blocks_array = [];
       foreach ($entities as $block_id => $block) {
