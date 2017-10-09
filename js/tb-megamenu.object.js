@@ -1019,7 +1019,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     }
   });
 
-  $(window).load(function() {
+  $(window).on('load', function() {
     Drupal.TBMegaMenu.initPanel();
     Drupal.TBMegaMenu.initPreSubmit();
     Drupal.TBMegaMenu.initRadioGroup();
