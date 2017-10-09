@@ -421,7 +421,7 @@ class TBMegaMenuBuilder {
                 unset($item_config['rows_content'][$i][$j]['col_content'][$k]);
               }
               \Drupal::logger('tb_megamenu')->warning('Unknown / invalid column content: <pre>@content</pre>', [
-                 '@content' => print_r($tb_item, TRUE),
+                '@content' => print_r($tb_item, TRUE),
               ]);
             }
           }

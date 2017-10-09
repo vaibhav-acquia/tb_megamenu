@@ -97,7 +97,7 @@ class MegaMenuAdd extends EntityForm {
     ];
     $form['menu_config'] = [
       '#type' => 'value',
-        '#value' => Json::encode([]),
+      '#value' => Json::encode([]),
     ];
 
     // You will need additional form elements for your custom properties.

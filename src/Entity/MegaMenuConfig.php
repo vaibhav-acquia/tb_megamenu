@@ -71,6 +71,16 @@ class MegaMenuConfig extends ConfigEntityBase implements MegaMenuConfigInterface
 
   /**
    * {@inheritdoc}
+   */
+  public static function create(array $values = []) {
+    if (!isset($values['id']) && isset($values['menu']) && isset($values['theme'])) {
+      $values['id'] = "{$values['menu']}__{$values['theme']}";
+    }
+    return parent::create($values);
+  }
+
+  /**
+   * {@inheritdoc}
    *
    * @see \Drupal\tb_megamenu\MegaMenuConfigInterface::setMenu()
    */

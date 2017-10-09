@@ -15,7 +15,7 @@ use Drupal\tb_megamenu\TBMegaMenuBuilder;
  *   category = @Translation("TB Mega Menu"),
  *   deriver = "Drupal\tb_megamenu\Plugin\Derivative\TBMegaMenuBlock",
  * )
- * 
+ *
  * TODO: Add injection
  */
 class TBMegaMenuBlock extends BlockBase {
