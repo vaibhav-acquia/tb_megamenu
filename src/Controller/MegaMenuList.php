@@ -27,7 +27,7 @@ class MegaMenuList extends ConfigEntityListBuilder {
   public function buildRow(EntityInterface $entity) {
     $menu_info = Menu::load($entity->menu);
     $row['menu'] = $entity->menu;
-    $row['label'] = $menu_info->label();
+    $row['label'] = $menu_info !== NULL ? $menu_info->label() : "MISSING MENU! Was it deleted?";
     $row['theme'] = $entity->theme;
     return $row + parent::buildRow($entity);
   }
