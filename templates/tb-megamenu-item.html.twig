@@ -1,5 +1,17 @@
+{% set linkAttributes = link['attributes'] %}
+{% if ( link['url'] is defined and link['url'] is not empty ) %}
+  {% set tag = "a" %}
+  {% set href = " href='#{ link['url'] }'" %}
+{% else  %}
+  {% set tag = 'span' %}
+  {% set href = '' %}
+  {% set linkAttributes = linkAttributes.addClass('tb-megamenu-no-link') %}
+  {% if submenu is empty %}
+    {% set linkAttributes = linkAttributes.addClass('tb-megamenu-no-submenu') %}
+  {% endif %}
+{% endif %}
 <li {{ attributes }} >
-  <a href="{{ link['url'] }}" {{ link['attributes'] }}>
+  <{{ tag }}{{ href|raw }} {{ link['attributes'] }}>
     {% if  item_config['xicon'] %}
       <i class="{{ item_config['xicon'] }}"></i>
     {% endif %}
@@ -10,6 +22,6 @@
     {% if item_config['caption'] %}
       <span class="mega-caption"> {{ item_config['caption']|t }}</span>
     {% endif %}
-  </a>
+  </{{ tag }}>
   {{ submenu }}
 </li>

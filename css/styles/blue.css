@@ -2,7 +2,8 @@
   background-color: #00aeee;
 }
 
-.tb-megamenu .nav > li > a {
+.tb-megamenu .nav > li > a,
+.tb-megamenu .nav > li > span.tb-megamenu-no-link {
   border-right: 1px solid #4dc6f3;
 }
 
@@ -23,14 +24,18 @@
 }
 
 .tb-megamenu .nav > li.dropdown.open.active > a:hover,
-.tb-megamenu .nav > li.dropdown.open.active > a:focus {
+.tb-megamenu .nav > li.dropdown.open.active > a:focus,
+.tb-megamenu .nav > li.dropdown.open.active > span.tb-megamenu-no-link:hover,
+.tb-megamenu .nav > li.dropdown.open.active > span.tb-megamenu-no-link:focus {
   background-color: #fff;
   border-right-color: #4dc6f3;
   color: #00aeee;
 }
 
 .tb-megamenu .nav > li > a:focus,
-.tb-megamenu .nav > li > a:hover {
+.tb-megamenu .nav > li > a:hover,
+.tb-megamenu .nav > li > span.tb-megamenu-no-link:focus,
+.tb-megamenu .nav > li > span.tb-megamenu-no-link:hover {
   color: #00aeee;
 }
 
@@ -40,13 +45,19 @@
 
 .tb-megamenu .dropdown-menu li > a:hover,
 .tb-megamenu .dropdown-menu li > a:focus,
-.tb-megamenu .dropdown-submenu:hover > a {
+.tb-megamenu .dropdown-submenu:hover > a,
+.tb-megamenu .dropdown-menu li > span.tb-megamenu-no-link:hover,
+.tb-megamenu .dropdown-menu li > span.tb-megamenu-no-link:focus,
+.tb-megamenu .dropdown-submenu:hover > span.tb-megamenu-no-link {
   color: #00aeee;
 }
 
 .tb-megamenu .nav > .active > a,
 .tb-megamenu .nav > .active > a:hover,
-.tb-megamenu .nav > .active > a:focus {
+.tb-megamenu .nav > .active > a:focus,
+.tb-megamenu .nav > .active > span.tb-megamenu-no-link,
+.tb-megamenu .nav > .active > span.tb-megamenu-no-link:hover,
+.tb-megamenu .nav > .active > span.tb-megamenu-no-link:focus {
   color: #fff;
   text-shadow: none;
   background-color: #009bd4;
@@ -70,11 +81,15 @@
     background-color: inherit;
 }
   .tb-megamenu .nav-collapse .nav > li > a:hover,
-  .tb-megamenu .nav-collapse .nav > li > a:focus {
+  .tb-megamenu .nav-collapse .nav > li > a:focus,
+  .tb-megamenu .nav-collapse .nav > li > span.tb-megamenu-no-link:hover,
+  .tb-megamenu .nav-collapse .nav > li > span.tb-megamenu-no-link:focus {
     color: #00aeee;
   }
   .tb-megamenu .nav-collapse .nav > li.active > a:hover,
-  .tb-megamenu .nav-collapse .nav > li.active > a:focus {
+  .tb-megamenu .nav-collapse .nav > li.active > a:focus,
+  .tb-megamenu .nav-collapse .nav > li.active > span.tb-megamenu-no-link:hover,
+  .tb-megamenu .nav-collapse .nav > li.active > span.tb-megamenu-no-link:focus {
     background-color: #00aeee;
     color: #fff;
 }
