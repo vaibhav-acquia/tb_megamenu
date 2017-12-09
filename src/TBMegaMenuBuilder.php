@@ -468,12 +468,19 @@ class TBMegaMenuBuilder {
         foreach ($row as $col) {
           foreach ($col['col_content'] as $menu_item) {
             if ($menu_item['type'] == 'menu_item') {
-              $item_sorted[$menu_item['weight']] = $menu_item;
+              $item_sorted[$menu_item['weight']][] = $menu_item;
             }
           }
         }
         // Sort menu by weight.
         ksort($item_sorted);
+        $new_list = [];
+        foreach($item_sorted as $weight_group) {
+          foreach ($weight_group as $item) {
+            $new_list[] = $item;
+          }
+        }
+        $item_sorted = $new_list;
         foreach ($row as $rid => $col) {
           foreach ($col['col_content'] as $menu_item_id => $menu_item) {
             if ($menu_item['type'] == 'menu_item') {
