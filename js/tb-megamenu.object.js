@@ -569,6 +569,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       item_config['group'] = $this.attr('data-group') ? $this.attr('data-group') : "";
       item_config['hidewcol'] = $this.attr('data-hidewcol') ? $this.attr('data-hidewcol') : 1;
       item_config['hidesub'] = $this.attr('data-hidesub') ? $this.attr('data-hidesub') : 1;
+      item_config['label'] = $this.attr('data-label') ? $this.attr('data-label') : "";
       var config = {'rows_content': rows, 'submenu_config': submenu_config, 'item_config': item_config};
       menu_config[id] = config;
     });
