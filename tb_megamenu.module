@@ -5,6 +5,7 @@
  * TB Mega Menu.
  */
 
+use Drupal\Core\Access\AccessResultInterface;
 use Drupal\Core\Block\BlockPluginInterface;
 use Drupal\tb_megamenu\TBMegaMenuBuilder;
 use Drupal\Core\Menu\MenuTreeParameters;
@@ -240,12 +241,6 @@ function template_preprocess_tb_megamenu_subnav(array &$vars) {
       continue;
     }
     if ($item->link == NULL) {
-      \Drupal::logger('tb_megamenu')->warning("Found null link in tb_item: @tb_item, menu: @menu, plugin_id: @plugin level: @level", [
-        '@tb_item' => is_null($tb_item) ? "NULL" : print_r($tb_item, TRUE),
-        '@menu' => $vars['menu_name'],
-        '@plugin' => $tb_item['plugin_id'],
-        '@level' => $level,
-      ]);
       continue;
     }
 
@@ -341,13 +336,21 @@ function template_preprocess_tb_megamenu_submenu(array &$vars) {
  *   Variables are declared in theme.
  */
 function template_preprocess_tb_megamenu(array &$vars) {
+
   $menu_name = $vars['menu_name'];
   $theme = $vars['block_theme'];
   $vars['#attached']['drupalSettings']['TBMegaMenu']['theme'] = $theme;
+
   $menu_tree = \Drupal::menuTree();
   $menu_active_trail = \Drupal::service('menu.active_trail')->getActiveTrailIds($menu_name);
   $parameters = (new MenuTreeParameters)->setActiveTrail($menu_active_trail)->onlyEnabledLinks();
   $menu_items = $menu_tree->load($menu_name, $parameters);
+  $manipulators = [
+      ['callable' => 'menu.default_tree_manipulators:checkNodeAccess'],
+      ['callable' => 'menu.default_tree_manipulators:checkAccess'],
+  ];
+  $menu_items = $menu_tree->transform($menu_items, $manipulators);
+  tb_megamenu_check_access($menu_items);
   /*
    * This function is old, we need to solve this later.
    * if (function_exists('i18n_menu_localize_tree')) {
@@ -602,6 +605,7 @@ function template_preprocess_tb_megamenu_item(array &$vars) {
   $vars['attributes']['data-group'] = $item_config['group'];
   $vars['attributes']['data-hidewcol'] = $item_config['hidewcol'];
   $vars['attributes']['data-hidesub'] = $item_config['hidesub'];
+  $vars['attributes']['data-label'] = $item->link->getTitle();
   if ($vars['section'] == 'backend') {
     $vars['attributes']['title'] = t("Menu Item");
   }
@@ -663,4 +667,21 @@ function tb_megamenu_attach_number_columns($childrens, $elements) {
   ];
   \Drupal::service('renderer')->render($render_array);
   return $childrens;
+}
+/**
+ * Recursively remove menu items without access rights.
+ *
+ * @param array $menu_items
+ *   Menu section to check.
+ */
+function tb_megamenu_check_access( array &$menu_items ) {
+  foreach ($menu_items as $route => &$item ) {
+    if ($item->access instanceof AccessResultInterface && !$item->access->isAllowed()) {
+      unset($menu_items{$route});
+      continue;
+    }
+    if ($item->hasChildren) {
+      tb_megamenu_check_access ($item->subtree);
+    }
+  }
 }
