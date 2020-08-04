@@ -525,7 +525,7 @@ class TBMegaMenuBuilder {
    */
   public static function insertTbMenuItem(array &$item_config, $row, $col, $item) {
     $i = 0;
-    $col_content = isset($item_config['rows_content'][$row][$col]['col_content']) ? $item_config['rows_content'][$row][$col]['col_content'] : [];
+    $col_content = isset($item_config['rows_content'][$row][$col]['col_content']) ? array_values($item_config['rows_content'][$row][$col]['col_content']) : [];
     current($col_content);
     foreach ($col_content as $value) {
       if (!empty($value['weight']) && $value['weight'] < $item->link->getWeight()) {
@@ -534,14 +534,15 @@ class TBMegaMenuBuilder {
       }
     }
     for ($j = count($col_content); $j > $i; $j--) {
-      $item_config['rows_content'][$row][$col]['col_content'][$j] = $item_config['rows_content'][$row][$col]['col_content'][$j - 1];
+      $col_content[$j] = $col_content[$j - 1];
     }
-    $item_config['rows_content'][$row][$col]['col_content'][$i] = [
+    $col_content[$i] = [
       'plugin_id' => $item->link->getPluginId(),
       'type' => 'menu_item',
       'weight' => $item->link->getWeight(),
       'tb_item_config' => [],
     ];
+    $item_config['rows_content'][$row][$col]['col_content'] = $col_content;
   }
 
 }
