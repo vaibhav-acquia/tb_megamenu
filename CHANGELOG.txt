@@ -8,3 +8,4 @@ The Better Mega Menu 8.x-1.0-dev, 2020-08-04
   an error.
 - Issue #3045390 by RuslanP, knaffles: Module Description: add dot to the end of
   the sentence.
+- Issue #3095820 by themodularlab, knaffles, RuslanP: D8 Accessibility Upgrades

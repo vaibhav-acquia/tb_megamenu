@@ -301,6 +301,9 @@ function template_preprocess_tb_megamenu_subnav(array &$vars) {
   $vars['attributes']['class'][] = "mega-nav";
   $vars['attributes']['class'][] = "level-" . $level;
   $vars['attributes']['class'][] = "items-" . count($col);
+
+  // Add a11y attributes.
+  $vars['attributes']['role'] = t('list');
 }
 
 /**
@@ -352,6 +355,9 @@ function template_preprocess_tb_megamenu_submenu(array &$vars) {
   if (!empty($submenu_config['width'])) {
     $vars['attributes']['style'] = "width: " . $submenu_config['width'] . "px;";
   }
+
+  // Add a11y attributes.
+  $vars['attributes']['role'] = t('list');
 }
 
 /**
@@ -429,6 +435,9 @@ function template_preprocess_tb_megamenu(array &$vars) {
     $css .= '  -o-transition-duration: ' . $block_config['duration'] . 'ms;';
     $vars['css_style'] = $css;
   }
+
+  // Add a11y attributes.
+  $vars['attributes']['role'] = t('navigation');
 }
 
 /**
@@ -546,6 +555,9 @@ function template_preprocess_tb_megamenu_nav(array &$vars) {
   $vars['attributes']['class'][] = "nav";
   $vars['attributes']['class'][] = "level-" . $level;
   $vars['attributes']['class'][] = "items-" . count($items);
+
+  // Add a11y attributes to unordered list tag.
+  $vars['attributes']['role'] = t('list');
 }
 
 /**
@@ -633,6 +645,30 @@ function template_preprocess_tb_megamenu_item(array &$vars) {
   $vars['attributes']['data-label'] = $item->link->getTitle();
   if ($vars['section'] == 'backend') {
     $vars['attributes']['title'] = t("Menu Item");
+  }
+
+  // Add a11y attributes to list item tag.
+  $vars['attributes']['role'] = t('listitem');
+  $vars['attributes']['aria-level'] = $level;
+
+  // Add a11y attributes to anchor tag.
+  if (!empty($vars['link']['description'])) {
+    $vars['link']['attributes']['title'] = t($vars['link']['description']);
+  }
+  if ($vars['submenu'] != NULL) {
+    $vars['link']['attributes']['aria-haspopup'] = t('true');
+    $vars['link']['attributes']['aria-expanded'] = t('false');
+  }
+
+  // Make other menu attributes available to TB Mega Menu Anchor Links.
+  if (!empty($vars['link']['options']['attributes']['target'])) {
+    $vars['link']['attributes']['target'] = $vars['link']['options']['attributes']['target'];
+  }
+  if (!empty($vars['link']['options']['attributes']['rel'])) {
+    $vars['link']['attributes']['rel'] = $vars['link']['options']['attributes']['rel'];
+  }
+  if (!empty($vars['link']['options']['attributes']['class'])) {
+    $vars['link']['attributes']->addClass($vars['link']['options']['attributes']['class']);
   }
 }
 
