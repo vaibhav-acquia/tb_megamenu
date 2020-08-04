@@ -76,6 +76,3 @@ This project has been sponsored by:
 
  * This module is currently owned and maintained by [Bounteous](https://www.bounteous.com)
  * This module was originally developed by ThemeBrain.
- * ThemeBrain is a professional Drupal theme providers with the only principle
- in mind - bringing Drupal to everyone.
- * For more information, please visit at www.themebrain.com.
