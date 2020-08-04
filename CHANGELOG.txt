@@ -1,0 +1,4 @@
+The Better Mega Menu 8.x-1.0-dev, 2020-08-04
+--------------------------------------------
+- Issue #2952410 by ankitjain28may, SivaprasadC: Typo in
+  css/tb_megamenu.default.css
