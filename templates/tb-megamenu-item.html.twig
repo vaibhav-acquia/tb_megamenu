@@ -5,7 +5,7 @@
 {% else  %}
   {% set tag = 'span' %}
   {% set href = '' %}
-  {% set linkAttributes = linkAttributes.addClass('tb-megamenu-no-link') %}
+  {% set linkAttributes = linkAttributes.addClass('tb-megamenu-no-link').setAttribute('tabindex', '0') %}
   {% if submenu is empty %}
     {% set linkAttributes = linkAttributes.addClass('tb-megamenu-no-submenu') %}
   {% endif %}

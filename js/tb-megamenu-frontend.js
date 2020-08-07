@@ -140,14 +140,33 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
             var $openItem = $('.tb-megamenu').find('.tb-megamenu-item.level-1.open');
 
             if ($openItem.length === 0) {
-              $openItem = $('.tb-megamenu').find('a:focus').closest('.level-1');
+              $openItem = $('.tb-megamenu').find('a:focus, span:focus').closest('.level-1');
             }
             var $nextItem = $openItem.next('li');
 
             hideMenu($openItem, mm_timeout);
 
             if ($nextItem.length > 0) {
-              $nextItem.children('a').focus();
+              $nextItem.children('a, span').focus();
+            }
+
+            return;
+          }
+
+          // Left arrow
+          if (event.keyCode == 37) {
+            var $openItem = $('.tb-megamenu').find('.tb-megamenu-item.level-1.open');
+
+            if ($openItem.length === 0) {
+              $openItem = $('.tb-megamenu').find('a:focus, span:focus').closest('.level-1');
+            }
+
+            var $nextItem = $openItem.prev('li');
+
+            hideMenu($openItem, mm_timeout);
+            
+            if ($nextItem.length > 0) {
+              $nextItem.children('a, span').focus();
             }
 
             return;

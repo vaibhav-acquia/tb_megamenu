@@ -2,6 +2,8 @@ The Better Mega Menu 8.x-1.0-dev, 2020-08-07
 --------------------------------------------
 - Issue #2882051 by knaffles, maithili11: Top level drop downs do not work on
   touch devices when the menu item path is set to <nolink>
+- Issue #3095820 Restore missing snippet for left arrow. Also fix issue where
+  <nolink> top level menu items are not focusable using left/right arrow keys.
 
 The Better Mega Menu 8.x-1.0-dev, 2020-08-04
 --------------------------------------------
