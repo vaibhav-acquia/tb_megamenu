@@ -1,3 +1,8 @@
+The Better Mega Menu 8.x-1.0-dev, 2020-08-07
+--------------------------------------------
+- Issue #2882051 by knaffles, maithili11: Top level drop downs do not work on
+  touch devices when the menu item path is set to <nolink>
+
 The Better Mega Menu 8.x-1.0-dev, 2020-08-04
 --------------------------------------------
 - Issue #2952410 by ankitjain28may, SivaprasadC: Typo in
