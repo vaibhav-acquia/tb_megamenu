@@ -165,55 +165,88 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
           }
         });
         var mm_timeout = mm_duration ? 100 + mm_duration : 500;
-        $('.nav > li, li.mega', context).bind('mouseenter', function(event) {
-          showMenu($(this), mm_timeout)
-        });
-        $('.nav > li > .dropdown-toggle, li.mega > .dropdown-toggle', context).bind('focus', function(event) {
-          var $this = $(this);
-          var $subMenu = $this.closest('li');
 
-          showMenu($subMenu, mm_timeout);
-          // If the focus moves outside of the subMenu, close it.
-          $(document).bind('focusin', function(event) {
-            if ($subMenu.has(event.target).length) {
-              return;
-            }
-            $(document).unbind(event);
-            hideMenu($subMenu, mm_timeout);
+        if (!isTouch) {
+          $('.nav > li, li.mega', context).bind('mouseenter', function(event) {
+            showMenu($(this), mm_timeout)
           });
-        });
-        $('.nav > li, li.mega', context).bind('mouseleave', function(event) {
-          hideMenu($(this), mm_timeout);
-        });
-
-        // Handle keyboard input whenever the mouse enters the menu or it
-        // receives focus.
-        $('.tb-megamenu', context).on('mouseenter focusin', function(event) {
-          $(document).off('keydown.tbMegamenu');
-          handleKeyboard(mm_timeout);
-        })
-
-        // Remove keyboard listener whenever the mouse leaves.
-        $('.tb-megamenu', context).on('mouseleave', function(event) {
-          // Does an element in the menu still have focus? If so, do nothing.
-          var $hasFocus = $('.tb-megamenu').find('a:focus');
-
-          if ($hasFocus.length === 0) {
+          $('.nav > li > .dropdown-toggle, li.mega > .dropdown-toggle', context).bind('focus', function(event) {
+            var $this = $(this);
+            var $subMenu = $this.closest('li');
+  
+            showMenu($subMenu, mm_timeout);
+            // If the focus moves outside of the subMenu, close it.
+            $(document).bind('focusin', function(event) {
+              if ($subMenu.has(event.target).length) {
+                return;
+              }
+              $(document).unbind(event);
+              hideMenu($subMenu, mm_timeout);
+            });
+          });
+          $('.nav > li, li.mega', context).bind('mouseleave', function(event) {
+            hideMenu($(this), mm_timeout);
+          });
+  
+          // Handle keyboard input whenever the mouse enters the menu or it
+          // receives focus.
+          $('.tb-megamenu', context).on('mouseenter focusin', function(event) {
             $(document).off('keydown.tbMegamenu');
-          }
-        })
+            handleKeyboard(mm_timeout);
+          })
+  
+          // Remove keyboard listener whenever the mouse leaves.
+          $('.tb-megamenu', context).on('mouseleave', function(event) {
+            // Does an element in the menu still have focus? If so, do nothing.
+            var $hasFocus = $('.tb-megamenu').find('a:focus');
+  
+            if ($hasFocus.length === 0) {
+              $(document).off('keydown.tbMegamenu');
+            }
+          })
+  
+          // Remove keyboard listener whenever the menu loses focus.
+          $('.tb-megamenu', context).on('focusout', function(event) {
+            $(document).off('keydown.tbMegamenu');
+          }) 
+        }
 
-        // Remove keyboard listener whenever the menu loses focus.
-        $('.tb-megamenu', context).on('focusout', function(event) {
-          $(document).off('keydown.tbMegamenu');
-        })
+        // Define actions for touch devices.
+        var createTouchMenu = function (items) {
+          items.children("a, span").each(function () {
+            var $item = $(this);
+            var tbitem = $(this).parent();
 
-        // If we are on a touch device, do not click through on dropdown
-        // toggles.
-        if (isTouch) {
-          $('.dropdown-toggle', context).on('click', function(event) {
-            return false;
+            $item.click(function (event) {
+              // If the menu link has already been clicked once...
+              if ($item.hasClass("tb-megamenu-clicked")) {
+                var $uri = $item.attr("href");
+
+                // If the menu link has a URI, go to the link.
+                // <nolink> menu items will not have a URI.
+                if ($uri) {
+                  window.location.href = $uri;
+                } else {
+                  $item.removeClass("tb-megamenu-clicked");
+                  hideMenu(tbitem, mm_timeout);
+                }
+              } else {
+                event.preventDefault();
+
+                // Hide any already open menus.
+                hideMenuFast();
+                $(".tb-megamenu").find(".tb-megamenu-clicked").removeClass("tb-megamenu-clicked");
+
+                // Open the submenu.
+                $item.addClass("tb-megamenu-clicked");
+                showMenu(tbitem, mm_timeout);
+              }
+            });
           });
+        };
+
+        if (isTouch) {
+          createTouchMenu($(".tb-megamenu ul.nav li.mega", context).has(".dropdown-menu"));
         }
       });
 
@@ -224,6 +257,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
           Drupal.TBMegaMenu.menuResponsive();
         }
       });
+
     }
   };
 })(jQuery, Drupal, drupalSettings);

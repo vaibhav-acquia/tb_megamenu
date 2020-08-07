@@ -26,7 +26,6 @@ theme.tb_megamenu:
       css/tb_megamenu.compatibility.css: {}
   js:
     js/tb-megamenu-frontend.js: { scope: footer }
-    js/tb-megamenu-touch.js: { scope: footer }
   dependencies:
     - core/jquery
     - core/drupal
