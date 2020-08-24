@@ -21,7 +21,7 @@ use Drupal\Component\Serialization\Json;
  *     }
  *   },
  *   config_prefix = "menu_config",
- *   admin_permission = "administer site configuration",
+ *   admin_permission = "administer tb_megamenu",
  *   entity_keys = {
  *     "id" = "id",
  *     "menu" = "menu",
