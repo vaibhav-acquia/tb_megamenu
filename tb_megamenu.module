@@ -14,6 +14,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Component\Serialization\Json;
 use Drupal\tb_megamenu\TBMegaMenuBuilder;
 use Drupal\tb_megamenu\Entity\MegaMenuConfig;
+use Drupal\Core\Url;
 
 /**
  * Implements hook_help().
@@ -461,7 +462,7 @@ function template_preprocess_tb_megamenu_backend(array &$vars) {
   $vars['block_config'] = $block_config;
   $vars['animation_options'] = TBMegaMenuBuilder::createAnimationOptions($block_config);
   $vars['style_options'] = TBMegaMenuBuilder::createStyleOptions($block_config);
-  $vars['edit_links'] = \Drupal::url('entity.menu.edit_form', ['menu' => $menu_name]);
+  $vars['edit_links'] = Url::fromRoute('entity.menu.edit_form', ['menu' => $menu_name])->toString();
 
   // Attach this to init TB Mega Menu (Importance).
   $vars['#attached']['drupalSettings']['TBMegaMenu']['menu_name'] = $menu_name;
@@ -695,7 +696,7 @@ function tb_megamenu_update_megamenus(&$form, FormStateInterface $form_state) {
 
       $config = MegaMenuConfig::loadMenu($menu_name, $theme);
       if ($config === NULL) {
-        drupal_set_message(t("Cannot create a new config object in save!"));
+        \Drupal::messenger()->addStatus(t("Cannot create a new config object in save!"));
         return;
       }
       $config->block_config = Json::encode($block_config);

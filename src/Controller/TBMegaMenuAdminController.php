@@ -107,7 +107,7 @@ class TBMegaMenuAdminController extends ControllerBase {
           $config = MegaMenuConfig::loadMenu($menu_name, $theme);
           if ($config === NULL) {
             $msg = $this->t("Cannot create a new config object in save!");
-            drupal_set_message($msg);
+            $this->messenger()->addStatus($msg);
             $result = $msg;
             break;
           }
@@ -127,7 +127,7 @@ class TBMegaMenuAdminController extends ControllerBase {
           $msg = $this->t(
             "Error Saving TB MegaMenu configuration: Post was missing the following information: @problem",
             ['@problem' => $problem]);
-          drupal_set_message($msg);
+          $this->messenger()->addStatus($msg);
           $result = $msg;
         }
         break;
@@ -167,9 +167,9 @@ class TBMegaMenuAdminController extends ControllerBase {
     $page['#attached']['library'][] = 'tb_megamenu/form.chosen';
     // Add a custom library.
     $page['#attached']['library'][] = 'tb_megamenu/form.configure-megamenu';
-    URL::fromRoute('tb_megamenu.admin.save', [], ['absolute' => TRUE]);
+    Url::fromRoute('tb_megamenu.admin.save', [], ['absolute' => TRUE]);
 
-    $abs_url_config = URL::fromRoute('tb_megamenu.admin.save', [], ['absolute' => TRUE])->toString();
+    $abs_url_config = Url::fromRoute('tb_megamenu.admin.save', [], ['absolute' => TRUE])->toString();
     $page['#attached']['drupalSettings']['TBMegaMenu']['saveConfigURL'] = $abs_url_config;
     if (!empty($tb_megamenu)) {
       $page['tb_megamenu'] = [

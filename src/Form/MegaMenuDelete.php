@@ -37,7 +37,7 @@ class MegaMenuDelete extends EntityConfirmFormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $this->entity->delete();
-    drupal_set_message($this->t('MegaMenu %label has been deleted.', ['%label' => $this->entity->menu]));
+    $this->messenger()->addStatus($this->t('MegaMenu %label has been deleted.', ['%label' => $this->entity->menu]));
 
     $form_state->setRedirectUrl($this->getCancelUrl());
   }

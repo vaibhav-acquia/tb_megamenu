@@ -140,12 +140,12 @@ class MegaMenuAdd extends EntityForm {
     $status = $megamenu->save();
 
     if ($status) {
-      drupal_set_message($this->t('Created the %label Mega Menu, edit it to configure.', [
+      $this->messenger()->addStatus($this->t('Created the %label Mega Menu, edit it to configure.', [
         '%label' => $megamenu->menu,
       ]));
     }
     else {
-      drupal_set_message($this->t('The %label Example was not saved.', [
+      $this->messenger()->addStatus($this->t('The %label Example was not saved.', [
         '%label' => $megamenu->menu,
       ]));
     }
