@@ -4,6 +4,8 @@ The Better Mega Menu 8.x-1.0-dev, 2020-10-02
   characters in hook help.
 - Issue #3174465 by John.nie: Mega menu missing config_export definition
   in its annotation.
+- Issue #3174475 by John.nie: Array and string offset access syntax with
+  curly braces is deprecated
 The Better Mega Menu 8.x-1.0-dev, 2020-09-11
 --------------------------------------------
 - Issue #3149011 by Project Update Bot, themodularlab: Automated Drupal 9 compatibility fixes

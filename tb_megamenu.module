@@ -739,7 +739,7 @@ function tb_megamenu_attach_number_columns($childrens, $elements) {
 function tb_megamenu_check_access( array &$menu_items ) {
   foreach ($menu_items as $route => &$item ) {
     if ($item->access instanceof AccessResultInterface && !$item->access->isAllowed()) {
-      unset($menu_items{$route});
+      unset($menu_items[$route]);
       continue;
     }
     if ($item->hasChildren) {
