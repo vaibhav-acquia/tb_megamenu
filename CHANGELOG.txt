@@ -1,3 +1,15 @@
+The Better Mega Menu 8.x-1.0-beta2, 2020-10-02
+--------------------------------------------
+- Issue #3172977 by Ramya Balasubramanian, dev.patrick: Unwanted special
+  characters in hook help.
+- Issue #3174465 by John.nie: Mega menu missing config_export definition
+  in its annotation.
+- Issue #3174475 by John.nie: Array and string offset access syntax with
+  curly braces is deprecated
+- Issue #3174476 by John.nie, themodularlab: Render #post_render callbacks must be methods
+  of a class that implements \Drupal\Core\Security\TrustedCallbackInterface
+  or be an anonymous function.
+
 The Better Mega Menu 8.x-1.0-beta1, 2020-09-11
 --------------------------------------------
 - Issue #3149011 by Project Update Bot, themodularlab: Automated Drupal 9 compatibility fixes
