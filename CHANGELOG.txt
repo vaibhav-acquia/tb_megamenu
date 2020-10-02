@@ -6,6 +6,10 @@ The Better Mega Menu 8.x-1.0-dev, 2020-10-02
   in its annotation.
 - Issue #3174475 by John.nie: Array and string offset access syntax with
   curly braces is deprecated
+- Issue #3174476 by John.nie, themodularlab: Render #post_render callbacks must be methods
+  of a class that implements \Drupal\Core\Security\TrustedCallbackInterface
+  or be an anonymous function.
+
 The Better Mega Menu 8.x-1.0-dev, 2020-09-11
 --------------------------------------------
 - Issue #3149011 by Project Update Bot, themodularlab: Automated Drupal 9 compatibility fixes

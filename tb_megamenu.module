@@ -721,15 +721,6 @@ function tb_megamenu_block_view_tb_megamenu_menu_block_alter(array &$build, Bloc
 /**
  * Attach the number of columns into JS.
  */
-function tb_megamenu_attach_number_columns($childrens, $elements) {
-  $number_columns = &drupal_static('column');
-  $render_array = [];
-  $render_array['#attached']['drupalSettings']['TBMegaMenu'] = [
-    'TBElementsCounter' => ['column' => $number_columns],
-  ];
-  \Drupal::service('renderer')->render($render_array);
-  return $childrens;
-}
 /**
  * Recursively remove menu items without access rights.
  *
