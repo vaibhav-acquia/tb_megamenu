@@ -57,7 +57,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
   }  
   Drupal.behaviors.tbMegaMenuTouchAction = {
     attach: function(context) {
-      var isTouch = 'ontouchstart' in window && !(/hp-tablet/gi).test(navigator.appVersion);
+      var isTouch = window.matchMedia('(pointer: coarse)').matches;
       if(isTouch){
         $('html').addClass('touch');
         Drupal.TBMegaMenu.createTouchMenu($('.tb-megamenu ul.nav li.mega').has('.dropdown-menu'));
