@@ -14,10 +14,12 @@ function tb_megamenu_schema() {
       ),
       'block_config' => array(
         'type' => 'text',
+        'size' => 'medium',
         'not null' => FALSE
       ),
       'menu_config' => array(
         'type' => 'text',
+        'size' => 'medium',
         'not null' => FALSE
       ),
       'language' => array(
@@ -55,11 +57,21 @@ function tb_megamenu_update_7101(&$sandbox) {
   db_query("UPDATE {tb_megamenus} SET language = :language",
       array(':language' => $GLOBALS['language']->language));
   return t('Added language field and set all existing menus to current language');
-  
 }
 
 /**
  * Deprecated update - rolled into 7101 to prevent possible data loss.
  */
 function tb_megamenu_update_7102(&$sandbox) {
+}
+
+/**
+ * Implements hook_update_N().
+ */
+function tb_megamenu_update_7103(&$sandbox) {
+  // Increased column sizes so large menus can be saved properly.
+  // The API's db_change_field() is unnecessary because no keys or indices are
+  // affected.
+  db_query('ALTER TABLE {tb_megamenus} MODIFY COLUMN block_config MEDIUMTEXT');
+  db_query('ALTER TABLE {tb_megamenus} MODIFY COLUMN menu_config MEDIUMTEXT');
 }
