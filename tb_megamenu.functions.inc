@@ -11,11 +11,23 @@ function tb_megamenu_check_library($module, $name) {
     }
   }
   elseif ($library = drupal_get_library($module, $name)) {
-    if (!empty($library['css'])) {
-      $files['css'] = key($library['css']);
+    // Get all directories in /sites/all/libraries fully or partially matching $name.
+    $paths = [];
+    foreach (glob('sites/all/libraries/' . $name . '*') as $path) {
+      if (is_dir($path)) {
+        $paths[] = $path;
+      }
     }
-    if (!empty($library['js'])) {
-      $files['js'] = key($library['js']);
+    // If one or more directories were found use the one with the highest version number.
+    if (!empty($paths)) {
+      $library_path = max($paths);
+
+      if (!empty($library['css'])) {
+        $files['css'] = $library_path . key($library['css']);
+      }
+      if (!empty($library['js'])) {
+        $files['js'] = $library_path . key($library['js']);
+      }
     }
   }
   return !empty($files) ? $files : FALSE;
@@ -637,7 +649,7 @@ function tb_megamenu_update_megamenus(&$form, &$form_state) {
       $block_config = tb_megamenu_get_block_config($menu_name);
       tb_megamenu_sync_config_all($items, $menu_config, 'backend');
       tb_megamenu_sync_order_menus($menu_config);
-      
+
       global $language;
       $tb_megamenu = db_select('tb_megamenus', 't')
         ->fields('t')
