@@ -144,6 +144,9 @@ function template_preprocess_tb_megamenu_item(&$vars) {
     $vars['item']['link']['#attributes'] += $item['link']['localized_options']['attributes'];
   }
 
+  // Ensure the link options are not NULL and an array.
+  $vars['item']['link']['options'] = isset($vars['item']['link']['options']) && is_array($vars['item']['link']['options']) ? $vars['item']['link']['options'] : [];
+
   if (isset($trail[$mlid])) {
     $vars['classes_array'][] = 'active';
     $vars['classes_array'][] = $vars['a_classes'][] = 'active-trail';
