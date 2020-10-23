@@ -7,11 +7,13 @@ include_once drupal_get_path('module', 'tb_megamenu') . '/tb_megamenu.functions.
 function tb_megamenu_admin_settings($form) {
   $menus = tb_megamenu_get_megamenus();
   foreach ($menus as $menu) {
-    $form[$menu->menu_name]['#tb_megamenu'] = $menu;
-    $form[$menu->menu_name]['menu_name'] = array('#markup' => $menu->menu_name);
-    $form[$menu->menu_name]['title'] = array('#markup' => $menu->title);
-    $form[$menu->menu_name]['config_megamenu'] = array('#type' => 'link', '#title' => t('Config'), '#href' => "admin/structure/tb-megamenu/$menu->menu_name");
-    $form[$menu->menu_name]['config_links'] = array('#type' => 'link', '#title' => t('Edit links'), '#href' => "admin/structure/menu/manage/$menu->menu_name");
+    if (drupal_valid_path('admin/structure/menu/manage/' . $menu->menu_name)) {
+      $form[$menu->menu_name]['#tb_megamenu'] = $menu;
+      $form[$menu->menu_name]['menu_name'] = array('#markup' => $menu->menu_name);
+      $form[$menu->menu_name]['title'] = array('#markup' => $menu->title);
+      $form[$menu->menu_name]['config_megamenu'] = array('#type' => 'link', '#title' => t('Config'), '#href' => "admin/structure/tb-megamenu/$menu->menu_name");
+      $form[$menu->menu_name]['config_links'] = array('#type' => 'link', '#title' => t('Edit links'), '#href' => "admin/structure/menu/manage/$menu->menu_name");
+    }
   }
   return $form;
 }
