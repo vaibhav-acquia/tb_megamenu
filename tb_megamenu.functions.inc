@@ -639,9 +639,32 @@ function tb_megamenu_get_counter($key) {
  * Update items in tb_megamenus table.
  */
 function tb_megamenu_update_megamenus(&$form, &$form_state) {
+  // Capture all values in $form_state representing a menu item.
+  $mlid_values = array_filter($form_state['values'], function($key) {
+    return strpos($key, 'mlid:') !== FALSE;
+  }, ARRAY_FILTER_USE_KEY );
+  // Extract the mlid for each item from the keys of the array of menu items.
+  $mlid_keys = array_keys($mlid_values);
+  $valid_mlids = [];
+  // Build an array of current/valid mlids.
+  foreach($mlid_keys as $key => $value) {
+    $valid_mlids[] = substr($value, 5);
+  }
+
   if (isset($form_state['build_info']['args'][0]['menu_name']) ) {
     $menu_name = $form_state['build_info']['args'][0]['menu_name'];
     if ($menu_config = tb_megamenu_get_menu_config($menu_name)) {
+      // Confirm the previously saved config doesn't contain any items that no
+      // longer exist by comparing the mlids in config to the mlids of the
+      // submitted form values.
+      $invalid_mlids = array_diff(array_keys($menu_config), $valid_mlids);
+      // Remove any invalid menu items from the config object.
+      if (!empty($invalid_mlids)) {
+        foreach ($invalid_mlids as $invalid_mlid) {
+          unset($menu_config[$invalid_mlid]);
+        }
+      }
+
       $items = tb_megamenu_get_tree($menu_name);
       if (function_exists('i18n_menu_localize_tree')) {
         $items = i18n_menu_localize_tree($items);
