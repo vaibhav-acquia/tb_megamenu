@@ -338,7 +338,9 @@ function tb_megamenu_sync_config($items, &$item_config, $_mlid, $section) {
         else {
           $row = 0;
           $col = 0;
-          while (isset($item_config['rows_content'][$row][$col]['col_content']) && $item_config['rows_content'][$row][$col]['col_content'][0]['type'] == 'block') {
+          while (isset($item_config['rows_content'][$row][$col]['col_content'])
+            && isset($item_config['rows_content'][$row][$col]['col_content'][0])
+            && $item_config['rows_content'][$row][$col]['col_content'][0]['type'] == 'block') {
             $row++;
           }
           tb_megamenu_insert_tb_item($item_config, $row, $col, $item);
