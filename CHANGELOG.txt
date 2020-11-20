@@ -1,3 +1,8 @@
+The Better Mega Menu 8.x-1.0-dev, 2020-11-20
+--------------------------------------------
+- Issue #2965871 by quondam, gaurav.bajpai, andrewozone: When Parent menu
+  disabled Submenu getting shifted to previous parent
+
 The Better Mega Menu 8.x-1.0-dev, 2020-10-02
 --------------------------------------------
 - Issue #3172977 by Ramya Balasubramanian, dev.patrick: Unwanted special

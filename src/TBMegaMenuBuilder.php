@@ -2,6 +2,7 @@
 
 namespace Drupal\tb_megamenu;
 
+use Drupal\Core\Menu\MenuLinkTreeElement;
 use Drupal\Core\Menu\MenuTreeParameters;
 use Drupal\tb_megamenu\Entity\MegaMenuConfig;
 
@@ -328,6 +329,28 @@ class TBMegaMenuBuilder {
   }
 
   /**
+   * Check if the parent of a menu link is enabled.
+   *
+   * @param \Drupal\Core\Menu\MenuLinkTreeElement $item
+   *   The individual menu item.
+   *
+   * @return bool
+   *   TRUE if the parent is enabled, otherwise FALSE.
+   */
+  public static function checkParentEnabled(MenuLinkTreeElement $item) {
+    // Assume enabled by default to account for top-level items without parents.
+    $parent_enabled = TRUE;
+
+    // Load the parent item and check that it's enabled.
+    if ($parent_id = $item->link->getParent()) {
+      $parent = \Drupal::service('menu.tree_storage')->load($parent_id);
+      $parent_enabled = !$parent || !$parent['enabled'] || $parent['enabled'] == 0 ? FALSE : TRUE;
+    }
+
+    return $parent_enabled;
+  }
+
+  /**
    * Add item config values to menu config array.
    *
    * @param array $menu_items
@@ -366,7 +389,8 @@ class TBMegaMenuBuilder {
       ];
 
       foreach ($items as $plugin_id => $item) {
-        if ($item->link->isEnabled()) {
+        $parent_enabled = self::checkParentEnabled($item);
+        if ($item->link->isEnabled() && $parent_enabled) {
           $item_config['rows_content'][0][0]['col_content'][] = [
             'type' => 'menu_item',
             'plugin_id' => $plugin_id,
@@ -391,7 +415,8 @@ class TBMegaMenuBuilder {
               ];
               $existed = FALSE;
               foreach ($items as $plugin_id => $item) {
-                if ($item->link->isEnabled() && $tb_item['plugin_id'] == $plugin_id) {
+                $parent_enabled = self::checkParentEnabled($item);
+                if ($item->link->isEnabled() && $tb_item['plugin_id'] == $plugin_id && $parent_enabled) {
                   $item_config['rows_content'][$i][$j]['col_content'][$k]['weight'] = $item->link->getWeight();
                   $existed = TRUE;
                   break;
