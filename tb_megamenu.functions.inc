@@ -342,7 +342,9 @@ function tb_megamenu_sync_config($items, &$item_config, $_mlid, $section) {
             $row++;
           }
           tb_megamenu_insert_tb_item($item_config, $row, $col, $item);
-          $item_config['rows_content'][$row][$col]['col_config'] = array();
+          if (!isset($item_config['rows_content'][$row][$col]['col_config'])) {
+            $item_config['rows_content'][$row][$col]['col_config'] = array();
+          }
         }
       }
     }
@@ -350,20 +352,36 @@ function tb_megamenu_sync_config($items, &$item_config, $_mlid, $section) {
 }
 
 function tb_megamenu_insert_tb_item(&$item_config, $row, $col, $item) {
-  $i = 0;
+  $added = FALSE;
+  $new_col = array();
   $col_content = isset($item_config['rows_content'][$row][$col]['col_content']) ? $item_config['rows_content'][$row][$col]['col_content'] : array();
-  while ($i < count($col_content) && $col_content[$i]['weight'] < $item['link']['weight']) {
-    $i++;
-  }
-  for ($j = count($col_content); $j > $i; $j--) {
-    $item_config['rows_content'][$row][$col]['col_content'][$j] = $item_config['rows_content'][$row][$col]['col_content'][$j - 1];
-  }
-  $item_config['rows_content'][$row][$col]['col_content'][$i] = array(
+
+  // If this tree has not been corrected due to issue #2571547, $col_content might be an associative array.
+  // It should be an indexed array. Build a new indexed array, discarding the keys.
+  $new_config = array(
     'mlid' => $item['link']['mlid'],
     'type' => 'menu_item',
     'weight' => $item['link']['weight'],
     'tb_item_config' => array(),
   );
+
+  foreach ($col_content as $cell) {
+    $new_col[] = $cell;
+    if (!$added && isset($new_config['weight'])) {
+      $new_col[] = $new_config;
+      $added = TRUE;
+    }
+    // Sort all cells by ascending weight value to match the menu ordering.
+    $weight = array_column($new_col, 'weight');
+    array_multisort($weight, SORT_ASC, $new_col);
+  }
+
+  if (!count($new_col)) {
+    // in case there were no existing items
+    $new_col[] = $new_config;
+  }
+
+  $item_config['rows_content'][$row][$col]['col_content'] = $new_col;
 }
 
 function tb_megamenu_array_to_object($array) {
