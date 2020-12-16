@@ -128,7 +128,6 @@
   margin-bottom: 0;
   list-style: none;
 }
-
 .tb-megamenu .nav > li > a,
 .tb-megamenu .nav > li > span.tb-megamenu-no-link {
   display: block;
@@ -137,6 +136,16 @@
 .tb-megamenu .nav > li > span.tb-megamenu-no-link:hover {
   text-decoration: none;
   background-color: #eee;
+}
+.tb-megamenu .dropdown-menu a,
+.tb-megamenu .dropdown-menu span.tb-megamenu-no-link {
+  display: block;
+  padding: 3px 20px;
+  clear: both;
+  font-weight: normal;
+  line-height: 18px;
+  color: #333;
+  white-space: nowrap;
 }
 .tb-megamenu .dropdown-menu li > a:hover,
 .tb-megamenu .dropdown-menu li > a:focus,
@@ -294,73 +303,6 @@
 .tb-megamenu input[type="submit"].btn::-moz-focus-inner {
   padding: 0;
   border: 0;
-}
-.tb-megamenu .btn-group {
-  position: relative;
-  font-size: 0;
-  white-space: nowrap;
-  *margin-left: .3em;
-}
-.tb-megamenu .btn-group:first-child {
-  *margin-left: 0;
-}
-.tb-megamenu .btn-group + .btn-group {
-  margin-left: 5px;
-}
-.tb-megamenu .btn-group > .btn {
-  position: relative;
-  border-radius: 0;
-}
-.tb-megamenu .btn-group > .btn + .btn {
-  margin-left: -1px;
-}
-.tb-megamenu .btn-group > .btn,
-.tb-megamenu .btn-group > .dropdown-menu {
-  font-size: 13px;
-}
-.tb-megamenu .btn-group > .btn.first,
-.tb-megamenu .btn-group > .btn:first-child {
-  margin-left: 0;
-  border-top-left-radius: 4px;
-  border-bottom-left-radius: 4px;
-}
-.tb-megamenu .btn-group > .btn.last,
-.tb-megamenu .btn-group > .btn:last-child,
-.tb-megamenu .btn-group > .dropdown-toggle {
-  border-top-right-radius: 4px;
-  border-bottom-right-radius: 4px;
-}
-.tb-megamenu .btn-group > .btn.large:first-child {
-  margin-left: 0;
-  border-top-left-radius: 6px;
-  border-bottom-left-radius: 6px;
-}
-.tb-megamenu .btn-group > .btn.large:last-child,
-.tb-megamenu .btn-group > .large.dropdown-toggle {
-  border-top-right-radius: 6px;
-  border-bottom-right-radius: 6px;
-}
-.tb-megamenu .btn-group > .btn:hover,
-.tb-megamenu .btn-group > .btn:focus,
-.tb-megamenu .btn-group > .btn:active,
-.tb-megamenu .btn-group > .btn.active {
-  z-index: 2;
-}
-.tb-megamenu .btn-group .dropdown-toggle:active,
-.tb-megamenu .btn-group.open .dropdown-toggle {
-  outline: 0;
-}
-.tb-megamenu .btn-group > .btn + .dropdown-toggle {
-  padding-left: 8px;
-  padding-right: 8px;
-  box-shadow: inset 1px 0 0 rgba(255,255,255,.125), inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);
-}
-.tb-megamenu .btn-group.open .dropdown-toggle {
-  background-image: none;
-  box-shadow: inset 0 2px 4px rgba(0,0,0,.15), 0 1px 2px rgba(0,0,0,.05);
-}
-.tb-megamenu .btn-group.open .btn.dropdown-toggle {
-  background-color: #e6e6e6;
 }
 .tb-megamenu a.disabled,
 .tb-megamenu a.disabled:hover {

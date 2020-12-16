@@ -87,9 +87,6 @@
 .tb-megamenu .btn.active {
   background-color: #cccccc \9;
 }
-.tb-megamenu .btn:first-child {
-  *margin-left: 0;
-}
 .tb-megamenu .btn:hover,
 .tb-megamenu .btn:focus {
   color: #333333;
@@ -123,100 +120,6 @@
   line-height: 14px;
   vertical-align: text-top;
   margin-top: 1px;
-}
-.tb-megamenu .btn-group {
-  position: relative;
-  display: inline-block;
-  font-size: 0;
-  vertical-align: middle;
-  white-space: nowrap;
-}
-.tb-megamenu .btn-group:first-child {
-  *margin-left: 0;
-}
-.tb-megamenu .btn-group + .btn-group {
-  margin-left: 5px;
-}
-.tb-megamenu .btn-toolbar {
-  font-size: 0;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-.tb-megamenu .btn-toolbar > .btn + .btn,
-.tb-megamenu .btn-toolbar > .btn-group + .btn,
-.tb-megamenu .btn-toolbar > .btn + .btn-group {
-  margin-left: 5px;
-}
-.tb-megamenu .btn-group > .btn {
-  position: relative;
-  border-radius: 0;
-}
-.tb-megamenu .btn-group > .btn + .btn {
-  margin-left: -1px;
-}
-.tb-megamenu .btn-group > .btn,
-.tb-megamenu .btn-group > .dropdown-menu,
-.tb-megamenu .btn-group > .popover {
-  font-size: 14px;
-}
-.tb-megamenu .btn-group > .btn-mini {
-  font-size: 10.5px;
-}
-.tb-megamenu .btn-group > .btn-small {
-  font-size: 11.9px;
-}
-.tb-megamenu .btn-group > .btn-large {
-  font-size: 17.5px;
-}
-.tb-megamenu .btn-group > .btn:first-child {
-  margin-left: 0;
-  border-top-left-radius: 4px;
-  border-bottom-left-radius: 4px;
-}
-.tb-megamenu .btn-group > .btn:last-child,
-.tb-megamenu .btn-group > .dropdown-toggle {
-  border-top-right-radius: 4px;
-  border-bottom-right-radius: 4px;
-}
-.tb-megamenu .btn-group > .btn.large:first-child {
-  margin-left: 0;
-  border-top-left-radius: 6px;
-  border-bottom-left-radius: 6px;
-}
-.tb-megamenu .btn-group > .btn.large:last-child,
-.tb-megamenu .btn-group > .large.dropdown-toggle {
-  border-top-right-radius: 6px;
-  border-bottom-right-radius: 6px;
-}
-.tb-megamenu .btn-group > .btn:hover,
-.tb-megamenu .btn-group > .btn:focus,
-.tb-megamenu .btn-group > .btn:active,
-.tb-megamenu .btn-group > .btn.active {
-  z-index: 2;
-}
-.tb-megamenu .btn-group .dropdown-toggle:active,
-.tb-megamenu .btn-group.open .dropdown-toggle {
-  outline: 0;
-}
-.tb-megamenu .btn-group > .btn + .dropdown-toggle {
-  padding-left: 8px;
-  padding-right: 8px;
-  box-shadow: inset 1px 0 0 rgba(255,255,255,.125), inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);
-}
-.tb-megamenu .btn-group > .btn-mini + .dropdown-toggle {
-  padding-left: 5px;
-  padding-right: 5px;
-}
-.tb-megamenu .btn-group > .btn-large + .dropdown-toggle {
-  padding-left: 12px;
-  padding-right: 12px;
-}
-.tb-megamenu .btn-group.open .dropdown-toggle {
-  background-image: none;
-  box-shadow: inset 0 2px 4px rgba(0,0,0,.15), 0 1px 2px rgba(0,0,0,.05);
-}
-.tb-megamenu .btn-group.open .btn.dropdown-toggle {
-  background-color: #e6e6e6;
 }
 .tb-megamenu .btn .caret {
   margin-top: 8px;
@@ -261,7 +164,6 @@
   border-top-color: #005580;
   border-bottom-color: #005580;
 }
-/* move down carets for tabs */
 .tb-megamenu .nav .active .dropdown-toggle .caret {
   border-top-color: #fff;
   border-bottom-color: #fff;
@@ -301,9 +203,6 @@
 .tb-megamenu .dropdown {
   position: relative;
 }
-.tb-megamenu .dropdown-toggle {
-  *margin-bottom: -3px;
-}
 .tb-megamenu .dropdown-toggle:active,
 .tb-megamenu .open .dropdown-toggle {
   outline: 0;
@@ -341,10 +240,8 @@
   background-clip: padding-box;
 }
 .tb-megamenu .dropdown-menu .divider {
-  *width: 100%;
   height: 1px;
   margin: 9px 1px;
-  *margin: -5px 0 5px;
   overflow: hidden;
   background-color: #e5e5e5;
   border-bottom: 1px solid #ffffff;
