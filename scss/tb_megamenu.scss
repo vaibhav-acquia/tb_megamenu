@@ -365,6 +365,7 @@
       > a,
       > span.tb-megamenu-no-link {
         color: #999;
+
         &:hover,
         &:focus {
           color: #999;
@@ -503,6 +504,14 @@
       float: none;
       list-style: none;
       margin-left: 0;
+
+      &:first-child {
+        > a,
+        > span.tb-megamenu-no-link {
+          margin-top: 0;
+          padding-top: 0;
+        }
+      }
 
       a,
       span.tb-megamenu-no-link {

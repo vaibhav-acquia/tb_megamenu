@@ -1147,3 +1147,75 @@ input[type='file'] {
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
+
+/* This was ported from tb_megamenu.default.css. May not be needed. */
+@media (min-width: 980px) and (max-width: 1199px) {
+  .tb-megamenu input,
+  .tb-megamenu textarea,
+  .tb-megamenu .uneditable-input {
+    margin-left: 0;
+  }
+  .tb-megamenu .controls-row [class*='span'] + [class*='span'] {
+    margin-left: 40px;
+  }
+  .tb-megamenu input.span12,
+  textarea.span12,
+  .uneditable-input.span12 {
+    width: 918px;
+  }
+  .tb-megamenu input.span11,
+  textarea.span11,
+  .uneditable-input.span11 {
+    width: 837px;
+  }
+  .tb-megamenu input.span10,
+  textarea.span10,
+  .uneditable-input.span10 {
+    width: 756px;
+  }
+  .tb-megamenu input.span9,
+  textarea.span9,
+  .uneditable-input.span9 {
+    width: 675px;
+  }
+  .tb-megamenu input.span8,
+  textarea.span8,
+  .uneditable-input.span8 {
+    width: 594px;
+  }
+  .tb-megamenu input.span7,
+  textarea.span7,
+  .uneditable-input.span7 {
+    width: 513px;
+  }
+  .tb-megamenu input.span6,
+  textarea.span6,
+  .uneditable-input.span6 {
+    width: 432px;
+  }
+  .tb-megamenu input.span5,
+  textarea.span5,
+  .uneditable-input.span5 {
+    width: 351px;
+  }
+  .tb-megamenu input.span4,
+  textarea.span4,
+  .uneditable-input.span4 {
+    width: 270px;
+  }
+  .tb-megamenu input.span3,
+  textarea.span3,
+  .uneditable-input.span3 {
+    width: 189px;
+  }
+  .tb-megamenu input.span2,
+  textarea.span2,
+  .uneditable-input.span2 {
+    width: 108px;
+  }
+  .tb-megamenu input.span1,
+  textarea.span1,
+  .uneditable-input.span1 {
+    width: 27px;
+  }
+}
