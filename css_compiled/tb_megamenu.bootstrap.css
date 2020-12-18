@@ -1,13 +1,9 @@
-/*!
- * Bootstrap v2.3.2
- *
- * Copyright 2012 Twitter, Inc
- * Licensed under the Apache License v2.0
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Designed and built with all the love in the world @twitter by @mdo and @fat.
- */
-/* line 11, scss/tb_megamenu.bootstrap.scss */
+/* line 1, scss/tb_megamenu.bootstrap.scss */
+.tb-megamenu {
+  background-color: #000;
+}
+
+/* line 4, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .row-fluid {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -19,13 +15,13 @@
   width: 100%;
 }
 
-/* line 15, scss/tb_megamenu.bootstrap.scss */
+/* line 9, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .row-fluid + .row-fluid {
   padding-top: 10px;
-  border-top: 1px solid #eeeeee;
+  border-top: 1px solid #ddd;
 }
 
-/* line 19, scss/tb_megamenu.bootstrap.scss */
+/* line 14, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .row-fluid [class*='span'] {
   display: block;
   width: 100%;
@@ -34,67 +30,67 @@
           box-sizing: border-box;
 }
 
-/* line 25, scss/tb_megamenu.bootstrap.scss */
+/* line 21, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .row-fluid .span12 {
   width: 100%;
 }
 
-/* line 28, scss/tb_megamenu.bootstrap.scss */
+/* line 24, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .row-fluid .span11 {
   width: 91.66666667%;
 }
 
-/* line 31, scss/tb_megamenu.bootstrap.scss */
+/* line 27, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .row-fluid .span10 {
   width: 83.33333333%;
 }
 
-/* line 34, scss/tb_megamenu.bootstrap.scss */
+/* line 30, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .row-fluid .span9 {
   width: 75%;
 }
 
-/* line 37, scss/tb_megamenu.bootstrap.scss */
+/* line 33, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .row-fluid .span8 {
   width: 66.66666667%;
 }
 
-/* line 40, scss/tb_megamenu.bootstrap.scss */
+/* line 36, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .row-fluid .span7 {
   width: 58.33333333%;
 }
 
-/* line 43, scss/tb_megamenu.bootstrap.scss */
+/* line 39, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .row-fluid .span6 {
   width: 50%;
 }
 
-/* line 46, scss/tb_megamenu.bootstrap.scss */
+/* line 42, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .row-fluid .span5 {
   width: 41.66666667%;
 }
 
-/* line 49, scss/tb_megamenu.bootstrap.scss */
+/* line 45, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .row-fluid .span4 {
   width: 33.33333333%;
 }
 
-/* line 52, scss/tb_megamenu.bootstrap.scss */
+/* line 48, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .row-fluid .span3 {
   width: 25%;
 }
 
-/* line 55, scss/tb_megamenu.bootstrap.scss */
+/* line 51, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .row-fluid .span2 {
   width: 16.66666667%;
 }
 
-/* line 58, scss/tb_megamenu.bootstrap.scss */
+/* line 54, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .row-fluid .span1 {
   width: 8.333333333%;
 }
 
-/* line 64, scss/tb_megamenu.bootstrap.scss */
+/* line 60, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .btn {
   display: inline-block;
   padding: 4px 12px;
@@ -111,7 +107,7 @@
   border-radius: 4px;
 }
 
-/* line 79, scss/tb_megamenu.bootstrap.scss */
+/* line 75, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .btn:hover {
   color: #333333;
   background-color: #e6e6e6;
@@ -119,7 +115,7 @@
   text-decoration: none;
 }
 
-/* line 86, scss/tb_megamenu.bootstrap.scss */
+/* line 82, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .btn:focus {
   color: #333333;
   background-color: #e6e6e6;
@@ -130,7 +126,7 @@
   outline-offset: -2px;
 }
 
-/* line 96, scss/tb_megamenu.bootstrap.scss */
+/* line 92, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .btn:active {
   color: #333333;
   background-color: #e6e6e6;
@@ -138,13 +134,13 @@
   outline: 0;
 }
 
-/* line 103, scss/tb_megamenu.bootstrap.scss */
+/* line 99, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .btn .caret {
   margin-top: 8px;
   margin-left: 0;
 }
 
-/* line 109, scss/tb_megamenu.bootstrap.scss */
+/* line 105, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .btn.active {
   color: #333333;
   background-color: #e6e6e6;
@@ -152,7 +148,7 @@
   outline: 0;
 }
 
-/* line 116, scss/tb_megamenu.bootstrap.scss */
+/* line 112, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .btn.disabled,
 .tb-megamenu .btn[disabled] {
   color: #333333;
@@ -161,7 +157,7 @@
   opacity: 0.65;
 }
 
-/* line 124, scss/tb_megamenu.bootstrap.scss */
+/* line 120, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu [class^='fa-'],
 .tb-megamenu [class*=' fa-'] {
   display: inline-block;
@@ -173,7 +169,7 @@
   margin-top: 1px;
 }
 
-/* line 136, scss/tb_megamenu.bootstrap.scss */
+/* line 132, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .nav {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -187,159 +183,163 @@
   margin: 0;
 }
 
-/* line 144, scss/tb_megamenu.bootstrap.scss */
+/* line 140, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .nav span.tb-megamenu-no-link:hover {
   cursor: default;
 }
 
-/* line 150, scss/tb_megamenu.bootstrap.scss */
+/* line 146, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .nav span.tb-megamenu-no-link.tb-megamenu-no-submenu:hover {
   color: inherit !important;
 }
 
-/* line 156, scss/tb_megamenu.bootstrap.scss */
+/* line 151, scss/tb_megamenu.bootstrap.scss */
+.tb-megamenu .nav > li {
+  position: relative;
+}
+
+/* line 154, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .nav > li > a,
 .tb-megamenu .nav > li > span.tb-megamenu-no-link {
+  border: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  color: #fff;
   display: block;
+  font-weight: bold;
+  height: 100%;
+  padding: 15px 20px;
+  text-shadow: none;
 }
 
-/* line 159, scss/tb_megamenu.bootstrap.scss */
-.tb-megamenu .nav > li > a:hover,
+/* line 165, scss/tb_megamenu.bootstrap.scss */
+.tb-megamenu .nav > li > a:focus, .tb-megamenu .nav > li > a:hover,
+.tb-megamenu .nav > li > span.tb-megamenu-no-link:focus,
 .tb-megamenu .nav > li > span.tb-megamenu-no-link:hover {
+  background-color: #fff;
+  color: #e54e4b;
   text-decoration: none;
-  background-color: #eeeeee;
+  text-shadow: none;
+  outline: none;
 }
 
-/* line 163, scss/tb_megamenu.bootstrap.scss */
-.tb-megamenu .nav > li > a:focus,
-.tb-megamenu .nav > li > span.tb-megamenu-no-link:focus {
-  text-decoration: none;
-  background-color: #eeeeee;
-}
-
-/* line 167, scss/tb_megamenu.bootstrap.scss */
+/* line 174, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .nav > li > a > img,
 .tb-megamenu .nav > li > span.tb-megamenu-no-link > img {
   max-width: none;
 }
 
-/* line 175, scss/tb_megamenu.bootstrap.scss */
+/* line 182, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .nav .dropdown-toggle .caret {
-  border-top-color: #0088cc;
-  border-bottom-color: #0088cc;
-  margin-top: 6px;
+  border-top-color: #666;
+  border-bottom-color: #666;
+  margin-left: 5px;
+  margin-top: 8px;
 }
 
-/* line 180, scss/tb_megamenu.bootstrap.scss */
+/* line 189, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .nav .dropdown-toggle:active {
   outline: 0;
 }
 
-/* line 184, scss/tb_megamenu.bootstrap.scss */
-.tb-megamenu .nav .dropdown-toggle:hover .caret {
-  border-top-color: #005580;
-  border-bottom-color: #005580;
+/* line 195, scss/tb_megamenu.bootstrap.scss */
+.tb-megamenu .nav .dropdown-toggle:hover .caret, .tb-megamenu .nav .dropdown-toggle:focus .caret {
+  border-top-color: #e54e4b;
+  border-bottom-color: #e54e4b;
 }
 
-/* line 190, scss/tb_megamenu.bootstrap.scss */
-.tb-megamenu .nav .dropdown-toggle:focus .caret {
-  border-top-color: #005580;
-  border-bottom-color: #005580;
+/* line 203, scss/tb_megamenu.bootstrap.scss */
+.tb-megamenu .nav > .active > a,
+.tb-megamenu .nav > .active > a:hover,
+.tb-megamenu .nav > .active > a:focus,
+.tb-megamenu .nav > .active > span.tb-megamenu-no-link,
+.tb-megamenu .nav > .active > span.tb-megamenu-no-link:hover,
+.tb-megamenu .nav > .active > span.tb-megamenu-no-link:focus {
+  background-color: #e54e4b;
+  color: #fff;
+  text-shadow: none;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  outline: none;
 }
 
-/* line 199, scss/tb_megamenu.bootstrap.scss */
+/* line 219, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .nav .active .dropdown-toggle .caret {
   border-top-color: #fff;
   border-bottom-color: #fff;
 }
 
-/* line 208, scss/tb_megamenu.bootstrap.scss */
-.tb-megamenu .nav > .dropdown.active > a:hover {
-  cursor: pointer;
-}
-
-/* line 211, scss/tb_megamenu.bootstrap.scss */
-.tb-megamenu .nav > .dropdown.active > a:focus {
-  cursor: pointer;
-}
-
-/* line 217, scss/tb_megamenu.bootstrap.scss */
-.tb-megamenu .nav > li.dropdown {
-  position: relative;
-}
-
-/* line 223, scss/tb_megamenu.bootstrap.scss */
-.tb-megamenu .nav > li.dropdown.open.active > a:hover {
-  color: #ffffff;
-  background-color: #999999;
-  border-color: #999999;
-}
-
 /* line 228, scss/tb_megamenu.bootstrap.scss */
-.tb-megamenu .nav > li.dropdown.open.active > a:focus {
+.tb-megamenu .nav .dropdown.active > a:hover, .tb-megamenu .nav .dropdown.active > a:focus {
+  cursor: pointer;
+}
+
+/* line 237, scss/tb_megamenu.bootstrap.scss */
+.tb-megamenu .nav .dropdown.open.active > a:hover, .tb-megamenu .nav .dropdown.open.active > a:focus {
   color: #ffffff;
   background-color: #999999;
   border-color: #999999;
 }
 
-/* line 234, scss/tb_megamenu.bootstrap.scss */
-.tb-megamenu .nav > li.dropdown.open.active .caret {
+/* line 245, scss/tb_megamenu.bootstrap.scss */
+.tb-megamenu .nav .dropdown.open.active .caret {
   border-top-color: #ffffff;
   border-bottom-color: #ffffff;
   opacity: 1;
 }
 
-/* line 242, scss/tb_megamenu.bootstrap.scss */
-.tb-megamenu .nav li.dropdown.open .caret {
-  border-top-color: #ffffff;
-  border-bottom-color: #ffffff;
-  opacity: 1;
+/* line 254, scss/tb_megamenu.bootstrap.scss */
+.tb-megamenu .nav .dropdown.active > .dropdown-toggle,
+.tb-megamenu .nav .dropdown.open.active > .dropdown-toggle {
+  background-color: #e54e4b;
+  border-color: #444;
+  color: #eee;
 }
 
-/* line 247, scss/tb_megamenu.bootstrap.scss */
-.tb-megamenu .nav li.dropdown.open .dropdown-toggle {
+/* line 259, scss/tb_megamenu.bootstrap.scss */
+.tb-megamenu .nav .dropdown.active > .dropdown-toggle .caret,
+.tb-megamenu .nav .dropdown.open.active > .dropdown-toggle .caret {
+  border-top-color: #eee;
+  border-bottom-color: #eee;
+}
+
+/* line 267, scss/tb_megamenu.bootstrap.scss */
+.tb-megamenu .nav > .dropdown.open.active > a:hover,
+.tb-megamenu .nav > .dropdown.open.active > span.tb-megamenu-no-link:hover {
+  background-color: #e54e4b;
+  border-color: #444;
+  color: #eee;
+}
+
+/* line 276, scss/tb_megamenu.bootstrap.scss */
+.tb-megamenu .nav .dropdown.open .dropdown-toggle {
   outline: 0;
 }
 
-/* line 250, scss/tb_megamenu.bootstrap.scss */
-.tb-megamenu .nav li.dropdown.open > .dropdown-menu {
+/* line 282, scss/tb_megamenu.bootstrap.scss */
+.tb-megamenu .nav .dropdown.open > .dropdown-toggle {
+  background-color: #fff;
+  color: #e54e4b;
+}
+
+/* line 287, scss/tb_megamenu.bootstrap.scss */
+.tb-megamenu .nav .dropdown.open > .dropdown-menu {
   display: block;
 }
 
-/* line 256, scss/tb_megamenu.bootstrap.scss */
-.tb-megamenu .nav li.dropdown.open a:hover .caret {
-  border-top-color: #ffffff;
-  border-bottom-color: #ffffff;
-  opacity: 1;
-}
-
-/* line 263, scss/tb_megamenu.bootstrap.scss */
-.tb-megamenu .nav li.dropdown.open a:focus .caret {
-  border-top-color: #ffffff;
-  border-bottom-color: #ffffff;
-  opacity: 1;
-}
-
-/* line 273, scss/tb_megamenu.bootstrap.scss */
+/* line 293, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .nav > .disabled > a {
   color: #999999;
 }
 
-/* line 275, scss/tb_megamenu.bootstrap.scss */
-.tb-megamenu .nav > .disabled > a:hover {
+/* line 295, scss/tb_megamenu.bootstrap.scss */
+.tb-megamenu .nav > .disabled > a:hover, .tb-megamenu .nav > .disabled > a:focus {
   text-decoration: none;
   background-color: transparent;
   cursor: default;
 }
 
-/* line 280, scss/tb_megamenu.bootstrap.scss */
-.tb-megamenu .nav > .disabled > a:focus {
-  text-decoration: none;
-  background-color: transparent;
-  cursor: default;
-}
-
-/* line 289, scss/tb_megamenu.bootstrap.scss */
+/* line 305, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .caret {
   display: inline-block;
   width: 0;
@@ -351,7 +351,7 @@
   content: '';
 }
 
-/* line 302, scss/tb_megamenu.bootstrap.scss */
+/* line 318, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .dropdown-menu {
   position: absolute;
   top: 100%;
@@ -372,26 +372,23 @@
   background-clip: padding-box;
 }
 
-/* line 319, scss/tb_megamenu.bootstrap.scss */
-.tb-megamenu .dropdown-menu .divider {
-  height: 1px;
-  margin: 9px 1px;
-  overflow: hidden;
-  background-color: #e5e5e5;
-  border-bottom: 1px solid #ffffff;
+/* line 337, scss/tb_megamenu.bootstrap.scss */
+.tb-megamenu .dropdown-menu li > a,
+.tb-megamenu .dropdown-menu li > span.tb-megamenu-no-link {
+  border-bottom: 0;
+  border-top: 1px solid #eee;
+  color: #333;
+  display: block;
+  font-weight: normal;
+  line-height: 20px;
+  padding: 3px 20px;
+  text-shadow: none;
+  white-space: nowrap;
 }
 
-/* line 330, scss/tb_megamenu.bootstrap.scss */
-.tb-megamenu .dropdown-menu li > a:hover,
-.tb-megamenu .dropdown-menu li > span.tb-megamenu-no-link:hover {
-  text-decoration: none;
-  color: #e54e4b;
-  background-color: inherit;
-  background-image: none;
-}
-
-/* line 336, scss/tb_megamenu.bootstrap.scss */
-.tb-megamenu .dropdown-menu li > a:focus,
+/* line 349, scss/tb_megamenu.bootstrap.scss */
+.tb-megamenu .dropdown-menu li > a:hover, .tb-megamenu .dropdown-menu li > a:focus,
+.tb-megamenu .dropdown-menu li > span.tb-megamenu-no-link:hover,
 .tb-megamenu .dropdown-menu li > span.tb-megamenu-no-link:focus {
   text-decoration: none;
   color: #e54e4b;
@@ -399,13 +396,19 @@
   background-image: none;
 }
 
-/* line 346, scss/tb_megamenu.bootstrap.scss */
+/* line 358, scss/tb_megamenu.bootstrap.scss */
+.tb-megamenu .dropdown-menu li:first-child > a,
+.tb-megamenu .dropdown-menu li:first-child > span.tb-megamenu-no-link {
+  border-top: 0;
+}
+
+/* line 365, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .dropdown-menu .disabled > a,
 .tb-megamenu .dropdown-menu .disabled > span.tb-megamenu-no-link {
   color: #999;
 }
 
-/* line 349, scss/tb_megamenu.bootstrap.scss */
+/* line 368, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .dropdown-menu .disabled > a:hover, .tb-megamenu .dropdown-menu .disabled > a:focus,
 .tb-megamenu .dropdown-menu .disabled > span.tb-megamenu-no-link:hover,
 .tb-megamenu .dropdown-menu .disabled > span.tb-megamenu-no-link:focus {
@@ -416,7 +419,7 @@
   background-image: none;
 }
 
-/* line 361, scss/tb_megamenu.bootstrap.scss */
+/* line 380, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .dropdown-menu > .active > a,
 .tb-megamenu .dropdown-menu > .active > span.tb-megamenu-no-link {
   color: #ffffff;
@@ -428,7 +431,7 @@
   background-repeat: repeat-x;
 }
 
-/* line 369, scss/tb_megamenu.bootstrap.scss */
+/* line 388, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .dropdown-menu > .active > a:hover,
 .tb-megamenu .dropdown-menu > .active > span.tb-megamenu-no-link:hover {
   color: #ffffff;
@@ -440,7 +443,7 @@
   background-repeat: repeat-x;
 }
 
-/* line 377, scss/tb_megamenu.bootstrap.scss */
+/* line 396, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .dropdown-menu > .active > a:focus,
 .tb-megamenu .dropdown-menu > .active > span.tb-megamenu-no-link:focus {
   color: #ffffff;
@@ -452,17 +455,17 @@
   background-repeat: repeat-x;
 }
 
-/* line 390, scss/tb_megamenu.bootstrap.scss */
+/* line 409, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .dropdown-submenu {
   position: relative;
 }
 
-/* line 394, scss/tb_megamenu.bootstrap.scss */
+/* line 413, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .dropdown-submenu .caret {
   display: none;
 }
 
-/* line 400, scss/tb_megamenu.bootstrap.scss */
+/* line 419, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .dropdown-submenu > a:after,
 .tb-megamenu .dropdown-submenu > span.tb-megamenu-no-link:after {
   display: block;
@@ -478,59 +481,50 @@
   margin-right: -10px;
 }
 
-/* line 416, scss/tb_megamenu.bootstrap.scss */
+/* line 436, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .dropdown-submenu:hover > a,
-.tb-megamenu .dropdown-submenu:hover > span.tb-megamenu-no-link {
+.tb-megamenu .dropdown-submenu:hover > span.tb-megamenu-no-link, .tb-megamenu .dropdown-submenu:focus > a,
+.tb-megamenu .dropdown-submenu:focus > span.tb-megamenu-no-link {
   text-decoration: none;
   color: #e54e4b;
   background-color: inherit;
   background-image: none;
 }
 
-/* line 423, scss/tb_megamenu.bootstrap.scss */
+/* line 443, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .dropdown-submenu:hover > a:after,
-.tb-megamenu .dropdown-submenu:hover > span.tb-megamenu-no-link:after {
-  border-left-color: #ffffff;
+.tb-megamenu .dropdown-submenu:hover > span.tb-megamenu-no-link:after, .tb-megamenu .dropdown-submenu:focus > a:after,
+.tb-megamenu .dropdown-submenu:focus > span.tb-megamenu-no-link:after {
+  border-left-color: #eee;
 }
 
-/* line 427, scss/tb_megamenu.bootstrap.scss */
-.tb-megamenu .dropdown-submenu:hover .dropdown-menu {
+/* line 448, scss/tb_megamenu.bootstrap.scss */
+.tb-megamenu .dropdown-submenu:hover .dropdown-menu, .tb-megamenu .dropdown-submenu:focus .dropdown-menu {
   display: block;
 }
 
-/* line 433, scss/tb_megamenu.bootstrap.scss */
-.tb-megamenu .dropdown-submenu:focus > a,
-.tb-megamenu .dropdown-submenu:focus > span.tb-megamenu-no-link {
-  text-decoration: none;
-  color: #ffffff;
-  background-color: #0081c2;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#0088cc), to(#0077b3));
-  background-image: linear-gradient(to bottom, #0088cc, #0077b3);
-  background-repeat: repeat-x;
-}
-
-/* line 443, scss/tb_megamenu.bootstrap.scss */
+/* line 453, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .dropdown-submenu > .dropdown-menu {
   top: 0;
   left: 100%;
   margin-top: -6px;
   margin-left: -1px;
-  border-radius: 0 6px 6px 6px;
+  border-radius: 0;
 }
 
-/* line 452, scss/tb_megamenu.bootstrap.scss */
+/* line 462, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .hidden {
-  display: none;
+  display: none !important;
   visibility: hidden;
 }
 
-/* line 459, scss/tb_megamenu.bootstrap.scss */
+/* line 469, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .mega > .mega-dropdown-menu {
   min-width: 800px;
   display: none;
 }
 
-/* line 465, scss/tb_megamenu.bootstrap.scss */
+/* line 475, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .mega.open > .mega-dropdown-menu {
   display: block;
   overflow: visible;
@@ -539,7 +533,7 @@
   width: auto;
 }
 
-/* line 475, scss/tb_megamenu.bootstrap.scss */
+/* line 485, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .mega.dropdown-submenu:hover > .mega-dropdown-menu {
   display: block;
   overflow: visible;
@@ -548,14 +542,14 @@
   width: auto;
 }
 
-/* line 486, scss/tb_megamenu.bootstrap.scss */
+/* line 496, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .mega-nav {
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-/* line 491, scss/tb_megamenu.bootstrap.scss */
+/* line 501, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .mega-nav > li {
   display: block;
   float: none;
@@ -563,22 +557,19 @@
   margin-left: 0;
 }
 
-/* line 496, scss/tb_megamenu.bootstrap.scss */
-.tb-megamenu .mega-nav > li a {
-  white-space: normal;
-}
-
-/* line 499, scss/tb_megamenu.bootstrap.scss */
+/* line 507, scss/tb_megamenu.bootstrap.scss */
+.tb-megamenu .mega-nav > li a,
 .tb-megamenu .mega-nav > li span.tb-megamenu-no-link {
+  padding: 5px 0;
   white-space: normal;
 }
 
-/* line 506, scss/tb_megamenu.bootstrap.scss */
+/* line 516, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .mega-inner {
   padding: 10px;
 }
 
-/* line 516, scss/tb_megamenu.bootstrap.scss */
+/* line 526, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .mega-group-title {
   background: inherit;
   font-weight: bold;
@@ -587,36 +578,36 @@
   text-transform: uppercase;
 }
 
-/* line 522, scss/tb_megamenu.bootstrap.scss */
+/* line 532, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .mega-group-title:hover {
   background: inherit;
   color: inherit;
 }
 
-/* line 526, scss/tb_megamenu.bootstrap.scss */
+/* line 536, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .mega-group-title:active {
   background: inherit;
   color: inherit;
 }
 
-/* line 530, scss/tb_megamenu.bootstrap.scss */
+/* line 540, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .mega-group-title:focus {
   background: inherit;
   color: inherit;
 }
 
-/* line 538, scss/tb_megamenu.bootstrap.scss */
+/* line 548, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .mega-group-ct {
   margin: 0;
   padding: 0;
 }
 
-/* line 543, scss/tb_megamenu.bootstrap.scss */
+/* line 553, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .mega-group-ct > .row-fluid > [class*='span'] > .mega-inner {
   padding: 0;
 }
 
-/* line 551, scss/tb_megamenu.bootstrap.scss */
+/* line 561, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .mega-caption {
   display: block;
   white-space: nowrap;
@@ -626,79 +617,168 @@
   font-weight: normal;
 }
 
-/* line 562, scss/tb_megamenu.bootstrap.scss */
+/* line 572, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .mega-align-left > .dropdown-menu {
   left: 0;
 }
 
-/* line 568, scss/tb_megamenu.bootstrap.scss */
+/* line 578, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .mega-align-right > .dropdown-menu {
   left: auto;
   right: 0;
 }
 
-/* line 575, scss/tb_megamenu.bootstrap.scss */
+/* line 585, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .mega-align-center > .dropdown-menu {
   left: 50%;
   -webkit-transform: translate(-50%);
           transform: translate(-50%);
 }
 
-/* line 582, scss/tb_megamenu.bootstrap.scss */
+/* line 592, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .dropdown-submenu.mega-align-left > .dropdown-menu {
   left: 100%;
 }
 
-/* line 588, scss/tb_megamenu.bootstrap.scss */
+/* line 598, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .dropdown-submenu.mega-align-right > .dropdown-menu {
   left: auto;
   right: 100%;
 }
 
-/* line 594, scss/tb_megamenu.bootstrap.scss */
+/* line 604, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .mega-align-justify {
   position: static;
 }
 
-/* line 597, scss/tb_megamenu.bootstrap.scss */
+/* line 607, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .mega-align-justify > .dropdown-menu {
   left: 0;
   margin-left: 0;
   top: auto;
 }
 
-/* line 603, scss/tb_megamenu.bootstrap.scss */
+/* line 613, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .mega-align-justify > .dropdown-menu.span12 {
   width: 100%;
 }
 
-/* line 609, scss/tb_megamenu.bootstrap.scss */
+/* line 619, scss/tb_megamenu.bootstrap.scss */
 .tb-megamenu .tb-block {
   margin-bottom: 10px;
 }
 
+/* line 622, scss/tb_megamenu.bootstrap.scss */
+.tb-megamenu .tb-block .block-title {
+  font-size: 12px;
+  color: #333;
+  display: block;
+  line-height: 20px;
+  margin: 0 0 15px;
+  text-transform: uppercase;
+}
+
+/* line 632, scss/tb_megamenu.bootstrap.scss */
+.tb-megamenu .tb-block ul,
+.tb-megamenu .tb-block .nav {
+  margin: 0;
+}
+
+/* line 636, scss/tb_megamenu.bootstrap.scss */
+.tb-megamenu .tb-block ul li,
+.tb-megamenu .tb-block .nav li {
+  background: none;
+  list-style: disc;
+  display: list-item;
+  float: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* line 645, scss/tb_megamenu.bootstrap.scss */
+.tb-megamenu .tb-block ul li a,
+.tb-megamenu .tb-block ul li span.tb-megamenu-no-link,
+.tb-megamenu .tb-block .nav li a,
+.tb-megamenu .tb-block .nav li span.tb-megamenu-no-link {
+  display: inline;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  font-size: 100%;
+  background: none;
+  font: inherit;
+  white-space: normal;
+}
+
+/* line 656, scss/tb_megamenu.bootstrap.scss */
+.tb-megamenu .tb-block ul li a:hover, .tb-megamenu .tb-block ul li a:focus, .tb-megamenu .tb-block ul li a:active,
+.tb-megamenu .tb-block ul li span.tb-megamenu-no-link:hover,
+.tb-megamenu .tb-block ul li span.tb-megamenu-no-link:focus,
+.tb-megamenu .tb-block ul li span.tb-megamenu-no-link:active,
+.tb-megamenu .tb-block .nav li a:hover,
+.tb-megamenu .tb-block .nav li a:focus,
+.tb-megamenu .tb-block .nav li a:active,
+.tb-megamenu .tb-block .nav li span.tb-megamenu-no-link:hover,
+.tb-megamenu .tb-block .nav li span.tb-megamenu-no-link:focus,
+.tb-megamenu .tb-block .nav li span.tb-megamenu-no-link:active {
+  background: none;
+  font: inherit;
+}
+
+/* line 668, scss/tb_megamenu.bootstrap.scss */
+.tb-megamenu .btn-navbar {
+  display: none;
+  float: left;
+  padding: 10px;
+  margin: 0;
+  color: #fff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  background-color: #e8e8e8;
+  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(255, 255, 255, 0.075);
+          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(255, 255, 255, 0.075);
+}
+
+/* line 679, scss/tb_megamenu.bootstrap.scss */
+.tb-megamenu .btn-navbar:hover, .tb-megamenu .btn-navbar:focus, .tb-megamenu .btn-navbar:active, .tb-megamenu .btn-navbar.active, .tb-megamenu .btn-navbar.disabled, .tb-megamenu .btn-navbar[disabled] {
+  color: #fff;
+  background-color: #d9d9d9;
+}
+
+/* line 689, scss/tb_megamenu.bootstrap.scss */
+.tb-megamenu .btn-navbar:active, .tb-megamenu .btn-navbar.active {
+  background-color: #bfbfbf \9;
+}
+
+/* line 694, scss/tb_megamenu.bootstrap.scss */
+.tb-megamenu .btn-navbar [class^='fa-'],
+.tb-megamenu .btn-navbar [class^=' fa-'] {
+  color: #666;
+  text-shadow: none;
+}
+
 @media (max-width: 767px) {
-  /* line 616, scss/tb_megamenu.bootstrap.scss */
+  /* line 704, scss/tb_megamenu.bootstrap.scss */
   .tb-megamenu [class*='span'] {
     width: 100%;
   }
-  /* line 619, scss/tb_megamenu.bootstrap.scss */
+  /* line 707, scss/tb_megamenu.bootstrap.scss */
   .tb-megamenu .uneditable-input[class*='span'] {
     width: 100%;
   }
-  /* line 623, scss/tb_megamenu.bootstrap.scss */
+  /* line 711, scss/tb_megamenu.bootstrap.scss */
   .tb-megamenu .row-fluid [class*='span'] {
     width: 100%;
   }
-  /* line 626, scss/tb_megamenu.bootstrap.scss */
+  /* line 714, scss/tb_megamenu.bootstrap.scss */
   .tb-megamenu .row-fluid .span12 {
     width: 100%;
   }
-  /* line 630, scss/tb_megamenu.bootstrap.scss */
+  /* line 718, scss/tb_megamenu.bootstrap.scss */
   .tb-megamenu .span12 {
     width: 100%;
   }
-  /* line 633, scss/tb_megamenu.bootstrap.scss */
+  /* line 721, scss/tb_megamenu.bootstrap.scss */
   .tb-megamenu .input-large {
     display: block;
     width: 100%;
@@ -706,7 +786,7 @@
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
   }
-  /* line 639, scss/tb_megamenu.bootstrap.scss */
+  /* line 727, scss/tb_megamenu.bootstrap.scss */
   .tb-megamenu .input-xlarge {
     display: block;
     width: 100%;
@@ -714,7 +794,7 @@
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
   }
-  /* line 645, scss/tb_megamenu.bootstrap.scss */
+  /* line 733, scss/tb_megamenu.bootstrap.scss */
   .tb-megamenu .input-xxlarge {
     display: block;
     width: 100%;
@@ -722,7 +802,7 @@
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
   }
-  /* line 651, scss/tb_megamenu.bootstrap.scss */
+  /* line 739, scss/tb_megamenu.bootstrap.scss */
   .tb-megamenu input[class*='span'] {
     display: block;
     width: 100%;
@@ -730,7 +810,7 @@
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
   }
-  /* line 657, scss/tb_megamenu.bootstrap.scss */
+  /* line 745, scss/tb_megamenu.bootstrap.scss */
   .tb-megamenu select[class*='span'] {
     display: block;
     width: 100%;
@@ -738,7 +818,7 @@
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
   }
-  /* line 663, scss/tb_megamenu.bootstrap.scss */
+  /* line 751, scss/tb_megamenu.bootstrap.scss */
   .tb-megamenu textarea[class*='span'] {
     display: block;
     width: 100%;
@@ -746,7 +826,7 @@
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
   }
-  /* line 669, scss/tb_megamenu.bootstrap.scss */
+  /* line 757, scss/tb_megamenu.bootstrap.scss */
   .tb-megamenu .uneditable-input {
     display: block;
     width: 100%;
@@ -754,108 +834,186 @@
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
   }
-  /* line 676, scss/tb_megamenu.bootstrap.scss */
+  /* line 764, scss/tb_megamenu.bootstrap.scss */
   .tb-megamenu .input-prepend input {
     display: inline-block;
     width: auto;
   }
-  /* line 680, scss/tb_megamenu.bootstrap.scss */
+  /* line 768, scss/tb_megamenu.bootstrap.scss */
   .tb-megamenu .input-prepend input[class*='span'] {
     display: inline-block;
     width: auto;
   }
-  /* line 686, scss/tb_megamenu.bootstrap.scss */
+  /* line 774, scss/tb_megamenu.bootstrap.scss */
   .tb-megamenu .input-append input {
     display: inline-block;
     width: auto;
   }
-  /* line 690, scss/tb_megamenu.bootstrap.scss */
+  /* line 778, scss/tb_megamenu.bootstrap.scss */
   .tb-megamenu .input-append input[class*='span'] {
     display: inline-block;
     width: auto;
   }
-  /* line 698, scss/tb_megamenu.bootstrap.scss */
+  /* line 786, scss/tb_megamenu.bootstrap.scss */
   .tb-megamenu .controls-row [class*='span'] + [class*='span'] {
     margin-left: 0;
   }
 }
 
 @media (min-width: 768px) and (max-width: 979px) {
-  /* line 709, scss/tb_megamenu.bootstrap.scss */
+  /* line 797, scss/tb_megamenu.bootstrap.scss */
   .tb-megamenu input {
     margin-left: 0;
   }
-  /* line 712, scss/tb_megamenu.bootstrap.scss */
+  /* line 800, scss/tb_megamenu.bootstrap.scss */
   .tb-megamenu textarea {
     margin-left: 0;
   }
-  /* line 715, scss/tb_megamenu.bootstrap.scss */
+  /* line 803, scss/tb_megamenu.bootstrap.scss */
   .tb-megamenu .uneditable-input {
     margin-left: 0;
   }
-  /* line 721, scss/tb_megamenu.bootstrap.scss */
+  /* line 809, scss/tb_megamenu.bootstrap.scss */
   .tb-megamenu .controls-row [class*='span'] + [class*='span'] {
     margin-left: 20px;
   }
 }
 
 @media (min-width: 1200px) {
-  /* line 732, scss/tb_megamenu.bootstrap.scss */
+  /* line 820, scss/tb_megamenu.bootstrap.scss */
   .tb-megamenu input {
     margin-left: 0;
   }
-  /* line 735, scss/tb_megamenu.bootstrap.scss */
+  /* line 823, scss/tb_megamenu.bootstrap.scss */
   .tb-megamenu textarea {
     margin-left: 0;
   }
-  /* line 738, scss/tb_megamenu.bootstrap.scss */
+  /* line 826, scss/tb_megamenu.bootstrap.scss */
   .tb-megamenu .uneditable-input {
     margin-left: 0;
   }
-  /* line 744, scss/tb_megamenu.bootstrap.scss */
+  /* line 832, scss/tb_megamenu.bootstrap.scss */
   .tb-megamenu .controls-row [class*='span'] + [class*='span'] {
     margin-left: 30px;
   }
 }
 
 @media (max-width: 979px) {
-  /* line 755, scss/tb_megamenu.bootstrap.scss */
+  /* line 842, scss/tb_megamenu.bootstrap.scss */
+  .tb-megamenu {
+    background-color: inherit;
+    height: auto;
+  }
+  /* line 848, scss/tb_megamenu.bootstrap.scss */
+  .tb-megamenu .always-show .mega > .mega-dropdown-menu {
+    display: block !important;
+  }
+  /* line 853, scss/tb_megamenu.bootstrap.scss */
+  .tb-megamenu .always-show .dropdown-menu {
+    display: block !important;
+  }
+  /* line 857, scss/tb_megamenu.bootstrap.scss */
+  .tb-megamenu .always-show .caret {
+    display: none !important;
+  }
+  /* line 864, scss/tb_megamenu.bootstrap.scss */
+  .tb-megamenu .always-show .dropdown-submenu > a:after,
+  .tb-megamenu .always-show .dropdown-submenu > span.tb-megamenu-no-link:after {
+    display: none !important;
+  }
+  /* line 871, scss/tb_megamenu.bootstrap.scss */
+  .tb-megamenu .hidden-collapse {
+    display: none !important;
+  }
+  /* line 876, scss/tb_megamenu.bootstrap.scss */
+  .tb-megamenu .sub-hidden-collapse > .nav-child {
+    display: none !important;
+  }
+  /* line 879, scss/tb_megamenu.bootstrap.scss */
+  .tb-megamenu .sub-hidden-collapse .caret {
+    display: none !important;
+  }
+  /* line 883, scss/tb_megamenu.bootstrap.scss */
+  .tb-megamenu .sub-hidden-collapse > a:after {
+    display: none !important;
+  }
+  /* line 889, scss/tb_megamenu.bootstrap.scss */
+  .tb-megamenu .row-fluid {
+    width: 100% !important;
+    min-width: 100% !important;
+    left: 0 !important;
+    margin-left: 0 !important;
+    -webkit-transform: none !important;
+            transform: none !important;
+  }
+  /* line 896, scss/tb_megamenu.bootstrap.scss */
+  .tb-megamenu .row-fluid [class*='span'] {
+    width: 100% !important;
+    min-width: 100% !important;
+    left: 0 !important;
+    margin-left: 0 !important;
+    -webkit-transform: none !important;
+            transform: none !important;
+  }
+  /* line 903, scss/tb_megamenu.bootstrap.scss */
+  .tb-megamenu .row-fluid + .row-fluid {
+    padding-top: 10px;
+    border-top: 1px solid #222;
+  }
+  /* line 909, scss/tb_megamenu.bootstrap.scss */
+  .tb-megamenu .btn-navbar {
+    display: block;
+    margin-bottom: 10px;
+  }
+  /* line 913, scss/tb_megamenu.bootstrap.scss */
+  .tb-megamenu .btn-navbar:hover {
+    cursor: pointer;
+  }
+  /* line 918, scss/tb_megamenu.bootstrap.scss */
   .tb-megamenu .nav-collapse {
-    overflow: hidden;
+    background: #000;
+    margin-top: 10px;
+    position: absolute;
+    top: 27px;
+    width: 100%;
+    z-index: 999;
     height: 0;
+    overflow: hidden;
   }
-  /* line 760, scss/tb_megamenu.bootstrap.scss */
-  .tb-megamenu .nav-collapse .nav > li {
-    float: none;
+  /* line 928, scss/tb_megamenu.bootstrap.scss */
+  .tb-megamenu .nav-collapse .nav {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
   }
-  /* line 763, scss/tb_megamenu.bootstrap.scss */
-  .tb-megamenu .nav-collapse .nav > li > a {
-    padding: 9px 15px;
+  /* line 932, scss/tb_megamenu.bootstrap.scss */
+  .tb-megamenu .nav-collapse .nav > li > a,
+  .tb-megamenu .nav-collapse .nav > li > span.tb-megamenu-no-link {
+    border-bottom: 1px solid #222;
+    border-radius: 0;
+    border-right: none;
+    color: #fff;
+    font-size: 15px;
+    margin-bottom: 0;
+    text-shadow: none;
     font-weight: bold;
-    color: #777777;
-    border-radius: 3px;
+    padding: 9px 15px;
   }
-  /* line 768, scss/tb_megamenu.bootstrap.scss */
-  .tb-megamenu .nav-collapse .nav > li > a:hover {
-    background-color: #f2f2f2;
+  /* line 944, scss/tb_megamenu.bootstrap.scss */
+  .tb-megamenu .nav-collapse .nav > li > a:hover, .tb-megamenu .nav-collapse .nav > li > a:focus,
+  .tb-megamenu .nav-collapse .nav > li > span.tb-megamenu-no-link:hover,
+  .tb-megamenu .nav-collapse .nav > li > span.tb-megamenu-no-link:focus {
+    background-color: #fff;
+    color: #e54e4b;
   }
-  /* line 771, scss/tb_megamenu.bootstrap.scss */
-  .tb-megamenu .nav-collapse .nav > li > a:focus {
-    background-color: #f2f2f2;
+  /* line 954, scss/tb_megamenu.bootstrap.scss */
+  .tb-megamenu .nav-collapse .nav > li.active > a:hover, .tb-megamenu .nav-collapse .nav > li.active > a:focus,
+  .tb-megamenu .nav-collapse .nav > li.active > span.tb-megamenu-no-link:hover,
+  .tb-megamenu .nav-collapse .nav > li.active > span.tb-megamenu-no-link:focus {
+    background-color: #e54e4b;
   }
-  /* line 776, scss/tb_megamenu.bootstrap.scss */
-  .tb-megamenu .nav-collapse .nav > li > .dropdown-menu:before {
-    display: none;
-  }
-  /* line 779, scss/tb_megamenu.bootstrap.scss */
-  .tb-megamenu .nav-collapse .nav > li > .dropdown-menu:after {
-    display: none;
-  }
-  /* line 784, scss/tb_megamenu.bootstrap.scss */
-  .tb-megamenu .nav-collapse .nav > .divider-vertical {
-    display: none;
-  }
-  /* line 788, scss/tb_megamenu.bootstrap.scss */
+  /* line 963, scss/tb_megamenu.bootstrap.scss */
   .tb-megamenu .nav-collapse .dropdown-menu {
     position: static;
     top: auto;
@@ -863,60 +1021,223 @@
     float: none;
     display: none;
     max-width: none;
-    margin: 0 15px;
+    margin: 0;
     padding: 0;
-    background-color: transparent;
-    border: none;
+    background-color: #000;
+    border: 0;
     border-radius: 0;
     -webkit-box-shadow: none;
             box-shadow: none;
+    width: 100% !important;
   }
-  /* line 789, scss/tb_megamenu.bootstrap.scss */
-  .tb-megamenu .nav-collapse .dropdown-menu a {
-    padding: 9px 15px;
-    font-weight: bold;
-    color: #777777;
-    border-radius: 3px;
+  /* line 978, scss/tb_megamenu.bootstrap.scss */
+  .tb-megamenu .nav-collapse .dropdown-menu a,
+  .tb-megamenu .nav-collapse .dropdown-menu span.tb-megamenu-no-link {
+    border-bottom: 0;
+    border-bottom: 1px solid #222;
+    border-radius: 0;
+    border-right: none;
+    border-top: 1px solid #222;
+    color: #fff;
+    font-weight: normal;
+    padding: 10px 20px;
+    text-shadow: none;
   }
-  /* line 794, scss/tb_megamenu.bootstrap.scss */
-  .tb-megamenu .nav-collapse .dropdown-menu a:hover {
-    background-color: #f2f2f2;
+  /* line 990, scss/tb_megamenu.bootstrap.scss */
+  .tb-megamenu .nav-collapse .dropdown-menu a:hover, .tb-megamenu .nav-collapse .dropdown-menu a:focus,
+  .tb-megamenu .nav-collapse .dropdown-menu span.tb-megamenu-no-link:hover,
+  .tb-megamenu .nav-collapse .dropdown-menu span.tb-megamenu-no-link:focus {
+    background-color: inherit;
   }
-  /* line 797, scss/tb_megamenu.bootstrap.scss */
-  .tb-megamenu .nav-collapse .dropdown-menu a:focus {
-    background-color: #f2f2f2;
+  /* line 996, scss/tb_megamenu.bootstrap.scss */
+  .tb-megamenu .nav-collapse .dropdown-menu li + li a,
+  .tb-megamenu .nav-collapse .dropdown-menu li + li span.tb-megamenu-no-link {
+    margin-bottom: 0;
   }
-  /* line 804, scss/tb_megamenu.bootstrap.scss */
-  .tb-megamenu .nav-collapse .dropdown-menu li + li a {
-    margin-bottom: 2px;
-  }
-  /* line 822, scss/tb_megamenu.bootstrap.scss */
-  .tb-megamenu .nav-collapse .dropdown-menu:before {
-    display: none;
-  }
-  /* line 825, scss/tb_megamenu.bootstrap.scss */
-  .tb-megamenu .nav-collapse .dropdown-menu:after {
-    display: none;
-  }
-  /* line 828, scss/tb_megamenu.bootstrap.scss */
-  .tb-megamenu .nav-collapse .dropdown-menu .divider {
-    display: none;
-  }
-  /* line 832, scss/tb_megamenu.bootstrap.scss */
+  /* line 1002, scss/tb_megamenu.bootstrap.scss */
   .tb-megamenu .nav-collapse .btn {
     padding: 4px 10px 4px;
     font-weight: normal;
     border-radius: 4px;
   }
-  /* line 838, scss/tb_megamenu.bootstrap.scss */
+  /* line 1009, scss/tb_megamenu.bootstrap.scss */
   .tb-megamenu .nav-collapse .open > .dropdown-menu {
     display: block;
   }
-  /* line 844, scss/tb_megamenu.bootstrap.scss */
+  /* line 1016, scss/tb_megamenu.bootstrap.scss */
   .tb-megamenu .nav-collapse.in .btn-group {
     margin-top: 5px;
     padding: 0;
   }
+  /* line 1022, scss/tb_megamenu.bootstrap.scss */
+  .tb-megamenu .mega-inner {
+    padding: 10px 20px;
+  }
+  /* line 1026, scss/tb_megamenu.bootstrap.scss */
+  .tb-megamenu .mega-dropdown-menu {
+    width: 100% !important;
+    min-width: 100% !important;
+    left: 0 !important;
+    margin-left: 0 !important;
+    -webkit-transform: none !important;
+            transform: none !important;
+  }
+  /* line 1036, scss/tb_megamenu.bootstrap.scss */
+  .tb-megamenu .mega-nav > li a {
+    padding: 5px 0;
+    margin-left: 20px;
+  }
+  /* line 1040, scss/tb_megamenu.bootstrap.scss */
+  .tb-megamenu .mega-nav > li span.tb-megamenu-no-link {
+    padding: 5px 0;
+    margin-left: 20px;
+  }
+  /* line 1050, scss/tb_megamenu.bootstrap.scss */
+  .tb-megamenu .dropdown-menu .mega-nav > li a,
+  .tb-megamenu .dropdown-menu .mega-nav > li span.tb-megamenu-no-link {
+    padding: 5px 0;
+    margin-left: 20px;
+  }
+  /* line 1059, scss/tb_megamenu.bootstrap.scss */
+  .tb-megamenu .tb-block {
+    margin-bottom: 0;
+  }
+  /* line 1062, scss/tb_megamenu.bootstrap.scss */
+  .tb-megamenu .tb-block .block-title {
+    color: #fff;
+  }
+}
+
+@media (min-width: 980px) {
+  /* line 1073, scss/tb_megamenu.bootstrap.scss */
+  .tb-megamenu.animate .mega > .mega-dropdown-menu {
+    -webkit-transition: all 400ms;
+    transition: all 400ms;
+    -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+    opacity: 0;
+  }
+  /* line 1080, scss/tb_megamenu.bootstrap.scss */
+  .tb-megamenu.animate .mega.animating > .mega-dropdown-menu {
+    display: block !important;
+  }
+  /* line 1085, scss/tb_megamenu.bootstrap.scss */
+  .tb-megamenu.animate .mega.open > .mega-dropdown-menu {
+    opacity: 1;
+  }
+  /* line 1090, scss/tb_megamenu.bootstrap.scss */
+  .tb-megamenu.animate .mega.animating.open > .mega-dropdown-menu {
+    opacity: 1;
+  }
+  /* line 1097, scss/tb_megamenu.bootstrap.scss */
+  .tb-megamenu.animate.zoom .mega > .mega-dropdown-menu {
+    -webkit-transform: scale(0, 0);
+            transform: scale(0, 0);
+    -webkit-transform-origin: 20% 20%;
+            transform-origin: 20% 20%;
+  }
+  /* line 1103, scss/tb_megamenu.bootstrap.scss */
+  .tb-megamenu.animate.zoom .mega.open > .mega-dropdown-menu {
+    -webkit-transform: scale(1, 1);
+            transform: scale(1, 1);
+  }
+  /* line 1111, scss/tb_megamenu.bootstrap.scss */
+  .tb-megamenu.animate.elastic .level0 > .mega > .mega-dropdown-menu {
+    -webkit-transform: scale(1, 0);
+            transform: scale(1, 0);
+  }
+  /* line 1117, scss/tb_megamenu.bootstrap.scss */
+  .tb-megamenu.animate.elastic .mega > .mega-dropdown-menu {
+    -webkit-transform: scale(0, 1);
+            transform: scale(0, 1);
+    -webkit-transform-origin: 10% 0;
+            transform-origin: 10% 0;
+  }
+  /* line 1123, scss/tb_megamenu.bootstrap.scss */
+  .tb-megamenu.animate.elastic .mega.open > .mega-dropdown-menu {
+    -webkit-transform: scale(1, 1);
+            transform: scale(1, 1);
+  }
+  /* line 1130, scss/tb_megamenu.bootstrap.scss */
+  .tb-megamenu.animate.slide .mega.animating > .mega-dropdown-menu {
+    overflow: hidden;
+  }
+  /* line 1136, scss/tb_megamenu.bootstrap.scss */
+  .tb-megamenu.animate.slide .mega > .mega-dropdown-menu > div {
+    -webkit-transition: all 400ms;
+    transition: all 400ms;
+    -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+    margin-top: -100%;
+  }
+  /* line 1143, scss/tb_megamenu.bootstrap.scss */
+  .tb-megamenu.animate.slide .mega .mega > .mega-dropdown-menu {
+    min-width: 0;
+  }
+  /* line 1145, scss/tb_megamenu.bootstrap.scss */
+  .tb-megamenu.animate.slide .mega .mega > .mega-dropdown-menu > div {
+    min-width: 200px;
+    margin-top: 0;
+    margin-left: -500px;
+  }
+  /* line 1154, scss/tb_megamenu.bootstrap.scss */
+  .tb-megamenu.animate.slide .mega .mega.open > .mega-dropdown-menu > div {
+    margin-left: 0;
+  }
+  /* line 1162, scss/tb_megamenu.bootstrap.scss */
+  .tb-megamenu.animate.slide .mega.open > .mega-dropdown-menu > div {
+    margin-top: 0%;
+  }
+}
+
+/* line 1174, scss/tb_megamenu.bootstrap.scss */
+.tb-megamenu .block-view-demo .views-field-title a {
+  border-top: none !important;
+  color: #eee;
+  padding: 0 !important;
+  border-top: none;
+  color: #aaa;
+  padding: 0;
+}
+
+/* line 1184, scss/tb_megamenu.bootstrap.scss */
+.tb-megamenu .block-view-demo .views-field-field-image {
+  float: left;
+}
+
+/* line 1187, scss/tb_megamenu.bootstrap.scss */
+.tb-megamenu .block-view-demo .views-field-field-image img {
+  border: 1px solid #333;
+  margin: 0 20px 0 0;
+  max-width: none !important;
+  padding: 4px;
+  width: auto;
+}
+
+/* line 1198, scss/tb_megamenu.bootstrap.scss */
+.tb-megamenu .block-view-demo .item-list ul li {
+  border-bottom: 1px solid #333;
+  margin: 0;
+  min-height: 60px;
+  padding: 10px 0;
+}
+
+/* line 1205, scss/tb_megamenu.bootstrap.scss */
+.tb-megamenu .block-view-demo .item-list ul li.views-row-first {
+  padding-top: 0;
+}
+
+/* line 1211, scss/tb_megamenu.bootstrap.scss */
+.tb-megamenu .block-view-demo a {
+  padding: 0 !important;
+}
+
+/* line 1214, scss/tb_megamenu.bootstrap.scss */
+.tb-megamenu .block-view-demo a:hover, .tb-megamenu .block-view-demo a:focus {
+  background: none !important;
+  border: none !important;
+  color: #e54e4b;
+  text-decoration: none;
 }
 
 /*# sourceMappingURL=maps/tb_megamenu.bootstrap.css.map */
