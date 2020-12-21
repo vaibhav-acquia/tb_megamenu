@@ -21,36 +21,47 @@
     .span12 {
       width: 100%;
     }
+
     .span11 {
       width: 91.66666667%;
     }
+
     .span10 {
       width: 83.33333333%;
     }
+
     .span9 {
       width: 75%;
     }
+
     .span8 {
       width: 66.66666667%;
     }
+
     .span7 {
       width: 58.33333333%;
     }
+
     .span6 {
       width: 50%;
     }
+
     .span5 {
       width: 41.66666667%;
     }
+
     .span4 {
       width: 33.33333333%;
     }
+
     .span3 {
       width: 25%;
     }
+
     .span2 {
       width: 16.66666667%;
     }
+
     .span1 {
       width: 8.333333333%;
     }
@@ -386,6 +397,7 @@
         background-color: #0081c2;
         background-image: linear-gradient(to bottom, #0088cc, #0077b3);
         background-repeat: repeat-x;
+
         &:hover {
           color: #ffffff;
           text-decoration: none;
@@ -394,6 +406,7 @@
           background-image: linear-gradient(to bottom, #0088cc, #0077b3);
           background-repeat: repeat-x;
         }
+
         &:focus {
           color: #ffffff;
           text-decoration: none;
@@ -472,6 +485,7 @@
       display: none;
     }
   }
+
   .mega.open {
     > .mega-dropdown-menu {
       display: block;
@@ -481,6 +495,7 @@
       width: auto;
     }
   }
+
   .mega.dropdown-submenu {
     &:hover {
       > .mega-dropdown-menu {
@@ -538,15 +553,10 @@
     padding: 0 0 0 10px;
     margin: 0;
     text-transform: uppercase;
-    &:hover {
-      background: inherit;
-      color: inherit;
-    }
+
+    &:hover,
+    &:focus,
     &:active {
-      background: inherit;
-      color: inherit;
-    }
-    &:focus {
       background: inherit;
       color: inherit;
     }
@@ -713,82 +723,98 @@
     [class*='span'] {
       width: 100%;
     }
+
     .uneditable-input[class*='span'] {
       width: 100%;
     }
+
     .row-fluid {
       [class*='span'] {
         width: 100%;
       }
+
       .span12 {
         width: 100%;
       }
     }
+
     .span12 {
       width: 100%;
     }
+
     .input-large {
       display: block;
       width: 100%;
       min-height: 30px;
       box-sizing: border-box;
     }
+
     .input-xlarge {
       display: block;
       width: 100%;
       min-height: 30px;
       box-sizing: border-box;
     }
+
     .input-xxlarge {
       display: block;
       width: 100%;
       min-height: 30px;
       box-sizing: border-box;
     }
+
     input[class*='span'] {
       display: block;
       width: 100%;
       min-height: 30px;
       box-sizing: border-box;
     }
+
     select[class*='span'] {
       display: block;
       width: 100%;
       min-height: 30px;
       box-sizing: border-box;
     }
+
     textarea[class*='span'] {
       display: block;
       width: 100%;
       min-height: 30px;
       box-sizing: border-box;
     }
+
     .uneditable-input {
       display: block;
       width: 100%;
       min-height: 30px;
       box-sizing: border-box;
     }
+
     .input-prepend {
       input {
         display: inline-block;
         width: auto;
       }
+
       input[class*='span'] {
         display: inline-block;
         width: auto;
       }
     }
+
     .input-append {
       input {
         display: inline-block;
         width: auto;
       }
+
       input[class*='span'] {
         display: inline-block;
         width: auto;
       }
     }
+
     .controls-row {
       [class*='span'] {
         + {
@@ -806,19 +832,18 @@
     input {
       margin-left: 0;
     }
+
     textarea {
       margin-left: 0;
     }
+
     .uneditable-input {
       margin-left: 0;
     }
+
     .controls-row {
-      [class*='span'] {
-        + {
-          [class*='span'] {
-            margin-left: 20px;
-          }
-        }
+      [class*='span'] + [class*='span'] {
+        margin-left: 20px;
       }
     }
   }
@@ -829,19 +854,18 @@
     input {
       margin-left: 0;
     }
+
     textarea {
       margin-left: 0;
     }
+
     .uneditable-input {
       margin-left: 0;
     }
+
     .controls-row {
-      [class*='span'] {
-        + {
-          [class*='span'] {
-            margin-left: 30px;
-          }
-        }
+      [class*='span'] + [class*='span'] {
+        margin-left: 30px;
       }
     }
   }
@@ -885,9 +909,11 @@
       > .nav-child {
         display: none !important;
       }
+
       .caret {
         display: none !important;
       }
+
       > a {
         &:after {
           display: none !important;
@@ -909,6 +935,7 @@
         margin-left: 0 !important;
         transform: none !important;
       }
+
       + .row-fluid {
         padding-top: 10px;
         border-top: 1px solid #222;
@@ -1042,10 +1069,7 @@
 
     .mega-nav {
       > li {
-        a {
-          padding: 5px 0;
-          margin-left: 20px;
-        }
+        a,
         span.tb-megamenu-no-link {
           padding: 5px 0;
           margin-left: 20px;
@@ -1085,22 +1109,26 @@
         opacity: 0;
       }
     }
+
     .mega.animating {
       > .mega-dropdown-menu {
         display: block !important;
       }
     }
+
     .mega.open {
       > .mega-dropdown-menu {
         opacity: 1;
       }
     }
+
     .mega.animating.open {
       > .mega-dropdown-menu {
         opacity: 1;
       }
     }
   }
+
   .tb-megamenu.animate.zoom {
     .mega {
       > .mega-dropdown-menu {
@@ -1108,12 +1136,14 @@
         transform-origin: 20% 20%;
       }
     }
+
     .mega.open {
       > .mega-dropdown-menu {
         transform: scale(1, 1);
       }
     }
   }
+
   .tb-megamenu.animate.elastic {
     .level0 {
       > .mega {
@@ -1122,24 +1152,28 @@
         }
       }
     }
+
     .mega {
       > .mega-dropdown-menu {
         transform: scale(0, 1);
         transform-origin: 10% 0;
       }
     }
+
     .mega.open {
       > .mega-dropdown-menu {
         transform: scale(1, 1);
       }
     }
   }
+
   .tb-megamenu.animate.slide {
     .mega.animating {
       > .mega-dropdown-menu {
         overflow: hidden;
       }
     }
+
     .mega {
       > .mega-dropdown-menu {
         > div {
@@ -1148,9 +1182,11 @@
           margin-top: -100%;
         }
       }
+
       .mega {
         > .mega-dropdown-menu {
           min-width: 0;
+
           > div {
             min-width: 200px;
             margin-top: 0;
@@ -1158,6 +1194,7 @@
           }
         }
       }
+
       .mega.open {
         > .mega-dropdown-menu {
           > div {
@@ -1166,6 +1203,7 @@
         }
       }
     }
+
     .mega.open {
       > .mega-dropdown-menu {
         > div {
