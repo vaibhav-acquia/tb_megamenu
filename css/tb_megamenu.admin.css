@@ -98,7 +98,6 @@
 ---------------------*/
 #tb-megamenu-admin-mm-tb {
   float: left;
-  text-shadow: 0 1px 1px #fff;
 }
 
 #tb-megamenu-admin .admin-inline-toolbox {
@@ -631,7 +630,8 @@ input[type='file'] {
 .tb-megamenu .navbar .nav > li {
   float: left;
 }
-.tb-megamenu .navbar .nav > li > a {
+.tb-megamenu .navbar .nav > li > a,
+.tb-megamenu .navbar .nav > li > span.tb-megamenu-no-link {
   float: none;
   padding: 10px 15px 10px;
   color: #777777;
