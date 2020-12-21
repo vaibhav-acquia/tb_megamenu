@@ -1,5 +1,17 @@
+$color-light-grey: #ddd;
+$color-light-grey-2: #ccc;
+$color-light-grey-3: #e6e6e6;
+$color-dark-grey: #333;
+$color-dark-grey-2: #222;
+$color-dark-grey-3: #666;
+$color-medium-grey: #aaa;
+$color-medium-grey-2: #999;
+$color-red: #e54e4b;
+$color-white: #fff;
+$color-black: #000;
+
 .tb-megamenu {
-  background-color: #000;
+  background-color: $color-black;
 
   .row-fluid {
     display: flex;
@@ -8,7 +20,7 @@
 
     + .row-fluid {
       padding-top: 10px;
-      border-top: 1px solid #ddd;
+      border-top: 1px solid $color-light-grey;
     }
 
     [class*='span'] {
@@ -77,33 +89,32 @@
     text-align: center;
     vertical-align: middle;
     cursor: pointer;
-    color: #333333;
+    color: $color-dark-grey;
     background-color: #f5f5f5;
-    border: 1px solid #cccccc;
+    border: 1px solid $color-light-grey-2;
     border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
     border-radius: 4px;
 
     &:hover {
-      color: #333333;
-      background-color: #e6e6e6;
-      color: #333333;
+      color: $color-dark-grey;
+      background-color: $color-light-grey-3;
+      color: $color-dark-grey;
       text-decoration: none;
     }
 
     &:focus {
-      color: #333333;
-      background-color: #e6e6e6;
-      color: #333333;
+      color: $color-dark-grey;
+      background-color: $color-light-grey-3;
+      color: $color-dark-grey;
       text-decoration: none;
-      outline: thin dotted #333;
+      outline: thin dotted $color-dark-grey;
       outline: 5px auto -webkit-focus-ring-color;
       outline-offset: -2px;
     }
 
     &:active {
-      color: #333333;
-      background-color: #e6e6e6;
-      background-color: #cccccc \9;
+      color: $color-dark-grey;
+      background-color: $color-light-grey-3;
       outline: 0;
     }
 
@@ -114,16 +125,15 @@
   }
 
   .btn.active {
-    color: #333333;
-    background-color: #e6e6e6;
-    background-color: #cccccc \9;
+    color: $color-dark-grey;
+    background-color: $color-light-grey-3;
     outline: 0;
   }
 
   .btn.disabled,
   .btn[disabled] {
-    color: #333333;
-    background-color: #e6e6e6;
+    color: $color-dark-grey;
+    background-color: $color-light-grey-3;
     cursor: default;
     opacity: 0.65;
   }
@@ -166,7 +176,7 @@
       > span.tb-megamenu-no-link {
         border: 0;
         box-sizing: border-box;
-        color: #fff;
+        color: $color-white;
         display: block;
         font-weight: bold;
         height: 100%;
@@ -175,8 +185,8 @@
 
         &:focus,
         &:hover {
-          background-color: #fff;
-          color: #e54e4b;
+          background-color: $color-white;
+          color: $color-red;
           text-decoration: none;
           text-shadow: none;
           outline: none;
@@ -191,8 +201,8 @@
     // The anchor tag for any menu item that has a submenu.
     .dropdown-toggle {
       .caret {
-        border-top-color: #666;
-        border-bottom-color: #666;
+        border-top-color: $color-dark-grey-3;
+        border-bottom-color: $color-dark-grey-3;
         margin-left: 5px;
         margin-top: 8px;
       }
@@ -204,8 +214,8 @@
       &:hover,
       &:focus {
         .caret {
-          border-top-color: #e54e4b;
-          border-bottom-color: #e54e4b;
+          border-top-color: $color-red;
+          border-bottom-color: $color-red;
         }
       }
     }
@@ -217,8 +227,8 @@
       > span.tb-megamenu-no-link,
       > span.tb-megamenu-no-link:hover,
       > span.tb-megamenu-no-link:focus {
-        background-color: #e54e4b;
-        color: #fff;
+        background-color: $color-red;
+        color: $color-white;
         text-shadow: none;
         box-shadow: none;
         outline: none;
@@ -228,8 +238,8 @@
     .active {
       .dropdown-toggle {
         .caret {
-          border-top-color: #fff;
-          border-bottom-color: #fff;
+          border-top-color: $color-white;
+          border-bottom-color: $color-white;
         }
       }
     }
@@ -247,15 +257,15 @@
       > a {
         &:hover,
         &:focus {
-          color: #ffffff;
-          background-color: #999999;
-          border-color: #999999;
+          color: $color-white;
+          background-color: $color-medium-grey-2;
+          border-color: $color-medium-grey-2;
         }
       }
 
       .caret {
-        border-top-color: #ffffff;
-        border-bottom-color: #ffffff;
+        border-top-color: $color-white;
+        border-bottom-color: $color-white;
         opacity: 1;
       }
     }
@@ -263,7 +273,7 @@
     .dropdown.active,
     .dropdown.open.active {
       > .dropdown-toggle {
-        background-color: #e54e4b;
+        background-color: $color-red;
         border-color: #444;
         color: #eee;
 
@@ -277,7 +287,7 @@
     > .dropdown.open.active {
       > a:hover,
       > span.tb-megamenu-no-link:hover {
-        background-color: #e54e4b;
+        background-color: $color-red;
         border-color: #444;
         color: #eee;
       }
@@ -291,8 +301,8 @@
       // Change the color of the immediate toggle, but not any further down the
       // chain.
       > .dropdown-toggle {
-        background-color: #fff;
-        color: #e54e4b;
+        background-color: $color-white;
+        color: $color-red;
       }
 
       > .dropdown-menu {
@@ -302,7 +312,7 @@
 
     > .disabled {
       > a {
-        color: #999999;
+        color: $color-medium-grey-2;
         &:hover,
         &:focus {
           text-decoration: none;
@@ -318,7 +328,7 @@
     width: 0;
     height: 0;
     vertical-align: top;
-    border-top: 4px solid #000000;
+    border-top: 4px solid $color-black;
     border-right: 4px solid transparent;
     border-left: 4px solid transparent;
     content: '';
@@ -337,8 +347,8 @@
     padding: 5px 0;
     margin: 2px 0 0;
     list-style: none;
-    background-color: #ffffff;
-    border: 1px solid #ccc;
+    background-color: $color-white;
+    border: 1px solid $color-light-grey-2;
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 6px;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
@@ -349,7 +359,7 @@
       > span.tb-megamenu-no-link {
         border-bottom: 0;
         border-top: 1px solid #eee;
-        color: #333;
+        color: $color-dark-grey;
         display: block;
         font-weight: normal;
         line-height: 20px;
@@ -360,7 +370,7 @@
         &:hover,
         &:focus {
           text-decoration: none;
-          color: #e54e4b;
+          color: $color-red;
           background-color: inherit;
           background-image: none;
         }
@@ -375,11 +385,11 @@
     .disabled {
       > a,
       > span.tb-megamenu-no-link {
-        color: #999;
+        color: $color-medium-grey-2;
 
         &:hover,
         &:focus {
-          color: #999;
+          color: $color-medium-grey-2;
           text-decoration: none;
           background-color: transparent;
           cursor: default;
@@ -391,7 +401,7 @@
     > .active {
       > a,
       > span.tb-megamenu-no-link {
-        color: #ffffff;
+        color: $color-white;
         text-decoration: none;
         outline: 0;
         background-color: #0081c2;
@@ -399,7 +409,7 @@
         background-repeat: repeat-x;
 
         &:hover {
-          color: #ffffff;
+          color: $color-white;
           text-decoration: none;
           outline: 0;
           background-color: #0081c2;
@@ -408,7 +418,7 @@
         }
 
         &:focus {
-          color: #ffffff;
+          color: $color-white;
           text-decoration: none;
           outline: 0;
           background-color: #0081c2;
@@ -439,7 +449,7 @@
         border-color: transparent;
         border-style: solid;
         border-width: 5px 0 5px 5px;
-        border-left-color: #cccccc;
+        border-left-color: $color-light-grey-2;
         margin-top: 5px;
         margin-right: -10px;
       }
@@ -450,7 +460,7 @@
       > a,
       > span.tb-megamenu-no-link {
         text-decoration: none;
-        color: #e54e4b;
+        color: $color-red;
         background-color: inherit;
         background-image: none;
 
@@ -580,7 +590,7 @@
   .mega-caption {
     display: block;
     white-space: nowrap;
-    color: #999;
+    color: $color-medium-grey-2;
     font-size: 12px;
     margin-top: 3px;
     font-weight: normal;
@@ -640,7 +650,7 @@
 
     .block-title {
       font-size: 12px;
-      color: #333;
+      color: $color-dark-grey;
       display: block;
       line-height: 20px;
       margin: 0 0 15px;
@@ -689,7 +699,7 @@
     float: left;
     padding: 10px;
     margin: 0;
-    color: #fff;
+    color: $color-white;
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
     background-color: #e8e8e8;
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1),
@@ -701,18 +711,13 @@
     &.active,
     &.disabled,
     &[disabled] {
-      color: #fff;
+      color: $color-white;
       background-color: #d9d9d9;
-    }
-
-    &:active,
-    &.active {
-      background-color: #bfbfbf \9;
     }
 
     [class^='fa-'],
     [class^=' fa-'] {
-      color: #666;
+      color: $color-dark-grey-3;
       text-shadow: none;
     }
   }
@@ -938,7 +943,7 @@
 
       + .row-fluid {
         padding-top: 10px;
-        border-top: 1px solid #222;
+        border-top: 1px solid $color-dark-grey-2;
       }
     }
 
@@ -952,7 +957,7 @@
     }
 
     .nav-collapse {
-      background: #000;
+      background: $color-black;
       margin-top: 10px;
       position: absolute;
       top: 27px;
@@ -967,10 +972,10 @@
         > li {
           > a,
           > span.tb-megamenu-no-link {
-            border-bottom: 1px solid #222;
+            border-bottom: 1px solid $color-dark-grey-2;
             border-radius: 0;
             border-right: none;
-            color: #fff;
+            color: $color-white;
             font-size: 15px;
             margin-bottom: 0;
             text-shadow: none;
@@ -979,8 +984,8 @@
 
             &:hover,
             &:focus {
-              background-color: #fff;
-              color: #e54e4b;
+              background-color: $color-white;
+              color: $color-red;
             }
           }
 
@@ -989,7 +994,7 @@
             > span.tb-megamenu-no-link {
               &:hover,
               &:focus {
-                background-color: #e54e4b;
+                background-color: $color-red;
               }
             }
           }
@@ -1005,7 +1010,7 @@
         max-width: none;
         margin: 0;
         padding: 0;
-        background-color: #000;
+        background-color: $color-black;
         border: 0;
         border-radius: 0;
         box-shadow: none;
@@ -1014,11 +1019,11 @@
         a,
         span.tb-megamenu-no-link {
           border-bottom: 0;
-          border-bottom: 1px solid #222;
+          border-bottom: 1px solid $color-dark-grey-2;
           border-radius: 0;
           border-right: none;
-          border-top: 1px solid #222;
-          color: #fff;
+          border-top: 1px solid $color-dark-grey-2;
+          color: $color-white;
           font-weight: normal;
           padding: 10px 20px;
           text-shadow: none;
@@ -1093,7 +1098,7 @@
       margin-bottom: 0;
 
       .block-title {
-        color: #fff;
+        color: $color-white;
       }
     }
   }
@@ -1223,7 +1228,7 @@
         color: #eee;
         padding: 0 !important;
         border-top: none;
-        color: #aaa;
+        color: $color-medium-grey;
         padding: 0;
       }
     }
@@ -1232,7 +1237,7 @@
       float: left;
 
       img {
-        border: 1px solid #333;
+        border: 1px solid $color-dark-grey;
         margin: 0 20px 0 0;
         max-width: none !important;
         padding: 4px;
@@ -1243,7 +1248,7 @@
     .item-list {
       ul {
         li {
-          border-bottom: 1px solid #333;
+          border-bottom: 1px solid $color-dark-grey;
           margin: 0;
           min-height: 60px;
           padding: 10px 0;
@@ -1262,7 +1267,7 @@
       &:focus {
         background: none !important;
         border: none !important;
-        color: #e54e4b;
+        color: $color-red;
         text-decoration: none;
       }
     }
