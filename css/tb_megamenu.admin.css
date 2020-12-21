@@ -1148,16 +1148,52 @@ input[type='file'] {
   outline-offset: -2px;
 }
 
-/* This was ported from tb_megamenu.default.css. May not be needed. */
+/* These styles may not be needed anymore. */
+@media (max-width: 767px) {
+  .tb-megamenu .input-large {
+    display: block;
+    width: 100%;
+    min-height: 30px;
+    box-sizing: border-box;
+  }
+
+  .tb-megamenu .input-xlarge {
+    display: block;
+    width: 100%;
+    min-height: 30px;
+    box-sizing: border-box;
+  }
+
+  .tb-megamenu .input-xxlarge {
+    display: block;
+    width: 100%;
+    min-height: 30px;
+    box-sizing: border-box;
+  }
+
+  .tb-megamenu input[class*='span'] {
+    display: block;
+    width: 100%;
+    min-height: 30px;
+    box-sizing: border-box;
+  }
+
+  .tb-megamenu select[class*='span'] {
+    display: block;
+    width: 100%;
+    min-height: 30px;
+    box-sizing: border-box;
+  }
+
+  .tb-megamenu textarea[class*='span'] {
+    display: block;
+    width: 100%;
+    min-height: 30px;
+    box-sizing: border-box;
+  }
+}
+
 @media (min-width: 980px) and (max-width: 1199px) {
-  .tb-megamenu input,
-  .tb-megamenu textarea,
-  .tb-megamenu .uneditable-input {
-    margin-left: 0;
-  }
-  .tb-megamenu .controls-row [class*='span'] + [class*='span'] {
-    margin-left: 40px;
-  }
   .tb-megamenu input.span12,
   textarea.span12,
   .uneditable-input.span12 {

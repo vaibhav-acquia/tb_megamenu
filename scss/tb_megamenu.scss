@@ -156,13 +156,7 @@ $color-white-75-op: rgba(255, 255, 255, 0.075);
 
   [class^='fa-'],
   [class*=' fa-'] {
-    display: inline-block;
-    width: 14px;
-    height: 14px;
-    line-height: 14px;
-    vertical-align: text-top;
     margin-right: 5px;
-    margin-top: 1px;
   }
 
   // The <ul> around the top level menu.
@@ -309,6 +303,11 @@ $color-white-75-op: rgba(255, 255, 255, 0.075);
     }
 
     .dropdown.open {
+      .caret {
+        border-bottom-color: $color-red;
+        border-top-color: $color-red;
+      }
+
       .dropdown-toggle {
         outline: 0;
       }
@@ -705,7 +704,7 @@ $color-white-75-op: rgba(255, 255, 255, 0.075);
   .btn-navbar {
     display: none;
     float: left;
-    padding: 10px;
+    padding: 10px 14px;
     margin: 0;
     color: $color-white;
     text-shadow: 0 -1px 0 $color-black-25-op;
@@ -723,8 +722,9 @@ $color-white-75-op: rgba(255, 255, 255, 0.075);
     }
 
     [class^='fa-'],
-    [class^=' fa-'] {
+    [class*=' fa-'] {
       color: $color-dark-grey-3;
+      margin: 0;
       text-shadow: none;
     }
   }
@@ -775,159 +775,6 @@ $color-white-75-op: rgba(255, 255, 255, 0.075);
         border: 0 !important;
         color: $color-red;
         text-decoration: none;
-      }
-    }
-  }
-}
-
-@media (max-width: 767px) {
-  .tb-megamenu {
-    [class*='span'] {
-      width: 100%;
-    }
-
-    .uneditable-input[class*='span'] {
-      width: 100%;
-    }
-
-    .row-fluid {
-      [class*='span'] {
-        width: 100%;
-      }
-
-      .span12 {
-        width: 100%;
-      }
-    }
-
-    .span12 {
-      width: 100%;
-    }
-
-    .input-large {
-      display: block;
-      width: 100%;
-      min-height: 30px;
-      box-sizing: border-box;
-    }
-
-    .input-xlarge {
-      display: block;
-      width: 100%;
-      min-height: 30px;
-      box-sizing: border-box;
-    }
-
-    .input-xxlarge {
-      display: block;
-      width: 100%;
-      min-height: 30px;
-      box-sizing: border-box;
-    }
-
-    input[class*='span'] {
-      display: block;
-      width: 100%;
-      min-height: 30px;
-      box-sizing: border-box;
-    }
-
-    select[class*='span'] {
-      display: block;
-      width: 100%;
-      min-height: 30px;
-      box-sizing: border-box;
-    }
-
-    textarea[class*='span'] {
-      display: block;
-      width: 100%;
-      min-height: 30px;
-      box-sizing: border-box;
-    }
-
-    .uneditable-input {
-      display: block;
-      width: 100%;
-      min-height: 30px;
-      box-sizing: border-box;
-    }
-
-    .input-prepend {
-      input {
-        display: inline-block;
-        width: auto;
-      }
-
-      input[class*='span'] {
-        display: inline-block;
-        width: auto;
-      }
-    }
-
-    .input-append {
-      input {
-        display: inline-block;
-        width: auto;
-      }
-
-      input[class*='span'] {
-        display: inline-block;
-        width: auto;
-      }
-    }
-
-    .controls-row {
-      [class*='span'] {
-        + {
-          [class*='span'] {
-            margin-left: 0;
-          }
-        }
-      }
-    }
-  }
-}
-
-@media (min-width: 768px) and (max-width: 979px) {
-  .tb-megamenu {
-    input {
-      margin-left: 0;
-    }
-
-    textarea {
-      margin-left: 0;
-    }
-
-    .uneditable-input {
-      margin-left: 0;
-    }
-
-    .controls-row {
-      [class*='span'] + [class*='span'] {
-        margin-left: 20px;
-      }
-    }
-  }
-}
-
-@media (min-width: 1200px) {
-  .tb-megamenu {
-    input {
-      margin-left: 0;
-    }
-
-    textarea {
-      margin-left: 0;
-    }
-
-    .uneditable-input {
-      margin-left: 0;
-    }
-
-    .controls-row {
-      [class*='span'] + [class*='span'] {
-        margin-left: 30px;
       }
     }
   }
