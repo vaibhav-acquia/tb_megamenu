@@ -22,7 +22,7 @@ options.theme = {
   root: options.rootPath.theme,
   scss: options.rootPath.theme + 'scss/',
   es6: options.rootPath.theme + 'es6/',
-  css: options.rootPath.theme + 'css_compiled/',
+  css: options.rootPath.theme + 'css/compiled/',
   js: options.rootPath.theme + 'js/',
 };
 

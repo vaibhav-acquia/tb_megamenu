@@ -2,7 +2,7 @@ form.configure-megamenu:
   version: 1.x
   css:
     theme:
-      css_compiled/tb_megamenu.css: {}
+      css/compiled/tb_megamenu.css: {}
       css/tb_megamenu.admin.css: {}
       css/tb_megamenu.backend.css: {}
   js:
@@ -19,7 +19,7 @@ theme.tb_megamenu:
   css:
     theme:
       https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css: { type: external }
-      css_compiled/tb_megamenu.css: {}
+      css/compiled/tb_megamenu.css: {}
       css/tb_megamenu.compatibility.css: {}
   js:
     js/tb-megamenu-frontend.js: { scope: footer }
