@@ -89,6 +89,17 @@ $color-white-75-op: rgba(255, 255, 255, 0.075);
     }
   }
 
+  // When a row is within a submenu, it needs a negative margin.
+  .mega-inner .row-fluid {
+    margin-left: -10px;
+    margin-right: -10px;
+  }
+
+  .mega-inner .dropdown-submenu .row-fluid {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
   // Buttons
   .btn {
     display: inline-block;
@@ -349,14 +360,20 @@ $color-white-75-op: rgba(255, 255, 255, 0.075);
     display: none;
     float: left;
     min-width: 160px;
-    padding: 5px 0;
-    margin: 2px 0 0;
+    padding: 0;
+    margin: 0;
     list-style: none;
     background-color: $color-white;
     border: 1px solid $color-black-20-op;
-    border-radius: 6px;
+    border-top-width: 0;
+    border-radius: 0;
     box-shadow: 0 5px 10px $color-black-20-op;
     background-clip: padding-box;
+
+    .dropdown-menu {
+      // Anything other than the 1st dropdown menu needs the top border.
+      border-top-width: 1px;
+    }
 
     li {
       > a,
@@ -384,6 +401,11 @@ $color-white-75-op: rgba(255, 255, 255, 0.075);
       &:first-child > span.tb-megamenu-no-link {
         border-top: 0;
       }
+    }
+
+    // Do not display the down carat in any dropdowns.
+    .caret {
+      display: none;
     }
 
     .disabled {
@@ -425,16 +447,11 @@ $color-white-75-op: rgba(255, 255, 255, 0.075);
   .dropdown-submenu {
     position: relative;
 
-    // Do not display the down carat on submenus.
-    .caret {
-      display: none;
-    }
-
     > a,
     > span.tb-megamenu-no-link {
       &:after {
         display: block;
-        content: ' ';
+        content: '';
         float: right;
         width: 0;
         height: 0;
@@ -442,8 +459,7 @@ $color-white-75-op: rgba(255, 255, 255, 0.075);
         border-style: solid;
         border-width: 5px 0 5px 5px;
         border-left-color: $color-light-grey-2;
-        margin-top: 5px;
-        margin-right: -10px;
+        margin: 5px 0 0;
       }
     }
 
