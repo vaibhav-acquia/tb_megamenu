@@ -2,10 +2,9 @@
 $color-light-grey-1: #ccc;
 $color-light-grey-2: #e6e6e6;
 $color-light-grey-3: #eee;
-$color-dark-grey: #333;
+$color-medium-grey: #999;
+$color-dark-grey-1: #333;
 $color-dark-grey-2: #222;
-$color-medium-grey: #aaa;
-$color-medium-grey-2: #999;
 $color-red: #e54e4b;
 $color-white: #fff;
 $color-black: #000;
@@ -107,7 +106,7 @@ $dropdown-width: 400px;
     text-align: center;
     vertical-align: middle;
     cursor: pointer;
-    color: $color-dark-grey;
+    color: $color-dark-grey-1;
     background-color: $color-light-grey-3;
     border: 1px solid $color-light-grey-1;
     border-color: $color-black-10-op $color-black-10-op $color-black-25-op;
@@ -115,18 +114,18 @@ $dropdown-width: 400px;
 
     &:hover,
     &:focus {
-      color: $color-dark-grey;
+      color: $color-dark-grey-1;
       background-color: $color-light-grey-2;
       text-decoration: none;
     }
 
     &:focus {
-      outline: thin dotted $color-dark-grey;
+      outline: thin dotted $color-dark-grey-1;
       outline-offset: -2px;
     }
 
     &:active {
-      color: $color-dark-grey;
+      color: $color-dark-grey-1;
       background-color: $color-light-grey-2;
       outline: 0;
     }
@@ -138,14 +137,14 @@ $dropdown-width: 400px;
   }
 
   .btn.active {
-    color: $color-dark-grey;
+    color: $color-dark-grey-1;
     background-color: $color-light-grey-2;
     outline: 0;
   }
 
   .btn.disabled,
   .btn[disabled] {
-    color: $color-dark-grey;
+    color: $color-dark-grey-1;
     background-color: $color-light-grey-2;
     cursor: default;
     opacity: 0.65;
@@ -286,7 +285,7 @@ $dropdown-width: 400px;
     // Top level menu items that are disabled. Not certain this is needed.
     > .disabled {
       > a {
-        color: $color-medium-grey-2;
+        color: $color-medium-grey;
 
         &:hover,
         &:focus {
@@ -339,7 +338,7 @@ $dropdown-width: 400px;
       > span.tb-megamenu-no-link {
         border-bottom: 0;
         border-top: 1px solid $color-light-grey-3;
-        color: $color-dark-grey;
+        color: $color-dark-grey-1;
         display: block;
         font-weight: normal;
         line-height: 20px;
@@ -370,11 +369,11 @@ $dropdown-width: 400px;
     .disabled {
       > a,
       > span.tb-megamenu-no-link {
-        color: $color-medium-grey-2;
+        color: $color-medium-grey;
 
         &:hover,
         &:focus {
-          color: $color-medium-grey-2;
+          color: $color-medium-grey;
           text-decoration: none;
           background-color: transparent;
           cursor: default;
@@ -554,7 +553,7 @@ $dropdown-width: 400px;
   .mega-caption {
     display: block;
     white-space: nowrap;
-    color: $color-medium-grey-2;
+    color: $color-medium-grey;
     font-size: 12px;
     margin-top: 3px;
     font-weight: normal;
@@ -614,7 +613,7 @@ $dropdown-width: 400px;
 
     .block-title {
       font-size: 12px;
-      color: $color-dark-grey;
+      color: $color-dark-grey-1;
       display: block;
       line-height: 20px;
       margin: 0 0 15px;
@@ -645,7 +644,7 @@ $dropdown-width: 400px;
 
     [class^='fa-'],
     [class*=' fa-'] {
-      color: $color-dark-grey;
+      color: $color-dark-grey-1;
       margin: 0;
       text-shadow: none;
     }
