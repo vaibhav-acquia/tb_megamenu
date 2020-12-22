@@ -31,7 +31,7 @@ options.scss = {
   // importer: importOnce,
   outputStyle: 'expanded',
   lintIgnore: [],
-  sourceComments: true,
+  sourceComments: false,
   includePaths: [
     // options.rootPath.project + "node_modules/foundation-sites/scss",
   ],

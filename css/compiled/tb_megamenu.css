@@ -1,10 +1,8 @@
-/* line 22, scss/tb_megamenu.scss */
 .tb-megamenu {
   background-color: #000;
   position: relative;
 }
 
-/* line 27, scss/tb_megamenu.scss */
 .tb-megamenu .row-fluid {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -16,7 +14,6 @@
   width: 100%;
 }
 
-/* line 32, scss/tb_megamenu.scss */
 .tb-megamenu .row-fluid [class*='span'] {
   display: block;
   width: 100%;
@@ -25,79 +22,64 @@
           box-sizing: border-box;
 }
 
-/* line 39, scss/tb_megamenu.scss */
 .tb-megamenu .row-fluid .span12 {
   width: 100%;
 }
 
-/* line 43, scss/tb_megamenu.scss */
 .tb-megamenu .row-fluid .span11 {
   width: 91.66666667%;
 }
 
-/* line 47, scss/tb_megamenu.scss */
 .tb-megamenu .row-fluid .span10 {
   width: 83.33333333%;
 }
 
-/* line 51, scss/tb_megamenu.scss */
 .tb-megamenu .row-fluid .span9 {
   width: 75%;
 }
 
-/* line 55, scss/tb_megamenu.scss */
 .tb-megamenu .row-fluid .span8 {
   width: 66.66666667%;
 }
 
-/* line 59, scss/tb_megamenu.scss */
 .tb-megamenu .row-fluid .span7 {
   width: 58.33333333%;
 }
 
-/* line 63, scss/tb_megamenu.scss */
 .tb-megamenu .row-fluid .span6 {
   width: 50%;
 }
 
-/* line 67, scss/tb_megamenu.scss */
 .tb-megamenu .row-fluid .span5 {
   width: 41.66666667%;
 }
 
-/* line 71, scss/tb_megamenu.scss */
 .tb-megamenu .row-fluid .span4 {
   width: 33.33333333%;
 }
 
-/* line 75, scss/tb_megamenu.scss */
 .tb-megamenu .row-fluid .span3 {
   width: 25%;
 }
 
-/* line 79, scss/tb_megamenu.scss */
 .tb-megamenu .row-fluid .span2 {
   width: 16.66666667%;
 }
 
-/* line 83, scss/tb_megamenu.scss */
 .tb-megamenu .row-fluid .span1 {
   width: 8.333333333%;
 }
 
-/* line 89, scss/tb_megamenu.scss */
 .tb-megamenu .mega-inner .row-fluid {
   margin-left: -10px;
   margin-right: -10px;
 }
 
-/* line 94, scss/tb_megamenu.scss */
 .tb-megamenu .mega-inner .dropdown-submenu .row-fluid {
   margin-left: 0;
   margin-right: 0;
 }
 
-/* line 100, scss/tb_megamenu.scss */
 .tb-megamenu .btn {
   display: inline-block;
   padding: 4px 12px;
@@ -114,40 +96,34 @@
   border-radius: 4px;
 }
 
-/* line 115, scss/tb_megamenu.scss */
 .tb-megamenu .btn:hover, .tb-megamenu .btn:focus {
   color: #333;
   background-color: #e6e6e6;
   text-decoration: none;
 }
 
-/* line 122, scss/tb_megamenu.scss */
 .tb-megamenu .btn:focus {
   outline: thin dotted #333;
   outline-offset: -2px;
 }
 
-/* line 127, scss/tb_megamenu.scss */
 .tb-megamenu .btn:active {
   color: #333;
   background-color: #e6e6e6;
   outline: 0;
 }
 
-/* line 133, scss/tb_megamenu.scss */
 .tb-megamenu .btn .caret {
   margin-top: 8px;
   margin-left: 0;
 }
 
-/* line 139, scss/tb_megamenu.scss */
 .tb-megamenu .btn.active {
   color: #333;
   background-color: #e6e6e6;
   outline: 0;
 }
 
-/* line 145, scss/tb_megamenu.scss */
 .tb-megamenu .btn.disabled,
 .tb-megamenu .btn[disabled] {
   color: #333;
@@ -156,13 +132,11 @@
   opacity: 0.65;
 }
 
-/* line 154, scss/tb_megamenu.scss */
 .tb-megamenu [class^='fa-'],
 .tb-megamenu [class*=' fa-'] {
   margin-right: 5px;
 }
 
-/* line 160, scss/tb_megamenu.scss */
 .tb-megamenu .nav {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -176,22 +150,18 @@
   padding: 0;
 }
 
-/* line 171, scss/tb_megamenu.scss */
 .tb-megamenu .nav span.tb-megamenu-no-link.tb-megamenu-no-submenu:hover {
   color: inherit !important;
 }
 
-/* line 176, scss/tb_megamenu.scss */
 .tb-megamenu .nav span.tb-megamenu-no-link:hover {
   cursor: default;
 }
 
-/* line 182, scss/tb_megamenu.scss */
 .tb-megamenu .nav > li {
   position: relative;
 }
 
-/* line 185, scss/tb_megamenu.scss */
 .tb-megamenu .nav > li > a,
 .tb-megamenu .nav > li > span.tb-megamenu-no-link {
   border: 0;
@@ -205,7 +175,6 @@
   text-shadow: none;
 }
 
-/* line 196, scss/tb_megamenu.scss */
 .tb-megamenu .nav > li > a:focus, .tb-megamenu .nav > li > a:hover,
 .tb-megamenu .nav > li > span.tb-megamenu-no-link:focus,
 .tb-megamenu .nav > li > span.tb-megamenu-no-link:hover {
@@ -216,30 +185,25 @@
   outline: none;
 }
 
-/* line 205, scss/tb_megamenu.scss */
 .tb-megamenu .nav > li > a > img,
 .tb-megamenu .nav > li > span.tb-megamenu-no-link > img {
   max-width: none;
 }
 
-/* line 213, scss/tb_megamenu.scss */
 .tb-megamenu .nav .dropdown-toggle .caret {
   margin-left: 5px;
   margin-top: 8px;
 }
 
-/* line 218, scss/tb_megamenu.scss */
 .tb-megamenu .nav .dropdown-toggle:active {
   outline: 0;
 }
 
-/* line 224, scss/tb_megamenu.scss */
 .tb-megamenu .nav .dropdown-toggle:hover .caret, .tb-megamenu .nav .dropdown-toggle:focus .caret {
   border-top-color: #e54e4b;
   border-bottom-color: #e54e4b;
 }
 
-/* line 234, scss/tb_megamenu.scss */
 .tb-megamenu .nav .dropdown.active > a,
 .tb-megamenu .nav .dropdown.active > a:hover,
 .tb-megamenu .nav .dropdown.active > a:focus,
@@ -256,20 +220,17 @@
   color: #fff;
 }
 
-/* line 245, scss/tb_megamenu.scss */
 .tb-megamenu .nav .dropdown.active > a:hover, .tb-megamenu .nav .dropdown.active > a:focus,
 .tb-megamenu .nav .dropdown.open.active > a:hover,
 .tb-megamenu .nav .dropdown.open.active > a:focus {
   cursor: pointer;
 }
 
-/* line 250, scss/tb_megamenu.scss */
 .tb-megamenu .nav .dropdown.active > a .mega-caption,
 .tb-megamenu .nav .dropdown.open.active > a .mega-caption {
   color: #fff;
 }
 
-/* line 255, scss/tb_megamenu.scss */
 .tb-megamenu .nav .dropdown.active .caret,
 .tb-megamenu .nav .dropdown.open.active .caret {
   border-top-color: #fff;
@@ -277,41 +238,34 @@
   opacity: 1;
 }
 
-/* line 264, scss/tb_megamenu.scss */
 .tb-megamenu .nav .dropdown.open .caret {
   border-bottom-color: #e54e4b;
   border-top-color: #e54e4b;
 }
 
-/* line 269, scss/tb_megamenu.scss */
 .tb-megamenu .nav .dropdown.open .dropdown-toggle {
   outline: 0;
 }
 
-/* line 275, scss/tb_megamenu.scss */
 .tb-megamenu .nav .dropdown.open > .dropdown-toggle {
   background-color: #fff;
   color: #e54e4b;
 }
 
-/* line 280, scss/tb_megamenu.scss */
 .tb-megamenu .nav .dropdown.open > .dropdown-menu {
   display: block;
 }
 
-/* line 287, scss/tb_megamenu.scss */
 .tb-megamenu .nav > .disabled > a {
   color: #999;
 }
 
-/* line 290, scss/tb_megamenu.scss */
 .tb-megamenu .nav > .disabled > a:hover, .tb-megamenu .nav > .disabled > a:focus {
   text-decoration: none;
   background-color: transparent;
   cursor: default;
 }
 
-/* line 300, scss/tb_megamenu.scss */
 .tb-megamenu .caret {
   display: inline-block;
   width: 0;
@@ -323,7 +277,6 @@
   content: '';
 }
 
-/* line 313, scss/tb_megamenu.scss */
 .tb-megamenu .dropdown-menu {
   position: absolute;
   top: 100%;
@@ -344,12 +297,10 @@
   background-clip: padding-box;
 }
 
-/* line 331, scss/tb_megamenu.scss */
 .tb-megamenu .dropdown-menu .dropdown-menu {
   border-top-width: 1px;
 }
 
-/* line 337, scss/tb_megamenu.scss */
 .tb-megamenu .dropdown-menu li > a,
 .tb-megamenu .dropdown-menu li > span.tb-megamenu-no-link {
   border-bottom: 0;
@@ -363,7 +314,6 @@
   white-space: nowrap;
 }
 
-/* line 349, scss/tb_megamenu.scss */
 .tb-megamenu .dropdown-menu li > a:hover, .tb-megamenu .dropdown-menu li > a:focus,
 .tb-megamenu .dropdown-menu li > span.tb-megamenu-no-link:hover,
 .tb-megamenu .dropdown-menu li > span.tb-megamenu-no-link:focus {
@@ -373,24 +323,20 @@
   background-image: none;
 }
 
-/* line 358, scss/tb_megamenu.scss */
 .tb-megamenu .dropdown-menu li:first-child > a,
 .tb-megamenu .dropdown-menu li:first-child > span.tb-megamenu-no-link {
   border-top: 0;
 }
 
-/* line 365, scss/tb_megamenu.scss */
 .tb-megamenu .dropdown-menu .caret {
   display: none;
 }
 
-/* line 370, scss/tb_megamenu.scss */
 .tb-megamenu .dropdown-menu .disabled > a,
 .tb-megamenu .dropdown-menu .disabled > span.tb-megamenu-no-link {
   color: #999;
 }
 
-/* line 374, scss/tb_megamenu.scss */
 .tb-megamenu .dropdown-menu .disabled > a:hover, .tb-megamenu .dropdown-menu .disabled > a:focus,
 .tb-megamenu .dropdown-menu .disabled > span.tb-megamenu-no-link:hover,
 .tb-megamenu .dropdown-menu .disabled > span.tb-megamenu-no-link:focus {
@@ -401,7 +347,6 @@
   background-image: none;
 }
 
-/* line 386, scss/tb_megamenu.scss */
 .tb-megamenu .dropdown-menu > .active > a,
 .tb-megamenu .dropdown-menu > .active > span.tb-megamenu-no-link {
   color: #fff;
@@ -410,7 +355,6 @@
   background-color: #0081c2;
 }
 
-/* line 393, scss/tb_megamenu.scss */
 .tb-megamenu .dropdown-menu > .active > a:hover, .tb-megamenu .dropdown-menu > .active > a:focus,
 .tb-megamenu .dropdown-menu > .active > span.tb-megamenu-no-link:hover,
 .tb-megamenu .dropdown-menu > .active > span.tb-megamenu-no-link:focus {
@@ -420,12 +364,10 @@
   background-color: #0081c2;
 }
 
-/* line 405, scss/tb_megamenu.scss */
 .tb-megamenu .dropdown-submenu {
   position: relative;
 }
 
-/* line 410, scss/tb_megamenu.scss */
 .tb-megamenu .dropdown-submenu > a:after,
 .tb-megamenu .dropdown-submenu > span.tb-megamenu-no-link:after {
   display: block;
@@ -440,7 +382,6 @@
   margin: 5px 0 0;
 }
 
-/* line 426, scss/tb_megamenu.scss */
 .tb-megamenu .dropdown-submenu:hover > a,
 .tb-megamenu .dropdown-submenu:hover > span.tb-megamenu-no-link, .tb-megamenu .dropdown-submenu:focus > a,
 .tb-megamenu .dropdown-submenu:focus > span.tb-megamenu-no-link {
@@ -450,14 +391,12 @@
   background-image: none;
 }
 
-/* line 433, scss/tb_megamenu.scss */
 .tb-megamenu .dropdown-submenu:hover > a:after,
 .tb-megamenu .dropdown-submenu:hover > span.tb-megamenu-no-link:after, .tb-megamenu .dropdown-submenu:focus > a:after,
 .tb-megamenu .dropdown-submenu:focus > span.tb-megamenu-no-link:after {
   border-left-color: #eee;
 }
 
-/* line 439, scss/tb_megamenu.scss */
 .tb-megamenu .dropdown-submenu > .dropdown-menu {
   top: 0;
   left: 100%;
@@ -466,19 +405,16 @@
   border-radius: 0;
 }
 
-/* line 448, scss/tb_megamenu.scss */
 .tb-megamenu .hidden {
   display: none !important;
   visibility: hidden;
 }
 
-/* line 455, scss/tb_megamenu.scss */
 .tb-megamenu .mega > .mega-dropdown-menu {
   min-width: 400px;
   display: none;
 }
 
-/* line 462, scss/tb_megamenu.scss */
 .tb-megamenu .mega.open > .mega-dropdown-menu {
   display: block;
   overflow: visible;
@@ -487,7 +423,6 @@
   width: auto;
 }
 
-/* line 474, scss/tb_megamenu.scss */
 .tb-megamenu .mega.dropdown-submenu:hover > .mega-dropdown-menu, .tb-megamenu .mega.dropdown-submenu:focus > .mega-dropdown-menu {
   display: block;
   overflow: visible;
@@ -496,14 +431,12 @@
   width: auto;
 }
 
-/* line 485, scss/tb_megamenu.scss */
 .tb-megamenu .mega-nav {
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-/* line 490, scss/tb_megamenu.scss */
 .tb-megamenu .mega-nav > li {
   display: block;
   float: none;
@@ -511,26 +444,22 @@
   margin-left: 0;
 }
 
-/* line 497, scss/tb_megamenu.scss */
 .tb-megamenu .mega-nav > li:first-child > a,
 .tb-megamenu .mega-nav > li:first-child > span.tb-megamenu-no-link {
   margin-top: 0;
   padding-top: 0;
 }
 
-/* line 504, scss/tb_megamenu.scss */
 .tb-megamenu .mega-nav > li a,
 .tb-megamenu .mega-nav > li span.tb-megamenu-no-link {
   padding: 5px 0;
   white-space: normal;
 }
 
-/* line 513, scss/tb_megamenu.scss */
 .tb-megamenu .mega-inner {
   padding: 10px;
 }
 
-/* line 522, scss/tb_megamenu.scss */
 .tb-megamenu .mega-group-title {
   background: inherit;
   font-weight: bold;
@@ -539,24 +468,20 @@
   text-transform: uppercase;
 }
 
-/* line 529, scss/tb_megamenu.scss */
 .tb-megamenu .mega-group-title:hover, .tb-megamenu .mega-group-title:focus, .tb-megamenu .mega-group-title:active {
   background: inherit;
   color: inherit;
 }
 
-/* line 539, scss/tb_megamenu.scss */
 .tb-megamenu .mega-group-ct {
   margin: 0;
   padding: 0;
 }
 
-/* line 545, scss/tb_megamenu.scss */
 .tb-megamenu .mega-group-ct > .row-fluid > [class*='span'] > .mega-inner {
   padding: 0;
 }
 
-/* line 553, scss/tb_megamenu.scss */
 .tb-megamenu .mega-caption {
   display: block;
   white-space: nowrap;
@@ -566,58 +491,48 @@
   font-weight: normal;
 }
 
-/* line 564, scss/tb_megamenu.scss */
 .tb-megamenu .mega-align-left > .dropdown-menu {
   left: 0;
 }
 
-/* line 570, scss/tb_megamenu.scss */
 .tb-megamenu .mega-align-right > .dropdown-menu {
   left: auto;
   right: 0;
 }
 
-/* line 577, scss/tb_megamenu.scss */
 .tb-megamenu .mega-align-center > .dropdown-menu {
   left: 50%;
   -webkit-transform: translate(-50%);
           transform: translate(-50%);
 }
 
-/* line 584, scss/tb_megamenu.scss */
 .tb-megamenu .dropdown-submenu.mega-align-left > .dropdown-menu {
   left: 100%;
 }
 
-/* line 590, scss/tb_megamenu.scss */
 .tb-megamenu .dropdown-submenu.mega-align-right > .dropdown-menu {
   left: auto;
   right: 100%;
 }
 
-/* line 596, scss/tb_megamenu.scss */
 .tb-megamenu .mega-align-justify {
   position: static;
 }
 
-/* line 599, scss/tb_megamenu.scss */
 .tb-megamenu .mega-align-justify > .dropdown-menu {
   left: 0;
   margin-left: 0;
   top: auto;
 }
 
-/* line 605, scss/tb_megamenu.scss */
 .tb-megamenu .mega-align-justify > .dropdown-menu.span12 {
   width: 100%;
 }
 
-/* line 611, scss/tb_megamenu.scss */
 .tb-megamenu .tb-block {
   margin-bottom: 10px;
 }
 
-/* line 614, scss/tb_megamenu.scss */
 .tb-megamenu .tb-block .block-title {
   font-size: 12px;
   color: #333;
@@ -627,7 +542,6 @@
   text-transform: uppercase;
 }
 
-/* line 625, scss/tb_megamenu.scss */
 .tb-megamenu .btn-navbar {
   display: none;
   float: left;
@@ -640,13 +554,11 @@
           box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(255, 255, 255, 0.075);
 }
 
-/* line 635, scss/tb_megamenu.scss */
 .tb-megamenu .btn-navbar:hover, .tb-megamenu .btn-navbar:focus, .tb-megamenu .btn-navbar:active, .tb-megamenu .btn-navbar.active, .tb-megamenu .btn-navbar.disabled, .tb-megamenu .btn-navbar[disabled] {
   color: #fff;
   background-color: #ccc;
 }
 
-/* line 645, scss/tb_megamenu.scss */
 .tb-megamenu .btn-navbar [class^='fa-'],
 .tb-megamenu .btn-navbar [class*=' fa-'] {
   color: #333;
@@ -655,45 +567,35 @@
 }
 
 @media (max-width: 979px) {
-  /* line 655, scss/tb_megamenu.scss */
   .tb-megamenu {
     background-color: inherit;
     height: auto;
   }
-  /* line 661, scss/tb_megamenu.scss */
   .tb-megamenu .always-show .mega > .mega-dropdown-menu {
     display: block !important;
   }
-  /* line 666, scss/tb_megamenu.scss */
   .tb-megamenu .always-show .dropdown-menu {
     display: block !important;
   }
-  /* line 670, scss/tb_megamenu.scss */
   .tb-megamenu .always-show .caret {
     display: none !important;
   }
-  /* line 677, scss/tb_megamenu.scss */
   .tb-megamenu .always-show .dropdown-submenu > a:after,
   .tb-megamenu .always-show .dropdown-submenu > span.tb-megamenu-no-link:after {
     display: none !important;
   }
-  /* line 684, scss/tb_megamenu.scss */
   .tb-megamenu .hidden-collapse {
     display: none !important;
   }
-  /* line 689, scss/tb_megamenu.scss */
   .tb-megamenu .sub-hidden-collapse > .nav-child {
     display: none !important;
   }
-  /* line 693, scss/tb_megamenu.scss */
   .tb-megamenu .sub-hidden-collapse .caret {
     display: none !important;
   }
-  /* line 698, scss/tb_megamenu.scss */
   .tb-megamenu .sub-hidden-collapse > a:after {
     display: none !important;
   }
-  /* line 704, scss/tb_megamenu.scss */
   .tb-megamenu .row-fluid {
     width: 100% !important;
     min-width: 100% !important;
@@ -702,7 +604,6 @@
     -webkit-transform: none !important;
             transform: none !important;
   }
-  /* line 711, scss/tb_megamenu.scss */
   .tb-megamenu .row-fluid [class*='span'] {
     width: 100% !important;
     min-width: 100% !important;
@@ -711,16 +612,13 @@
     -webkit-transform: none !important;
             transform: none !important;
   }
-  /* line 720, scss/tb_megamenu.scss */
   .tb-megamenu .btn-navbar {
     display: block;
     margin-bottom: 10px;
   }
-  /* line 724, scss/tb_megamenu.scss */
   .tb-megamenu .btn-navbar:hover {
     cursor: pointer;
   }
-  /* line 729, scss/tb_megamenu.scss */
   .tb-megamenu .nav-collapse {
     background: #000;
     margin-top: 10px;
@@ -731,14 +629,12 @@
     height: 0;
     overflow: hidden;
   }
-  /* line 739, scss/tb_megamenu.scss */
   .tb-megamenu .nav-collapse .nav {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
             flex-direction: column;
   }
-  /* line 743, scss/tb_megamenu.scss */
   .tb-megamenu .nav-collapse .nav > li > a,
   .tb-megamenu .nav-collapse .nav > li > span.tb-megamenu-no-link {
     border-bottom: 1px solid #222;
@@ -751,20 +647,17 @@
     font-weight: bold;
     padding: 9px 15px;
   }
-  /* line 755, scss/tb_megamenu.scss */
   .tb-megamenu .nav-collapse .nav > li > a:hover, .tb-megamenu .nav-collapse .nav > li > a:focus,
   .tb-megamenu .nav-collapse .nav > li > span.tb-megamenu-no-link:hover,
   .tb-megamenu .nav-collapse .nav > li > span.tb-megamenu-no-link:focus {
     background-color: #fff;
     color: #e54e4b;
   }
-  /* line 765, scss/tb_megamenu.scss */
   .tb-megamenu .nav-collapse .nav > li.active > a:hover, .tb-megamenu .nav-collapse .nav > li.active > a:focus,
   .tb-megamenu .nav-collapse .nav > li.active > span.tb-megamenu-no-link:hover,
   .tb-megamenu .nav-collapse .nav > li.active > span.tb-megamenu-no-link:focus {
     background-color: #e54e4b;
   }
-  /* line 774, scss/tb_megamenu.scss */
   .tb-megamenu .nav-collapse .dropdown-menu {
     position: static;
     top: auto;
@@ -781,7 +674,6 @@
             box-shadow: none;
     width: 100% !important;
   }
-  /* line 789, scss/tb_megamenu.scss */
   .tb-megamenu .nav-collapse .dropdown-menu a,
   .tb-megamenu .nav-collapse .dropdown-menu span.tb-megamenu-no-link {
     border-bottom: 1px solid #222;
@@ -793,37 +685,30 @@
     padding: 10px 20px;
     text-shadow: none;
   }
-  /* line 800, scss/tb_megamenu.scss */
   .tb-megamenu .nav-collapse .dropdown-menu a:hover, .tb-megamenu .nav-collapse .dropdown-menu a:focus,
   .tb-megamenu .nav-collapse .dropdown-menu span.tb-megamenu-no-link:hover,
   .tb-megamenu .nav-collapse .dropdown-menu span.tb-megamenu-no-link:focus {
     background-color: inherit;
   }
-  /* line 806, scss/tb_megamenu.scss */
   .tb-megamenu .nav-collapse .dropdown-menu li + li a,
   .tb-megamenu .nav-collapse .dropdown-menu li + li span.tb-megamenu-no-link {
     margin-bottom: 0;
   }
-  /* line 812, scss/tb_megamenu.scss */
   .tb-megamenu .nav-collapse .btn {
     padding: 4px 10px;
     font-weight: normal;
     border-radius: 4px;
   }
-  /* line 819, scss/tb_megamenu.scss */
   .tb-megamenu .nav-collapse .open > .dropdown-menu {
     display: block;
   }
-  /* line 826, scss/tb_megamenu.scss */
   .tb-megamenu .nav-collapse.in .btn-group {
     margin-top: 5px;
     padding: 0;
   }
-  /* line 832, scss/tb_megamenu.scss */
   .tb-megamenu .mega-inner {
     padding: 10px 20px;
   }
-  /* line 836, scss/tb_megamenu.scss */
   .tb-megamenu .mega-dropdown-menu {
     width: 100% !important;
     min-width: 100% !important;
@@ -832,30 +717,25 @@
     -webkit-transform: none !important;
             transform: none !important;
   }
-  /* line 846, scss/tb_megamenu.scss */
   .tb-megamenu .mega-nav > li a,
   .tb-megamenu .mega-nav > li span.tb-megamenu-no-link {
     padding: 5px 0;
     margin-left: 20px;
   }
-  /* line 857, scss/tb_megamenu.scss */
   .tb-megamenu .dropdown-menu .mega-nav > li a,
   .tb-megamenu .dropdown-menu .mega-nav > li span.tb-megamenu-no-link {
     padding: 5px 0;
     margin-left: 20px;
   }
-  /* line 866, scss/tb_megamenu.scss */
   .tb-megamenu .tb-block {
     margin-bottom: 0;
   }
-  /* line 869, scss/tb_megamenu.scss */
   .tb-megamenu .tb-block .block-title {
     color: #fff;
   }
 }
 
 @media (min-width: 980px) {
-  /* line 880, scss/tb_megamenu.scss */
   .tb-megamenu.animate .mega > .mega-dropdown-menu {
     -webkit-transition: all 400ms;
     transition: all 400ms;
@@ -863,52 +743,42 @@
             backface-visibility: hidden;
     opacity: 0;
   }
-  /* line 888, scss/tb_megamenu.scss */
   .tb-megamenu.animate .mega.animating > .mega-dropdown-menu {
     display: block !important;
   }
-  /* line 894, scss/tb_megamenu.scss */
   .tb-megamenu.animate .mega.open > .mega-dropdown-menu {
     opacity: 1;
   }
-  /* line 900, scss/tb_megamenu.scss */
   .tb-megamenu.animate .mega.animating.open > .mega-dropdown-menu {
     opacity: 1;
   }
-  /* line 908, scss/tb_megamenu.scss */
   .tb-megamenu.animate.zoom .mega > .mega-dropdown-menu {
     -webkit-transform: scale(0, 0);
             transform: scale(0, 0);
     -webkit-transform-origin: 20% 20%;
             transform-origin: 20% 20%;
   }
-  /* line 915, scss/tb_megamenu.scss */
   .tb-megamenu.animate.zoom .mega.open > .mega-dropdown-menu {
     -webkit-transform: scale(1, 1);
             transform: scale(1, 1);
   }
-  /* line 924, scss/tb_megamenu.scss */
   .tb-megamenu.animate.elastic .level0 > .mega > .mega-dropdown-menu {
     -webkit-transform: scale(1, 0);
             transform: scale(1, 0);
   }
-  /* line 931, scss/tb_megamenu.scss */
   .tb-megamenu.animate.elastic .mega > .mega-dropdown-menu {
     -webkit-transform: scale(0, 1);
             transform: scale(0, 1);
     -webkit-transform-origin: 10% 0;
             transform-origin: 10% 0;
   }
-  /* line 938, scss/tb_megamenu.scss */
   .tb-megamenu.animate.elastic .mega.open > .mega-dropdown-menu {
     -webkit-transform: scale(1, 1);
             transform: scale(1, 1);
   }
-  /* line 946, scss/tb_megamenu.scss */
   .tb-megamenu.animate.slide .mega.animating > .mega-dropdown-menu {
     overflow: hidden;
   }
-  /* line 953, scss/tb_megamenu.scss */
   .tb-megamenu.animate.slide .mega > .mega-dropdown-menu > div {
     -webkit-transition: all 400ms;
     transition: all 400ms;
@@ -916,21 +786,17 @@
             backface-visibility: hidden;
     margin-top: -100%;
   }
-  /* line 961, scss/tb_megamenu.scss */
   .tb-megamenu.animate.slide .mega .mega > .mega-dropdown-menu {
     min-width: 0;
   }
-  /* line 964, scss/tb_megamenu.scss */
   .tb-megamenu.animate.slide .mega .mega > .mega-dropdown-menu > div {
     min-width: 200px;
     margin-top: 0;
     margin-left: -500px;
   }
-  /* line 974, scss/tb_megamenu.scss */
   .tb-megamenu.animate.slide .mega .mega.open > .mega-dropdown-menu > div {
     margin-left: 0;
   }
-  /* line 983, scss/tb_megamenu.scss */
   .tb-megamenu.animate.slide .mega.open > .mega-dropdown-menu > div {
     margin-top: 0%;
   }
