@@ -18,10 +18,11 @@ $color-black-25-op: rgba(0, 0, 0, 0.25);
 $color-white-10-op: rgba(255, 255, 255, 0.1);
 $color-white-75-op: rgba(255, 255, 255, 0.075);
 
-$dropdown-width: 800px;
+$dropdown-width: 400px;
 
 .tb-megamenu {
   background-color: $color-black;
+  position: relative;
 
   // Set up rowns and columns.
   .row-fluid {
@@ -162,6 +163,7 @@ $dropdown-width: 800px;
     flex-direction: row;
     list-style: none;
     margin: 0;
+    padding: 0;
 
     // <nolink> menu items.
     span.tb-megamenu-no-link {
@@ -433,10 +435,6 @@ $dropdown-width: 800px;
           border-left-color: $color-light-grey-3;
         }
       }
-
-      .dropdown-menu {
-        display: block;
-      }
     }
 
     > .dropdown-menu {
@@ -472,7 +470,8 @@ $dropdown-width: 800px;
   }
 
   .mega.dropdown-submenu {
-    &:hover {
+    &:hover,
+    &:focus {
       > .mega-dropdown-menu {
         display: block;
         overflow: visible;
@@ -621,41 +620,6 @@ $dropdown-width: 800px;
       margin: 0 0 15px;
       text-transform: uppercase;
     }
-
-    // For menus within a block?
-    ul,
-    .nav {
-      margin: 0;
-
-      li {
-        background: none;
-        list-style: disc;
-        display: list-item;
-        float: none;
-        margin: 0;
-        padding: 0;
-        border: 0;
-
-        a,
-        span.tb-megamenu-no-link {
-          display: inline;
-          padding: 0;
-          margin: 0;
-          border: 0;
-          font-size: 100%;
-          background: none;
-          font: inherit;
-          white-space: normal;
-
-          &:hover,
-          &:focus,
-          &:active {
-            background: none;
-            font: inherit;
-          }
-        }
-      }
-    }
   }
 
   // The mobile show/hide button.
@@ -684,56 +648,6 @@ $dropdown-width: 800px;
       color: $color-dark-grey;
       margin: 0;
       text-shadow: none;
-    }
-  }
-
-  // View demo styles.
-  .block-view-demo {
-    .views-field-title {
-      a {
-        border-top: 0 !important;
-        padding: 0 !important;
-        color: $color-medium-grey;
-      }
-    }
-
-    .views-field-field-image {
-      float: left;
-
-      img {
-        border: 1px solid $color-dark-grey;
-        margin: 0 20px 0 0;
-        max-width: none !important;
-        padding: 4px;
-        width: auto;
-      }
-    }
-
-    .item-list {
-      ul {
-        li {
-          border-bottom: 1px solid $color-dark-grey;
-          margin: 0;
-          min-height: 60px;
-          padding: 10px 0;
-        }
-
-        li.views-row-first {
-          padding-top: 0;
-        }
-      }
-    }
-
-    a {
-      padding: 0 !important;
-
-      &:hover,
-      &:focus {
-        background: none !important;
-        border: 0 !important;
-        color: $color-red;
-        text-decoration: none;
-      }
     }
   }
 }

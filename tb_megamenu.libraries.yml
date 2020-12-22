@@ -20,7 +20,6 @@ theme.tb_megamenu:
     theme:
       https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css: { type: external }
       css/compiled/tb_megamenu.css: {}
-      css/tb_megamenu.compatibility.css: {}
   js:
     js/tb-megamenu-frontend.js: { scope: footer }
   dependencies:
