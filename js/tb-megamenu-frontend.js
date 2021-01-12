@@ -100,9 +100,6 @@
           curPos = $(this).data('coordinate');
         });
 
-        // On Keydown
-        navParent.addEventListener('keydown',keydownEvent);
-
         // Key Pressed
         function keydownEvent(k) {
           // Determine Key
@@ -169,7 +166,7 @@
           } // determine key
         } // keydownEvent
 
-      /* Keypress Functions */
+        /* Keypress Functions */
         // Tab
         function nav_tab(k) {
           if(nav_is_toplink()) {
@@ -541,11 +538,18 @@
           createTouchMenu($(".tb-megamenu ul.nav li.mega", context).has(".dropdown-menu"));
         };
 
-        $(window).resize(function() {
+        $(window).on('load resize', function() {
           var windowWidth = window.innerWidth ? window.innerWidth : $(window).width();
           if(windowWidth != Drupal.TBMegaMenu.oldWindowWidth){
             Drupal.TBMegaMenu.oldWindowWidth = windowWidth;
             Drupal.TBMegaMenu.menuResponsive();
+
+            if (windowWidth >= Drupal.TBMegaMenu.supportedScreens[0]) {
+              navParent.addEventListener('keydown',keydownEvent);
+            }
+            else {
+              navParent.removeEventListener('keydown',keydownEvent);
+            }
           }
         });
 
