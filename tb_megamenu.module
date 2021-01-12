@@ -649,7 +649,6 @@ function template_preprocess_tb_megamenu_item(array &$vars) {
   }
 
   // Add a11y attributes to list item tag.
-  $vars['attributes']['role'] = t('listitem');
   $vars['attributes']['aria-level'] = $level;
 
   // Add a11y attributes to anchor tag.
@@ -657,7 +656,6 @@ function template_preprocess_tb_megamenu_item(array &$vars) {
     $vars['link']['attributes']['title'] = t($vars['link']['description']);
   }
   if ($vars['submenu'] != NULL) {
-    $vars['link']['attributes']['aria-haspopup'] = t('true');
     $vars['link']['attributes']['aria-expanded'] = t('false');
   }
 
