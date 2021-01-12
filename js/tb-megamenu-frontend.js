@@ -304,7 +304,6 @@
 
         // Next Column
         function nav_next_column() {
-          console.log("curpos: ", curPos);
           if(linkArray[curPos[0]][curPos[1] + 1]) {
             linkArray[curPos[0]][curPos[1] + 1][0].focus();
           } else {
