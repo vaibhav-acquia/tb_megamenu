@@ -221,7 +221,16 @@
             nav_prev_toplink();
           } else {
             if(linkArray[curPos[0]][curPos[1]][curPos[2] - 1]) {
-              linkArray[curPos[0]][curPos[1]][curPos[2] - 1].focus();
+              // If the previous link in the array is hidden (ie, it's in a
+              // submenu that is not currently expanded), then skip to the next
+              // item in the array until we find one that's visible.
+              if ($(linkArray[curPos[0]][curPos[1]][curPos[2] - 1]).is(':visible')) {
+                linkArray[curPos[0]][curPos[1]][curPos[2] - 1].focus();  
+              }
+              else {
+                curPos = [curPos[0], curPos[1], curPos[2] - 1];
+                nav_up();
+              }
             } else {
               nav_prev_column();
             }
