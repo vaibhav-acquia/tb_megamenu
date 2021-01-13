@@ -439,6 +439,7 @@ function template_preprocess_tb_megamenu(array &$vars) {
 
   // Add a11y attributes.
   $vars['attributes']['role'] = t('navigation');
+  $vars['attributes']['aria-label'] = t('Main navigation');
 }
 
 /**
