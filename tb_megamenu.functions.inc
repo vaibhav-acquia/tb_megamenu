@@ -374,7 +374,12 @@ function tb_megamenu_insert_tb_item(&$item_config, $row, $col, $item) {
       $added = TRUE;
     }
     // Sort all cells by ascending weight value to match the menu ordering.
-    $weight = array_column($new_col, 'weight');
+    $weight = [];
+    foreach ($new_col as $col_key => $col_vals) {
+      if (isset($col_vals['weight'])) {
+        $weight[] = $col_vals['weight'];
+      }
+    }
     array_multisort($weight, SORT_ASC, $new_col);
   }
 
