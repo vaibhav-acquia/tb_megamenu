@@ -2,6 +2,7 @@ The Better Mega Menu 8.x-1.0-dev, 2021-01-19
 --------------------------------------------
 - Issue #3183288 by quondam, timotej-pl, Scott Weston, themodularlab: Replace
   calls to \Drupal with Dependency Injection
+- Issue #3192235 by knaffles, andrewozone: Accessibility Upgrades
 
 The Better Mega Menu 8.x-1.0-dev, 2020-11-20
 --------------------------------------------
