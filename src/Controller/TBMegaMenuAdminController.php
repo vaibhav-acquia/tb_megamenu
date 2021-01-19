@@ -35,16 +35,26 @@ class TBMegaMenuAdminController extends ControllerBase {
   protected $renderer;
 
   /**
+   * The menu builder service.
+   *
+   * @var \Drupal\tb_megamenu\TBMegaMenuBuilder
+   */
+  private $menuBuilder;
+
+  /**
    * Constructs a TBMegaMenuAdminController object.
    *
    * @param \Drupal\Core\Menu\MenuLinkTree $menu_tree
    *   The Menu Link Tree service.
    * @param \Drupal\Core\Render\RendererInterface $renderer
    *   The renderer service.
+   * @param \Drupal\tb_megamenu\TBMegaMenuBuilder $menu_builder
+   *   The menu builder service.
    */
-  public function __construct(MenuLinkTree $menu_tree, RendererInterface $renderer) {
+  public function __construct(MenuLinkTree $menu_tree, RendererInterface $renderer, TBMegaMenuBuilder $menu_builder) {
     $this->menuTree = $menu_tree;
     $this->renderer = $renderer;
+    $this->menuBuilder = $menu_builder;
   }
 
   /**
@@ -52,9 +62,10 @@ class TBMegaMenuAdminController extends ControllerBase {
    */
   public static function create(ContainerInterface $container) {
     return new static(
-        $container->get('menu.link_tree'),
-        $container->get('renderer')
-        );
+      $container->get('menu.link_tree'),
+      $container->get('renderer'),
+      $container->get('tb_megamenu.menu_builder')
+    );
   }
 
   /**
@@ -83,7 +94,7 @@ class TBMegaMenuAdminController extends ControllerBase {
         $menu_name = isset($data['menu_name']) ? $data['menu_name'] : NULL;
         $theme = isset($data['theme']) ? $data['theme'] : NULL;
         if ($menu_name && $theme) {
-          $renderable_array = TBMegaMenuBuilder::renderBlock($menu_name, $theme);
+          $renderable_array = $this->menuBuilder->renderBlock($menu_name, $theme);
           $result = $this->renderer
             ->render($renderable_array)
             ->__toString();
@@ -101,8 +112,8 @@ class TBMegaMenuAdminController extends ControllerBase {
           // Load menu items with condition.
           $menu_items = $this->menuTree->load($menu_name, $menu_tree_parameters);
           // Sync mega menu before store.
-          TBMegaMenuBuilder::syncConfigAll($menu_items, $menu_config, 'backend');
-          TBMegaMenuBuilder::syncOrderMenus($menu_config);
+          $this->menuBuilder->syncConfigAll($menu_items, $menu_config, 'backend');
+          $this->menuBuilder->syncOrderMenus($menu_config);
 
           $config = MegaMenuConfig::loadMenu($menu_name, $theme);
           if ($config === NULL) {
