@@ -5,10 +5,7 @@ namespace Drupal\tb_megamenu\Plugin\Block;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Theme\ThemeManagerInterface;
-use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\tb_megamenu\TBMegaMenuBuilder;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides blocks which belong to TB Mega Menu.
@@ -20,8 +17,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   deriver = "Drupal\tb_megamenu\Plugin\Derivative\TBMegaMenuBlock",
  * )
  *
+ * TODO: Add injection
  */
-class TBMegaMenuBlock extends BlockBase implements ContainerFactoryPluginInterface {
+class TBMegaMenuBlock extends BlockBase {
 
   /**
    * Current theme name;
@@ -31,59 +29,12 @@ class TBMegaMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
   private $themeName;
 
   /**
-   * The theme manager service.
-   *
-   * @var \Drupal\Core\Theme\ThemeManagerInterface
-   */
-  private $themeManager;
-
-  /**
-   * The menu builder service.
-   *
-   * @var \Drupal\tb_megamenu\TBMegaMenuBuilder
-   */
-  private $menuBuilder;
-
-  /**
-   * Constructs a TBMegaMenuBlock.
-   *
-   * @param array $configuration
-   *   Configuration array.
-   * @param string $plugin_id
-   *   The plugin id.
-   * @param mixed $plugin_definition
-   *   The plugin definition.
-   * @param \Drupal\Core\Theme\ThemeManagerInterface $theme_manager
-   *   The theme manager service.
-   * @param \Drupal\tb_megamenu\TBMegaMenuBuilder $menu_builder
-   *   The menu builder service.
-   */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, ThemeManagerInterface $theme_manager, TBMegaMenuBuilder $menu_builder) {
-    parent::__construct($configuration, $plugin_id, $plugin_definition);
-    $this->themeManager = $theme_manager;
-    $this->menuBuilder = $menu_builder;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    return new static(
-      $configuration,
-      $plugin_id,
-      $plugin_definition,
-      $container->get('theme.manager'),
-      $container->get('tb_megamenu.menu_builder')
-    );
-  }
-
-  /**
    * {@inheritdoc}
    */
   public function build() {
     $menu_name = $this->getDerivativeId();
     $theme_name = $this->getThemeName();
-    $menu = $this->menuBuilder->getMenus($menu_name, $theme_name);
+    $menu = TBMegaMenuBuilder::getMenus($menu_name, $theme_name);
     if ($menu === NULL) {
       return [];
     }
@@ -146,7 +97,7 @@ class TBMegaMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
    */
   public function getThemeName() {
     if (!isset($this->themeName)) {
-      $this->themeName = $this->themeManager->getActiveTheme()->getName();
+      $this->themeName = \Drupal::service('theme.manager')->getActiveTheme()->getName();
     }
     return $this->themeName;
   }
