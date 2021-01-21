@@ -4,7 +4,6 @@ namespace Drupal\tb_megamenu;
 
 use Drupal\Core\Entity\EntityTypeManager;
 use Drupal\Core\Logger\LoggerChannelFactory;
-use Drupal\Core\Menu\MenuLinkTreeElement;
 use Drupal\Core\Menu\MenuTreeParameters;
 use Drupal\Core\Menu\MenuLinkTree;
 use Drupal\Core\Menu\MenuTreeStorage;
@@ -161,6 +160,7 @@ class TBMegaMenuBuilder {
    *
    * @return \Drupal\Core\Entity\EntityInterface|null
    *   The block entity.
+   *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
@@ -176,7 +176,7 @@ class TBMegaMenuBuilder {
    * @param string $theme
    *   The theme machine name.
    *
-   * @return array|\stdClass
+   * @return array|object
    *   The menu configuration info.
    */
   public function getMenuConfig($menu_name, $theme) {
@@ -277,7 +277,7 @@ class TBMegaMenuBuilder {
       '#menu_name' => $menu_name,
       '#block_theme' => $theme,
       '#section' => 'backend',
-      '#post_render' => ['\Drupal\tb_megamenu\Controller\TBMegaMenuController::tb_megamenu_attach_number_columns'],
+      '#post_render' => ['\Drupal\tb_megamenu\Controller\TBMegaMenuController::tbMegamenuAttachNumberColumns'],
     ];
   }
 
@@ -540,7 +540,7 @@ class TBMegaMenuBuilder {
         // Sort menu by weight.
         ksort($item_sorted);
         $new_list = [];
-        foreach($item_sorted as $weight_group) {
+        foreach ($item_sorted as $weight_group) {
           foreach ($weight_group as $item) {
             $new_list[] = $item;
           }

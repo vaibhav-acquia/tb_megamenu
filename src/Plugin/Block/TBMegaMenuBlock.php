@@ -19,12 +19,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   category = @Translation("TB Mega Menu"),
  *   deriver = "Drupal\tb_megamenu\Plugin\Derivative\TBMegaMenuBlock",
  * )
- *
  */
 class TBMegaMenuBlock extends BlockBase implements ContainerFactoryPluginInterface {
 
   /**
-   * Current theme name;
+   * Current theme name.
    *
    * @var string
    */
@@ -92,7 +91,7 @@ class TBMegaMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
       '#menu_name' => $menu_name,
       '#block_theme' => $theme_name,
       '#attached' => ['library' => ['tb_megamenu/theme.tb_megamenu']],
-      '#post_render' => ['\Drupal\tb_megamenu\Controller\TBMegaMenuController::tb_megamenu_attach_number_columns'],
+      '#post_render' => ['\Drupal\tb_megamenu\Controller\TBMegaMenuController::tbMegamenuAttachNumberColumns'],
     ];
   }
 
@@ -112,11 +111,12 @@ class TBMegaMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
     $rebuild_form['cache']['max_age']['#default_value'] = 0;
     return $rebuild_form;
   }
+
   /**
    * {@inheritdoc}
    */
   public function getCacheTags() {
-    // Rebuild block when menu or config changes
+    // Rebuild block when menu or config changes.
     $configName = "{$this->getDerivativeId()}__{$this->getThemeName()}";
     $cacheTags = parent::getCacheTags();
     $cacheTags[] = 'config:system.menu.' . $this->getDerivativeId();
@@ -139,10 +139,10 @@ class TBMegaMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
   }
 
   /**
-   * Get the current Theme Name
+   * Get the current Theme Name.
    *
    * @return string
-   * The current theme name.
+   *   The current theme name.
    */
   public function getThemeName() {
     if (!isset($this->themeName)) {
@@ -150,5 +150,5 @@ class TBMegaMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
     }
     return $this->themeName;
   }
-}
 
+}

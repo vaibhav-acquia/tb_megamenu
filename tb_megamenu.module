@@ -262,7 +262,7 @@ function template_preprocess_tb_megamenu_subnav(array &$vars) {
   foreach ($col as $tb_item) {
     $item = \Drupal::service('tb_megamenu.menu_builder')->getMenuItem($vars['menu_name'], $tb_item['plugin_id']);
     if (empty($tb_item)) {
-      // TODO: figure out how to handle NULLs in columns.
+      // @todo figure out how to handle NULLs in columns.
       continue;
     }
     if ($item->link == NULL) {
@@ -388,7 +388,7 @@ function template_preprocess_tb_megamenu(array &$vars) {
    *  $items = i18n_menu_localize_tree($items);
    * }
    */
-  // TODO: what does this function to do ?
+  // @todo what does this function to do ?
   // $items_page = menu_tree_page_data($menu_name);
   // $trail = tb_megamenu_build_page_trail($items_page);
   $menu_builder = \Drupal::service('tb_megamenu.menu_builder');
@@ -656,7 +656,7 @@ function template_preprocess_tb_megamenu_item(array &$vars) {
 
   // Add a11y attributes to anchor tag.
   if (!empty($vars['link']['description'])) {
-    $vars['link']['attributes']['title'] = t($vars['link']['description']);
+    $vars['link']['attributes']['title'] = $vars['link']['description'];
   }
   if ($vars['submenu'] != NULL) {
     $vars['link']['attributes']['aria-expanded'] = t('false');
@@ -721,22 +721,19 @@ function tb_megamenu_block_view_tb_megamenu_menu_block_alter(array &$build, Bloc
 }
 
 /**
- * Attach the number of columns into JS.
- */
-/**
  * Recursively remove menu items without access rights.
  *
  * @param array $menu_items
  *   Menu section to check.
  */
-function tb_megamenu_check_access( array &$menu_items ) {
-  foreach ($menu_items as $route => &$item ) {
+function tb_megamenu_check_access(array &$menu_items) {
+  foreach ($menu_items as $route => &$item) {
     if ($item->access instanceof AccessResultInterface && !$item->access->isAllowed()) {
       unset($menu_items[$route]);
       continue;
     }
     if ($item->hasChildren) {
-      tb_megamenu_check_access ($item->subtree);
+      tb_megamenu_check_access($item->subtree);
     }
   }
 }

@@ -5,13 +5,17 @@ namespace Drupal\tb_megamenu\Controller;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Security\TrustedCallbackInterface;
 
+/**
+ * Handler for attaching columns to MegaMenu render arrays.
+ */
 class TBMegaMenuController extends ControllerBase implements TrustedCallbackInterface {
 
   /**
    * Attach the number of columns into JS.
+   *
    * @throws \Exception
    */
-  public static function tb_megamenu_attach_number_columns($childrens, $elements) {
+  public static function tbMegamenuAttachNumberColumns($childrens, $elements) {
     $number_columns = &drupal_static('column');
     $render_array = [];
     $render_array['#attached']['drupalSettings']['TBMegaMenu'] = [
@@ -24,10 +28,10 @@ class TBMegaMenuController extends ControllerBase implements TrustedCallbackInte
   }
 
   /**
-  * {@inheritDoc}
-  */
+   * {@inheritDoc}
+   */
   public static function trustedCallbacks() {
-    return ['tb_megamenu_attach_number_columns'];
+    return ['tbMegamenuAttachNumberColumns'];
   }
 
 }

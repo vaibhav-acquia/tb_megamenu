@@ -1,3 +1,8 @@
+/**
+ * @file
+ * Defines Javascript behaviors for MegaMenu frontend.
+ */
+
 (function ($, Drupal, drupalSettings) {
   "use strict";
 
@@ -13,10 +18,12 @@
       navCollapse.addClass('collapse');
       if (Drupal.TBMegaMenu.displayedMenuMobile) {
         navCollapse.css({height: 'auto', overflow: 'visible'});
-      } else {
+      }
+      else {
         navCollapse.css({height: 0, overflow: 'hidden'});
       }
-    } else {
+    }
+    else {
       // If width of window is greater than 980 (supported screen).
       navCollapse.removeClass('collapse');
       if (navCollapse.height() <= 0) {
@@ -31,7 +38,7 @@
     var $current = $(document.activeElement);
 
     if ($current.length) {
-      var $focusable = $(focusableElements).filter(function() {
+      var $focusable = $(focusableElements).filter(function () {
         var $this = $(this);
         return $this.closest('.tb-megamenu-subnav').length === 0 && $this.is(':visible');
       })
@@ -54,7 +61,7 @@
   Drupal.behaviors.tbMegaMenuAction = {
     attach: function (context, settings) {
 
-      $('.tb-megamenu').once('tb-megamenu').each(function() {
+      $('.tb-megamenu').once('tb-megamenu').each(function () {
 
         /* Keyboard Control Setup */
         // Semi-Global Variables
@@ -63,7 +70,7 @@
             curPos = new Array(-1,-1,-1);
 
         // Each Top-Level Link
-        $('.tb-megamenu').find('.level-1').children('a, span').not('.mobile-only').each(function(i, toplink) {
+        $('.tb-megamenu').find('.level-1').children('a, span').not('.mobile-only').each(function (i, toplink) {
           linkArray[i] = new Array();
 
           // Add Link to Array
@@ -73,7 +80,7 @@
           $(toplink).data({ coordinate: [i, -1] });
 
           // Each Column
-          $(toplink).next().children().children().children('.mega-col-nav').each(function(j, column) {
+          $(toplink).next().children().children().children('.mega-col-nav').each(function (j, column) {
             // Only add to the linkArray if menu items exist.
             // TODO - this does not allow for tabbing to links in blocks, only menu item links.
             if ($(column).find('.tb-megamenu-item').children('a, span').length > 0) {
@@ -81,11 +88,11 @@
               linkArray[i][j] = new Array();
 
               // Each Link
-              $(column).find('.tb-megamenu-item').children('a, span').each(function(k, sublink) {
-  
+              $(column).find('.tb-megamenu-item').children('a, span').each(function (k, sublink) {
+
                 // Add Link to Array
                 linkArray[i][j][k] = sublink;
-  
+
                 // Determine Coordinates
                 $(sublink).data({ coordinate: [i, j, k] });
               }); // each link
@@ -96,7 +103,7 @@
         }); // each top-level link
 
         // Update Position on Focus
-        $('.tb-megamenu').find('.tb-megamenu-item').children('a, span').focus(function() {
+        $('.tb-megamenu').find('.tb-megamenu-item').children('a, span').focus(function () {
           curPos = $(this).data('coordinate');
         });
 
@@ -169,16 +176,19 @@
         /* Keypress Functions */
         // Tab
         function nav_tab(k) {
-          if(nav_is_toplink()) {
-            if(k.shiftKey) {
+          if (nav_is_toplink()) {
+            if (k.shiftKey) {
               nav_prev_toplink();
-            } else {
+            }
+            else {
               nav_next_toplink();
             }
-          } else {
-            if(k.shiftKey) {
+          }
+          else {
+            if (k.shiftKey) {
               nav_up();
-            } else {
+            }
+            else {
               nav_down();
             }
           }
@@ -196,39 +206,43 @@
 
         // Left
         function nav_left() {
-          if(nav_is_toplink()) {
+          if (nav_is_toplink()) {
             nav_prev_toplink();
-          } else {
+          }
+          else {
             nav_prev_column();
           }
         }
 
         // Right
         function nav_right() {
-          if(nav_is_toplink()) {
+          if (nav_is_toplink()) {
             nav_next_toplink();
-          } else {
+          }
+          else {
             nav_next_column();
           }
         }
 
         // Up
         function nav_up() {
-          if(nav_is_toplink()) {
+          if (nav_is_toplink()) {
             nav_prev_toplink();
-          } else {
-            if(linkArray[curPos[0]][curPos[1]][curPos[2] - 1]) {
+          }
+          else {
+            if (linkArray[curPos[0]][curPos[1]][curPos[2] - 1]) {
               // If the previous link in the array is hidden (ie, it's in a
               // submenu that is not currently expanded), then skip to the next
               // item in the array until we find one that's visible.
               if ($(linkArray[curPos[0]][curPos[1]][curPos[2] - 1]).is(':visible')) {
-                linkArray[curPos[0]][curPos[1]][curPos[2] - 1].focus();  
+                linkArray[curPos[0]][curPos[1]][curPos[2] - 1].focus();
               }
               else {
                 curPos = [curPos[0], curPos[1], curPos[2] - 1];
                 nav_up();
               }
-            } else {
+            }
+            else {
               nav_prev_column();
             }
           }
@@ -236,12 +250,14 @@
 
         // Down
         function nav_down() {
-          if(nav_is_toplink()) {
+          if (nav_is_toplink()) {
             nav_next_column();
-          } else {
-            if(linkArray[curPos[0]][curPos[1]][curPos[2] + 1]) {
+          }
+          else {
+            if (linkArray[curPos[0]][curPos[1]][curPos[2] + 1]) {
               linkArray[curPos[0]][curPos[1]][curPos[2] + 1].focus();
-            } else {
+            }
+            else {
               nav_next_column();
             }
           }
@@ -249,18 +265,20 @@
 
         // Home Button
         function nav_home() {
-          if(nav_is_toplink()) {
+          if (nav_is_toplink()) {
             linkArray[0][-1].focus();
-          } else {
+          }
+          else {
             linkArray[curPos[0]][0][0].focus();
           }
         }
 
         // End Button
         function nav_end() {
-          if(nav_is_toplink()) {
+          if (nav_is_toplink()) {
             linkArray.slice(-1)[0][-1].focus();
-          } else {
+          }
+          else {
             linkArray[curPos[0]].slice(-1)[0].slice(-1)[0].focus();
           }
         }
@@ -279,9 +297,10 @@
 
         // Next Toplink
         function nav_next_toplink() {
-          if(linkArray[curPos[0] + 1]) {
+          if (linkArray[curPos[0] + 1]) {
             linkArray[curPos[0] + 1][-1].focus();
-          } else {
+          }
+          else {
             nav_close_megamenu();
 
             // Focus on the next element.
@@ -291,9 +310,10 @@
 
         // Previous Toplink
         function nav_prev_toplink() {
-          if(linkArray[curPos[0] - 1]) {
+          if (linkArray[curPos[0] - 1]) {
             linkArray[curPos[0] - 1][-1].focus();
-          } else {
+          }
+          else {
             // Focus on the previous element.
             Drupal.TBMegaMenu.focusNextPrevElement('prev');
           }
@@ -301,18 +321,20 @@
 
         // Previous Column
         function nav_prev_column() {
-          if(linkArray[curPos[0]][curPos[1] - 1][0]) {
+          if (linkArray[curPos[0]][curPos[1] - 1][0]) {
             linkArray[curPos[0]][curPos[1] - 1][0].focus();
-          } else {
+          }
+          else {
             nav_parent_toplink();
           }
         }
 
         // Next Column
         function nav_next_column() {
-          if(linkArray[curPos[0]][curPos[1] + 1]) {
+          if (linkArray[curPos[0]][curPos[1] + 1]) {
             linkArray[curPos[0]][curPos[1] + 1][0].focus();
-          } else {
+          }
+          else {
             nav_parent_toplink();
           }
         }
@@ -322,11 +344,11 @@
           linkArray[curPos[0]][-1].focus();
         }
 
-        var ariaCheck = function() {
+        var ariaCheck = function () {
           $("li.tb-megamenu-item").each(function () {
             if ($(this).is('.mega-group')) {
               // Mega menu item has mega class (it's a true mega menu)
-              if(!$(this).parents().is('.open')) {
+              if (!$(this).parents().is('.open')) {
                 // Mega menu item has mega class and its ancestor is closed, so apply appropriate ARIA attributes
                 $(this).children().attr('aria-expanded', 'false');
               }
@@ -399,8 +421,8 @@
           }
         };
 
-        $('.tb-megamenu-button').click(function() {
-          if(parseInt($(this).parent().children('.nav-collapse').height())) {
+        $('.tb-megamenu-button').click(function () {
+          if (parseInt($(this).parent().children('.nav-collapse').height())) {
             $(this).parent().children('.nav-collapse').css({height: 0, overflow: 'hidden'});
             Drupal.TBMegaMenu.displayedMenuMobile = false;
           }
@@ -409,7 +431,7 @@
             Drupal.TBMegaMenu.displayedMenuMobile = true;
           }
         });
-        
+
         var isTouch = window.matchMedia('(pointer: coarse)').matches;
 
         if (!isTouch) {
@@ -507,11 +529,13 @@
                 // <nolink> menu items will not have a URI.
                 if ($uri) {
                   window.location.href = $uri;
-                } else {
+                }
+                else {
                   $item.removeClass("tb-megamenu-clicked");
                   hideMenu(tbitem, mm_timeout);
                 }
-              } else {
+              }
+              else {
                 event.preventDefault();
 
                 // Hide any already open menus.
@@ -526,7 +550,7 @@
           });
 
           // Anytime there's a click outside the menu, close the menu.
-          $(document).on('click', function(event) {
+          $(document).on('click', function (event) {
             if ($(event.target).closest('.tb-megamenu-nav').length === 0) {
               nav_close_megamenu();
               $(".tb-megamenu").find(".tb-megamenu-clicked").removeClass("tb-megamenu-clicked");
@@ -538,9 +562,9 @@
           createTouchMenu($(".tb-megamenu ul.nav li.mega", context).has(".dropdown-menu"));
         };
 
-        $(window).on('load resize', function() {
+        $(window).on('load resize', function () {
           var windowWidth = window.innerWidth ? window.innerWidth : $(window).width();
-          if(windowWidth != Drupal.TBMegaMenu.oldWindowWidth){
+          if (windowWidth != Drupal.TBMegaMenu.oldWindowWidth) {
             Drupal.TBMegaMenu.oldWindowWidth = windowWidth;
             Drupal.TBMegaMenu.menuResponsive();
 
