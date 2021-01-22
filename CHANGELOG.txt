@@ -1,5 +1,10 @@
 The Better Mega Menu 8.x-1.0-dev, 2021-01-22
 --------------------------------------------
+- Issue #3194239 by quondam, knaffles: Getting a 500 error when menu items are
+  reordered and then saved
+
+The Better Mega Menu 8.x-1.0-dev, 2021-01-22
+--------------------------------------------
 - Issue #3131180 by quondam, Suresh Prabhu Parkala: Drupal coding standards
 
 The Better Mega Menu 8.x-1.0-dev, 2021-01-19
