@@ -1,3 +1,7 @@
+The Better Mega Menu 8.x-1.0-dev, 2021-01-22
+--------------------------------------------
+- Issue #3131180 by quondam, Suresh Prabhu Parkala: Drupal coding standards
+
 The Better Mega Menu 8.x-1.0-dev, 2021-01-19
 --------------------------------------------
 - Issue #3183288 by quondam, timotej-pl, Scott Weston, themodularlab: Replace
