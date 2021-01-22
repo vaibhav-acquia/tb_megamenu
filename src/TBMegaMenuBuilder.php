@@ -3,7 +3,7 @@
 namespace Drupal\tb_megamenu;
 
 use Drupal\Core\Entity\EntityTypeManager;
-use Drupal\Core\Logger\LoggerChannelFactory;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Menu\MenuTreeParameters;
 use Drupal\Core\Menu\MenuLinkTree;
 use Drupal\Core\Menu\MenuTreeStorage;
@@ -18,7 +18,7 @@ class TBMegaMenuBuilder {
   /**
    * The logger service.
    *
-   * @var \Drupal\Core\Logger\LoggerChannelFactory
+   * @var \Psr\Log\LoggerInterface
    */
   private $logger;
 
@@ -53,8 +53,8 @@ class TBMegaMenuBuilder {
   /**
    * Constructs a TBMegaMenuBuilder.
    *
-   * @param \Drupal\Core\Logger\LoggerChannelFactory $logger
-   *   The logger service.
+   * @param \Drupal\Core\Logger\LoggerChannelFactoryInterface $logger_factory
+   *   The logger factory service.
    * @param \Drupal\Core\Menu\MenuLinkTree $menu_tree
    *   The menu link service.
    * @param \Drupal\Core\Entity\EntityTypeManager $entity_manager
@@ -64,8 +64,8 @@ class TBMegaMenuBuilder {
    * @param \Drupal\Core\Menu\MenuTreeStorage $menu_storage
    *   The menu tree storage service.
    */
-  public function __construct(LoggerChannelFactory $logger, MenuLinkTree $menu_tree, EntityTypeManager $entity_manager, PathMatcher $path_matcher, MenuTreeStorage $menu_storage) {
-    $this->logger = $logger;
+  public function __construct(LoggerChannelFactoryInterface $logger_factory, MenuLinkTree $menu_tree, EntityTypeManager $entity_manager, PathMatcher $path_matcher, MenuTreeStorage $menu_storage) {
+    $this->logger = $logger_factory->get('tb_megamenu');
     $this->menuTree = $menu_tree;
     $this->entityManager = $entity_manager;
     $this->pathMatcher = $path_matcher;
@@ -102,12 +102,10 @@ class TBMegaMenuBuilder {
   public function getMenus($menu_name, $theme) {
     $config = MegaMenuConfig::loadMenu($menu_name, $theme);
     if ($config === NULL) {
-      $this->logger('tb_megamenu')->warning(
-        t("Could not find TB Megamenu configuration for menu: @menu, theme: @theme", [
-          '@menu' => $menu_name,
-          '@theme' => $theme,
-        ]
-      ));
+      $this->logger->warning("Could not find TB Megamenu configuration for menu: @menu, theme: @theme", [
+        '@menu' => $menu_name,
+        '@theme' => $theme,
+      ]);
     }
     return $config;
   }
@@ -485,7 +483,7 @@ class TBMegaMenuBuilder {
               if (empty($tb_item)) {
                 unset($item_config['rows_content'][$i][$j]['col_content'][$k]);
               }
-              $this->logger('tb_megamenu')->warning('Unknown / invalid column content: <pre>@content</pre>', [
+              $this->logger->warning("Unknown / invalid column content: <pre>@content</pre>", [
                 '@content' => print_r($tb_item, TRUE),
               ]);
             }
