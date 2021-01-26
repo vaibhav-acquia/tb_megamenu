@@ -17,12 +17,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Issue [#2965871](https://www.drupal.org/project/tb_megamenu/issues/2965871) by quondam, gaurav.bajpai, andrewozone: When Parent menu
   disabled Submenu getting shifted to previous parent, 2020-11-20
 - **Deprecated** CHANGELOG.txt in favor of CHANGELOG.md.
-- **Changed** README.md to include CHANGELOG NOTES.
+- **Changed** README.md to include CHANGELOG notes.
   
 ## [\[8.x-1.0-beta2\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.0-beta2) - 2020-10-02
 ### Changed
 - Issue [#3174475](https://www.drupal.org/project/tb_megamenu/issues/3174475) by John.nie: Array and string offset access syntax with
   curly braces is deprecated
+  
 ### Fixed
 - Issue [#3174476](https://www.drupal.org/project/tb_megamenu/issues/3174476) by John.nie, themodularlab: Render #post_render callbacks must
   be methods of a class that implements \Drupal\Core\Security\TrustedCallbackInterface or be an anonymous function.
@@ -35,9 +36,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Added README.md
 - Issue [#3095820](https://www.drupal.org/project/tb_megamenu/issues/3095820) by themodularlab, knaffles, RuslanP: D8 Accessibility Upgrades
+
 ### Changed
 - Issue [#3002715](https://www.drupal.org/project/tb_megamenu/issues/3002715) by i_g_wright, themodularlab, mellowtothemax: Admin permissions
   set too high
+
 ### Fixed
 - Issue [#3149011](https://www.drupal.org/project/tb_megamenu/issues/3149011) by Project Update Bot, themodularlab: Automated Drupal 9
   compatibility fixes
