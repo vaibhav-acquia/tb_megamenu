@@ -5,12 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [\[8.x-1.0-dev\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.x-dev) - 2021-01-22
+## [\[Unreleased: 8.x-1.x-dev\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.x-dev) - 2021-01-22
 
+- Issue [#3186612](https://www.drupal.org/project/tb_megamenu/issues/3186612) by quondam: Security Advisory Coverage - Security Review
 - Issue [#3194239](https://www.drupal.org/project/tb_megamenu/issues/3194239) by quondam, knaffles: Getting a 500 error when menu items are
   reordered and then saved, 2021-01-22
-- Issue [#3131180](https://www.drupal.org/project/tb_megamenu/issues/3131180) by quondam, Suresh Prabhu Parkala: Drupal coding standards, 
-2021-01-22
+- Issue [#3131180](https://www.drupal.org/project/tb_megamenu/issues/3131180) by quondam, Suresh Prabhu Parkala: Drupal coding standards,
+  2021-01-22
 - Issue [#3183288](https://www.drupal.org/project/tb_megamenu/issues/3183288) by quondam, timotej-pl, Scott Weston, themodularlab: Replace
   calls to \Drupal with Dependency Injection, 2021-01-19
 - Issue [#3192235](https://www.drupal.org/project/tb_megamenu/issues/3192235) by knaffles, andrewozone: Accessibility Upgrades, 2021-01-19
@@ -18,12 +19,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   disabled Submenu getting shifted to previous parent, 2020-11-20
 - **Deprecated** CHANGELOG.txt in favor of CHANGELOG.md.
 - **Changed** README.md to include CHANGELOG notes.
-  
-## [\[8.x-1.0-beta2\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.0-beta2) - 2020-10-02
+## [\[8.x-1.0.0-beta.2\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.0-beta2) - 2020-10-02
 ### Changed
 - Issue [#3174475](https://www.drupal.org/project/tb_megamenu/issues/3174475) by John.nie: Array and string offset access syntax with
   curly braces is deprecated
-  
+
 ### Fixed
 - Issue [#3174476](https://www.drupal.org/project/tb_megamenu/issues/3174476) by John.nie, themodularlab: Render #post_render callbacks must
   be methods of a class that implements \Drupal\Core\Security\TrustedCallbackInterface or be an anonymous function.
@@ -31,8 +31,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   in its annotation.
 - Issue [#3172977](https://www.drupal.org/project/tb_megamenu/issues/3172977) by Ramya Balasubramanian, dev.patrick: Unwanted special
   characters in hook help.
-  
-## [\[8.x-1.0-beta1\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.0-beta1) - 2020-09-11
+
+## [\[8.x-1.0.0-beta.1\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.0-beta1) - 2020-09-11
 ### Added
 - Added README.md
 - Issue [#3095820](https://www.drupal.org/project/tb_megamenu/issues/3095820) by themodularlab, knaffles, RuslanP: D8 Accessibility Upgrades
@@ -59,8 +59,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   the sentence.
 
 [8.x-1.x-dev]: https://git.drupalcode.org/project/tb_megamenu/-/tree/8.x-1.x-dev
-[8.x-1.0-beta2]: https://git.drupalcode.org/project/tb_megamenu/-/tags/8.x-1.0-beta2
-[8.x-1.0-beta1]: https://git.drupalcode.org/project/tb_megamenu/-/tags/8.x-1.0-beta1
+[8.x-1.0.0-beta.2]: https://git.drupalcode.org/project/tb_megamenu/-/tags/8.x-1.0-beta2
+[8.x-1.0.0-beta.1]: https://git.drupalcode.org/project/tb_megamenu/-/tags/8.x-1.0-beta1
 
 
 

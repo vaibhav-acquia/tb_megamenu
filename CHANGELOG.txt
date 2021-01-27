@@ -1,3 +1,7 @@
+NOTE:
+THIS VERSION OF THE CHANGELOG HAS BEEN DEPRECATED AND WILL BE REMOVED IN A
+FUTURE RELEASE.  SEE CHANGELOG.md for changes going forward.
+
 The Better Mega Menu 8.x-1.0-dev, 2021-01-22
 --------------------------------------------
 - Issue #3194239 by quondam, knaffles: Getting a 500 error when menu items are
