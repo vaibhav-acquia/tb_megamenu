@@ -7,7 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [\[Unreleased: 8.x-1.x-dev\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.x-dev)
 
-## [\[8.x-1.0.0-rc.1\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.0.0-rc.1) - 2021-01-29
+## [\[8.x-1.0-rc2\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.0.0-rc.2) - 2021-01-28
+### Fixed
+
+- Issue [#3195191](https://www.drupal.org/project/tb_megamenu/issues/3195191) by quondam: WSOD with error related to null block_id
+
+## [\[8.x-1.0-rc1\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.0.0-rc.1) - 2021-01-27
 
 This is the first 8.x-1.x Release Candidate!  This version contains the required
 fixes needed for Drupal Security Policy coverage.  The goal will be to apply for
@@ -45,7 +50,7 @@ no code other than release prep, adding because this is the parent security
 coverage issue.
 - Issue [#3186612](https://www.drupal.org/project/tb_megamenu/issues/3186612) by quondam: Security Advisory Coverage - Security Review
 
-## [\[8.x-1.0.0-beta.2\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.0-beta2) - 2020-10-02
+## [\[8.x-1.0-beta2\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.0-beta2) - 2020-10-02
 ### Changed
 - Issue [#3174475](https://www.drupal.org/project/tb_megamenu/issues/3174475) by John.nie: Array and string offset access syntax with
   curly braces is deprecated
@@ -58,7 +63,7 @@ coverage issue.
 - Issue [#3172977](https://www.drupal.org/project/tb_megamenu/issues/3172977) by Ramya Balasubramanian, dev.patrick: Unwanted special
   characters in hook help.
 
-## [\[8.x-1.0.0-beta.1\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.0-beta1) - 2020-09-11
+## [\[8.x-1.0-beta1\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.0-beta1) - 2020-09-11
 ### Added
 - Added README.md
 - Issue [#3095820](https://www.drupal.org/project/tb_megamenu/issues/3095820) by themodularlab, knaffles, RuslanP: D8 Accessibility Upgrades
@@ -85,8 +90,8 @@ coverage issue.
   the sentence.
 
 [8.x-1.x-dev]: https://git.drupalcode.org/project/tb_megamenu/-/tree/8.x-1.x-dev
-[8.x-1.0.0-beta.2]: https://git.drupalcode.org/project/tb_megamenu/-/tags/8.x-1.0-beta2
-[8.x-1.0.0-beta.1]: https://git.drupalcode.org/project/tb_megamenu/-/tags/8.x-1.0-beta1
+[8.x-1.0-beta2]: https://git.drupalcode.org/project/tb_megamenu/-/tags/8.x-1.0-beta2
+[8.x-1.0-beta1]: https://git.drupalcode.org/project/tb_megamenu/-/tags/8.x-1.0-beta1
 
 
 
