@@ -5,20 +5,44 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [\[Unreleased: 8.x-1.x-dev\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.x-dev) - 2021-01-22
+## [\[Unreleased: 8.x-1.x-dev\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.x-dev)
 
-- Issue [#3186612](https://www.drupal.org/project/tb_megamenu/issues/3186612) by quondam: Security Advisory Coverage - Security Review
-- Issue [#3194239](https://www.drupal.org/project/tb_megamenu/issues/3194239) by quondam, knaffles: Getting a 500 error when menu items are
-  reordered and then saved, 2021-01-22
+This is the first 8.x-1.x Release Candidate!  This version contains the required
+fixes needed for Drupal Security Policy coverage.  The goal will be to apply for
+coverage with this branch and ultimately roll in into an official and stable
+1.0.0 version of The better menu.
+
+### Changed
+
+- Changed README.md to include CHANGELOG notes.
 - Issue [#3131180](https://www.drupal.org/project/tb_megamenu/issues/3131180) by quondam, Suresh Prabhu Parkala: Drupal coding standards,
-  2021-01-22
+2021-01-22
 - Issue [#3183288](https://www.drupal.org/project/tb_megamenu/issues/3183288) by quondam, timotej-pl, Scott Weston, themodularlab: Replace
   calls to \Drupal with Dependency Injection, 2021-01-19
 - Issue [#3192235](https://www.drupal.org/project/tb_megamenu/issues/3192235) by knaffles, andrewozone: Accessibility Upgrades, 2021-01-19
+
+### Deprecated
+
+- Deprecated CHANGELOG.txt in favor of CHANGELOG.md
+
+### Removed
+
+- Removed CHANGELOG.txt in favor of CHANGELOG.md
+
+### Fixed
+
 - Issue [#2965871](https://www.drupal.org/project/tb_megamenu/issues/2965871) by quondam, gaurav.bajpai, andrewozone: When Parent menu
-  disabled Submenu getting shifted to previous parent, 2020-11-20
-- **Deprecated** CHANGELOG.txt in favor of CHANGELOG.md.
-- **Changed** README.md to include CHANGELOG notes.
+disabled Submenu getting shifted to previous parent, 2020-11-20
+- Issue [#3194239](https://www.drupal.org/project/tb_megamenu/issues/3194239) by quondam, knaffles: Getting a 500 error when menu items are
+reordered and then saved, 2021-01-22
+
+### Security
+
+- Issue [#3186616](https://www.drupal.org/project/tb_megamenu/issues/3186616) by knaffles, andrewozone, quondam, themodularlab: Security Advisory Coverage
+no code other than release prep, adding because this is the parent security
+coverage issue.
+- Issue [#3186612](https://www.drupal.org/project/tb_megamenu/issues/3186612) by quondam: Security Advisory Coverage - Security Review
+
 ## [\[8.x-1.0.0-beta.2\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.0-beta2) - 2020-10-02
 ### Changed
 - Issue [#3174475](https://www.drupal.org/project/tb_megamenu/issues/3174475) by John.nie: Array and string offset access syntax with
