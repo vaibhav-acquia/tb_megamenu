@@ -78,7 +78,7 @@ class TBMegaMenuBuilder implements TBMegaMenuBuilderInterface {
   /**
    * {@inheritdoc}
    */
-  public function getBlockConfig($menu_name, $theme) {
+  public function getBlockConfig(string $menu_name, string $theme) {
     $menu = self::getMenus($menu_name, $theme);
     return ($menu) ? $menu->getBlockConfig() : [];
   }
@@ -86,7 +86,7 @@ class TBMegaMenuBuilder implements TBMegaMenuBuilderInterface {
   /**
    * {@inheritdoc}
    */
-  public function getMenus($menu_name, $theme) {
+  public function getMenus(string $menu_name, string $theme) {
     $config = MegaMenuConfig::loadMenu($menu_name, $theme);
     if ($config === NULL) {
       $this->logger->warning("Could not find TB Megamenu configuration for menu: @menu, theme: @theme", [
@@ -100,7 +100,7 @@ class TBMegaMenuBuilder implements TBMegaMenuBuilderInterface {
   /**
    * {@inheritdoc}
    */
-  public function getMenuItem($menu_name, $plugin_id) {
+  public function getMenuItem(string $menu_name, string $plugin_id) {
     $tree = $this->menuTree->load($menu_name, (new MenuTreeParameters())->onlyEnabledLinks());
     $item = self::findMenuItem($tree, $plugin_id);
     return $item;
@@ -109,7 +109,7 @@ class TBMegaMenuBuilder implements TBMegaMenuBuilderInterface {
   /**
    * {@inheritdoc}
    */
-  public function findMenuItem($tree, $plugin_id) {
+  public function findMenuItem(array $tree, string $plugin_id) {
     foreach ($tree as $menu_plugin_id => $item) {
       if ($menu_plugin_id == $plugin_id) {
         return $item;
@@ -124,14 +124,14 @@ class TBMegaMenuBuilder implements TBMegaMenuBuilderInterface {
   /**
    * {@inheritdoc}
    */
-  public function loadEntityBlock($block_id) {
+  public function loadEntityBlock(string $block_id) {
     return $this->entityTypeManager->getStorage('block')->load($block_id);
   }
 
   /**
    * {@inheritdoc}
    */
-  public function getMenuConfig($menu_name, $theme) {
+  public function getMenuConfig(string $menu_name, string $theme) {
     $menu = self::getMenus($menu_name, $theme);
     return isset($menu) ? $menu->getMenuConfig() : [];
   }
@@ -203,7 +203,7 @@ class TBMegaMenuBuilder implements TBMegaMenuBuilderInterface {
   /**
    * {@inheritdoc}
    */
-  public function renderBlock($menu_name, $theme) {
+  public function renderBlock(string $menu_name, string $theme) {
     return [
       '#theme' => 'tb_megamenu',
       '#menu_name' => $menu_name,
@@ -216,7 +216,7 @@ class TBMegaMenuBuilder implements TBMegaMenuBuilderInterface {
   /**
    * {@inheritdoc}
    */
-  public function getIdColumn($number_columns) {
+  public function getIdColumn(int $number_columns) {
     $value = &drupal_static('column');
     if (!isset($value)) {
       $value = 1;
@@ -230,7 +230,7 @@ class TBMegaMenuBuilder implements TBMegaMenuBuilderInterface {
   /**
    * {@inheritdoc}
    */
-  public function getAllBlocks($theme) {
+  public function getAllBlocks(string $theme) {
     static $_blocks_array = [];
     if (empty($_blocks_array)) {
       // Get storage handler of block.
@@ -296,7 +296,7 @@ class TBMegaMenuBuilder implements TBMegaMenuBuilderInterface {
   /**
    * {@inheritdoc}
    */
-  public function syncConfigAll(array $menu_items, array &$menu_config, $section) {
+  public function syncConfigAll(array $menu_items, array &$menu_config, string $section) {
     foreach ($menu_items as $id => $menu_item) {
       $item_config = isset($menu_config[$id]) ? $menu_config[$id] : [];
       if ($menu_item->hasChildren || $item_config) {
@@ -310,7 +310,7 @@ class TBMegaMenuBuilder implements TBMegaMenuBuilderInterface {
   /**
    * {@inheritdoc}
    */
-  public function syncConfig(array $items, array &$item_config, $section) {
+  public function syncConfig(array $items, array &$item_config, string $section) {
     if (empty($item_config['rows_content'])) {
       $item_config['rows_content'][0][0] = [
         'col_content' => [],
@@ -334,7 +334,7 @@ class TBMegaMenuBuilder implements TBMegaMenuBuilderInterface {
             }
             // Add a block to the config.
             elseif ($tb_item['type'] == 'block' && !empty($tb_item['block_id'])) {
-              self::syncBlock($hash, $tb_item, $row_delta, $col_delta, $item_delta, $items, $item_config);
+              self::syncBlock($tb_item, $row_delta, $col_delta, $item_delta, $section, $item_config);
             }
             // Remove an invalid column from the config.
             else {
@@ -351,7 +351,7 @@ class TBMegaMenuBuilder implements TBMegaMenuBuilderInterface {
   /**
    * {@inheritdoc}
    */
-  public function addColContent($items, &$item_config) {
+  public function addColContent(array $items, array &$item_config) {
     foreach ($items as $plugin_id => $item) {
       if ($item->link->isEnabled()) {
         $item_config['rows_content'][0][0]['col_content'][] = [
@@ -367,7 +367,7 @@ class TBMegaMenuBuilder implements TBMegaMenuBuilderInterface {
   /**
    * {@inheritdoc}
    */
-  public function syncMenuItem(&$hash, $tb_item, $row_delta, $col_delta, $item_delta, $items, &$item_config) {
+  public function syncMenuItem(array &$hash, array $tb_item, $row_delta, $col_delta, $item_delta, array $items, array &$item_config) {
     $hash[$tb_item['plugin_id']] = [
       'row' => $row_delta,
       'col' => $col_delta,
@@ -394,7 +394,7 @@ class TBMegaMenuBuilder implements TBMegaMenuBuilderInterface {
   /**
    * {@inheritdoc}
    */
-  public function syncBlock($tb_item, $row_delta, $col_delta, $item_delta, $section, &$item_config) {
+  public function syncBlock(array $tb_item, $row_delta, $col_delta, $item_delta, string $section, array &$item_config) {
     if (!self::isBlockContentEmpty($tb_item['block_id'], $section)) {
       unset($item_config['rows_content'][$row_delta][$col_delta]['col_content'][$item_delta]);
       if (empty($item_config['rows_content'][$row_delta][$col_delta]['col_content'])) {
@@ -409,7 +409,7 @@ class TBMegaMenuBuilder implements TBMegaMenuBuilderInterface {
   /**
    * {@inheritdoc}
    */
-  public function removeColumn($tb_item, $row_delta, $col_delta, $item_delta, &$item_config) {
+  public function removeColumn(array $tb_item, $row_delta, $col_delta, $item_delta, array &$item_config) {
     if (empty($tb_item)) {
       unset($item_config['rows_content'][$row_delta][$col_delta]['col_content'][$item_delta]);
     }
@@ -421,7 +421,7 @@ class TBMegaMenuBuilder implements TBMegaMenuBuilderInterface {
   /**
    * {@inheritdoc}
    */
-  public function insertEnabledLinks($items, $hash, &$item_config) {
+  public function insertEnabledLinks(array $items, array $hash, array &$item_config) {
     $row = -1;
     $col = -1;
     foreach ($items as $plugin_id => $item) {
@@ -480,7 +480,7 @@ class TBMegaMenuBuilder implements TBMegaMenuBuilderInterface {
   /**
    * {@inheritdoc}
    */
-  public function sortByWeight($item_sorted) {
+  public function sortByWeight(array $item_sorted) {
     ksort($item_sorted);
     $new_list = [];
     foreach ($item_sorted as $weight_group) {
@@ -495,7 +495,7 @@ class TBMegaMenuBuilder implements TBMegaMenuBuilderInterface {
   /**
    * {@inheritdoc}
    */
-  public function isBlockContentEmpty($block_id, $section) {
+  public function isBlockContentEmpty(string $block_id, string $section) {
     $entity_block = self::loadEntityBlock($block_id);
     if ($entity_block && ($entity_block->getPlugin()->build() || $section == 'backend')) {
       return TRUE;
@@ -506,7 +506,7 @@ class TBMegaMenuBuilder implements TBMegaMenuBuilderInterface {
   /**
    * {@inheritdoc}
    */
-  public function insertTbMenuItem(array &$item_config, $row, $col, $item) {
+  public function insertTbMenuItem(array &$item_config, $row, $col, object $item) {
     $idx = 0;
     $col_content = isset($item_config['rows_content'][$row][$col]['col_content']) ? array_values($item_config['rows_content'][$row][$col]['col_content']) : [];
     current($col_content);

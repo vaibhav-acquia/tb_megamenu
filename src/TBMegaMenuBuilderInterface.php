@@ -18,7 +18,7 @@ interface TBMegaMenuBuilderInterface {
    * @return array
    *   The block config array
    */
-  public function getBlockConfig($menu_name, $theme);
+  public function getBlockConfig(string $menu_name, string $theme);
 
   /**
    * Get menus that belongs TB mega menu.
@@ -31,7 +31,7 @@ interface TBMegaMenuBuilderInterface {
    * @return \Drupal\tb_megamenu\MegaMenuConfigInterface|null
    *   The configuration entity for this menu or NULL if not found.
    */
-  public function getMenus($menu_name, $theme);
+  public function getMenus(string $menu_name, string $theme);
 
   /**
    * Find a menu item.
@@ -44,20 +44,20 @@ interface TBMegaMenuBuilderInterface {
    * @return \Drupal\Core\Menu\MenuLinkTreeElement
    *   The menu item element.
    */
-  public function getMenuItem($menu_name, $plugin_id);
+  public function getMenuItem(string $menu_name, string $plugin_id);
 
   /**
    * Search by menu item.
    *
-   * @param mixed $tree
+   * @param array $tree
    *   The menu tree.
-   * @param mixed $plugin_id
+   * @param string $plugin_id
    *   The item plugin id.
    *
    * @return \Drupal\Core\Menu\MenuLinkTreeElement
    *   The menu link element.
    */
-  public function findMenuItem($tree, $plugin_id);
+  public function findMenuItem(array $tree, string $plugin_id);
 
   /**
    * Load blocks by block_id.
@@ -71,7 +71,7 @@ interface TBMegaMenuBuilderInterface {
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  public function loadEntityBlock($block_id);
+  public function loadEntityBlock(string $block_id);
 
   /**
    * Get configuration of menu.
@@ -84,7 +84,7 @@ interface TBMegaMenuBuilderInterface {
    * @return array|object
    *   The menu configuration info.
    */
-  public function getMenuConfig($menu_name, $theme);
+  public function getMenuConfig(string $menu_name, string $theme);
 
   /**
    * Create the default attributes for the configuration of block.
@@ -129,7 +129,7 @@ interface TBMegaMenuBuilderInterface {
    * @return array
    *   The render array.
    */
-  public function renderBlock($menu_name, $theme);
+  public function renderBlock(string $menu_name, string $theme);
 
   /**
    * Get Id of column.
@@ -140,7 +140,7 @@ interface TBMegaMenuBuilderInterface {
    * @return string
    *   The column id.
    */
-  public function getIdColumn($number_columns);
+  public function getIdColumn(int $number_columns);
 
   /**
    * Get all of blocks in system without blocks which belong to TB Mega Menu.
@@ -153,7 +153,7 @@ interface TBMegaMenuBuilderInterface {
    * @return \Drupal\Core\Entity\EntityTypeInterface[]
    *   An array of block entities or an empty array if none found.
    */
-  public function getAllBlocks($theme);
+  public function getAllBlocks(string $theme);
 
   /**
    * Create options for animation.
@@ -195,7 +195,7 @@ interface TBMegaMenuBuilderInterface {
    * @param string $section
    *   The menu section.
    */
-  public function syncConfigAll(array $menu_items, array &$menu_config, $section);
+  public function syncConfigAll(array $menu_items, array &$menu_config, string $section);
 
   /**
    * Populate the item_config values.
@@ -207,7 +207,7 @@ interface TBMegaMenuBuilderInterface {
    * @param string $section
    *   The menu section.
    */
-  public function syncConfig(array $items, array &$item_config, $section);
+  public function syncConfig(array $items, array &$item_config, string $section);
 
   /**
    * Add menu item content to a column.
@@ -226,52 +226,52 @@ interface TBMegaMenuBuilderInterface {
    *   An array of hashes for all menu items based on their positions.
    * @param array $tb_item
    *   The individual menu item.
-   * @param int $row_delta
+   * @param int|string $row_delta
    *   The delta for the current row.
-   * @param int $col_delta
+   * @param int|string $col_delta
    *   The delta for the current column.
-   * @param int $item_delta
+   * @param int|string $item_delta
    *   The delta for the current item.
    * @param array $items
    *   All items in the current menu.
    * @param array $item_config
    *   The current configuration for all items.
    */
-  public function syncMenuItem(array &$hash, array $tb_item, int $row_delta, int $col_delta, int $item_delta, array $items, array &$item_config);
+  public function syncMenuItem(array &$hash, array $tb_item, $row_delta, $col_delta, $item_delta, array $items, array &$item_config);
 
   /**
    * Sync a core block with the TB config.
    *
    * @param array $tb_item
    *   The individual menu item.
-   * @param int $row_delta
+   * @param int|string $row_delta
    *   The delta for the current row.
-   * @param int $col_delta
+   * @param int|string $col_delta
    *   The delta for the current column.
-   * @param int $item_delta
+   * @param int|string $item_delta
    *   The delta for the current item.
    * @param string $section
    *   The portion of the configuration to sync.
    * @param array $item_config
    *   The current configuration for all items.
    */
-  public function syncBlock(array $tb_item, int $row_delta, int $col_delta, int $item_delta, string $section, array &$item_config);
+  public function syncBlock(array $tb_item, $row_delta, $col_delta, $item_delta, string $section, array &$item_config);
 
   /**
    * Remove a column from the TB config.
    *
    * @param array $tb_item
    *   The individual menu item.
-   * @param int $row_delta
+   * @param int|string $row_delta
    *   The delta for the current row.
-   * @param int $col_delta
+   * @param int|string $col_delta
    *   The delta for the current column.
-   * @param int $item_delta
+   * @param int|string $item_delta
    *   The delta for the current item.
    * @param array $item_config
    *   The current configuration for all items.
    */
-  public function removeColumn(array $tb_item, int $row_delta, int $col_delta, int $item_delta, array &$item_config);
+  public function removeColumn(array $tb_item, $row_delta, $col_delta, $item_delta, array &$item_config);
 
   /**
    * Insert an enabled link into the TB config.
@@ -307,28 +307,28 @@ interface TBMegaMenuBuilderInterface {
   /**
    * Test if a block has content or not.
    *
-   * @param mixed $block_id
+   * @param string $block_id
    *   The block id.
-   * @param mixed $section
+   * @param string $section
    *   The menu section.
    *
    * @return bool
    *   True if empty.
    */
-  public function isBlockContentEmpty($block_id, $section);
+  public function isBlockContentEmpty(string $block_id, string $section);
 
   /**
    * Insert a menu item into the item config array.
    *
    * @param array $item_config
    *   The item config array.
-   * @param string $row
+   * @param int|string $row
    *   The row to insert at.
-   * @param string $col
+   * @param int|string $col
    *   The column to insert at.
-   * @param mixed $item
+   * @param object $item
    *   The menu item to insert.
    */
-  public function insertTbMenuItem(array &$item_config, $row, $col, $item);
+  public function insertTbMenuItem(array &$item_config, $row, $col, object $item);
 
 }
