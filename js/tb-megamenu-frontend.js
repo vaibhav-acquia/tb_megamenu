@@ -359,10 +359,10 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
             }, 100));
           }
           else {
-            clearTimeout($menuItem.data('hoverTimeout'));
-            $menuItem.data('hoverTimeout',
+            clearTimeout($subMenu.data('hoverTimeout'));
+            $subMenu.data('hoverTimeout',
                 setTimeout(function () {
-                  $menuItem.addClass('open');
+                  $subMenu.addClass('open');
                   ariaCheck();
                 }, 100));
           }
