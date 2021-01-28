@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [\[Unreleased: 8.x-1.x-dev\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.x-dev)
 
+## [\[8.x-1.0.0-rc.1\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.0.0-rc.1) - 2021-01-29
+
 This is the first 8.x-1.x Release Candidate!  This version contains the required
 fixes needed for Drupal Security Policy coverage.  The goal will be to apply for
 coverage with this branch and ultimately roll in into an official and stable
