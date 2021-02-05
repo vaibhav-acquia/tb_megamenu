@@ -182,7 +182,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       currentSelected.attr('data-showblocktitle', 1);
     }
     if ($('#tb-megamenu-block-wrapper select[name="toolcol-block"]').val() != '') {
-      value = $('#tb-megamenu-block-wrapper select[name="toolcol-block"]').val();
+      var value = $('#tb-megamenu-block-wrapper select[name="toolcol-block"]').val();
       $('#tb-megamenu-admin-mm-tb #toolbox-loading').show();
       callAjax({'action': 'load_block', 'block_id': value, 'id': currentSelected.attr('id'), 'showblocktitle': parseInt(currentSelected.attr('data-showblocktitle'))});
     }
