@@ -7,14 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [\[Unreleased: 8.x-1.x-dev\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.x-dev)
 
-## [\[8.x-1.0-rc2\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.0.0-rc.2) - 2021-02-10
+## [\[8.x-1.0-rc3\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.0-rc3) - 2021-02-11
 ### Fixed
 
-- Issue [#3195191](https://www.drupal.org/project/tb_megamenu/issues/3195191) by quondam: WSOD with error related to null block_id
+- Issue [#3196330](https://www.drupal.org/project/tb_megamenu/issues/3196330) by quondam: Uncaught ReferenceError: value is not defined
 - Issue [#3196569](https://www.drupal.org/project/tb_megamenu/issues/3196569) by quondam: TypeError: Argument 1 passed to Drupal\tb_megamenu\TBMegaMenuBuilder::editColumnConfig() causes site crash
 - Issue [#3195480](https://www.drupal.org/project/tb_megamenu/issues/3195480) by quondam: Improve messaging in toolbox admin UI
 
-## [\[8.x-1.0-rc1\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.0.0-rc.1) - 2021-01-27
+## [\[8.x-1.0-rc2\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.0-rc2) - 2021-01-28
+### Fixed
+
+- Issue [#3195191](https://www.drupal.org/project/tb_megamenu/issues/3195191) by quondam: WSOD with error related to null block_id
+
+## [\[8.x-1.0-rc1\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.0-rc1) - 2021-01-27
 
 This is the first 8.x-1.x Release Candidate!  This version contains the required
 fixes needed for Drupal Security Policy coverage.  The goal will be to apply for
@@ -92,6 +97,9 @@ coverage issue.
   the sentence.
 
 [8.x-1.x-dev]: https://git.drupalcode.org/project/tb_megamenu/-/tree/8.x-1.x-dev
+[8.x-1.0-rc3]: https://git.drupalcode.org/project/tb_megamenu/-/tags/8.x-1.0-rc3
+[8.x-1.0-rc2]: https://git.drupalcode.org/project/tb_megamenu/-/tags/8.x-1.0-rc2
+[8.x-1.0-rc1]: https://git.drupalcode.org/project/tb_megamenu/-/tags/8.x-1.0-rc1
 [8.x-1.0-beta2]: https://git.drupalcode.org/project/tb_megamenu/-/tags/8.x-1.0-beta2
 [8.x-1.0-beta1]: https://git.drupalcode.org/project/tb_megamenu/-/tags/8.x-1.0-beta1
 
