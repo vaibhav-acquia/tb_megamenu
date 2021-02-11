@@ -192,7 +192,7 @@ function template_preprocess_tb_megamenu_row(array &$vars) {
  */
 function template_preprocess_tb_megamenu_column(array &$vars) {
   $col = $vars['col']['col_content'];
-  $col_config = $vars['col']['col_config'];
+  $col_config = isset($vars['col']['col_config']) ? $vars['col']['col_config'] : [];
 
   \Drupal::service('tb_megamenu.menu_builder')->editColumnConfig($col_config);
   $vars['col_config'] = $col_config;
@@ -246,7 +246,8 @@ function template_preprocess_tb_megamenu_column(array &$vars) {
   $vars['attributes']['data-class'] = $col_config['class'];
   $vars['attributes']['data-width'] = $col_config['width'];
   $vars['attributes']['data-hidewcol'] = $col_config['hidewcol'];
-  $vars['attributes']['id'] = \Drupal::service('tb_megamenu.menu_builder')->getIdColumn($vars['block_config']['number-columns']);
+  $num_cols = isset($vars['block_config']['number-columns']) ? $vars['block_config']['number-columns'] : 1;
+  $vars['attributes']['id'] = \Drupal::service('tb_megamenu.menu_builder')->getIdColumn($num_cols);
 }
 
 /**

@@ -107,7 +107,10 @@ class TBMegaMenuAdminController extends ControllerBase {
         break;
     }
 
-    return new Response($result);
+    // Return the response message and status code.
+    $response = new Response($result['message']);
+    $response->setStatusCode($result['code']);
+    return $response;
   }
 
   /**
@@ -116,20 +119,31 @@ class TBMegaMenuAdminController extends ControllerBase {
    * @param array $data
    *   A decoded JSON object used to load the configuration.
    *
-   * @return \Symfony\Component\HttpFoundation\Response
-   *   A string response with either a success/error message or just data.
+   * @return array
+   *   The message and status code indicating the result of the load attempt.
    */
   public function loadMenuConfig(array $data) {
     $menu_name = self::getMenuName($data);
     $theme = self::getTheme($data);
+    $code = 200;
+
+    // Attempt to load the menu config.
     if ($menu_name && $theme) {
       $renderable_array = $this->menuBuilder->renderBlock($menu_name, $theme);
       $result = $this->renderer
         ->render($renderable_array)
         ->__toString();
     }
+    // Display an error if the config can't be loaded.
+    else {
+      $result = self::saveError('load_config');
+      $code = 500;
+    }
 
-    return $result;
+    return [
+      'message' => $result,
+      'code' => $code,
+    ];
   }
 
   /**
@@ -138,20 +152,23 @@ class TBMegaMenuAdminController extends ControllerBase {
    * @param array $data
    *   A decoded JSON object used to save the configuration.
    *
-   * @return \Symfony\Component\HttpFoundation\Response
-   *   A string response with either a success/error message or just data.
+   * @return array
+   *   The message and status code indicating the result of the save attempt.
    */
   public function saveMenuConfig(array $data) {
     $menu_config = self::getMenuConfig($data);
     $block_config = self::getBlockConfig($data);
     $menu_name = self::getMenuName($data);
     $theme = self::getTheme($data);
+    $code = 200;
 
     // Ensure the config can be loaded before proceeding.
     $config = MegaMenuConfig::loadMenu($menu_name, $theme);
     if ($config === NULL) {
-      $result = self::saveError('load_menu');
-      return $result;
+      return [
+        'message' => self::saveError('load_menu'),
+        'code' => 500,
+      ];
     }
 
     if ($menu_config && $menu_name && $block_config && $theme) {
@@ -169,13 +186,21 @@ class TBMegaMenuAdminController extends ControllerBase {
       if ($saved_config == 1 || $saved_config == 2) {
         $result = $this->t("Saved config sucessfully!");
       }
+      else {
+        $result = self::saveError('unknown');
+        $code = 500;
+      }
     }
     // Display an error when required values are missing.
     else {
       $result = self::saveError('missing_info', $menu_name, $theme, $block_config, $menu_config);
+      $code = 500;
     }
 
-    return $result;
+    return [
+      'message' => $result,
+      'code' => $code,
+    ];
   }
 
   /**
@@ -196,26 +221,33 @@ class TBMegaMenuAdminController extends ControllerBase {
    *   An error message displayed to the user.
    */
   public function saveError(string $event, string $menu_name = NULL, string $theme = NULL, array $block_config = NULL, array $menu_config = NULL) {
-    $msg = $this->t("Error Saving TB MegaMenu configuration:");
+    $msg = $this->t("TB MegaMenu error:");
 
     switch ($event) {
       case 'load_menu':
-        $msg .= $this->t("Could not load the menu.");
+        $msg .= ' ' . $this->t("could not load the requested menu.");
+        break;
+
+      case 'load_config':
+        $msg .= ' ' . $this->t("could not (re)load the requested menu configuration.");
+        break;
+
+      case 'load_block':
+        $msg .= ' ' . $this->t("could not load the requested menu block.");
         break;
 
       case 'missing_info':
         $problem = ($menu_name ? '' : "menu_name ") . ($theme ? '' : "theme_name ") .
         ($block_config ? '' : "block_config ") . ($menu_config ? '' : "menu_config");
-        $msg .= $this->t(
+        $msg .= ' ' . $this->t(
           "Post was missing the following information: @problem",
           ['@problem' => $problem]);
         break;
 
       default:
-        $msg .= $this->t("An unknown error occurred.");
+        $msg .= ' ' . $this->t("an unknown error occurred.");
     }
 
-    $this->messenger()->addStatus($msg);
     return $msg;
   }
 
@@ -225,13 +257,16 @@ class TBMegaMenuAdminController extends ControllerBase {
    * @param array $data
    *   A decoded JSON object used to load the block.
    *
-   * @return \Symfony\Component\HttpFoundation\Response
-   *   A string response with either a success/error message or just data.
+   * @return array
+   *   The message and status code indicating the result of the load attempt.
    */
   public function loadMenuBlock(array $data) {
     $block_id = isset($data['block_id']) ? $data['block_id'] : NULL;
     $id = isset($data['id']) ? $data['id'] : NULL;
     $showblocktitle = isset($data['showblocktitle']) ? $data['showblocktitle'] : NULL;
+    $code = 200;
+
+    // Attempt to render the specified block.
     if ($block_id && $id) {
       $render = [
         '#theme' => 'tb_megamenu_block',
@@ -244,8 +279,16 @@ class TBMegaMenuAdminController extends ControllerBase {
         ->__toString();
       $result = Json::encode(['content' => $content, 'id' => $id]);
     }
+    // Display an error if the block can't be loaded.
+    else {
+      $result = self::saveError('load_block');
+      $code = 500;
+    }
 
-    return $result;
+    return [
+      'message' => $result,
+      'code' => $code,
+    ];
   }
 
   /**

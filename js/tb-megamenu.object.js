@@ -9,6 +9,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
   "use strict";
 
   var currentSelected = null, megamenu, nav_items, nav_subs, nav_cols, nav_all;
+  var modalTimeout;
   Drupal.TBMegaMenu.lockedAjax = false;
 
   Drupal.TBMegaMenu.lockAjax = function () {
@@ -502,16 +503,25 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
         'theme': drupalSettings.TBMegaMenu.theme,
         'menu_name': options['menu_name']
       }),
-      complete: function (msg) {
-        $('#tb-megamenu-admin-mm-container').html(msg.responseText).megamenuAdmin({'menu_name': options['menu_name']});
-        $('#tb-megamenu-admin-mm-container').find('.mega-inner').children('span.close').click(function () {
-          $(this).parent().html("");
-        });
-        $('#tb-megamenu-admin-mm-tb #toolbox-loading').hide();
-        $('#tb-megamenu-admin-mm-tb #toolbox-message').html(Drupal.t("All unsaved changed has been reseted!")).show();
-        window.setTimeout(function () {
-          $('#tb-megamenu-admin-mm-tb #toolbox-message').html("").hide();
-        }, 5000);
+      complete: function (r) {
+        switch (r.status) {
+          // If an error occurred only set a status message.
+          case 500:
+            var statusMsg = r.responseText;
+            break;
+          // When successful revert the configuration displayed in the UI.
+          default:
+            $('#tb-megamenu-admin-mm-container').html(r.responseText).megamenuAdmin({'menu_name': options['menu_name']});
+            // Collapse all expanded menu items.
+            $('#tb-megamenu-admin-mm-container').find('.mega-inner').children('span.close').click(function () {
+              $(this).parent().html("");
+            });
+            // Set a confirmation message.
+            var statusMsg = Drupal.t("All unsaved changes have been reverted.");
+        }
+        // Display the status message modal.
+        status_modal(r.status, statusMsg);
+
         Drupal.TBMegaMenu.releaseAjax();
       }
     });
@@ -606,16 +616,44 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
         'block_config': block_config
       }),
       complete: function (r) {
-        $('#tb-megamenu-admin-mm-tb #toolbox-loading').hide();
-        var $div = $('<div class="messages messages--status" role="contentinfo" aria-label="Status message"><h2 class="visually-hidden">Status message</h2>' + r.responseText + '</div>');
-        $('#tb-megamenu-admin-mm-tb #toolbox-message').html($div).show();
-        window.setTimeout(function () {
-          $('#tb-megamenu-admin-mm-tb #toolbox-message').html("").hide();
-        }, 7000);
+        // Set the status message based on the response.
+        var statusMsg = r.responseText;
+        // Show the status message modal.
+        status_modal(r.status, statusMsg);
+
         Drupal.TBMegaMenu.releaseAjax();
       }
     });
   };
+
+  var status_modal = function (code, statusMsg) {
+    // Clear any previously set timeouts and hide any visible modals.
+    clearTimeout(modalTimeout);
+    $('#tb-megamenu-admin-mm-tb #toolbox-message').html("").hide();
+    // Set the message container class based on the status code.
+    switch (code) {
+      case 500:
+        var msgClass = 'messages--error';
+        break;
+      default:
+        var msgClass = 'messages--status';
+    }
+    // Hide the loading animation.
+    $('#tb-megamenu-admin-mm-tb #toolbox-loading').hide();
+    // Build the modal status message container.
+    var $div = $('<div class="messages ' + msgClass + '" role="contentinfo" aria-label="Status message"><h2 class="visually-hidden">Status message</h2><span class="close fa fa-times-circle" title="Dismiss this message">&nbsp;</span>' + statusMsg + '</div>');
+    // Show the modal and bind a click event to its close (X) button.
+    $('#tb-megamenu-admin-mm-tb #toolbox-message').html($div).show();
+    $('#tb-megamenu-admin-mm-tb #toolbox-message span.close').click(function () {
+      $(this).parent().html("").hide();
+    });
+    // Auto-dismiss all success messages after a delay.
+    if (code == 200) {
+      modalTimeout = window.setTimeout(function () {
+        $('#tb-megamenu-admin-mm-tb #toolbox-message').html("").hide();
+      }, 7000);
+    }
+  }
 
   var toolbox_type = function () {
     return currentSelected ? currentSelected.hasClass('nav-child') ? 'sub' : (currentSelected[0].tagName == 'DIV' ? 'col' : 'item') : false;
@@ -897,18 +935,36 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
           contentType: "application/json; charset=utf-8",
           data: JSON.stringify(data),
           complete: function (msg) {
-            var resp = $.parseJSON(msg.responseText);
-            var content = resp.content ? resp.content : "";
-            var close_button = $('<span class="close fa fa-times-circle" title="' + Drupal.t("Remove this block") + '">&nbsp;</span>');
-            var id = resp.id ? resp.id : "";
-            var currentElement = $("#" + id);
-            if (currentElement.length) {
-              currentElement.children('.mega-inner').html("").append(close_button).append($(content)).find(':input').removeAttr('name');
-              currentElement.children('.mega-inner').children('span.close').click(function () {
-                $(this).parent().html("");
-              });
+            // Check if a valid block was loaded & a JSON object was returned.
+            var isJson = true;
+            try {
+              var resp = $.parseJSON(msg.responseText);
             }
-            $('#tb-megamenu-admin-mm-tb #toolbox-loading').hide();
+            catch(err) {
+              isJson = false;
+            }
+            // If we received a block, display it in the UI.
+            if (isJson) {
+              var content = resp.content ? resp.content : "";
+              var id = resp.id ? resp.id : "";
+              // Add a close (remove) button and bind a click event to it.
+              var close_button = $('<span class="close fa fa-times-circle" title="' + Drupal.t("Remove this block") + '">&nbsp;</span>');
+              var currentElement = $("#" + id);
+              if (currentElement.length) {
+                currentElement.children('.mega-inner').html("").append(close_button).append($(content)).find(':input').removeAttr('name');
+                currentElement.children('.mega-inner').children('span.close').click(function () {
+                  $(this).parent().html("");
+                });
+              }
+              // Hide the loading animation.
+              $('#tb-megamenu-admin-mm-tb #toolbox-loading').hide();
+            }
+            // If no JSON was received display an error in the modal.
+            else {
+              var statusMsg = msg.responseText;
+              status_modal(msg.status, statusMsg);
+            }
+
             Drupal.TBMegaMenu.releaseAjax();
           }
         });

@@ -7,10 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [\[Unreleased: 8.x-1.x-dev\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.x-dev)
 
-## [\[8.x-1.0-rc2\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.0.0-rc.2) - 2021-01-28
+## [\[8.x-1.0-rc2\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.0.0-rc.2) - 2021-02-10
 ### Fixed
 
 - Issue [#3195191](https://www.drupal.org/project/tb_megamenu/issues/3195191) by quondam: WSOD with error related to null block_id
+- Issue [#3196569](https://www.drupal.org/project/tb_megamenu/issues/3196569) by quondam: TypeError: Argument 1 passed to Drupal\tb_megamenu\TBMegaMenuBuilder::editColumnConfig() causes site crash
+- Issue [#3195480](https://www.drupal.org/project/tb_megamenu/issues/3195480) by quondam: Improve messaging in toolbox admin UI
 
 ## [\[8.x-1.0-rc1\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.0.0-rc.1) - 2021-01-27
 
