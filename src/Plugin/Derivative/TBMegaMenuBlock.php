@@ -5,6 +5,7 @@ namespace Drupal\tb_megamenu\Plugin\Derivative;
 use Drupal\Component\Plugin\Derivative\DeriverBase;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Plugin\Discovery\ContainerDeriverInterface;
+use Drupal\system\Entity\Menu;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -42,13 +43,14 @@ class TBMegaMenuBlock extends DeriverBase implements ContainerDeriverInterface {
    * {@inheritdoc}
    */
   public function getDerivativeDefinitions($base_plugin_definition) {
-    $menus = menu_ui_get_menus();
+    $menus = Menu::loadMultiple();
+    asort($menus);
     foreach ($this->configFactory->listAll('tb_megamenu.menu_config.') as $index_id) {
       $info = $this->configFactory->get($index_id);
       $menu = $info->get('menu');
       if (isset($menus[$menu])) {
         $this->derivatives[$menu] = $base_plugin_definition;
-        $this->derivatives[$menu]['admin_label'] = $menus[$menu];
+        $this->derivatives[$menu]['admin_label'] = $menus[$menu]->label();
       }
     }
     return $this->derivatives;
