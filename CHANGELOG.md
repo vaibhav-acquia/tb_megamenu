@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [\[Unreleased: 8.x-1.x-dev\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.x-dev)
+- Issue [#3198123](https://www.drupal.org/project/tb_megamenu/issues/3198123) by arshadkhan35: Drupal 9.1 install crash undefined function menu_ui_get_menus()
 
 ## [\[8.x-1.0-rc3\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.0-rc3) - 2021-02-11
 ### Fixed
