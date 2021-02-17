@@ -4,3 +4,4 @@ description: 'Megamenu solutions for Drupal.'
 core: 8.x
 core_version_requirement: ^8 || ^9
 package: Menu
+configure: entity.tb_megamenu.collection
