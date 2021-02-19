@@ -9,7 +9,9 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       $item.click( function(event){
         if ($item.hasClass('tb-megamenu-clicked')) {
           var $uri = $item.attr('href');
-          window.location.href = $uri;
+          if ($uri && $uri !== '#') {
+            window.location.href = $uri;
+          }
         }
         else {
           event.preventDefault();
