@@ -7,11 +7,11 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Menu\MenuTreeParameters;
 use Drupal\Core\Url;
 use Drupal\tb_megamenu\Entity\MegaMenuConfig;
-use Drupal\tb_megamenu\TBMegaMenuBuilder;
+use Drupal\tb_megamenu\TBMegaMenuBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\Core\Menu\MenuLinkTree;
+use Drupal\Core\Menu\MenuLinkTreeInterface;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\Component\Serialization\Json;
 
@@ -23,7 +23,7 @@ class TBMegaMenuAdminController extends ControllerBase {
   /**
    * The menu tree service.
    *
-   * @var \Drupal\Core\Menu\MenuLinkTree
+   * @var \Drupal\Core\Menu\MenuLinkTreeInterface
    */
   protected $menuTree;
 
@@ -37,21 +37,21 @@ class TBMegaMenuAdminController extends ControllerBase {
   /**
    * The menu builder service.
    *
-   * @var \Drupal\tb_megamenu\TBMegaMenuBuilder
+   * @var \Drupal\tb_megamenu\TBMegaMenuBuilderInterface
    */
   private $menuBuilder;
 
   /**
    * Constructs a TBMegaMenuAdminController object.
    *
-   * @param \Drupal\Core\Menu\MenuLinkTree $menu_tree
+   * @param \Drupal\Core\Menu\MenuLinkTreeInterface $menu_tree
    *   The Menu Link Tree service.
    * @param \Drupal\Core\Render\RendererInterface $renderer
    *   The renderer service.
-   * @param \Drupal\tb_megamenu\TBMegaMenuBuilder $menu_builder
+   * @param \Drupal\tb_megamenu\TBMegaMenuBuilderInterface $menu_builder
    *   The menu builder service.
    */
-  public function __construct(MenuLinkTree $menu_tree, RendererInterface $renderer, TBMegaMenuBuilder $menu_builder) {
+  public function __construct(MenuLinkTreeInterface $menu_tree, RendererInterface $renderer, TBMegaMenuBuilderInterface $menu_builder) {
     $this->menuTree = $menu_tree;
     $this->renderer = $renderer;
     $this->menuBuilder = $menu_builder;

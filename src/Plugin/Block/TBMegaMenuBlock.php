@@ -7,7 +7,7 @@ use Drupal\Core\Cache\Cache;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Theme\ThemeManagerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Drupal\tb_megamenu\TBMegaMenuBuilder;
+use Drupal\tb_megamenu\TBMegaMenuBuilderInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -39,7 +39,7 @@ class TBMegaMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
   /**
    * The menu builder service.
    *
-   * @var \Drupal\tb_megamenu\TBMegaMenuBuilder
+   * @var \Drupal\tb_megamenu\TBMegaMenuBuilderInterface
    */
   private $menuBuilder;
 
@@ -54,10 +54,10 @@ class TBMegaMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
    *   The plugin definition.
    * @param \Drupal\Core\Theme\ThemeManagerInterface $theme_manager
    *   The theme manager service.
-   * @param \Drupal\tb_megamenu\TBMegaMenuBuilder $menu_builder
+   * @param \Drupal\tb_megamenu\TBMegaMenuBuilderInterface $menu_builder
    *   The menu builder service.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, ThemeManagerInterface $theme_manager, TBMegaMenuBuilder $menu_builder) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, ThemeManagerInterface $theme_manager, TBMegaMenuBuilderInterface $menu_builder) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->themeManager = $theme_manager;
     $this->menuBuilder = $menu_builder;

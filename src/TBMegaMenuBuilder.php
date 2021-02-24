@@ -2,12 +2,12 @@
 
 namespace Drupal\tb_megamenu;
 
-use Drupal\Core\Entity\EntityTypeManager;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Menu\MenuTreeParameters;
-use Drupal\Core\Menu\MenuLinkTree;
-use Drupal\Core\Menu\MenuTreeStorage;
-use Drupal\Core\Path\PathMatcher;
+use Drupal\Core\Menu\MenuLinkTreeInterface;
+use Drupal\Core\Menu\MenuTreeStorageInterface;
+use Drupal\Core\Path\PathMatcherInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\tb_megamenu\Entity\MegaMenuConfig;
 
@@ -28,28 +28,28 @@ class TBMegaMenuBuilder implements TBMegaMenuBuilderInterface {
   /**
    * The menu link service.
    *
-   * @var \Drupal\Core\Menu\MenuLinkTree
+   * @var \Drupal\Core\Menu\MenuLinkTreeInterface
    */
   private $menuTree;
 
   /**
    * The entity manager service.
    *
-   * @var \Drupal\Core\Entity\EntityTypeManager
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
   private $entityTypeManager;
 
   /**
    * The path matcher service.
    *
-   * @var \Drupal\Core\Path\PathMatcher
+   * @var \Drupal\Core\Path\PathMatcherInterface
    */
   private $pathMatcher;
 
   /**
    * The menu tree storage service.
    *
-   * @var \Drupal\Core\Menu\MenuTreeStorage
+   * @var \Drupal\Core\Menu\MenuTreeStorageInterface
    */
   private $menuStorage;
 
@@ -58,16 +58,16 @@ class TBMegaMenuBuilder implements TBMegaMenuBuilderInterface {
    *
    * @param \Drupal\Core\Logger\LoggerChannelFactoryInterface $logger_factory
    *   The logger factory service.
-   * @param \Drupal\Core\Menu\MenuLinkTree $menu_tree
+   * @param \Drupal\Core\Menu\MenuLinkTreeInterface $menu_tree
    *   The menu link service.
-   * @param \Drupal\Core\Entity\EntityTypeManager $entity_manager
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_manager
    *   The entity manager service.
-   * @param \Drupal\Core\Path\PathMatcher $path_matcher
+   * @param \Drupal\Core\Path\PathMatcherInterface $path_matcher
    *   The path matcher service.
-   * @param \Drupal\Core\Menu\MenuTreeStorage $menu_storage
+   * @param \Drupal\Core\Menu\MenuTreeStorageInterface $menu_storage
    *   The menu tree storage service.
    */
-  public function __construct(LoggerChannelFactoryInterface $logger_factory, MenuLinkTree $menu_tree, EntityTypeManager $entity_manager, PathMatcher $path_matcher, MenuTreeStorage $menu_storage) {
+  public function __construct(LoggerChannelFactoryInterface $logger_factory, MenuLinkTreeInterface $menu_tree, EntityTypeManagerInterface $entity_manager, PathMatcherInterface $path_matcher, MenuTreeStorageInterface $menu_storage) {
     $this->logger = $logger_factory->get('tb_megamenu');
     $this->menuTree = $menu_tree;
     $this->entityTypeManager = $entity_manager;
