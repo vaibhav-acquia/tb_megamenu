@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Issue [#3198123](https://www.drupal.org/project/tb_megamenu/issues/3198123) by arshadkhan35: Drupal 9.1 install crash undefined function menu_ui_get_menus()
 - Issue [#3198116](https://www.drupal.org/project/tb_megamenu/issues/3198116) by quondam: Add Configure link on Extend page
 - Issue [#3199343](https://www.drupal.org/project/tb_megamenu/issues/3199343) by nironan: Allow compatibility with webprofiler
+- Issue [#3199456](https://www.drupal.org/project/tb_megamenu/issues/3199456) by nironan: Performance: do not load the menu tree multiple times
 
 ## [\[8.x-1.0-rc3\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.0-rc3) - 2021-02-11
 ### Fixed
