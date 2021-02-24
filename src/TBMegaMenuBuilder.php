@@ -101,7 +101,10 @@ class TBMegaMenuBuilder implements TBMegaMenuBuilderInterface {
    * {@inheritdoc}
    */
   public function getMenuItem(string $menu_name, string $plugin_id) {
-    $tree = $this->menuTree->load($menu_name, (new MenuTreeParameters())->onlyEnabledLinks());
+    $tree = &drupal_static(__FUNCTION__);
+    if (is_null($tree)) {
+      $tree = $this->menuTree->load($menu_name, (new MenuTreeParameters())->onlyEnabledLinks());
+    }
     $item = self::findMenuItem($tree, $plugin_id);
     return $item;
   }
