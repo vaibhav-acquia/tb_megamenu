@@ -68,7 +68,8 @@ coverage issue.
 
 ### Fixed
 - Issue [#3174476](https://www.drupal.org/project/tb_megamenu/issues/3174476) by John.nie, themodularlab: Render #post_render callbacks must
-  be methods of a class that implements \Drupal\Core\Security\TrustedCallbackInterface or be an anonymous function.
+  be methods of a class that implements
+  \Drupal\Core\Security\TrustedCallbackInterface or be an anonymous function.
 - Issue [#3174465](https://www.drupal.org/project/tb_megamenu/issues/3174465) by John.nie: Mega menu missing config_export definition
   in its annotation.
 - Issue [#3172977](https://www.drupal.org/project/tb_megamenu/issues/3172977) by Ramya Balasubramanian, dev.patrick: Unwanted special
@@ -106,8 +107,3 @@ coverage issue.
 [8.x-1.0-rc1]: https://git.drupalcode.org/project/tb_megamenu/-/tags/8.x-1.0-rc1
 [8.x-1.0-beta2]: https://git.drupalcode.org/project/tb_megamenu/-/tags/8.x-1.0-beta2
 [8.x-1.0-beta1]: https://git.drupalcode.org/project/tb_megamenu/-/tags/8.x-1.0-beta1
-
-
-
-
-

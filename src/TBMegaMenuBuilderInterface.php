@@ -329,6 +329,6 @@ interface TBMegaMenuBuilderInterface {
    * @param object $item
    *   The menu item to insert.
    */
-  public function insertTbMenuItem(array &$item_config, $row, $col, object $item);
+  public function insertTbMenuItem(array &$item_config, $row, $col, $item);
 
 }
