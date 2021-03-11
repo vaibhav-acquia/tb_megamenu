@@ -328,17 +328,19 @@ class TBMegaMenuBuilder implements TBMegaMenuBuilderInterface {
       foreach ($item_config['rows_content'] as $row_delta => $row) {
         foreach ($row as $col_delta => $col) {
           foreach ($col['col_content'] as $item_delta => $tb_item) {
-            // Add a menu item to the config.
-            if ($tb_item['type'] == 'menu_item') {
-              self::syncMenuItem($hash, $tb_item, $row_delta, $col_delta, $item_delta, $items, $item_config);
-            }
-            // Add a block to the config.
-            elseif ($tb_item['type'] == 'block' && !empty($tb_item['block_id'])) {
-              self::syncBlock($tb_item, $row_delta, $col_delta, $item_delta, $section, $item_config);
-            }
-            // Remove an invalid column from the config.
-            else {
-              self::removeColumn($tb_item, $row_delta, $col_delta, $item_delta, $item_config);
+            if (!empty($tb_item) && is_array($tb_item)) {
+              // Add a menu item to the config.
+              if ($tb_item['type'] == 'menu_item') {
+                self::syncMenuItem($hash, $tb_item, $row_delta, $col_delta, $item_delta, $items, $item_config);
+              }
+              // Add a block to the config.
+              elseif ($tb_item['type'] == 'block' && !empty($tb_item['block_id'])) {
+                self::syncBlock($tb_item, $row_delta, $col_delta, $item_delta, $section, $item_config);
+              }
+              // Remove an invalid column from the config.
+              else {
+                self::removeColumn($tb_item, $row_delta, $col_delta, $item_delta, $item_config);
+              }
             }
           }
         }

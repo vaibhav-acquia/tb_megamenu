@@ -261,7 +261,8 @@ function template_preprocess_tb_megamenu_subnav(array &$vars) {
   $level = $vars['level'];
   $vars['lis'] = [];
   foreach ($col as $tb_item) {
-    $item = \Drupal::service('tb_megamenu.menu_builder')->getMenuItem($vars['menu_name'], $tb_item['plugin_id']);
+    $plugin_id = !empty($tb_item['plugin_id']) ? $tb_item['plugin_id'] : '';
+    $item = \Drupal::service('tb_megamenu.menu_builder')->getMenuItem($vars['menu_name'], $plugin_id);
     if (empty($tb_item)) {
       // @todo figure out how to handle NULLs in columns.
       continue;
