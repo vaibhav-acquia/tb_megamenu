@@ -305,7 +305,7 @@ function template_preprocess_tb_megamenu_subnav(array &$vars) {
   $vars['attributes']['class'][] = "items-" . count($col);
 
   // Add a11y attributes.
-  $vars['attributes']['role'] = t('list');
+  $vars['attributes']['role'] = 'list';
 }
 
 /**
@@ -359,7 +359,7 @@ function template_preprocess_tb_megamenu_submenu(array &$vars) {
   }
 
   // Add a11y attributes.
-  $vars['attributes']['role'] = t('list');
+  $vars['attributes']['role'] = 'list';
 }
 
 /**
@@ -440,7 +440,7 @@ function template_preprocess_tb_megamenu(array &$vars) {
   }
 
   // Add a11y attributes.
-  $vars['attributes']['role'] = t('navigation');
+  $vars['attributes']['role'] = 'navigation';
   $vars['attributes']['aria-label'] = t('Main navigation');
 }
 
@@ -562,7 +562,7 @@ function template_preprocess_tb_megamenu_nav(array &$vars) {
   $vars['attributes']['class'][] = "items-" . count($items);
 
   // Add a11y attributes to unordered list tag.
-  $vars['attributes']['role'] = t('list');
+  $vars['attributes']['role'] = 'list';
 }
 
 /**
