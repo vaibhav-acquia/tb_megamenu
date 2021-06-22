@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [\[Unreleased\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.x-dev)
+- issue [#3219595](https://www.drupal.org/project/tb_megamenu/issues3219595) by nironan, themodularlab: Accessibility: invalid roles for multilingual sites
 - Issue [#3186612]((https://www.drupal.org/project/tb_megamenu/issues/3186612)) by themodularlab, quondam, knaffles: Security Advisory Coverage
   Security Review
 - Issue [#3198123](https://www.drupal.org/project/tb_megamenu/issues/3198123) by arshadkhan35: Drupal 9.1 install crash undefined function menu_ui_get_menus()
