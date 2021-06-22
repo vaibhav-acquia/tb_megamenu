@@ -61,7 +61,7 @@
   Drupal.behaviors.tbMegaMenuAction = {
     attach: function (context, settings) {
 
-      $('.tb-megamenu').once('tb-megamenu').each(function () {
+      $('.tb-megamenu', context).once('tb-megamenu').each(function () {
 
         /* Keyboard Control Setup */
         // Semi-Global Variables
@@ -70,7 +70,7 @@
             curPos = new Array(-1,-1,-1);
 
         // Each Top-Level Link
-        $('.tb-megamenu').find('.level-1').children('a, span').not('.mobile-only').each(function (i, toplink) {
+        $(this).find('.level-1').children('a, span').not('.mobile-only').each(function (i, toplink) {
           linkArray[i] = new Array();
 
           // Add Link to Array
@@ -103,7 +103,7 @@
         }); // each top-level link
 
         // Update Position on Focus
-        $('.tb-megamenu').find('.tb-megamenu-item').children('a, span').focus(function () {
+        $(this).find('.tb-megamenu-item').children('a, span').focus(function () {
           curPos = $(this).data('coordinate');
         });
 
@@ -345,7 +345,7 @@
         }
 
         var ariaCheck = function () {
-          $("li.tb-megamenu-item").each(function () {
+          $("li.tb-megamenu-item", this).each(function () {
             if ($(this).is('.mega-group')) {
               // Mega menu item has mega class (it's a true mega menu)
               if (!$(this).parents().is('.open')) {
@@ -421,7 +421,7 @@
           }
         };
 
-        $('.tb-megamenu-button').click(function () {
+        $('.tb-megamenu-button', this).click(function () {
           if (parseInt($(this).parent().children('.nav-collapse').height())) {
             $(this).parent().children('.nav-collapse').css({height: 0, overflow: 'hidden'});
             Drupal.TBMegaMenu.displayedMenuMobile = false;
