@@ -40,10 +40,10 @@ function tb_megamenu_update_8001(&$sandbox) {
         $config->save();
       }
       catch (Exception $e) {
-        throw new UpdateException(t('Failed to save configuration object for @menu / @theme', [
+        throw new UpdateException('Failed to save configuration object for @menu / @theme', [
           '@menu' => $menu,
           '@theme' => $theme,
-        ]));
+        ]);
       }
       $count++;
     }

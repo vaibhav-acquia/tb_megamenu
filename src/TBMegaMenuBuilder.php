@@ -511,7 +511,7 @@ class TBMegaMenuBuilder implements TBMegaMenuBuilderInterface {
   /**
    * {@inheritdoc}
    */
-  public function insertTbMenuItem(array &$item_config, $row, $col, object $item) {
+  public function insertTbMenuItem(array &$item_config, $row, $col, $item) {
     $idx = 0;
     $col_content = isset($item_config['rows_content'][$row][$col]['col_content']) ? array_values($item_config['rows_content'][$row][$col]['col_content']) : [];
     current($col_content);
