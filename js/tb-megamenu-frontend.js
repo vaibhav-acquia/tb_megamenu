@@ -118,10 +118,6 @@
               nav_tab(k);
               break;
 
-            // SPACE
-            case 32:
-              k.preventDefault();
-
             // RETURN
             case 13:
               nav_open_link();

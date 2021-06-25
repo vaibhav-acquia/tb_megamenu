@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [\[Unreleased\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.x)
+- Issue [#3218482](https://www.drupal.org/project/tb_megamenu/issues/3218482) by pcfoster, knaffles: Keydown listener interferes with use of spacebar
 - Issue [#3204998](https://www.drupal.org/project/tb_megamenu/issues/3204998) by themodularlab, crasx, quondam: TB Megamenu doesnt work when logged in with admin toolbar enabled
 - issue [#3219595](https://www.drupal.org/project/tb_megamenu/issues/3219595) by nironan, themodularlab: Accessibility: invalid roles for multilingual sites
 - Issue [#3186612](https://www.drupal.org/project/tb_megamenu/issues/3186612) by themodularlab, quondam, knaffles: Security Advisory Coverage
