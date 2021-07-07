@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [\[Unreleased\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.x)
 
+## [\[8.x-1.0.1\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.0.1) - 2021-07-07
+### Fixed
+- Issue [#3222460](https://www.drupal.org/project/tb_megamenu/issues/3222460) by firfin: PHP error after enabling module (syntax error, unexpected ')' in ...Plugin/Derivative/TBMegaMenuBlock.php )
+
 ## [\[8.x-1.0\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.0) - 2021-06-25
 ### Fixed
 - Issue [#3218483](https://www.drupal.org/project/tb_megamenu/issues/3218483) by themodularlab, knaffles: Opt into Security Policy Coverage
