@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [\[Unreleased\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.x)
 
-## [\[8.x-1.0.1\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.0.1) - 2021-07-07
+## [\[8.x-1.1\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.1) - 2021-07-07
 ### Fixed
 - Issue [#3222460](https://www.drupal.org/project/tb_megamenu/issues/3222460) by firfin: PHP error after enabling module (syntax error, unexpected ')' in ...Plugin/Derivative/TBMegaMenuBlock.php )
 
@@ -114,9 +114,3 @@ coverage issue.
 - Issue [#3045390](https://www.drupal.org/project/tb_megamenu/issues/3045390) by RuslanP, knaffles: Module Description: add dot to the end of
   the sentence.
 
-[8.x-1.x-dev]: https://git.drupalcode.org/project/tb_megamenu/-/tree/8.x-1.x-dev
-[8.x-1.0-rc3]: https://git.drupalcode.org/project/tb_megamenu/-/tags/8.x-1.0-rc3
-[8.x-1.0-rc2]: https://git.drupalcode.org/project/tb_megamenu/-/tags/8.x-1.0-rc2
-[8.x-1.0-rc1]: https://git.drupalcode.org/project/tb_megamenu/-/tags/8.x-1.0-rc1
-[8.x-1.0-beta2]: https://git.drupalcode.org/project/tb_megamenu/-/tags/8.x-1.0-beta2
-[8.x-1.0-beta1]: https://git.drupalcode.org/project/tb_megamenu/-/tags/8.x-1.0-beta1

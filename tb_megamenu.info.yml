@@ -8,5 +8,5 @@ configure: entity.tb_megamenu.collection
 
 # Information added by Drupal.org packaging script on 2021-07-07
 version: '8.x-1.0.1'
-project: 'token'
+project: 'tb_megamenu'
 datestamp: 1625674790
