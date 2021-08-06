@@ -15,7 +15,6 @@
     var windowWidth = window.innerWidth ? window.innerWidth : $(window).width();
     var navCollapse = $('.tb-megamenu').children('.nav-collapse');
     if (windowWidth < Drupal.TBMegaMenu.supportedScreens[0]) {
-      navCollapse.addClass('collapse');
       if (Drupal.TBMegaMenu.displayedMenuMobile) {
         navCollapse.css({height: 'auto', overflow: 'visible'});
       }
@@ -25,7 +24,6 @@
     }
     else {
       // If width of window is greater than 980 (supported screen).
-      navCollapse.removeClass('collapse');
       if (navCollapse.height() <= 0) {
         navCollapse.css({height: 'auto', overflow: 'visible'});
       }

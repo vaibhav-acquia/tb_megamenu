@@ -1,0 +1,37 @@
+{
+  "name": "tb_megamenu",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "gulp",
+    "build": "gulp",
+    "es6": "gulp es6",
+    "sass": "gulp sass",
+    "watch": "gulp watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.5",
+    "del": "^5.1.0",
+    "foundation-sites": "^6.6.3",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^7.0.1",
+    "gulp-babel": "^8.0.0",
+    "gulp-cached": "^1.1.1",
+    "gulp-eslint": "^6.0.0",
+    "gulp-rename": "^2.0.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-sass-lint": "^1.4.0",
+    "gulp-size": "^3.0.0",
+    "gulp-sourcemaps": "^2.6.5",
+    "what-input": "^5.2.7"
+  },
+  "optionalDependencies": {
+    "fsevents": "1.2.9"
+  },
+  "_comment": "fsevent@1.2.9 is locked in to prevent broken in Vagrant."
+}
