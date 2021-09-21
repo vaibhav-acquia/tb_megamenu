@@ -1,10 +1,12 @@
 tb_megamenu.admin.save:
-  path: '/admin/structure/tb-megamenu/save'
+  path: '/admin/structure/tb-megamenu/save/{tb_megamenu}'
   defaults:
     _title: 'Save configuration of TB Mega Menu'
     _controller: '\Drupal\tb_megamenu\Controller\TBMegaMenuAdminController::saveConfiguration'
   requirements:
+    _csrf_token: 'TRUE'
     _permission: 'administer tb_megamenu'
+    tb_megamenu: ^[a-zA-Z0-9_-]+
 
 entity.tb_megamenu.collection:
   path: '/admin/structure/tb-megamenu'

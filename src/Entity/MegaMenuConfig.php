@@ -5,6 +5,7 @@ namespace Drupal\tb_megamenu\Entity;
 use Drupal\Core\Config\Entity\ConfigEntityBase;
 use Drupal\tb_megamenu\MegaMenuConfigInterface;
 use Drupal\Component\Serialization\Json;
+use Drupal\Component\Utility\Html;
 
 /**
  * Defines the Mega Menu Configuration entity.
@@ -121,6 +122,15 @@ class MegaMenuConfig extends ConfigEntityBase implements MegaMenuConfigInterface
       \Drupal::logger('tb_megamenu')->info("Converted block config array to json string.");
     }
     $config = isset($this->block_config) ? Json::decode($this->block_config) : [];
+
+    // Ensure that the delay and duration values are only integers.
+    if (isset($config['delay']) && !is_int($config['delay'])) {
+      $config['delay'] = '';
+    }
+    if (isset($config['duration']) && !is_int($config['duration'])) {
+      $config['duration'] = '';
+    }
+
     if ($config === NULL) {
       \Drupal::logger('tb_megamenu')->warning("Could not decode block config json string for @id", ['@id' => $this->id]);
       $config = [];
@@ -138,11 +148,24 @@ class MegaMenuConfig extends ConfigEntityBase implements MegaMenuConfigInterface
       $this->setMenuConfig($this->menu_config);
       \Drupal::logger('tb_megamenu')->info("Converted menu config array to json string.");
     }
+
     $config = isset($this->menu_config) ? Json::decode($this->menu_config) : [];
+
+    // Iterate through config in order to santitize items that could be
+    // vulnerable to XSS attacks.
+    foreach ($config as $key => $value) {
+      $config[$key]['submenu_config']['class'] = Html::escape($value['submenu_config']['class']);
+      $config[$key]['item_config']['caption'] = Html::escape($value['item_config']['caption']);
+      $config[$key]['item_config']['class'] = Html::escape($value['item_config']['class']);
+      $config[$key]['item_config']['xicon'] = Html::escape($value['item_config']['xicon']);
+      $config[$key]['item_config']['label'] = Html::escape($value['item_config']['label']);
+    }
+
     if ($config === NULL) {
       \Drupal::logger('tb_megamenu')->warning("Could not decode menu config json string for @id", ['@id' => $this->id]);
       $config = [];
     }
+
     return $config;
   }
 

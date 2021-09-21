@@ -353,9 +353,13 @@ class TBMegaMenuAdminController extends ControllerBase {
     $page['#attached']['library'][] = 'tb_megamenu/form.chosen';
     // Add a custom library.
     $page['#attached']['library'][] = 'tb_megamenu/form.configure-megamenu';
-    Url::fromRoute('tb_megamenu.admin.save', [], ['absolute' => TRUE]);
 
-    $abs_url_config = Url::fromRoute('tb_megamenu.admin.save', [], ['absolute' => TRUE])->toString();
+    $menu_name = !empty($tb_megamenu) ? $tb_megamenu->menu : '';
+    $url = Url::fromRoute('tb_megamenu.admin.save', ['tb_megamenu' => $menu_name]);
+    $csrf_token = \Drupal::csrfToken()->get($url->getInternalPath());
+    $url->setOptions(['absolute' => TRUE, 'query' => ['token' => $csrf_token]]);
+    $abs_url_config = $url->toString();
+
     $page['#attached']['drupalSettings']['TBMegaMenu']['saveConfigURL'] = $abs_url_config;
     if (!empty($tb_megamenu)) {
       $page['tb_megamenu'] = [

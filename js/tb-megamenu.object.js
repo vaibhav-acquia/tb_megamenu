@@ -889,8 +889,9 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
         if (type == 'item') {
           currentSelected.closest('li').attr('data-' + name, value);
           currentSelected.find('i').remove();
+          var escapedInputText = Drupal.checkPlain(value);
           if (value) {
-            currentSelected.prepend($('<i class="' + value + '"></i>'));
+            currentSelected.prepend($('<i class="' + escapedInputText + '"></i>'));
           }
         }
         break;
@@ -899,8 +900,9 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
         if (type == 'item') {
           currentSelected.closest('li').attr('data-' + name, value);
           currentSelected.find('span.mega-caption').remove();
+          var escapedInputText = Drupal.checkPlain(value);
           if (value) {
-            currentSelected.append($('<span class="mega-caption">' + value + '</span>'));
+            currentSelected.append($('<span class="mega-caption">' + escapedInputText + '</span>'));
           }
         }
         break;

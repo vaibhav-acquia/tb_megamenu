@@ -128,7 +128,11 @@ class TBMegaMenuBuilder implements TBMegaMenuBuilderInterface {
    * {@inheritdoc}
    */
   public function loadEntityBlock(string $block_id) {
-    return $this->entityTypeManager->getStorage('block')->load($block_id);
+    $block = $this->entityTypeManager->getStorage('block')->load($block_id);
+    // Ensure the current user has permissions to view the block.
+    if ($block->access('view')) {
+      return $block;
+    }
   }
 
   /**
@@ -243,7 +247,10 @@ class TBMegaMenuBuilder implements TBMegaMenuBuilderInterface {
       $entities = $block_storage->loadMultiple($entity_ids);
       $_blocks_array = [];
       foreach ($entities as $block_id => $block) {
-        if ($block->get('settings')['provider'] != 'tb_megamenu') {
+        // Ensure the current user has access to view the block and the block
+        // is not provided by the tb_megamenu module.
+        if ($block->get('settings')['provider'] != 'tb_megamenu'
+        && $block->access('view')) {
           $_blocks_array[$block_id] = $block->label();
         }
       }
