@@ -153,7 +153,7 @@ function template_preprocess_tb_megamenu_item(&$vars) {
   }
   // Add list item attributes.
     if (!empty($item['link']['localized_options']['item_attributes']['class'])) {
-    $vars['classes_array'][] = $item['link']['localized_options']['item_attributes']['class'];
+    $vars['classes_array'][] = check_plain($item['link']['localized_options']['item_attributes']['class']);
   }
 
   $vars['attributes_array']['data-id'] = $mlid;
@@ -333,7 +333,7 @@ function template_preprocess_tb_megamenu_block(&$vars) {
       if (isset($vars['showblocktitle']) && $vars['showblocktitle']) {
         // If i18n_block is not enabled, so we will set title to subject.
         if (!$is_enabled_i18n_block) {
-          $block->subject = $block->title ? $block->title : $block_content['subject'];
+          $block->subject = isset($block->title) ? check_plain($block->title) : $block_content['subject'];
         }
         elseif (!empty($block->title) && $block->title != '<none>') {
           // Check plain here to allow module generated titles to keep any markup.
