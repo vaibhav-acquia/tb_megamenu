@@ -160,7 +160,7 @@ function tb_megamenu_get_menu_config($menu_name) {
             foreach ($rows_value as $row_key => $row_value) {
               if (isset($row_value['col_config'])) {
                 $config[$key]['rows_content'][$rows_key][$row_key]['col_config']['class'] = isset($row_value['col_config']['class']) ? check_plain($row_value['col_config']['class']) : '';
-                $config[$key]['rows_content'][$rows_key][$row_key]['col_config']['width'] = isset($row_value['col_config']['width']) && is_int($row_value['col_config']['width']) ? check_plain($row_value['col_config']['width']) : '';
+                $config[$key]['rows_content'][$rows_key][$row_key]['col_config']['width'] = isset($row_value['col_config']['width']) ? check_plain($row_value['col_config']['width']) : '';
               }
             }
           }
