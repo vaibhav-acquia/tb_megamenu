@@ -154,11 +154,11 @@ class MegaMenuConfig extends ConfigEntityBase implements MegaMenuConfigInterface
     // Iterate through config in order to santitize items that could be
     // vulnerable to XSS attacks.
     foreach ($config as $key => $value) {
-      $config[$key]['submenu_config']['class'] = Html::escape($value['submenu_config']['class']);
-      $config[$key]['item_config']['caption'] = Html::escape($value['item_config']['caption']);
-      $config[$key]['item_config']['class'] = Html::escape($value['item_config']['class']);
-      $config[$key]['item_config']['xicon'] = Html::escape($value['item_config']['xicon']);
-      $config[$key]['item_config']['label'] = Html::escape($value['item_config']['label']);
+      $config[$key]['submenu_config']['class'] = isset($value['submenu_config']['class']) ? Html::escape($value['submenu_config']['class']) : '';
+      $config[$key]['item_config']['caption'] = isset($value['item_config']['caption']) ? Html::escape($value['item_config']['caption']) : '';
+      $config[$key]['item_config']['class'] = isset($value['item_config']['class']) ? Html::escape($value['item_config']['class']) : '';
+      $config[$key]['item_config']['xicon'] = isset($value['item_config']['xicon']) ? Html::escape($value['item_config']['xicon']) : '';
+      $config[$key]['item_config']['label'] = isset($value['item_config']['label']) ? Html::escape($value['item_config']['label']) : '';
     }
 
     if ($config === NULL) {

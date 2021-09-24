@@ -182,6 +182,7 @@ class TBMegaMenuBuilder implements TBMegaMenuBuilderInterface {
       'group' => 0,
       'hidewcol' => 0,
       'hidesub' => 0,
+      'label' => '',
     ];
     foreach ($attributes as $attribute => $value) {
       if (!isset($item_config[$attribute])) {

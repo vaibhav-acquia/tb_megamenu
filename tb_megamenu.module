@@ -11,9 +11,10 @@ use Drupal\Core\Menu\MenuTreeParameters;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Template\Attribute;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Component\Serialization\Json;
-use Drupal\tb_megamenu\Entity\MegaMenuConfig;
 use Drupal\Core\Url;
+use Drupal\Component\Serialization\Json;
+use Drupal\Component\Utility\Xss;
+use Drupal\tb_megamenu\Entity\MegaMenuConfig;
 
 /**
  * Implements hook_help().
@@ -579,7 +580,7 @@ function template_preprocess_tb_megamenu_item(array &$vars) {
   $plugin_id = $vars['link']['id'];
   $menu_config = $vars['menu_config'];
   $item_config = isset($menu_config[$plugin_id]['item_config']) ? $menu_config[$plugin_id]['item_config'] : [];
-  $vars['link']['title_translated'] = $item_config['label'];
+  $vars['link']['title_translated'] = htmlspecialchars_decode(Xss::filter(t($item->link->getTitle())));
   $trail = $vars['trail'];
   $menu_builder = \Drupal::service('tb_megamenu.menu_builder');
   $menu_builder->editItemConfig($item_config);
