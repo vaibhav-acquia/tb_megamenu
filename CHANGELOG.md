@@ -7,9 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [\[Unreleased\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.x)
 
-## [\[8.x-1.2\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.2) - 2021-08-11
+## [\[8.x-1.5\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.5) - 2021-09-24
+### Fixed
+- Issue [#3238679](https://www.drupal.org/project/tb_megamenu/issues/3238679) by smortimore, themodularlab: HTML entities not processed correctly
+- Issue [#3238721](https://www.drupal.org/project/tb_megamenu/issues/3238721) by nironan, themodularlab: Version 1.4 ignores languages
+- Issue [#3238650](https://www.drupal.org/project/tb_megamenu/issues/3238650) by bmunslow, themodularlab, leisurman, maxwellkeeble, StevenPatz, knaffles, quondam: Site Inaccessible after updating to 1.4
+- Other fixes: Updating changelog with security releases plus details on 1.5.  Also reverts the `$vars['link']['title_translate']` / `link.title_translate` variables found on line 583 of tb_megamenu.module and line 20 of tb-megamenu-item.html-twig to avoid issues with users who have overridden twig template and/or preprocess functions.
+
+## [\[8.x-1.4\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.4) - 2021-09-21
+### Security
+- [SA-CONTRIB-2021-038](https://www.drupal.org/sa-contrib-2021-038) by FeyP, knaffles: Cross Site Scripting, Information Disclosure, Multiple vulnerabilities
+- [SA-CONTRIB-2021-039](https://www.drupal.org/sa-contrib-2021-039) by FeyP, themodularlab, greggles, justAChris, knaffles: Cross Site Scripting
+- [SA-CONTRIB-2021-040](https://www.drupal.org/sa-contrib-2021-040) by FeyP, knaffles: Cross Site Request Forgery
+- [SA-CONTRIB-2021-041](https://www.drupal.org/sa-contrib-2021-041) by FeyP, henry.odiete, quondam: Access bypass
+
+## [\[8.x-1.3\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.3) - 2021-08-11
 ### Fixed
 - Issue [#3227571](https://www.drupal.org/project/tb_megamenu/issues/3227571) by diamondsea: Version Information in tb_megamenu.info.yml file should be removed
+
+## [\[8.x-1.2\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.4) - 2021-07-07
+### Fixed
+- Fixed typos related to changelog.
 
 ## [\[8.x-1.1\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.1) - 2021-07-07
 ### Fixed
