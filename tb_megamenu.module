@@ -11,9 +11,10 @@ use Drupal\Core\Menu\MenuTreeParameters;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Template\Attribute;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Component\Serialization\Json;
-use Drupal\tb_megamenu\Entity\MegaMenuConfig;
 use Drupal\Core\Url;
+use Drupal\Component\Serialization\Json;
+use Drupal\Component\Utility\Xss;
+use Drupal\tb_megamenu\Entity\MegaMenuConfig;
 
 /**
  * Implements hook_help().
@@ -576,11 +577,11 @@ function template_preprocess_tb_megamenu_item(array &$vars) {
   $item = $vars['item'];
   $vars['link'] = $item->link->getPluginDefinition();
   $vars['link']['url'] = $item->link->getUrlObject()->toString();
-  $vars['link']['title_translate'] = $item->link->getTitle();
   $plugin_id = $vars['link']['id'];
-  $trail = $vars['trail'];
   $menu_config = $vars['menu_config'];
   $item_config = isset($menu_config[$plugin_id]['item_config']) ? $menu_config[$plugin_id]['item_config'] : [];
+  $vars['link']['title_translate'] = htmlspecialchars_decode(Xss::filter(t($item->link->getTitle())));
+  $trail = $vars['trail'];
   $menu_builder = \Drupal::service('tb_megamenu.menu_builder');
   $menu_builder->editItemConfig($item_config);
   $vars['item_config'] = $item_config;
@@ -648,7 +649,7 @@ function template_preprocess_tb_megamenu_item(array &$vars) {
   $vars['attributes']['data-group'] = $item_config['group'];
   $vars['attributes']['data-hidewcol'] = $item_config['hidewcol'];
   $vars['attributes']['data-hidesub'] = $item_config['hidesub'];
-  $vars['attributes']['data-label'] = $item->link->getTitle();
+  $vars['attributes']['data-label'] = $item_config['label'];
   if ($vars['section'] == 'backend') {
     $vars['attributes']['title'] = t("Menu Item");
   }
