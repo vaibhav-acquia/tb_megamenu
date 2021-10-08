@@ -597,27 +597,27 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       currentSelected.find('.tb-megamenu-submenu').remove();
     } // If this is the only one column left.
     else {
-        if (type_menu) {
-          var colidx = $allmenucols.index($col),
-              tocol = colidx == 0 ? $allmenucols[1] : $allmenucols[colidx - 1];
-          $col.find('ul:first > li').appendTo($(tocol).find('ul:first'));
-        }
-
-        var colidx = $allcols.index($col),
-            nextActiveCol = colidx == 0 ? $allcols[1] : $allcols[colidx - 1];
-
-        if (colcount < 1) {
-          $row.remove();
-        } else {
-          $cols = $cols.not($col);
-          $cols.each(function (i) {
-            $(this).removeClass('span' + $(this).attr('data-width')).addClass('span' + colwidths[i]).attr('data-width', colwidths[i]);
-          });
-          $col.remove();
-        }
-
-        show_toolbox($(nextActiveCol));
+      if (type_menu) {
+        var colidx = $allmenucols.index($col),
+            tocol = colidx == 0 ? $allmenucols[1] : $allmenucols[colidx - 1];
+        $col.find('ul:first > li').appendTo($(tocol).find('ul:first'));
       }
+
+      var colidx = $allcols.index($col),
+          nextActiveCol = colidx == 0 ? $allcols[1] : $allcols[colidx - 1];
+
+      if (colcount < 1) {
+        $row.remove();
+      } else {
+        $cols = $cols.not($col);
+        $cols.each(function (i) {
+          $(this).removeClass('span' + $(this).attr('data-width')).addClass('span' + colwidths[i]).attr('data-width', colwidths[i]);
+        });
+        $col.remove();
+      }
+
+      show_toolbox($(nextActiveCol));
+    }
   };
 
   actions.resetConfig = function (options) {
@@ -946,8 +946,6 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
 
       case 'col':
         $('.toolcol-exclass').attr('value', currentSelected.attr('data-class') || '');
-        $('.toolcol-block').val(currentSelected.children('.mega-inner').children('.tb-megamenu-block').attr('data-block') || '').trigger("chosen:updated");
-        $('.toolcol-width').val(currentSelected.attr('data-width') || '').trigger("chosen:updated");
 
         if (currentSelected.find('.mega-nav').length > 0) {
           $('.toolcol-block').parent().addClass('disabled');
@@ -1148,9 +1146,9 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
               $('#tb-megamenu-admin-mm-tb #toolbox-loading').hide();
             } // If no JSON was received display an error in the modal.
             else {
-                var statusMsg = msg.responseText;
-                status_modal(msg.status, statusMsg);
-              }
+              var statusMsg = msg.responseText;
+              status_modal(msg.status, statusMsg);
+            }
 
             Drupal.TBMegaMenu.releaseAjax();
           }

@@ -349,8 +349,6 @@ class TBMegaMenuAdminController extends ControllerBase {
   public function configMegaMenu(ConfigEntityInterface $tb_megamenu, Request $request) {
     // Add font-awesome library.
     $page['#attached']['library'][] = 'tb_megamenu/form.font-awesome';
-    // Add chosen library.
-    $page['#attached']['library'][] = 'tb_megamenu/form.chosen';
     // Add a custom library.
     $page['#attached']['library'][] = 'tb_megamenu/form.configure-megamenu';
     Url::fromRoute('tb_megamenu.admin.save', [], ['absolute' => TRUE]);

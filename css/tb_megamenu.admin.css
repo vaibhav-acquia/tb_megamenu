@@ -183,18 +183,6 @@
 
 /* ADMIN LAYOUT
 ---------------------------------------------------*/
-.tb-megamenu #tb-megamenu-block-wrapper .chosen-container,
-.tb-megamenu #tb-megamenu-block-wrapper .chosen-drop {
-  width: 230px !important;
-}
-
-.tb-megamenu .chosen-container,
-.tb-megamenu .chosen-drop {
-  max-width: 100% !important;
-  min-width: 100px;
-  width: 100% !important;
-}
-
 /* Toolbar ---*/
 #tb-megamenu-admin fieldset {
   background: none;
@@ -299,7 +287,7 @@ input#jform_grouptitle {
 }
 
 /* Button --- */
-.tb-megamenu select,
+/* .tb-megamenu select,
 textarea,
 .tb-megamenu input[type='text'],
 input[type='password'],
@@ -322,13 +310,7 @@ input[type='color'],
 .input-prepend .btn {
   height: 22px;
   line-height: 22px;
-}
-
-.tb-megamenu select,
-input[type='file'] {
-  height: 32px;
-  line-height: 32px;
-}
+} */
 
 /* Radio
 --------*/
@@ -776,210 +758,6 @@ input[type='file'] {
   }
 }
 
-/* PLUGINS STYLES
---------------------------------------------------*/
-/* Choosen
-----------*/
-/* @group Base */
-.tb-megamenu .chosen-container {
-  font-size: 14px;
-}
-
-.tb-megamenu .chosen-container .chosen-drop {
-  background: #fff;
-  border: 1px solid #aaa;
-  border-top: 0;
-  top: 29px;
-  left: 0;
-  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.15);
-}
-/* @end */
-
-/* @group Single Chosen */
-.tb-megamenu .chosen-container-single .chosen-single {
-  border-radius: 3px;
-  border: 1px solid #ccc;
-  box-shadow: 0 0 3px #ffffff inset, 0 1px 1px rgba(0, 0, 0, 0.1);
-  font-size: 13px;
-  /*  height: 30px;
-  line-height: 21px;*/
-  padding: 4px 0 4px 8px;
-  color: #555;
-}
-
-.tb-megamenu .chosen-container-single .chosen-default {
-  color: #999;
-}
-
-.tb-megamenu .chosen-container-single .chosen-single span {
-  margin-right: 26px;
-}
-
-.tb-megamenu .chosen-container-single .chosen-single abbr {
-  right: 26px;
-  top: 10px;
-}
-
-.tb-megamenu .chosen-container-single .chosen-single div {
-  width: 20px;
-}
-
-.tb-megamenu .chosen-container-single .chosen-single div b {
-  background-position: 0 4px;
-}
-
-.tb-megamenu .chosen-container-single .chosen-search {
-  padding: 5px 4px;
-  overflow: hidden;
-}
-
-.tb-megamenu .chosen-container-single .chosen-search input {
-  background-image: url(../images/search-invert.png);
-  background-position: 95% center;
-  margin: 0;
-  padding: 2px 20px 2px 5px;
-  border: 1px solid #eee;
-  float: none;
-}
-
-.tb-megamenu .chosen-container-single .chosen-search input:focus {
-  border: 1px solid rgba(82, 168, 236, 0.6);
-}
-
-.tb-megamenu .chosen-container .chosen-results li {
-  display: block;
-  font-size: 13px;
-  margin-right: 0 !important;
-  padding: 8px;
-}
-
-.tb-megamenu .chosen-container-single .chosen-drop {
-  border-radius: 0 0 3px 3px;
-  display: none;
-  width: 99%;
-}
-
-.tb-megamenu .chosen-with-drop .chosen-drop {
-  display: block;
-}
-
-/* @end */
-
-/* @group Results */
-.tb-megamenu .chosen-container .chosen-results {
-  clear: both;
-  width: 100%;
-}
-
-.tb-megamenu .chosen-container .chosen-results .highlighted {
-  background-color: #07b;
-  background-image: -moz-linear-gradient(top, #0097ee, #0077bb);
-  background-image: -webkit-gradient(
-    linear,
-    0 0,
-    0 100%,
-    from(#0097ee),
-    to(#0077bb)
-  );
-  background-image: -webkit-linear-gradient(top, #0097ee, #0077bb);
-  background-image: -o-linear-gradient(top, #0097ee, #0077bb);
-  background-image: linear-gradient(to bottom, #0097ee, #0077bb);
-  background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0097ee', endColorstr='#ff0077bb', GradientType=0);
-  color: #fff;
-  text-shadow: none;
-}
-
-.tb-megamenu .chosen-container .chosen-results li em {
-  background: #feffde;
-  font-style: normal;
-}
-
-.tb-megamenu .chosen-container .chosen-results .highlighted em {
-  background: transparent;
-}
-
-.tb-megamenu .chosen-container .chosen-results .no-results {
-  background: #f4f4f4;
-  display: list-item;
-}
-
-.tb-megamenu .chosen-container .chosen-results .group-result {
-  cursor: default;
-  color: #999;
-  font-weight: bold;
-}
-
-.tb-megamenu .chosen-container .chosen-results-scroll {
-  background: white;
-  margin: 0 4px;
-  position: absolute;
-  text-align: center;
-  width: 321px; /* This should by dynamic with js */
-  z-index: 1;
-}
-
-.tb-megamenu .chosen-container .chosen-results-scroll span {
-  display: inline-block;
-  height: 17px;
-  text-indent: -5000px;
-  width: 9px;
-}
-
-.tb-megamenu .chosen-container .chosen-results-scroll-down {
-  bottom: 0;
-}
-
-.tb-megamenu .chosen-container .chosen-results-scroll-down span {
-  background-position: -4px -3px;
-}
-
-.tb-megamenu .chosen-container .chosen-results-scroll-up span {
-  background-position: -22px -3px;
-}
-/* @end */
-
-/* @group Active  */
-.tb-megamenu .chosen-container-active .chosen-single {
-  -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-  -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-  border: 1px solid #07b;
-}
-
-.tb-megamenu .chosen-with-drop a.chosen-single {
-  border: 1px solid #aaa;
-  background-color: #eee;
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#ffffff', GradientType=0 );
-  background-image: -webkit-gradient(
-    linear,
-    0 0,
-    0 100%,
-    color-stop(20%, #eeeeee),
-    color-stop(80%, #ffffff)
-  );
-  background-image: -webkit-linear-gradient(top, #eeeeee 20%, #ffffff 80%);
-  background-image: -moz-linear-gradient(top, #eeeeee 20%, #ffffff 80%);
-  background-image: -o-linear-gradient(top, #eeeeee 20%, #ffffff 80%);
-  background-image: linear-gradient(#eeeeee 20%, #ffffff 80%);
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
-.tb-megamenu .chosen-with-drop a.chosen-single div b {
-  background-position: -18px 5px;
-}
-
-.tb-megamenu .chosen-container-active .chosen-choices {
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-  border: 1px solid #07b;
-}
-
-.tb-megamenu .chosen-container-active .chosen-choices .search-field input {
-  color: #333 !important;
-}
-/* @end */
-
 /* Fix for Font Awesome */
 .tb-megamenu [class^='fa-']:before,
 .tb-megamenu [class*=' fa-']:before {
@@ -1048,8 +826,9 @@ input[type='file'] {
 .tb-megamenu input[type='tel'],
 .tb-megamenu input[type='color'],
 .tb-megamenu .uneditable-input {
+  box-sizing: border-box;
   display: inline-block;
-  height: 18px;
+  height: 32px;
   padding: 4px 6px;
   margin-bottom: 9px;
   font-size: 13px;
@@ -1124,13 +903,14 @@ input[type='file'] {
 .tb-megamenu input[type='checkbox'] {
   width: auto;
 }
-.tb-megamenu select,
+/* .tb-megamenu select, */
 .tb-megamenu input[type='file'] {
   height: 30px;
   *margin-top: 4px;
   line-height: 30px;
 }
 .tb-megamenu select {
+  height: 32px;
   width: 220px;
   border: 1px solid #bbb;
   background-color: #fff;

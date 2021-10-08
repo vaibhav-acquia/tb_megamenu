@@ -19,7 +19,7 @@ theme.tb_megamenu:
   css:
     theme:
       https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css: { type: external }
-      css/compiled/tb_megamenu.css: {}
+      dist/style.css: {}
   js:
     js/tb-megamenu-frontend.js: { scope: footer }
   dependencies:
@@ -27,16 +27,6 @@ theme.tb_megamenu:
     - core/drupal
     - core/drupalSettings
     - core/jquery.once
-
-form.chosen:
-  version: 1.1.0
-  css:
-    theme:
-      https://cdnjs.cloudflare.com/ajax/libs/chosen/1.1.0/chosen.min.css: { type: external }
-  js:
-    https://cdnjs.cloudflare.com/ajax/libs/chosen/1.1.0/chosen.jquery.min.js: { type: external, group: JS_LIBRARY, scope: footer }
-  dependencies:
-    - core/jquery
 
 form.font-awesome:
   version: 4.3.0

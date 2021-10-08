@@ -115,10 +115,6 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       $(".tb-megamenu-column-inner .close").click(function () {
         $(this).parent().html("");
       });
-      $("#tb-megamenu-admin select").chosen({
-        disable_search_threshold: 15,
-        allow_single_deselect: true
-      });
       /* Init TB Mega Menu. */
 
       if (drupalSettings.TBMegaMenu.menu_name !== undefined) {

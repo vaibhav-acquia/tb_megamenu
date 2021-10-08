@@ -5,12 +5,10 @@
   margin-left: 20px;
 }
 
-
 /* Global Menu Inner padding ---*/
 .tb-megamenu .mega-inner {
   padding: 10px;
 }
-
 
 /* Menu Grid ---*/
 .tb-megamenu .row-fluid + .row-fluid {
@@ -18,7 +16,7 @@
   border-top: 0;
 }
 
-.tb-megamenu .row-fluid [class*="span"] {
+.tb-megamenu .row-fluid [class*='span'] {
   border: 1px dotted #ccc;
   border-radius: 3px;
   transition: all 0.1s ease 0s;
@@ -26,7 +24,6 @@
   -moz-transition: all 0.1s ease 0s;
   background: white;
 }
-
 
 /* The Nav ---*/
 .tb-megamenu .span12.mega-col-nav .mega-inner {
@@ -58,7 +55,6 @@
 .tb-megamenu .mega-nav .dropdown-submenu > a::after {
   margin-right: -10px;
 }
-
 
 /* Dropdown ---*/
 .tb-megamenu .dropup,
@@ -116,7 +112,6 @@
   -moz-transition: all 0.1s ease 0s;
 }
 
-
 /* The group ---*/
 .tb-megamenu .mega-nav .mega-group > .mega-group-title,
 .tb-megamenu .dropdown-menu .mega-nav .mega-group > .mega-group-title {
@@ -135,10 +130,9 @@
   background: #f2f2f2;
 }
 
-.tb-megamenu .mega-group-ct > .row-fluid > [class*="span"] > .mega-inner {
+.tb-megamenu .mega-group-ct > .row-fluid > [class*='span'] > .mega-inner {
   padding: 10px;
 }
-
 
 /* Module in Menu ---*/
 .tb-megamenu .tb-block {
@@ -157,7 +151,7 @@
   background: #eeeeee;
   right: -10px;
   bottom: -10px;
-  content: "Block";
+  content: 'Block';
   width: 60px;
   padding: 2px 0;
   text-align: center;
@@ -170,7 +164,7 @@
 }
 
 .tb-megamenu .tb-block .block-inner {
-  opacity: .3;
+  opacity: 0.3;
   font-size: 12px;
 }
 
@@ -230,9 +224,8 @@
   font: inherit;
 }
 
-
-.tb-megamenu [class*="span"].hover .tb-block:after,
-.tb-megamenu [class*="span"].selected .tb-block:after {
+.tb-megamenu [class*='span'].hover .tb-block:after,
+.tb-megamenu [class*='span'].selected .tb-block:after {
   border-style: solid;
   border-color: #666666;
   background: #ffbb00;
@@ -248,7 +241,6 @@
   margin-left: 3px;
 }
 
-
 /* Open Item ---*/
 .tb-megamenu .nav > li.open > a,
 .tb-megamenu .open > a {
@@ -257,12 +249,11 @@
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5) !important;
 }
 
-
 /* Hover Item ---*/
 .tb-megamenu .nav-child.hover,
-.tb-megamenu ul[class*="level"] > li > a.hover,
-.tb-megamenu ul[class*="level"] > li > span.tb-megamenu-no-link.hover,
-.tb-megamenu .row-fluid [class*="span"].hover {
+.tb-megamenu ul[class*='level'] > li > a.hover,
+.tb-megamenu ul[class*='level'] > li > span.tb-megamenu-no-link.hover,
+.tb-megamenu .row-fluid [class*='span'].hover {
   background: #fffbf0 !important;
   color: #333333 !important;
   border: 1px solid #666666 !important;
@@ -270,9 +261,9 @@
   border-radius: 3px;
 }
 
-.tb-megamenu ul[class*="level"] > li > a:hover,
-.tb-megamenu ul[class*="level"] > li > a:focus,
-.tb-megamenu ul[class*="level"] > li > a:active {
+.tb-megamenu ul[class*='level'] > li > a:hover,
+.tb-megamenu ul[class*='level'] > li > a:focus,
+.tb-megamenu ul[class*='level'] > li > a:active {
   background: #fffbf0 !important;
   color: #333333 !important;
   text-decoration: none !important;
@@ -284,7 +275,6 @@
 .tb-megamenu .mega-nav li a.selected:after {
   border-left-color: #333333;
 }
-
 
 /* Selected Item ---*/
 .tb-megamenu .selected {
@@ -303,23 +293,16 @@
   margin-top: 2px;
 }
 
-
 /* Fix for Joomla! Default Admin Template
 --------------------------------------------------*/
 #tb-megamenu-admin .dropdown-menu a {
   white-space: normal;
 }
-#tb-megamenu-admin .row-fluid [class*="span"] {
+#tb-megamenu-admin .row-fluid [class*='span'] {
   margin-left: 2.12766%;
 }
-#tb-megamenu-admin .row-fluid [class*="span"]:first-child {
+#tb-megamenu-admin .row-fluid [class*='span']:first-child {
   margin-left: 0;
-}
-
-/* Fix right spacing for chzn chosen in Megamenu Admin UI */
-#tb-megamenu-admin ul.chzn-results {
-  margin-right: 0;
-  float: none;
 }
 
 /* Fix submenu auto open on hover */
@@ -359,7 +342,7 @@
   }
   .tb-megamenu .row-fluid,
   .tb-megamenu .mega-dropdown-menu,
-  .tb-megamenu .row-fluid [class*="span"] {
+  .tb-megamenu .row-fluid [class*='span'] {
     width: 100% !important;
     min-width: 100% !important;
     left: 0 !important;

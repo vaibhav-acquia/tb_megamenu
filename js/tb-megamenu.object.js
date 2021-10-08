@@ -790,8 +790,6 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
 
       case 'col':
         $('.toolcol-exclass').attr('value', currentSelected.attr('data-class') || '');
-        $('.toolcol-block').val(currentSelected.children('.mega-inner').children('.tb-megamenu-block').attr('data-block') || '').trigger("chosen:updated");
-        $('.toolcol-width').val(currentSelected.attr('data-width') || '').trigger("chosen:updated");
         if (currentSelected.find('.mega-nav').length > 0) {
           $('.toolcol-block').parent().addClass('disabled');
         }
