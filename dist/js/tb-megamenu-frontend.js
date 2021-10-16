@@ -510,10 +510,10 @@
             }
           });
           var mm_timeout = mm_duration ? 100 + mm_duration : 500;
-          $('.nav > li, li.tb-megamenu-item', context).bind('mouseenter', function (event) {
+          $('.tb-megamenu-nav > li, li.tb-megamenu-item', context).bind('mouseenter', function (event) {
             showMenu($(this), mm_timeout);
           });
-          $('.nav > li > .dropdown-toggle, li.tb-megamenu-item > .dropdown-toggle', context).bind('focus', function (event) {
+          $('.tb-megamenu-nav > li > .dropdown-toggle, li.tb-megamenu-item > .dropdown-toggle', context).bind('focus', function (event) {
             var $this = $(this);
             var $subMenu = $this.closest('li');
             showMenu($subMenu, mm_timeout); // If the focus moves outside of the subMenu, close it.
@@ -527,7 +527,7 @@
               hideMenu($subMenu, mm_timeout);
             });
           });
-          $('.nav > li, li.tb-megamenu-item', context).bind('mouseleave', function (event) {
+          $('.tb-megamenu-nav > li, li.tb-megamenu-item', context).bind('mouseleave', function (event) {
             hideMenu($(this), mm_timeout);
           });
           /**
@@ -543,7 +543,7 @@
               nav_close_megamenu();
             }
           });
-          $('.nav > li > a, li.tb-megamenu-item > a').focus(function (event) {
+          $('.tb-megamenu-nav > li > a, li.tb-megamenu-item > a').focus(function (event) {
             // Remove all occurrences of "open" from other menu trees
             var siblings = $(this).parents('.tb-megamenu-item').siblings(); // var siblings = $(this).closest('.tb-megamenu-item.level-1').siblings();
 
@@ -618,7 +618,7 @@
         };
 
         if (isTouch) {
-          createTouchMenu($('.tb-megamenu ul.nav li.tb-megamenu-item', context).has('.dropdown-menu'));
+          createTouchMenu($('.tb-megamenu ul.tb-megamenu-nav li.tb-megamenu-item', context).has('.tb-megamenu-submenu'));
         }
 
         $(window).on('load resize', function () {

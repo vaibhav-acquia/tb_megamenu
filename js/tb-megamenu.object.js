@@ -121,7 +121,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       if (sub.length == 0) {
         var column = ++drupalSettings.TBMegaMenu.TBElementsCounter.column;
         sub = $(
-          '<div class="tb-megamenu-submenu nav-child dropdown-menu"><div class="row-fluid"><div id=tb-megamenu-column-' +
+          '<div class="tb-megamenu-submenu nav-child"><div class="row-fluid"><div id=tb-megamenu-column-' +
             column +
             ' class="span12" data-width="12"><div class="mega-inner"></div></div></div></div>',
         ).appendTo(liitem);
@@ -227,14 +227,14 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       currentSelected
         .addClass('dropdown-toggle')
         .attr('data-toggle', 'dropdown');
-      sub.removeClass('mega-group-ct').addClass('dropdown-menu');
+      sub.removeClass('mega-group-ct').addClass('tb-megamenu-submenu');
       sub.css('width', sub.attr('data-width'));
       rebindEvents(sub);
     } else {
       currentSelected.removeClass('dropdown-toggle').attr('data-toggle', '');
       liitem.attr('data-group', 1);
       liitem.removeClass('dropdown-submenu').addClass('mega-group');
-      sub.removeClass('dropdown-menu').addClass('mega-group-ct');
+      sub.removeClass('tb-megamenu-submenu').addClass('mega-group-ct');
       sub.css('width', '');
       rebindEvents(sub);
     }
@@ -656,14 +656,14 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       });
       var submenu_config = {};
       submenu_config['width'] = $this
-        .children('.tb-megamanu-submenu')
+        .children('.tb-megamenu-submenu')
         .attr('data-width')
-        ? $this.children('.tb-megamanu-submenu').attr('data-width')
+        ? $this.children('.tb-megamenu-submenu').attr('data-width')
         : '';
       submenu_config['class'] = $this
-        .children('.tb-megamanu-submenu')
+        .children('.tb-megamenu-submenu')
         .attr('data-class')
-        ? $this.children('.tb-megamanu-submenu').attr('data-class')
+        ? $this.children('.tb-megamenu-submenu').attr('data-class')
         : '';
       submenu_config['group'] = $this.attr('data-group')
         ? $this.attr('data-group')

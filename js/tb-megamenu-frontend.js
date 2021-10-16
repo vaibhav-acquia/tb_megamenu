@@ -463,7 +463,7 @@
             });
 
             var mm_timeout = mm_duration ? 100 + mm_duration : 500;
-            $('.nav > li, li.tb-megamenu-item', context).bind(
+            $('.tb-megamenu-nav > li, li.tb-megamenu-item', context).bind(
               'mouseenter',
               function (event) {
                 showMenu($(this), mm_timeout);
@@ -471,7 +471,7 @@
             );
 
             $(
-              '.nav > li > .dropdown-toggle, li.tb-megamenu-item > .dropdown-toggle',
+              '.tb-megamenu-nav > li > .dropdown-toggle, li.tb-megamenu-item > .dropdown-toggle',
               context,
             ).bind('focus', function (event) {
               var $this = $(this);
@@ -487,7 +487,7 @@
               });
             });
 
-            $('.nav > li, li.tb-megamenu-item', context).bind(
+            $('.tb-megamenu-nav > li, li.tb-megamenu-item', context).bind(
               'mouseleave',
               function (event) {
                 hideMenu($(this), mm_timeout);
@@ -510,48 +510,52 @@
               }
             });
 
-            $('.nav > li > a, li.tb-megamenu-item > a').focus(function (event) {
-              // Remove all occurrences of "open" from other menu trees
-              var siblings = $(this).parents('.tb-megamenu-item').siblings();
-              // var siblings = $(this).closest('.tb-megamenu-item.level-1').siblings();
-              $.each(siblings, function (i, v) {
-                var cousins = $(v).find('.open');
-                $.each(cousins, function (index, value) {
-                  $(value).removeClass('open');
-                  ariaCheck($(this));
+            $('.tb-megamenu-nav > li > a, li.tb-megamenu-item > a').focus(
+              function (event) {
+                // Remove all occurrences of "open" from other menu trees
+                var siblings = $(this).parents('.tb-megamenu-item').siblings();
+                // var siblings = $(this).closest('.tb-megamenu-item.level-1').siblings();
+                $.each(siblings, function (i, v) {
+                  var cousins = $(v).find('.open');
+                  $.each(cousins, function (index, value) {
+                    $(value).removeClass('open');
+                    ariaCheck($(this));
+                  });
+                  $(v).removeClass('open');
+                  ariaCheck();
                 });
-                $(v).removeClass('open');
-                ariaCheck();
-              });
-              // Open the submenu if the selected item has one
-              if ($(this).next('.tb-megamenu-submenu').length > 0) {
-                if (!$(this).parent().hasClass('open')) {
-                  $(this).parent().addClass('open');
+                // Open the submenu if the selected item has one
+                if ($(this).next('.tb-megamenu-submenu').length > 0) {
+                  if (!$(this).parent().hasClass('open')) {
+                    $(this).parent().addClass('open');
+                  }
                 }
-              }
-              // If the anchor's top-level parent is not open, open it
-              if (
-                !$(this)
-                  .closest('.tb-megamenu-item.dropdown')
-                  .hasClass('open') &&
-                $(this)
-                  .closest('.tb-megamenu-item.dropdown')
-                  .find('.tb-megamenu-submenu').length > 0
-              ) {
-                $(this).closest('.tb-megamenu-item.dropdown').addClass('open');
-                ariaCheck();
-              }
-              // If anchor's parent submenus are not open, open them
-              var parents = $(this).parents(
-                '.tb-megamenu-item.dropdown-submenu',
-              );
-              $.each(parents, function (i, v) {
-                if (!$(v).hasClass('open')) {
-                  $(v).addClass('open');
+                // If the anchor's top-level parent is not open, open it
+                if (
+                  !$(this)
+                    .closest('.tb-megamenu-item.dropdown')
+                    .hasClass('open') &&
+                  $(this)
+                    .closest('.tb-megamenu-item.dropdown')
+                    .find('.tb-megamenu-submenu').length > 0
+                ) {
+                  $(this)
+                    .closest('.tb-megamenu-item.dropdown')
+                    .addClass('open');
                   ariaCheck();
                 }
-              });
-            });
+                // If anchor's parent submenus are not open, open them
+                var parents = $(this).parents(
+                  '.tb-megamenu-item.dropdown-submenu',
+                );
+                $.each(parents, function (i, v) {
+                  if (!$(v).hasClass('open')) {
+                    $(v).addClass('open');
+                    ariaCheck();
+                  }
+                });
+              },
+            );
           }
 
           // Define actions for touch devices.
@@ -602,9 +606,10 @@
 
           if (isTouch) {
             createTouchMenu(
-              $('.tb-megamenu ul.nav li.tb-megamenu-item', context).has(
-                '.dropdown-menu',
-              ),
+              $(
+                '.tb-megamenu ul.tb-megamenu-nav li.tb-megamenu-item',
+                context,
+              ).has('.tb-megamenu-submenu'),
             );
           }
 

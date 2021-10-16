@@ -350,7 +350,6 @@ function template_preprocess_tb_megamenu_submenu(array &$vars) {
   else {
     $theme_name = str_replace('_', '-', $vars['theme_hook_original']);
     $vars['attributes']['class'][] = $theme_name;
-    $vars['attributes']['class'][] = 'dropdown-menu';
   }
 
   $vars['attributes']['class'][] = 'nav-child';

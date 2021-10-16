@@ -38,13 +38,13 @@ $dropdown-width: 400px;
   overflow: visible;
   margin-bottom: 20px;
 
-  .dropdown-menu li > a:hover,
-  .dropdown-menu li > a:focus,
+  .tb-megamenu-submenu li > a:hover,
+  .tb-megamenu-submenu li > a:focus,
   .dropdown-submenu:hover > a {
     background: #4f4f4f;
   }
 
-  .dropdown-menu a:visited {
+  .tb-megamenu-submenu a:visited {
     color: #666;
   }
 
@@ -261,7 +261,7 @@ $dropdown-width: 400px;
       box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.125);
     }
 
-    > li > .dropdown-menu:before {
+    > li > .tb-megamenu-submenu:before {
       content: '';
       display: inline-block;
       border-left: 7px solid transparent;
@@ -273,7 +273,7 @@ $dropdown-width: 400px;
       left: 9px;
     }
 
-    > li > .dropdown-menu:after {
+    > li > .tb-megamenu-submenu:after {
       content: '';
       display: inline-block;
       border-left: 6px solid transparent;
@@ -311,7 +311,7 @@ $dropdown-width: 400px;
   }
 
   // Show submenus on hover.
-  .dropdown-submenu:hover > .dropdown-menu {
+  .dropdown-submenu:hover > .tb-megamenu-submenu {
     display: block;
   }
 
@@ -366,7 +366,7 @@ $dropdown-width: 400px;
         transition: all 0.1s ease 0s;
       }
 
-      > .dropdown-menu {
+      > .tb-megamenu-submenu {
         top: 0;
         left: 110%;
         margin-top: -6px;
@@ -737,7 +737,7 @@ $dropdown-width: 400px;
     }
 
     > .btn,
-    > .dropdown-menu,
+    > .tb-megamenu-submenu,
     > .popover {
       font-size: 13px;
     }
@@ -903,8 +903,18 @@ $dropdown-width: 400px;
 }
 
 @media (max-width: 738px) {
-  .tb-megamenu .navbar .tb-megamenu-collapse .nav > li > .dropdown-menu::before,
-  .tb-megamenu .navbar .tb-megamenu-collapse .nav > li > .dropdown-menu::after,
+  .tb-megamenu
+    .navbar
+    .tb-megamenu-collapse
+    .nav
+    > li
+    > .tb-megamenu-submenu::before,
+  .tb-megamenu
+    .navbar
+    .tb-megamenu-collapse
+    .nav
+    > li
+    > .tb-megamenu-submenu::after,
   .tb-megamenu .navbar .tb-megamenu-collapse .dropdown-submenu > a::after,
   .tb-megamenu
     .navbar
@@ -916,9 +926,9 @@ $dropdown-width: 400px;
 }
 
 @media (max-width: 979px) {
-  .tb-megamenu-nav > li > .dropdown-menu:before,
-  .tb-megamenu-nav > li > .dropdown-menu:after,
-  .tb-megamenu-nav > li > .dropdown-menu .divider {
+  .tb-megamenu-nav > li > .tb-megamenu-submenu:before,
+  .tb-megamenu-nav > li > .tb-megamenu-submenu:after,
+  .tb-megamenu-nav > li > .tb-megamenu-submenu .divider {
     display: none;
   }
 }
