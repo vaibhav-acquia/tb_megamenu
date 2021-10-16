@@ -9,7 +9,7 @@ const glob = require('glob');
 const imagePath = path.resolve(__dirname, '../images');
 
 const MiniCssExtractPlugin = new _MiniCssExtractPlugin({
-  filename: 'style.css',
+  filename: '[name].css',
   chunkFilename: '[id].css',
 });
 

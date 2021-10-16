@@ -96,60 +96,6 @@ $dropdown-width: 400px;
     margin-right: 0;
   }
 
-  // Buttons
-  .btn {
-    display: inline-block;
-    padding: 4px 12px;
-    margin-bottom: 0;
-    font-size: 14px;
-    line-height: 20px;
-    text-align: center;
-    vertical-align: middle;
-    cursor: pointer;
-    color: $color-dark-grey-1;
-    background-color: $color-light-grey-3;
-    border: 1px solid $color-light-grey-1;
-    border-color: $color-black-10-op $color-black-10-op $color-black-25-op;
-    border-radius: 4px;
-
-    &:hover,
-    &:focus {
-      color: $color-dark-grey-1;
-      background-color: $color-light-grey-2;
-      text-decoration: none;
-    }
-
-    &:focus {
-      outline: thin dotted $color-dark-grey-1;
-      outline-offset: -2px;
-    }
-
-    &:active {
-      color: $color-dark-grey-1;
-      background-color: $color-light-grey-2;
-      outline: 0;
-    }
-
-    .caret {
-      margin-top: 8px;
-      margin-left: 0;
-    }
-  }
-
-  .btn.active {
-    color: $color-dark-grey-1;
-    background-color: $color-light-grey-2;
-    outline: 0;
-  }
-
-  .btn.disabled,
-  .btn[disabled] {
-    color: $color-dark-grey-1;
-    background-color: $color-light-grey-2;
-    cursor: default;
-    opacity: 0.65;
-  }
-
   // Admins can add font awesome icons to menu items.
   [class^='fa-'],
   [class*=' fa-'] {
@@ -157,7 +103,7 @@ $dropdown-width: 400px;
   }
 
   // The <ul> around the top level menu.
-  .nav {
+  .tb-megamenu-nav {
     display: flex;
     flex-direction: row;
     list-style: none;
@@ -451,14 +397,14 @@ $dropdown-width: 400px;
   }
 
   // Any <li> items within the mega menu.
-  .mega {
+  .tb-megamenu-item {
     > .mega-dropdown-menu {
       min-width: $dropdown-width;
       display: none;
     }
   }
 
-  .mega.open {
+  .tb-megamenu-item.open {
     > .mega-dropdown-menu {
       display: block;
       overflow: visible;
@@ -468,7 +414,7 @@ $dropdown-width: 400px;
     }
   }
 
-  .mega.dropdown-submenu {
+  .tb-megamenu-item.dropdown-submenu {
     &:hover,
     &:focus {
       > .mega-dropdown-menu {
@@ -622,9 +568,8 @@ $dropdown-width: 400px;
   }
 
   // The mobile show/hide button.
-  .btn-navbar {
+  .tb-megamenu-button {
     display: none;
-    float: left;
     padding: 10px 14px;
     margin: 0;
     color: $color-white;
@@ -657,7 +602,7 @@ $dropdown-width: 400px;
     height: auto;
 
     .always-show {
-      .mega {
+      .tb-megamenu-item {
         > .mega-dropdown-menu {
           display: block !important;
         }
@@ -717,7 +662,7 @@ $dropdown-width: 400px;
       }
     }
 
-    .btn-navbar {
+    .tb-megamenu-button {
       display: block;
       margin-bottom: 10px;
 
@@ -726,17 +671,16 @@ $dropdown-width: 400px;
       }
     }
 
-    .nav-collapse {
+    .tb-megamenu-collapse {
       background: $color-black;
-      margin-top: 10px;
-      position: absolute;
-      top: 32px;
-      width: 100%;
-      z-index: 999;
       height: 0;
       overflow: hidden;
+      position: absolute;
+      top: 100%;
+      width: 100%;
+      z-index: 999;
 
-      .nav {
+      .tb-megamenu-nav {
         flex-direction: column;
 
         > li {
@@ -822,13 +766,6 @@ $dropdown-width: 400px;
       }
     }
 
-    .nav-collapse.in {
-      .btn-group {
-        margin-top: 5px;
-        padding: 0;
-      }
-    }
-
     .mega-inner {
       padding: 10px 20px;
     }
@@ -876,7 +813,7 @@ $dropdown-width: 400px;
 // Animations, for desktop only.
 @media (min-width: 980px) {
   .tb-megamenu.animate {
-    .mega {
+    .tb-megamenu-item {
       > .mega-dropdown-menu {
         transition: all 400ms;
         backface-visibility: hidden;
@@ -884,19 +821,19 @@ $dropdown-width: 400px;
       }
     }
 
-    .mega.animating {
+    .tb-megamenu-item.animating {
       > .mega-dropdown-menu {
         display: block !important;
       }
     }
 
-    .mega.open {
+    .tb-megamenu-item.open {
       > .mega-dropdown-menu {
         opacity: 1;
       }
     }
 
-    .mega.animating.open {
+    .tb-megamenu-item.animating.open {
       > .mega-dropdown-menu {
         opacity: 1;
       }
@@ -904,14 +841,14 @@ $dropdown-width: 400px;
   }
 
   .tb-megamenu.animate.zoom {
-    .mega {
+    .tb-megamenu-item {
       > .mega-dropdown-menu {
         transform: scale(0, 0);
         transform-origin: 20% 20%;
       }
     }
 
-    .mega.open {
+    .tb-megamenu-item.open {
       > .mega-dropdown-menu {
         transform: scale(1, 1);
       }
@@ -920,21 +857,21 @@ $dropdown-width: 400px;
 
   .tb-megamenu.animate.elastic {
     .level0 {
-      > .mega {
+      > .tb-megamenu-item {
         > .mega-dropdown-menu {
           transform: scale(1, 0);
         }
       }
     }
 
-    .mega {
+    .tb-megamenu-item {
       > .mega-dropdown-menu {
         transform: scale(0, 1);
         transform-origin: 10% 0;
       }
     }
 
-    .mega.open {
+    .tb-megamenu-item.open {
       > .mega-dropdown-menu {
         transform: scale(1, 1);
       }
@@ -942,13 +879,13 @@ $dropdown-width: 400px;
   }
 
   .tb-megamenu.animate.slide {
-    .mega.animating {
+    .tb-megamenu-item.animating {
       > .mega-dropdown-menu {
         overflow: hidden;
       }
     }
 
-    .mega {
+    .tb-megamenu-item {
       > .mega-dropdown-menu {
         > div {
           transition: all 400ms;
@@ -957,7 +894,7 @@ $dropdown-width: 400px;
         }
       }
 
-      .mega {
+      .tb-megamenu-item {
         > .mega-dropdown-menu {
           min-width: 0;
 
@@ -969,7 +906,7 @@ $dropdown-width: 400px;
         }
       }
 
-      .mega.open {
+      .tb-megamenu-item.open {
         > .mega-dropdown-menu {
           > div {
             margin-left: 0;
@@ -978,7 +915,7 @@ $dropdown-width: 400px;
       }
     }
 
-    .mega.open {
+    .tb-megamenu-item.open {
       > .mega-dropdown-menu {
         > div {
           margin-top: 0%;

@@ -339,19 +339,22 @@ function template_preprocess_tb_megamenu_submenu(array &$vars) {
   }
   $vars['attributes'] = new Attribute();
   $vars['attributes']['class'] = [];
-  $theme_name = str_replace('_', '-', $vars['theme_hook_original']);
-  $vars['attributes']['class'][] = $theme_name;
 
   if ($submenu_config['class'] != "") {
     $vars['attributes']['class'][] = $submenu_config['class'];
   }
+
   if ($submenu_config['group']) {
     $vars['attributes']['class'][] = 'mega-group-ct';
   }
   else {
+    $theme_name = str_replace('_', '-', $vars['theme_hook_original']);
+    $vars['attributes']['class'][] = $theme_name;
+
     $vars['attributes']['class'][] = 'dropdown-menu';
     $vars['attributes']['class'][] = 'mega-dropdown-menu';
   }
+
   $vars['attributes']['class'][] = 'nav-child';
   $vars['attributes']['data-class'] = $submenu_config['class'];
   $vars['attributes']['data-width'] = $submenu_config['width'];
@@ -558,7 +561,6 @@ function template_preprocess_tb_megamenu_nav(array &$vars) {
   $vars['attributes']['class'] = [];
   $theme_name = str_replace('_', '-', $vars['theme_hook_original']);
   $vars['attributes']['class'][] = $theme_name;
-  $vars['attributes']['class'][] = "nav";
   $vars['attributes']['class'][] = "level-" . $level;
   $vars['attributes']['class'][] = "items-" . count($items);
 
@@ -609,7 +611,6 @@ function template_preprocess_tb_megamenu_item(array &$vars) {
   $theme_name = str_replace('_', '-', $vars['theme_hook_original']);
   $vars['attributes']['class'][] = $theme_name;
   $vars['attributes']['class'][] = 'level-' . $level;
-  $vars['attributes']['class'][] = 'mega';
   if (!empty($item_config['class'])) {
     $vars['attributes']['class'][] = $item_config['class'];
   }

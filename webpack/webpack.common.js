@@ -16,7 +16,8 @@ function getEntries(pattern) {
     entries[newfilePath] = file;
   });
 
-  entries.css = path.resolve(webpackDir, 'css.js');
+  entries.style = path.resolve(webpackDir, 'style.js');
+  entries.admin = path.resolve(webpackDir, 'admin.js');
 
   return entries;
 }

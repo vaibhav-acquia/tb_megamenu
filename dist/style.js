@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./webpack/css.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./webpack/style.js");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -100,10 +100,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./webpack/css.js":
-/*!************************!*\
-  !*** ./webpack/css.js ***!
-  \************************/
+/***/ "./webpack/style.js":
+/*!**************************!*\
+  !*** ./webpack/style.js ***!
+  \**************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -115,4 +115,4 @@ __webpack_require__.r(__webpack_exports__);
 /***/ })
 
 /******/ });
-//# sourceMappingURL=css.js.map
+//# sourceMappingURL=style.js.map

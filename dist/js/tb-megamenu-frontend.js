@@ -98,7 +98,7 @@
  * Defines Javascript behaviors for MegaMenu frontend.
  */
 (function ($, Drupal, drupalSettings) {
-  "use strict";
+  'use strict';
 
   Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
   Drupal.TBMegaMenu.oldWindowWidth = 0;
@@ -107,7 +107,7 @@
 
   Drupal.TBMegaMenu.menuResponsive = function () {
     var windowWidth = window.innerWidth ? window.innerWidth : $(window).width();
-    var navCollapse = $('.tb-megamenu').children('.nav-collapse');
+    var navCollapse = $('.tb-megamenu').children('.tb-megamenu-collapse');
 
     if (windowWidth < Drupal.TBMegaMenu.supportedScreens[0]) {
       if (Drupal.TBMegaMenu.displayedMenuMobile) {
@@ -415,7 +415,7 @@
         }
 
         var ariaCheck = function () {
-          $("li.tb-megamenu-item", this).each(function () {
+          $('li.tb-megamenu-item', this).each(function () {
             if ($(this).is('.mega-group')) {
               // Mega menu item has mega class (it's a true mega menu)
               if (!$(this).parents().is('.open')) {
@@ -486,14 +486,14 @@
         };
 
         $('.tb-megamenu-button', this).click(function () {
-          if (parseInt($(this).parent().children('.nav-collapse').height())) {
-            $(this).parent().children('.nav-collapse').css({
+          if (parseInt($(this).parent().children('.tb-megamenu-collapse').height())) {
+            $(this).parent().children('.tb-megamenu-collapse').css({
               height: 0,
               overflow: 'hidden'
             });
             Drupal.TBMegaMenu.displayedMenuMobile = false;
           } else {
-            $(this).parent().children('.nav-collapse').css({
+            $(this).parent().children('.tb-megamenu-collapse').css({
               height: 'auto',
               overflow: 'visible'
             });
@@ -510,10 +510,10 @@
             }
           });
           var mm_timeout = mm_duration ? 100 + mm_duration : 500;
-          $('.nav > li, li.mega', context).bind('mouseenter', function (event) {
+          $('.nav > li, li.tb-megamenu-item', context).bind('mouseenter', function (event) {
             showMenu($(this), mm_timeout);
           });
-          $('.nav > li > .dropdown-toggle, li.mega > .dropdown-toggle', context).bind('focus', function (event) {
+          $('.nav > li > .dropdown-toggle, li.tb-megamenu-item > .dropdown-toggle', context).bind('focus', function (event) {
             var $this = $(this);
             var $subMenu = $this.closest('li');
             showMenu($subMenu, mm_timeout); // If the focus moves outside of the subMenu, close it.
@@ -527,7 +527,7 @@
               hideMenu($subMenu, mm_timeout);
             });
           });
-          $('.nav > li, li.mega', context).bind('mouseleave', function (event) {
+          $('.nav > li, li.tb-megamenu-item', context).bind('mouseleave', function (event) {
             hideMenu($(this), mm_timeout);
           });
           /**
@@ -543,7 +543,7 @@
               nav_close_megamenu();
             }
           });
-          $('.nav > li > a, li.mega > a').focus(function (event) {
+          $('.nav > li > a, li.tb-megamenu-item > a').focus(function (event) {
             // Remove all occurrences of "open" from other menu trees
             var siblings = $(this).parents('.tb-megamenu-item').siblings(); // var siblings = $(this).closest('.tb-megamenu-item.level-1').siblings();
 
@@ -557,9 +557,9 @@
               ariaCheck();
             }); // Open the submenu if the selected item has one
 
-            if ($(this).next(".tb-megamenu-submenu").length > 0) {
-              if (!$(this).parent().hasClass("open")) {
-                $(this).parent().addClass("open");
+            if ($(this).next('.tb-megamenu-submenu').length > 0) {
+              if (!$(this).parent().hasClass('open')) {
+                $(this).parent().addClass('open');
               }
             } // If the anchor's top-level parent is not open, open it
 
@@ -582,28 +582,28 @@
 
 
         var createTouchMenu = function (items) {
-          items.children("a, span").each(function () {
+          items.children('a, span').each(function () {
             var $item = $(this);
             var tbitem = $(this).parent();
             $item.click(function (event) {
               // If the menu link has already been clicked once...
-              if ($item.hasClass("tb-megamenu-clicked")) {
-                var $uri = $item.attr("href"); // If the menu link has a URI, go to the link.
+              if ($item.hasClass('tb-megamenu-clicked')) {
+                var $uri = $item.attr('href'); // If the menu link has a URI, go to the link.
                 // <nolink> menu items will not have a URI.
 
                 if ($uri) {
                   window.location.href = $uri;
                 } else {
-                  $item.removeClass("tb-megamenu-clicked");
+                  $item.removeClass('tb-megamenu-clicked');
                   hideMenu(tbitem, mm_timeout);
                 }
               } else {
                 event.preventDefault(); // Hide any already open menus.
 
                 nav_close_megamenu();
-                $(".tb-megamenu").find(".tb-megamenu-clicked").removeClass("tb-megamenu-clicked"); // Open the submenu.
+                $('.tb-megamenu').find('.tb-megamenu-clicked').removeClass('tb-megamenu-clicked'); // Open the submenu.
 
-                $item.addClass("tb-megamenu-clicked");
+                $item.addClass('tb-megamenu-clicked');
                 showMenu(tbitem, mm_timeout);
               }
             });
@@ -612,18 +612,15 @@
           $(document).on('click', function (event) {
             if ($(event.target).closest('.tb-megamenu-nav').length === 0) {
               nav_close_megamenu();
-              $(".tb-megamenu").find(".tb-megamenu-clicked").removeClass("tb-megamenu-clicked");
+              $('.tb-megamenu').find('.tb-megamenu-clicked').removeClass('tb-megamenu-clicked');
             }
-
-            ;
           });
         };
 
         if (isTouch) {
-          createTouchMenu($(".tb-megamenu ul.nav li.mega", context).has(".dropdown-menu"));
+          createTouchMenu($('.tb-megamenu ul.nav li.tb-megamenu-item', context).has('.dropdown-menu'));
         }
 
-        ;
         $(window).on('load resize', function () {
           var windowWidth = window.innerWidth ? window.innerWidth : $(window).width();
 
