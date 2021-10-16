@@ -416,7 +416,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     var $ul = $tocol.find('ul:first');
 
     if (!$ul.length) {
-      $ul = $('<ul class="mega-nav level' + level + ' tb-megamenu-subnav">').appendTo($tocol.children('.mega-inner'));
+      $ul = $('<ul class="level' + level + ' tb-megamenu-subnav">').appendTo($tocol.children('.mega-inner'));
     }
 
     $moveitems.appendTo($ul);
@@ -466,7 +466,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     var $ul = $tocol.find('.mega-inner ul.tb-megamenu-subnav:first');
 
     if (!$ul.length) {
-      $ul = $('<ul class="mega-nav level' + level + ' tb-megamenu-subnav">').appendTo($tocol.children('.mega-inner'));
+      $ul = $('<ul class="level' + level + ' tb-megamenu-subnav">').appendTo($tocol.children('.mega-inner'));
     }
 
     $moveitems.prependTo($ul);
@@ -948,7 +948,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
         $('.toolcol-width').val(currentSelected.attr('data-width') || '');
         $('.toolcol-exclass').attr('value', currentSelected.attr('data-class') || '');
 
-        if (currentSelected.find('.mega-nav').length > 0) {
+        if (currentSelected.find('.tb-megamenu-subnav').length > 0) {
           $('.toolcol-block').parent().addClass('disabled');
         }
 

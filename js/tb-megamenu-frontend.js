@@ -86,7 +86,7 @@
                 .next()
                 .children()
                 .children()
-                .children('.mega-col-nav')
+                .children('.tb-megamenu-column')
                 .each(function (j, column) {
                   // Only add to the linkArray if menu items exist.
                   // TODO - this does not allow for tabbing to links in blocks, only menu item links.

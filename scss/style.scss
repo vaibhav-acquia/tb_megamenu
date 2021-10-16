@@ -225,6 +225,10 @@ $dropdown-width: 400px;
 
       > .tb-megamenu-submenu {
         display: block;
+        overflow: visible;
+        clip: auto;
+        height: auto;
+        width: auto;
       }
     }
 
@@ -257,22 +261,18 @@ $dropdown-width: 400px;
   // The <div> around any submenu dropdown. This is a direct descendent child of
   // the <li>.
   .tb-megamenu-submenu {
+    background-clip: padding-box;
+    background-color: $color-white;
+    border-radius: 0;
+    border-top-width: 0;
+    border: 1px solid $color-black-20-op;
+    box-shadow: 0 5px 10px $color-black-20-op;
+    display: none;
+    left: 0;
+    min-width: $dropdown-width;
     position: absolute;
     top: 100%;
-    left: 0;
     z-index: 1000;
-    display: none;
-    float: left;
-    min-width: 160px;
-    padding: 0;
-    margin: 0;
-    list-style: none;
-    background-color: $color-white;
-    border: 1px solid $color-black-20-op;
-    border-top-width: 0;
-    border-radius: 0;
-    box-shadow: 0 5px 10px $color-black-20-op;
-    background-clip: padding-box;
 
     .tb-megamenu-submenu {
       // Anything other than the 1st dropdown menu needs the top border.
@@ -389,34 +389,10 @@ $dropdown-width: 400px;
       margin-left: -1px;
       border-radius: 0;
     }
-  }
 
-  .hidden {
-    display: none !important;
-    visibility: hidden;
-  }
-
-  // Any <li> items within the mega menu.
-  .tb-megamenu-item {
-    > .tb-megamenu-submenu {
-      min-width: $dropdown-width;
-      display: none;
-    }
-  }
-
-  .tb-megamenu-item.open {
-    > .tb-megamenu-submenu {
-      display: block;
-      overflow: visible;
-      clip: auto;
-      height: auto;
-      width: auto;
-    }
-  }
-
-  .tb-megamenu-item.dropdown-submenu {
     &:hover,
-    &:focus {
+    &:focus,
+    &.open {
       > .tb-megamenu-submenu {
         display: block;
         overflow: visible;
@@ -427,8 +403,13 @@ $dropdown-width: 400px;
     }
   }
 
+  .hidden {
+    display: none !important;
+    visibility: hidden;
+  }
+
   // Any <ul> other than the top level.
-  .mega-nav {
+  .tb-megamenu-subnav {
     margin: 0;
     padding: 0;
     list-style: none;
@@ -462,7 +443,6 @@ $dropdown-width: 400px;
 
   // Any <li> that has been designated as a "group" item (the content within
   // is not contained within a dropdown/submenu, but is instead always visible.
-  // .mega-group {}
 
   // The title of a .mega-group.
   .mega-group-title {
@@ -778,24 +758,12 @@ $dropdown-width: 400px;
       transform: none !important;
     }
 
-    .mega-nav {
+    .tb-megamenu-subnav {
       > li {
         a,
         span.tb-megamenu-no-link {
           padding: 5px 0;
           margin-left: 20px;
-        }
-      }
-    }
-
-    .tb-megamenu-submenu {
-      .mega-nav {
-        > li {
-          a,
-          span.tb-megamenu-no-link {
-            padding: 5px 0;
-            margin-left: 20px;
-          }
         }
       }
     }

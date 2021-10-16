@@ -174,7 +174,7 @@
             coordinate: [i, -1]
           }); // Each Column
 
-          $(toplink).next().children().children().children('.mega-col-nav').each(function (j, column) {
+          $(toplink).next().children().children().children('.tb-megamenu-column').each(function (j, column) {
             // Only add to the linkArray if menu items exist.
             // TODO - this does not allow for tabbing to links in blocks, only menu item links.
             if ($(column).find('.tb-megamenu-item').children('a, span').length > 0) {
