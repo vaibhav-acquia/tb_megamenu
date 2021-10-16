@@ -100,7 +100,7 @@
 Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
 
 (function ($, Drupal, drupalSettings) {
-  "use strict";
+  'use strict';
 
   var currentSelected = null,
       megamenu,
@@ -144,7 +144,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     });
     hide_toolbox(true);
     bindEvents(nav_all);
-    $('.toolbox-action, .toolbox-toggle, .toolbox-input').unbind("focus blur click change keydown");
+    $('.toolbox-action, .toolbox-toggle, .toolbox-input').unbind('focus blur click change keydown');
     $('.tb-megamenu-admin-mm-row').click(function (event) {
       event.stopPropagation();
     });
@@ -212,9 +212,8 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     if (sub.length == 0 || sub.css('display') == 'none') {
       if (sub.length == 0) {
         var column = ++drupalSettings.TBMegaMenu.TBElementsCounter.column;
-        sub = $('<div class="tb-megamenu-submenu nav-child dropdown-menu mega-dropdown-menu"><div class="row-fluid"><div id=tb-megamenu-column-' + column + ' class="span12" data-width="12"><div class="mega-inner"></div></div></div></div>').appendTo(liitem);
+        sub = $('<div class="tb-megamenu-submenu nav-child dropdown-menu"><div class="row-fluid"><div id=tb-megamenu-column-' + column + ' class="span12" data-width="12"><div class="mega-inner"></div></div></div></div>').appendTo(liitem);
         bindEvents(sub.find('[class*="span"]'));
-        liitem.addClass('mega');
       } else {
         sub.css('display', '');
         liitem.attr('data-hidesub', 0);
@@ -288,10 +287,10 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       var value = $('#tb-megamenu-block-wrapper select[name="toolcol-block"]').val();
       $('#tb-megamenu-admin-mm-tb #toolbox-loading').show();
       callAjax({
-        'action': 'load_block',
-        'block_id': value,
-        'id': currentSelected.attr('id'),
-        'showblocktitle': parseInt(currentSelected.attr('data-showblocktitle'))
+        action: 'load_block',
+        block_id: value,
+        id: currentSelected.attr('id'),
+        showblocktitle: parseInt(currentSelected.attr('data-showblocktitle'))
       });
     }
   };
@@ -313,14 +312,14 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       liitem.attr('data-group', 0);
       liitem.removeClass('mega-group').addClass('dropdown-submenu');
       currentSelected.addClass('dropdown-toggle').attr('data-toggle', 'dropdown');
-      sub.removeClass('mega-group-ct').addClass('dropdown-menu mega-dropdown-menu');
+      sub.removeClass('mega-group-ct').addClass('dropdown-menu');
       sub.css('width', sub.attr('data-width'));
       rebindEvents(sub);
     } else {
       currentSelected.removeClass('dropdown-toggle').attr('data-toggle', '');
       liitem.attr('data-group', 1);
       liitem.removeClass('dropdown-submenu').addClass('mega-group');
-      sub.removeClass('dropdown-menu mega-dropdown-menu').addClass('mega-group-ct');
+      sub.removeClass('dropdown-menu').addClass('mega-group-ct');
       sub.css('width', '');
       rebindEvents(sub);
     }
@@ -629,16 +628,16 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     }
 
     Drupal.TBMegaMenu.lockAjax();
-    $('#tb-megamenu-admin-mm-tb #toolbox-message').html("").hide();
+    $('#tb-megamenu-admin-mm-tb #toolbox-message').html('').hide();
     $('#tb-megamenu-admin-mm-tb #toolbox-loading').show();
     $.ajax({
-      type: "POST",
+      type: 'POST',
       url: drupalSettings.TBMegaMenu.saveConfigURL,
-      contentType: "application/json; charset=utf-8",
+      contentType: 'application/json; charset=utf-8',
       data: JSON.stringify({
-        'action': 'load',
-        'theme': drupalSettings.TBMegaMenu.theme,
-        'menu_name': options['menu_name']
+        action: 'load',
+        theme: drupalSettings.TBMegaMenu.theme,
+        menu_name: options['menu_name']
       }),
       complete: function (r) {
         switch (r.status) {
@@ -650,14 +649,14 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
 
           default:
             $('#tb-megamenu-admin-mm-container').html(r.responseText).megamenuAdmin({
-              'menu_name': options['menu_name']
+              menu_name: options['menu_name']
             }); // Collapse all expanded menu items.
 
             $('#tb-megamenu-admin-mm-container').find('.mega-inner').children('span.close').click(function () {
-              $(this).parent().html("");
+              $(this).parent().html('');
             }); // Set a confirmation message.
 
-            var statusMsg = Drupal.t("All unsaved changes have been reverted.");
+            var statusMsg = Drupal.t('All unsaved changes have been reverted.');
         } // Display the status message modal.
 
 
@@ -690,13 +689,13 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
         var cols = [];
         $cols.each(function () {
           var col_config = {};
-          col_config['width'] = $(this).attr('data-width') ? $(this).attr('data-width') : "";
-          col_config['class'] = $(this).attr('data-class') ? $(this).attr('data-class') : "";
-          col_config['hidewcol'] = $(this).attr('data-hidewcol') ? $(this).attr('data-hidewcol') : "";
-          col_config['showblocktitle'] = $(this).attr('data-showblocktitle') ? $(this).attr('data-showblocktitle') : "1";
+          col_config['width'] = $(this).attr('data-width') ? $(this).attr('data-width') : '';
+          col_config['class'] = $(this).attr('data-class') ? $(this).attr('data-class') : '';
+          col_config['hidewcol'] = $(this).attr('data-hidewcol') ? $(this).attr('data-hidewcol') : '';
+          col_config['showblocktitle'] = $(this).attr('data-showblocktitle') ? $(this).attr('data-showblocktitle') : '1';
           var col = {
-            'col_content': [],
-            'col_config': col_config
+            col_content: [],
+            col_config: col_config
           };
           $(this).find('ul[class*="level"] > li').each(function () {
             var sub_level = parseInt($(this).attr('data-level'));
@@ -727,22 +726,22 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
         }
       });
       var submenu_config = {};
-      submenu_config['width'] = $this.children('.mega-dropdown-menu').attr('data-width') ? $this.children('.mega-dropdown-menu').attr('data-width') : "";
-      submenu_config['class'] = $this.children('.mega-dropdown-menu').attr('data-class') ? $this.children('.mega-dropdown-menu').attr('data-class') : "";
+      submenu_config['width'] = $this.children('.tb-megamanu-submenu').attr('data-width') ? $this.children('.tb-megamanu-submenu').attr('data-width') : '';
+      submenu_config['class'] = $this.children('.tb-megamanu-submenu').attr('data-class') ? $this.children('.tb-megamanu-submenu').attr('data-class') : '';
       submenu_config['group'] = $this.attr('data-group') ? $this.attr('data-group') : 0;
       var item_config = {};
-      item_config['class'] = $this.attr('data-class') ? $this.attr('data-class') : "";
-      item_config['xicon'] = $this.attr('data-xicon') ? $this.attr('data-xicon') : "";
-      item_config['caption'] = $this.attr('data-caption') ? $this.attr('data-caption') : "";
-      item_config['alignsub'] = $this.attr('data-alignsub') ? $this.attr('data-alignsub') : "";
-      item_config['group'] = $this.attr('data-group') ? $this.attr('data-group') : "";
+      item_config['class'] = $this.attr('data-class') ? $this.attr('data-class') : '';
+      item_config['xicon'] = $this.attr('data-xicon') ? $this.attr('data-xicon') : '';
+      item_config['caption'] = $this.attr('data-caption') ? $this.attr('data-caption') : '';
+      item_config['alignsub'] = $this.attr('data-alignsub') ? $this.attr('data-alignsub') : '';
+      item_config['group'] = $this.attr('data-group') ? $this.attr('data-group') : '';
       item_config['hidewcol'] = $this.attr('data-hidewcol') ? $this.attr('data-hidewcol') : 1;
       item_config['hidesub'] = $this.attr('data-hidesub') ? $this.attr('data-hidesub') : 1;
-      item_config['label'] = $this.attr('data-label') ? $this.attr('data-label') : "";
+      item_config['label'] = $this.attr('data-label') ? $this.attr('data-label') : '';
       var config = {
-        'rows_content': rows,
-        'submenu_config': submenu_config,
-        'item_config': item_config
+        rows_content: rows,
+        submenu_config: submenu_config,
+        item_config: item_config
       };
       menu_config[id] = config;
     });
@@ -754,18 +753,18 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     block_config['auto-arrow'] = $('#tb-megamenu-admin-mm-intro .toolitem-auto-arrow').attr('data-auto-arrow');
     block_config['always-show-submenu'] = $('#tb-megamenu-admin-mm-intro .toolitem-always-show-submenu').attr('data-always-show-submenu');
     block_config['number-columns'] = drupalSettings.TBMegaMenu.TBElementsCounter.column;
-    $('#tb-megamenu-admin-mm-tb #toolbox-message').html("").hide();
+    $('#tb-megamenu-admin-mm-tb #toolbox-message').html('').hide();
     $('#tb-megamenu-admin-mm-tb #toolbox-loading').show();
     $.ajax({
-      type: "POST",
+      type: 'POST',
       url: drupalSettings.TBMegaMenu.saveConfigURL,
-      contentType: "application/json; charset=utf-8",
+      contentType: 'application/json; charset=utf-8',
       data: JSON.stringify({
-        'action': 'save',
-        'theme': drupalSettings.TBMegaMenu.theme,
-        'menu_name': options['menu_name'],
-        'menu_config': menu_config,
-        'block_config': block_config
+        action: 'save',
+        theme: drupalSettings.TBMegaMenu.theme,
+        menu_name: options['menu_name'],
+        menu_config: menu_config,
+        block_config: block_config
       }),
       complete: function (r) {
         // Set the status message based on the response.
@@ -780,7 +779,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
   var status_modal = function (code, statusMsg) {
     // Clear any previously set timeouts and hide any visible modals.
     clearTimeout(modalTimeout);
-    $('#tb-megamenu-admin-mm-tb #toolbox-message').html("").hide(); // Set the message container class based on the status code.
+    $('#tb-megamenu-admin-mm-tb #toolbox-message').html('').hide(); // Set the message container class based on the status code.
 
     switch (code) {
       case 500:
@@ -798,12 +797,12 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
 
     $('#tb-megamenu-admin-mm-tb #toolbox-message').html($div).show();
     $('#tb-megamenu-admin-mm-tb #toolbox-message span.close').click(function () {
-      $(this).parent().html("").hide();
+      $(this).parent().html('').hide();
     }); // Auto-dismiss all success messages after a delay.
 
     if (code == 200) {
       modalTimeout = window.setTimeout(function () {
-        $('#tb-megamenu-admin-mm-tb #toolbox-message').html("").hide();
+        $('#tb-megamenu-admin-mm-tb #toolbox-message').html('').hide();
       }, 7000);
     }
   };
@@ -834,11 +833,11 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       var level = parseInt($(selected).parent().attr('data-level'));
 
       if (level > 1) {
-        $("#toogle-group-wrapper").show();
-        $("#toogle-break-column-wrapper").show();
+        $('#toogle-group-wrapper').show();
+        $('#toogle-break-column-wrapper').show();
       } else {
-        $("#toogle-group-wrapper").hide();
-        $("#toogle-break-column-wrapper").hide();
+        $('#toogle-group-wrapper').hide();
+        $('#toogle-break-column-wrapper').hide();
       }
     }
 
@@ -903,7 +902,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
           update_toggle(toggle, 0);
         }
 
-        if (!liparent.length || !liparent.hasClass('mega')) {
+        if (!liparent.length || !liparent.hasClass('tb-megamenu-item')) {
           $('.toolitem-moveleft, .toolitem-moveright').addClass('disabled');
         }
 
@@ -986,7 +985,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
      * For jquery 1.9 or higher, instead of $input.attr('checked', 'checked');
      */
 
-    $input.prop("checked", true);
+    $input.prop('checked', true);
     $input.trigger('update');
   };
 
@@ -1000,7 +999,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
         value = parseInt(value);
 
         if (isNaN(value)) {
-          value = "";
+          value = '';
 
           if (type == 'sub') {
             currentSelected.width(value);
@@ -1030,7 +1029,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
         value = parseInt(value);
 
         if (isNaN(value)) {
-          value = "";
+          value = '';
         }
 
         $(input).val(value);
@@ -1040,7 +1039,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
         value = parseInt(value);
 
         if (isNaN(value)) {
-          value = "";
+          value = '';
         }
 
         $(input).val(value);
@@ -1088,10 +1087,10 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
           if (value) {
             $('#tb-megamenu-admin-mm-tb #toolbox-loading').show();
             callAjax({
-              'action': 'load_block',
-              'block_id': value,
-              'id': currentSelected.attr('id'),
-              'showblocktitle': parseInt(currentSelected.attr('data-showblocktitle'))
+              action: 'load_block',
+              block_id: value,
+              id: currentSelected.attr('id'),
+              showblocktitle: parseInt(currentSelected.attr('data-showblocktitle'))
             });
           } else {
             currentSelected.find('.mega-inner').html('');
@@ -1117,9 +1116,9 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     switch (data.action) {
       case 'load_block':
         $.ajax({
-          type: "POST",
+          type: 'POST',
           url: drupalSettings.TBMegaMenu.saveConfigURL,
-          contentType: "application/json; charset=utf-8",
+          contentType: 'application/json; charset=utf-8',
           data: JSON.stringify(data),
           complete: function (msg) {
             // Check if a valid block was loaded & a JSON object was returned.
@@ -1133,16 +1132,16 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
 
 
             if (isJson) {
-              var content = resp.content ? resp.content : "";
-              var id = resp.id ? resp.id : ""; // Add a close (remove) button and bind a click event to it.
+              var content = resp.content ? resp.content : '';
+              var id = resp.id ? resp.id : ''; // Add a close (remove) button and bind a click event to it.
 
-              var close_button = $('<span class="close fa fa-times-circle" title="' + Drupal.t("Remove this block") + '">&nbsp;</span>');
-              var currentElement = $("#" + id);
+              var close_button = $('<span class="close fa fa-times-circle" title="' + Drupal.t('Remove this block') + '">&nbsp;</span>');
+              var currentElement = $('#' + id);
 
               if (currentElement.length) {
-                currentElement.children('.mega-inner').html("").append(close_button).append($(content)).find(':input').removeAttr('name');
+                currentElement.children('.mega-inner').html('').append(close_button).append($(content)).find(':input').removeAttr('name');
                 currentElement.children('.mega-inner').children('span.close').click(function () {
-                  $(this).parent().html("");
+                  $(this).parent().html('');
                 });
               } // Hide the loading animation.
 

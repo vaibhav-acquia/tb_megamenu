@@ -225,14 +225,14 @@ $dropdown-width: 400px;
 
     // Any <li> items within the mega menu.
     .tb-megamenu-item {
-      > .mega-dropdown-menu {
+      > .tb-megamenu-submenu {
         min-width: 200px;
         display: none;
       }
     }
 
     .tb-megamenu-item.open {
-      > .mega-dropdown-menu {
+      > .tb-megamenu-submenu {
         display: block;
         overflow: visible;
         clip: auto;
