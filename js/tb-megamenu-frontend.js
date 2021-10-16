@@ -85,7 +85,6 @@
               $(toplink)
                 .next()
                 .children()
-                .children()
                 .children('.tb-megamenu-column')
                 .each(function (j, column) {
                   // Only add to the linkArray if menu items exist.
