@@ -13,7 +13,7 @@
   Drupal.TBMegaMenu.supportedScreens = [980];
   Drupal.TBMegaMenu.menuResponsive = function () {
     var windowWidth = window.innerWidth ? window.innerWidth : $(window).width();
-    var navCollapse = $('.tb-megamenu').children('.tb-megamenu-collapse');
+    var navCollapse = $('.tbm').children('.tbm-collapse');
     if (windowWidth < Drupal.TBMegaMenu.supportedScreens[0]) {
       if (Drupal.TBMegaMenu.displayedMenuMobile) {
         navCollapse.css({ height: 'auto', overflow: 'visible' });
@@ -38,8 +38,7 @@
       var $focusable = $(focusableElements).filter(function () {
         var $this = $(this);
         return (
-          $this.closest('.tb-megamenu-subnav').length === 0 &&
-          $this.is(':visible')
+          $this.closest('.tbm-subnav').length === 0 && $this.is(':visible')
         );
       });
 
@@ -58,12 +57,12 @@
 
   Drupal.behaviors.tbMegaMenuAction = {
     attach: function (context, settings) {
-      $('.tb-megamenu', context)
-        .once('tb-megamenu')
+      $('.tbm', context)
+        .once('tbm')
         .each(function () {
           /* Keyboard Control Setup */
           // Semi-Global Variables
-          var navParent = document.querySelector('.tb-megamenu'),
+          var navParent = document.querySelector('.tbm'),
             linkArray = new Array(),
             curPos = new Array(-1, -1, -1);
 
@@ -85,19 +84,18 @@
               $(toplink)
                 .next()
                 .children()
-                .children('.tb-megamenu-column')
+                .children('.tbm-column')
                 .each(function (j, column) {
                   // Only add to the linkArray if menu items exist.
                   // TODO - this does not allow for tabbing to links in blocks, only menu item links.
                   if (
-                    $(column).find('.tb-megamenu-item').children('a, span')
-                      .length > 0
+                    $(column).find('.tbm-item').children('a, span').length > 0
                   ) {
                     linkArray[i][j] = new Array();
 
                     // Each Link
                     $(column)
-                      .find('.tb-megamenu-item')
+                      .find('.tbm-item')
                       .children('a, span')
                       .each(function (k, sublink) {
                         // Add Link to Array
@@ -112,7 +110,7 @@
 
           // Update Position on Focus
           $(this)
-            .find('.tb-megamenu-item')
+            .find('.tbm-item')
             .children('a, span')
             .focus(function () {
               curPos = $(this).data('coordinate');
@@ -288,7 +286,7 @@
 
           // Close Mega Menu
           function nav_close_megamenu() {
-            $('.tb-megamenu .open').removeClass('open');
+            $('.tbm .open').removeClass('open');
             ariaCheck();
           }
 
@@ -338,7 +336,7 @@
           }
 
           var ariaCheck = function () {
-            $('li.tb-megamenu-item', this).each(function () {
+            $('li.tbm-item', this).each(function () {
               if ($(this).is('.mega-group')) {
                 // Mega menu item has mega class (it's a true mega menu)
                 if (!$(this).parents().is('.open')) {
@@ -349,8 +347,8 @@
                   $(this).children().attr('aria-expanded', 'true');
                 }
               } else if (
-                $(this).is('.tb-megamenu-item--has-dropdown') ||
-                $(this).is('.tb-megamenu-item--has-dropdown-submenu')
+                $(this).is('.tbm-item--has-dropdown') ||
+                $(this).is('.tbm-item--has-dropdown-submenu')
               ) {
                 // Mega menu item has dropdown (it's a flyout menu)
                 if (!$(this).is('.open')) {
@@ -430,21 +428,17 @@
             }
           };
 
-          $('.tb-megamenu-button', this).click(function () {
-            if (
-              parseInt(
-                $(this).parent().children('.tb-megamenu-collapse').height(),
-              )
-            ) {
+          $('.tbm-button', this).click(function () {
+            if (parseInt($(this).parent().children('.tbm-collapse').height())) {
               $(this)
                 .parent()
-                .children('.tb-megamenu-collapse')
+                .children('.tbm-collapse')
                 .css({ height: 0, overflow: 'hidden' });
               Drupal.TBMegaMenu.displayedMenuMobile = false;
             } else {
               $(this)
                 .parent()
-                .children('.tb-megamenu-collapse')
+                .children('.tbm-collapse')
                 .css({ height: 'auto', overflow: 'visible' });
               Drupal.TBMegaMenu.displayedMenuMobile = true;
             }
@@ -455,14 +449,14 @@
           if (!isTouch) {
             var mm_duration = 0;
 
-            $('.tb-megamenu', context).each(function () {
+            $('.tbm', context).each(function () {
               if ($(this).data('duration')) {
                 mm_duration = $(this).data('duration');
               }
             });
 
             var mm_timeout = mm_duration ? 100 + mm_duration : 500;
-            $('.tb-megamenu-nav > li, li.tb-megamenu-item', context).bind(
+            $('.tbm-nav > li, li.tbm-item', context).bind(
               'mouseenter',
               function (event) {
                 showMenu($(this), mm_timeout);
@@ -470,7 +464,7 @@
             );
 
             $(
-              '.tb-megamenu-nav > li > .dropdown-toggle, li.tb-megamenu-item > .dropdown-toggle',
+              '.tbm-nav > li > .dropdown-toggle, li.tbm-item > .dropdown-toggle',
               context,
             ).bind('focus', function (event) {
               var $this = $(this);
@@ -486,7 +480,7 @@
               });
             });
 
-            $('.tb-megamenu-nav > li, li.tb-megamenu-item', context).bind(
+            $('.tbm-nav > li, li.tbm-item', context).bind(
               'mouseleave',
               function (event) {
                 hideMenu($(this), mm_timeout);
@@ -502,59 +496,57 @@
             // class occurrences
             $('a, span').focus(function (event) {
               if (
-                !$(this).parent().hasClass('tb-megamenu-item') &&
-                !$(this).parents('.tb-megamenu-block').length
+                !$(this).parent().hasClass('tbm-item') &&
+                !$(this).parents('.tbm-block').length
               ) {
                 nav_close_megamenu();
               }
             });
 
-            $('.tb-megamenu-nav > li > a, li.tb-megamenu-item > a').focus(
-              function (event) {
-                // Remove all occurrences of "open" from other menu trees
-                var siblings = $(this).parents('.tb-megamenu-item').siblings();
-                // var siblings = $(this).closest('.tb-megamenu-item.level-1').siblings();
-                $.each(siblings, function (i, v) {
-                  var cousins = $(v).find('.open');
-                  $.each(cousins, function (index, value) {
-                    $(value).removeClass('open');
-                    ariaCheck($(this));
-                  });
-                  $(v).removeClass('open');
-                  ariaCheck();
+            $('.tbm-nav > li > a, li.tbm-item > a').focus(function (event) {
+              // Remove all occurrences of "open" from other menu trees
+              var siblings = $(this).parents('.tbm-item').siblings();
+              // var siblings = $(this).closest('.tbm-item.level-1').siblings();
+              $.each(siblings, function (i, v) {
+                var cousins = $(v).find('.open');
+                $.each(cousins, function (index, value) {
+                  $(value).removeClass('open');
+                  ariaCheck($(this));
                 });
-                // Open the submenu if the selected item has one
-                if ($(this).next('.tb-megamenu-submenu').length > 0) {
-                  if (!$(this).parent().hasClass('open')) {
-                    $(this).parent().addClass('open');
-                  }
+                $(v).removeClass('open');
+                ariaCheck();
+              });
+              // Open the submenu if the selected item has one
+              if ($(this).next('.tbm-submenu').length > 0) {
+                if (!$(this).parent().hasClass('open')) {
+                  $(this).parent().addClass('open');
                 }
-                // If the anchor's top-level parent is not open, open it
-                if (
-                  !$(this)
-                    .closest('.tb-megamenu-item.tb-megamenu-item--has-dropdown')
-                    .hasClass('open') &&
-                  $(this)
-                    .closest('.tb-megamenu-item.tb-megamenu-item--has-dropdown')
-                    .find('.tb-megamenu-submenu').length > 0
-                ) {
-                  $(this)
-                    .closest('.tb-megamenu-item.tb-megamenu-item--has-dropdown')
-                    .addClass('open');
+              }
+              // If the anchor's top-level parent is not open, open it
+              if (
+                !$(this)
+                  .closest('.tbm-item.tbm-item--has-dropdown')
+                  .hasClass('open') &&
+                $(this)
+                  .closest('.tbm-item.tbm-item--has-dropdown')
+                  .find('.tbm-submenu').length > 0
+              ) {
+                $(this)
+                  .closest('.tbm-item.tbm-item--has-dropdown')
+                  .addClass('open');
+                ariaCheck();
+              }
+              // If anchor's parent submenus are not open, open them
+              var parents = $(this).parents(
+                '.tbm-item.tbm-item--has-dropdown-submenu',
+              );
+              $.each(parents, function (i, v) {
+                if (!$(v).hasClass('open')) {
+                  $(v).addClass('open');
                   ariaCheck();
                 }
-                // If anchor's parent submenus are not open, open them
-                var parents = $(this).parents(
-                  '.tb-megamenu-item.tb-megamenu-item--has-dropdown-submenu',
-                );
-                $.each(parents, function (i, v) {
-                  if (!$(v).hasClass('open')) {
-                    $(v).addClass('open');
-                    ariaCheck();
-                  }
-                });
-              },
-            );
+              });
+            });
           }
 
           // Define actions for touch devices.
@@ -565,7 +557,7 @@
 
               $item.click(function (event) {
                 // If the menu link has already been clicked once...
-                if ($item.hasClass('tb-megamenu-clicked')) {
+                if ($item.hasClass('tbm-clicked')) {
                   var $uri = $item.attr('href');
 
                   // If the menu link has a URI, go to the link.
@@ -573,7 +565,7 @@
                   if ($uri) {
                     window.location.href = $uri;
                   } else {
-                    $item.removeClass('tb-megamenu-clicked');
+                    $item.removeClass('tbm-clicked');
                     hideMenu(tbitem, mm_timeout);
                   }
                 } else {
@@ -581,12 +573,10 @@
 
                   // Hide any already open menus.
                   nav_close_megamenu();
-                  $('.tb-megamenu')
-                    .find('.tb-megamenu-clicked')
-                    .removeClass('tb-megamenu-clicked');
+                  $('.tbm').find('.tbm-clicked').removeClass('tbm-clicked');
 
                   // Open the submenu.
-                  $item.addClass('tb-megamenu-clicked');
+                  $item.addClass('tbm-clicked');
                   showMenu(tbitem, mm_timeout);
                 }
               });
@@ -594,21 +584,16 @@
 
             // Anytime there's a click outside the menu, close the menu.
             $(document).on('click', function (event) {
-              if ($(event.target).closest('.tb-megamenu-nav').length === 0) {
+              if ($(event.target).closest('.tbm-nav').length === 0) {
                 nav_close_megamenu();
-                $('.tb-megamenu')
-                  .find('.tb-megamenu-clicked')
-                  .removeClass('tb-megamenu-clicked');
+                $('.tbm').find('.tbm-clicked').removeClass('tbm-clicked');
               }
             });
           };
 
           if (isTouch) {
             createTouchMenu(
-              $(
-                '.tb-megamenu ul.tb-megamenu-nav li.tb-megamenu-item',
-                context,
-              ).has('.tb-megamenu-submenu'),
+              $('.tbm ul.tbm-nav li.tbm-item', context).has('.tbm-submenu'),
             );
           }
 

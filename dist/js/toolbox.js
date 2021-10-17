@@ -104,21 +104,21 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
 
   Drupal.behaviors.tbMegaMenuBackendAction = {
     attach: function (context) {
-      $('select[name="tb-megamenu-animation"]').change(function () {
-        $('#tb-megamenu-duration-wrapper').css({
+      $('select[name="tbm-animation"]').change(function () {
+        $('#tbm-duration-wrapper').css({
           display: $(this).val() == 'none' ? 'none' : 'inline-block'
         });
-        $('#tb-megamenu-delay-wrapper').css({
+        $('#tbm-delay-wrapper').css({
           display: $(this).val() == 'none' ? 'none' : 'inline-block'
         });
       });
-      $('.tb-megamenu-column-inner .close').click(function () {
+      $('.tbm-column-inner .close').click(function () {
         $(this).parent().html('');
       });
       /* Init TB Mega Menu. */
 
       if (drupalSettings.TBMegaMenu.menu_name !== undefined) {
-        $('#tb-megamenu-admin-mm-container').megamenuAdmin({
+        $('#tbm-admin-mm-container').megamenuAdmin({
           menu_name: drupalSettings.TBMegaMenu.menu_name
         });
       }
@@ -148,7 +148,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
   $.fn.megamenuAdmin = function (options) {
     var defaultOptions = {};
     var options = $.extend(defaultOptions, options);
-    megamenu = $(this).find('.tb-megamenu');
+    megamenu = $(this).find('.tbm');
     nav_items = megamenu.find('ul[class*="level"]>li>:first-child');
     nav_subs = megamenu.find('.nav-child');
     nav_cols = megamenu.find('[class*="span"]');
@@ -161,13 +161,13 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
         var sub = liitem.find('.nav-child:first');
         sub.css('display', 'none');
         a.removeClass('dropdown-toggle').attr('data-toggle', '');
-        liitem.removeClass('tb-megamenu-item--has-dropdown tb-megamenu-item--has-dropdown-submenu');
+        liitem.removeClass('tbm-item--has-dropdown tbm-item--has-dropdown-submenu');
       }
     });
     hide_toolbox(true);
     bindEvents(nav_all);
     $('.toolbox-action, .toolbox-toggle, .toolbox-input').unbind('focus blur click change keydown');
-    $('.tb-megamenu-admin-mm-row').click(function (event) {
+    $('.tbm-admin-mm-row').click(function (event) {
       event.stopPropagation();
     });
     $(document.body).click(function (event) {
@@ -234,7 +234,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     if (sub.length == 0 || sub.css('display') == 'none') {
       if (sub.length == 0) {
         var column = ++drupalSettings.TBMegaMenu.TBElementsCounter.column;
-        sub = $('<div class="tb-megamenu-submenu nav-child"><div class="tb-megamenu-row"><div id=tb-megamenu-column-' + column + ' class="span12" data-width="12"><div class="tb-megamenu-column-inner"></div></div></div></div>').appendTo(liitem);
+        sub = $('<div class="tbm-submenu nav-child"><div class="tbm-row"><div id=tbm-column-' + column + ' class="span12" data-width="12"><div class="tbm-column-inner"></div></div></div></div>').appendTo(liitem);
         bindEvents(sub.find('[class*="span"]'));
       } else {
         sub.css('display', '');
@@ -242,8 +242,8 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       }
 
       liitem.attr('data-group', 0);
-      currentSelected.addClass('dropdown-toggle').attr('data-toggle', 'tb-megamenu-item--has-dropdown');
-      liitem.addClass(liitem.attr('data-level') == 1 ? 'tb-megamenu-item--has-dropdown' : 'tb-megamenu-item--has-dropdown-submenu');
+      currentSelected.addClass('dropdown-toggle').attr('data-toggle', 'tbm-item--has-dropdown');
+      liitem.addClass(liitem.attr('data-level') == 1 ? 'tbm-item--has-dropdown' : 'tbm-item--has-dropdown-submenu');
       bindEvents(sub);
     } else {
       unbindEvents(sub);
@@ -257,7 +257,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
 
       liitem.attr('data-group', 0);
       currentSelected.removeClass('dropdown-toggle').attr('data-toggle', '');
-      liitem.removeClass('tb-megamenu-item--has-dropdown tb-megamenu-item--has-dropdown-submenu');
+      liitem.removeClass('tbm-item--has-dropdown tbm-item--has-dropdown-submenu');
     }
 
     update_toolbox();
@@ -305,9 +305,9 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       currentSelected.attr('data-showblocktitle', 1);
     }
 
-    if ($('#tb-megamenu-block-wrapper select[name="toolcol-block"]').val() != '') {
-      var value = $('#tb-megamenu-block-wrapper select[name="toolcol-block"]').val();
-      $('#tb-megamenu-admin-mm-tb #toolbox-loading').show();
+    if ($('#tbm-block-wrapper select[name="toolcol-block"]').val() != '') {
+      var value = $('#tbm-block-wrapper select[name="toolcol-block"]').val();
+      $('#tbm-admin-mm-tb #toolbox-loading').show();
       callAjax({
         action: 'load_block',
         block_id: value,
@@ -332,16 +332,16 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
 
     if (parseInt(liitem.attr('data-group'))) {
       liitem.attr('data-group', 0);
-      liitem.removeClass('mega-group').addClass('tb-megamenu-item--has-dropdown-submenu');
-      currentSelected.addClass('dropdown-toggle').attr('data-toggle', 'tb-megamenu-item--has-dropdown');
-      sub.removeClass('mega-group-ct').addClass('tb-megamenu-submenu');
+      liitem.removeClass('mega-group').addClass('tbm-item--has-dropdown-submenu');
+      currentSelected.addClass('dropdown-toggle').attr('data-toggle', 'tbm-item--has-dropdown');
+      sub.removeClass('mega-group-ct').addClass('tbm-submenu');
       sub.css('width', sub.attr('data-width'));
       rebindEvents(sub);
     } else {
       currentSelected.removeClass('dropdown-toggle').attr('data-toggle', '');
       liitem.attr('data-group', 1);
-      liitem.removeClass('tb-megamenu-item--has-dropdown-submenu').addClass('mega-group');
-      sub.removeClass('tb-megamenu-submenu').addClass('mega-group-ct');
+      liitem.removeClass('tbm-item--has-dropdown-submenu').addClass('mega-group');
+      sub.removeClass('tbm-submenu').addClass('mega-group-ct');
       sub.css('width', '');
       rebindEvents(sub);
     }
@@ -381,7 +381,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
 
   actions.alignment = function () {
     var liitem = currentSelected.closest('li');
-    liitem.removeClass('tb-megamenu-left tb-megamenu-center tb-megamenu-right tb-megamenu-justify').addClass('tb-megamenu-' + actions.datas.align);
+    liitem.removeClass('tbm-left tbm-center tbm-right tbm-justify').addClass('tbm-' + actions.datas.align);
 
     if (actions.datas.align == 'justify') {
       currentSelected.addClass('span12');
@@ -438,7 +438,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     var $ul = $tocol.find('ul:first');
 
     if (!$ul.length) {
-      $ul = $('<ul class="level' + level + ' tb-megamenu-subnav">').appendTo($tocol.children('.tb-megamenu-column-inner'));
+      $ul = $('<ul class="level' + level + ' tbm-subnav">').appendTo($tocol.children('.tbm-column-inner'));
     }
 
     $moveitems.appendTo($ul);
@@ -465,7 +465,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
         itemleft = $items.length - $moveitems.length,
         $rows = $col.parent().parent().children('[class*="row"]'),
         $cols = $rows.children('[class*="span"]').filter(function () {
-      return $(this).children('.tb-megamenu-column-inner').children('.tb-megamenu-block').length == 0;
+      return $(this).children('.tbm-column-inner').children('.tbm-block').length == 0;
     });
     var colidx = $cols.index($col);
 
@@ -480,15 +480,15 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       actions.datas.addfirst = false;
       actions.addColumn();
       $cols = $rows.children('[class*="span"]').filter(function () {
-        return $(this).children('.tb-megamenu-column-inner').children('.tb-megamenu-block').length == 0;
+        return $(this).children('.tbm-column-inner').children('.tbm-block').length == 0;
       }), currentSelected = oldSelected;
     }
 
     var $tocol = $($cols[colidx + 1]);
-    var $ul = $tocol.find('.tb-megamenu-column-inner ul.tb-megamenu-subnav:first');
+    var $ul = $tocol.find('.tbm-column-inner ul.tbm-subnav:first');
 
     if (!$ul.length) {
-      $ul = $('<ul class="level' + level + ' tb-megamenu-subnav">').appendTo($tocol.children('.tb-megamenu-column-inner'));
+      $ul = $('<ul class="level' + level + ' tbm-subnav">').appendTo($tocol.children('.tbm-column-inner'));
     }
 
     $moveitems.prependTo($ul);
@@ -506,7 +506,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     }
 
     var column = ++drupalSettings.TBMegaMenu.TBElementsCounter.column;
-    var $row = $('<div class="tb-megamenu-row"><div id=tb-megamenu-column-' + column + ' class="span12"><div class="tb-megamenu-column-inner"></div></div></div>').appendTo(currentSelected.find('[class*="row"]:first').parent()),
+    var $row = $('<div class="tbm-row"><div id=tbm-column-' + column + ' class="span12"><div class="tbm-column-inner"></div></div></div>').appendTo(currentSelected.find('[class*="row"]:first').parent()),
         $col = $row.children();
     bindEvents($col);
     currentSelected = null;
@@ -518,7 +518,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       return;
     }
 
-    var $row = $(currentSelected.closest('.tb-megamenu-row'));
+    var $row = $(currentSelected.closest('.tbm-row'));
     var $rows = $row.parent();
     var $prevRow = $row.prev();
 
@@ -531,7 +531,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     $row.replaceWith(trow1);
     $prevRow.replaceWith(trow); // Reset all events on new structure.
 
-    megamenu = $('#tb-megamenu-admin-mm-container').find('.tb-megamenu');
+    megamenu = $('#tbm-admin-mm-container').find('.tbm');
     nav_items = megamenu.find('ul[class*="level"]>li>:first-child');
     nav_subs = megamenu.find('.nav-child');
     nav_cols = megamenu.find('[class*="span"]');
@@ -545,7 +545,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       return;
     }
 
-    var $row = $(currentSelected.closest('.tb-megamenu-row'));
+    var $row = $(currentSelected.closest('.tbm-row'));
     var $rows = $row.parent();
     var $nextRow = $row.next();
 
@@ -558,7 +558,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     $row.replaceWith(trow1);
     $nextRow.replaceWith(trow); // Reset all events on new structure.
 
-    megamenu = $('#tb-megamenu-admin-mm-container').find('.tb-megamenu');
+    megamenu = $('#tbm-admin-mm-container').find('.tbm');
     nav_items = megamenu.find('ul[class*="level"]>li>:first-child');
     nav_subs = megamenu.find('.nav-child');
     nav_cols = megamenu.find('[class*="span"]');
@@ -576,7 +576,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     var colcount = $cols.length + 1;
     var colwidths = defaultColumnsWidth(colcount);
     var column = ++drupalSettings.TBMegaMenu.TBElementsCounter.column;
-    var $col = $('<div id=tb-megamenu-column-' + column + '><div class="tb-megamenu-column-inner"></div></div>');
+    var $col = $('<div id=tbm-column-' + column + '><div class="tbm-column-inner"></div></div>');
 
     if (actions.datas.addfirst) {
       $col.prependTo(currentSelected.parent());
@@ -613,9 +613,9 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
         type_menu = $col.attr('data-block') ? false : true;
 
     if (type_menu && (!$haspos && $allmenucols.length == 1 || $haspos && $allmenucols.length == 0) || $allcols.length == 1) {
-      show_toolbox($(currentSelected).closest('.tb-megamenu-item'));
-      currentSelected = $(currentSelected).closest('.tb-megamenu-item');
-      currentSelected.find('.tb-megamenu-submenu').remove();
+      show_toolbox($(currentSelected).closest('.tbm-item'));
+      currentSelected = $(currentSelected).closest('.tbm-item');
+      currentSelected.find('.tbm-submenu').remove();
     } // If this is the only one column left.
     else {
       if (type_menu) {
@@ -650,8 +650,8 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     }
 
     Drupal.TBMegaMenu.lockAjax();
-    $('#tb-megamenu-admin-mm-tb #toolbox-message').html('').hide();
-    $('#tb-megamenu-admin-mm-tb #toolbox-loading').show();
+    $('#tbm-admin-mm-tb #toolbox-message').html('').hide();
+    $('#tbm-admin-mm-tb #toolbox-loading').show();
     $.ajax({
       type: 'POST',
       url: drupalSettings.TBMegaMenu.saveConfigURL,
@@ -670,11 +670,11 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
           // When successful revert the configuration displayed in the UI.
 
           default:
-            $('#tb-megamenu-admin-mm-container').html(r.responseText).megamenuAdmin({
+            $('#tbm-admin-mm-container').html(r.responseText).megamenuAdmin({
               menu_name: options['menu_name']
             }); // Collapse all expanded menu items.
 
-            $('#tb-megamenu-admin-mm-container').find('.tb-megamenu-column-inner').children('span.close').click(function () {
+            $('#tbm-admin-mm-container').find('.tbm-column-inner').children('span.close').click(function () {
               $(this).parent().html('');
             }); // Set a confirmation message.
 
@@ -730,7 +730,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
               col['col_content'].push(ele);
             }
           });
-          $(this).children('.tb-megamenu-column-inner').children('.tb-megamenu-block').each(function () {
+          $(this).children('.tbm-column-inner').children('.tbm-block').each(function () {
             var ele = {};
             ele['block_id'] = $(this).attr('data-block');
             ele['type'] = $(this).attr('data-type');
@@ -748,8 +748,8 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
         }
       });
       var submenu_config = {};
-      submenu_config['width'] = $this.children('.tb-megamenu-submenu').attr('data-width') ? $this.children('.tb-megamenu-submenu').attr('data-width') : '';
-      submenu_config['class'] = $this.children('.tb-megamenu-submenu').attr('data-class') ? $this.children('.tb-megamenu-submenu').attr('data-class') : '';
+      submenu_config['width'] = $this.children('.tbm-submenu').attr('data-width') ? $this.children('.tbm-submenu').attr('data-width') : '';
+      submenu_config['class'] = $this.children('.tbm-submenu').attr('data-class') ? $this.children('.tbm-submenu').attr('data-class') : '';
       submenu_config['group'] = $this.attr('data-group') ? $this.attr('data-group') : 0;
       var item_config = {};
       item_config['class'] = $this.attr('data-class') ? $this.attr('data-class') : '';
@@ -768,15 +768,15 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       menu_config[id] = config;
     });
     var block_config = {};
-    block_config['animation'] = $('select[name="tb-megamenu-animation"]').val();
-    block_config['duration'] = parseInt($('input[name="tb-megamenu-duration"]').val());
-    block_config['delay'] = parseInt($('input[name="tb-megamenu-delay"]').val());
-    block_config['style'] = $('select[name="tb-megamenu-style"]').val();
-    block_config['auto-arrow'] = $('#tb-megamenu-admin-mm-intro .toolitem-auto-arrow').attr('data-auto-arrow');
-    block_config['always-show-submenu'] = $('#tb-megamenu-admin-mm-intro .toolitem-always-show-submenu').attr('data-always-show-submenu');
+    block_config['animation'] = $('select[name="tbm-animation"]').val();
+    block_config['duration'] = parseInt($('input[name="tbm-duration"]').val());
+    block_config['delay'] = parseInt($('input[name="tbm-delay"]').val());
+    block_config['style'] = $('select[name="tbm-style"]').val();
+    block_config['auto-arrow'] = $('#tbm-admin-mm-intro .toolitem-auto-arrow').attr('data-auto-arrow');
+    block_config['always-show-submenu'] = $('#tbm-admin-mm-intro .toolitem-always-show-submenu').attr('data-always-show-submenu');
     block_config['number-columns'] = drupalSettings.TBMegaMenu.TBElementsCounter.column;
-    $('#tb-megamenu-admin-mm-tb #toolbox-message').html('').hide();
-    $('#tb-megamenu-admin-mm-tb #toolbox-loading').show();
+    $('#tbm-admin-mm-tb #toolbox-message').html('').hide();
+    $('#tbm-admin-mm-tb #toolbox-loading').show();
     $.ajax({
       type: 'POST',
       url: drupalSettings.TBMegaMenu.saveConfigURL,
@@ -801,7 +801,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
   var status_modal = function (code, statusMsg) {
     // Clear any previously set timeouts and hide any visible modals.
     clearTimeout(modalTimeout);
-    $('#tb-megamenu-admin-mm-tb #toolbox-message').html('').hide(); // Set the message container class based on the status code.
+    $('#tbm-admin-mm-tb #toolbox-message').html('').hide(); // Set the message container class based on the status code.
 
     switch (code) {
       case 500:
@@ -813,18 +813,18 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     } // Hide the loading animation.
 
 
-    $('#tb-megamenu-admin-mm-tb #toolbox-loading').hide(); // Build the modal status message container.
+    $('#tbm-admin-mm-tb #toolbox-loading').hide(); // Build the modal status message container.
 
     var $div = $('<div class="messages ' + msgClass + '" role="contentinfo" aria-label="Status message"><h2 class="visually-hidden">Status message</h2><span class="close fa fa-times-circle" title="Dismiss this message">&nbsp;</span>' + statusMsg + '</div>'); // Show the modal and bind a click event to its close (X) button.
 
-    $('#tb-megamenu-admin-mm-tb #toolbox-message').html($div).show();
-    $('#tb-megamenu-admin-mm-tb #toolbox-message span.close').click(function () {
+    $('#tbm-admin-mm-tb #toolbox-message').html($div).show();
+    $('#tbm-admin-mm-tb #toolbox-message span.close').click(function () {
       $(this).parent().html('').hide();
     }); // Auto-dismiss all success messages after a delay.
 
     if (code == 200) {
       modalTimeout = window.setTimeout(function () {
-        $('#tb-megamenu-admin-mm-tb #toolbox-message').html('').hide();
+        $('#tbm-admin-mm-tb #toolbox-message').html('').hide();
       }, 7000);
     }
   };
@@ -834,7 +834,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
   };
 
   var hide_toolbox = function (show_intro) {
-    $('#tb-megamenu-admin-mm-tb .admin-toolbox').hide();
+    $('#tbm-admin-mm-tb .admin-toolbox').hide();
     currentSelected = null;
 
     if (megamenu && megamenu.data('nav_all')) {
@@ -844,14 +844,14 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     megamenu.find('li').removeClass('open');
 
     if (show_intro) {
-      $('#tb-megamenu-admin-mm-intro').show();
+      $('#tbm-admin-mm-intro').show();
     } else {
-      $('#tb-megamenu-admin-mm-intro').hide();
+      $('#tbm-admin-mm-intro').hide();
     }
   };
 
   var show_toolbox = function (selected) {
-    if (!selected.hasClass('tb-megamenu-column') && !selected.hasClass('tb-megamenu-submenu')) {
+    if (!selected.hasClass('tbm-column') && !selected.hasClass('tbm-submenu')) {
       var level = parseInt($(selected).parent().attr('data-level'));
 
       if (level > 1) {
@@ -881,9 +881,9 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     megamenu.data('nav_all').removeClass('selected');
     currentSelected.addClass('selected');
     var type = toolbox_type();
-    $('#tb-megamenu-admin-mm-tool' + type).show();
+    $('#tbm-admin-mm-tool' + type).show();
     update_toolbox(type);
-    $('#tb-megamenu-admin-mm-tb').show();
+    $('#tbm-admin-mm-tb').show();
   };
 
   var update_toolbox = function (type) {
@@ -891,8 +891,8 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       type = toolbox_type();
     }
 
-    $('#tb-megamenu-admin-mm-tb .disabled').removeClass('disabled');
-    $('#tb-megamenu-admin-mm-tb .active').removeClass('active');
+    $('#tbm-admin-mm-tb .disabled').removeClass('disabled');
+    $('#tbm-admin-mm-tb .active').removeClass('active');
 
     switch (type) {
       case 'item':
@@ -924,7 +924,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
           update_toggle(toggle, 0);
         }
 
-        if (!liparent.length || !liparent.hasClass('tb-megamenu-item')) {
+        if (!liparent.length || !liparent.hasClass('tbm-item')) {
           $('.toolitem-moveleft, .toolitem-moveright').addClass('disabled');
         }
 
@@ -966,11 +966,11 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
         break;
 
       case 'col':
-        $('.toolcol-block').val(currentSelected.children('.tb-megamenu-column-inner').children('.tb-megamenu-block').attr('data-block') || '');
+        $('.toolcol-block').val(currentSelected.children('.tbm-column-inner').children('.tbm-block').attr('data-block') || '');
         $('.toolcol-width').val(currentSelected.attr('data-width') || '');
         $('.toolcol-exclass').attr('value', currentSelected.attr('data-class') || '');
 
-        if (currentSelected.find('.tb-megamenu-subnav').length > 0) {
+        if (currentSelected.find('.tbm-subnav').length > 0) {
           $('.toolcol-block').parent().addClass('disabled');
         }
 
@@ -1107,7 +1107,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       case 'block':
         if (currentSelected.find('ul[class*="level"]').length == 0) {
           if (value) {
-            $('#tb-megamenu-admin-mm-tb #toolbox-loading').show();
+            $('#tbm-admin-mm-tb #toolbox-loading').show();
             callAjax({
               action: 'load_block',
               block_id: value,
@@ -1115,7 +1115,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
               showblocktitle: parseInt(currentSelected.attr('data-showblocktitle'))
             });
           } else {
-            currentSelected.find('.tb-megamenu-column-inner').html('');
+            currentSelected.find('.tbm-column-inner').html('');
           }
 
           currentSelected.attr('data-' + name, value);
@@ -1161,14 +1161,14 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
               var currentElement = $('#' + id);
 
               if (currentElement.length) {
-                currentElement.children('.tb-megamenu-column-inner').html('').append(close_button).append($(content)).find(':input').removeAttr('name');
-                currentElement.children('.tb-megamenu-column-inner').children('span.close').click(function () {
+                currentElement.children('.tbm-column-inner').html('').append(close_button).append($(content)).find(':input').removeAttr('name');
+                currentElement.children('.tbm-column-inner').children('span.close').click(function () {
                   $(this).parent().html('');
                 });
               } // Hide the loading animation.
 
 
-              $('#tb-megamenu-admin-mm-tb #toolbox-loading').hide();
+              $('#tbm-admin-mm-tb #toolbox-loading').hide();
             } // If no JSON was received display an error in the modal.
             else {
               var statusMsg = msg.responseText;
@@ -1244,10 +1244,10 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
 
   $.extend(Drupal.TBMegaMenu, {
     prepare: function () {
-      $('#tb-megamenu-admin').removeClass('hidden');
+      $('#tbm-admin').removeClass('hidden');
     },
     tb_megamenu: function (form, ctrlelm, ctrl, rsp) {
-      $('#tb-megamenu-admin-mm-container').html(rsp).megamenuAdmin().find(':input').removeAttr('name');
+      $('#tbm-admin-mm-container').html(rsp).megamenuAdmin().find(':input').removeAttr('name');
     },
     initPanel: function () {
       $('#jform_params_mm_panel').hide();
@@ -1270,7 +1270,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       };
     },
     initRadioGroup: function () {
-      var tb_megamenu_instance = $('.tb-megamenu-admin');
+      var tb_megamenu_instance = $('.tbm-admin');
       tb_megamenu_instance.find('.radio.btn-group label').addClass('btn');
       tb_megamenu_instance.find('.btn-group label').unbind('click').click(function () {
         var label = $(this),

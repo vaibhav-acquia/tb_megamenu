@@ -1,16 +1,16 @@
 {% if css_style is defined %}
 <style type="text/css">
-  .tb-megamenu.animate .tb-megamenu-item > .tb-megamenu-submenu, .tb-megamenu.animate.slide .tb-megamenu-item > .tb-megamenu-submenu > div {
+  .tbm.animate .tbm-item > .tbm-submenu, .tbm.animate.slide .tbm-item > .tbm-submenu > div {
   {{ css_style }}
   }
 </style>
 {% endif %}
 <div {{ attributes }}>
   {% if section == 'frontend' %}
-    <button class="tb-megamenu-button" type="button">
+    <button class="tbm-button" type="button">
       <i class="fa fa-reorder"></i>
     </button>
-    <div class="tb-megamenu-collapse {{ block_config['always-show-submenu'] ? ' always-show' : '' }}">
+    <div class="tbm-collapse {{ block_config['always-show-submenu'] ? ' always-show' : '' }}">
   {% endif %}
   {{ content }}
   {% if section == 'frontend' %}
