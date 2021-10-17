@@ -40,7 +40,7 @@ $dropdown-width: 400px;
 
   .tb-megamenu-submenu li > a:hover,
   .tb-megamenu-submenu li > a:focus,
-  .dropdown-submenu:hover > a {
+  .tb-megamenu-item--has-dropdown-submenu:hover > a {
     background: #4f4f4f;
   }
 
@@ -129,12 +129,12 @@ $dropdown-width: 400px;
     }
 
     // Set up rowns and columns.
-    .row-fluid {
+    .tb-megamenu-row {
       display: flex;
       flex-direction: row;
       width: 100%;
 
-      + .row-fluid {
+      + .tb-megamenu-row {
         margin-top: 10px;
         border-top: 0;
       }
@@ -284,34 +284,34 @@ $dropdown-width: 400px;
       left: 10px;
     }
 
-    li.dropdown > a:hover .caret,
-    li.dropdown > a:focus .caret {
+    li.tb-megamenu-item--has-dropdown > a:hover .caret,
+    li.tb-megamenu-item--has-dropdown > a:focus .caret {
       border-top-color: #333333;
       border-bottom-color: #333333;
     }
 
-    li.dropdown.open > .dropdown-toggle,
-    li.dropdown.active > .dropdown-toggle,
-    li.dropdown.open.active > .dropdown-toggle {
+    li.tb-megamenu-item--has-dropdown.open > .dropdown-toggle,
+    li.tb-megamenu-item--has-dropdown.active > .dropdown-toggle,
+    li.tb-megamenu-item--has-dropdown.open.active > .dropdown-toggle {
       background-color: #e5e5e5;
       color: #555555;
     }
 
-    li.dropdown > .dropdown-toggle .caret {
+    li.tb-megamenu-item--has-dropdown > .dropdown-toggle .caret {
       border-top-color: #777777;
       border-bottom-color: #777777;
     }
 
-    li.dropdown.open > .dropdown-toggle .caret,
-    li.dropdown.active > .dropdown-toggle .caret,
-    li.dropdown.open.active > .dropdown-toggle .caret {
+    li.tb-megamenu-item--has-dropdown.open > .dropdown-toggle .caret,
+    li.tb-megamenu-item--has-dropdown.active > .dropdown-toggle .caret,
+    li.tb-megamenu-item--has-dropdown.open.active > .dropdown-toggle .caret {
       border-top-color: #555555;
       border-bottom-color: #555555;
     }
   }
 
   // Show submenus on hover.
-  .dropdown-submenu:hover > .tb-megamenu-submenu {
+  .tb-megamenu-item--has-dropdown-submenu:hover > .tb-megamenu-submenu {
     display: block;
   }
 
@@ -915,11 +915,15 @@ $dropdown-width: 400px;
     .nav
     > li
     > .tb-megamenu-submenu::after,
-  .tb-megamenu .navbar .tb-megamenu-collapse .dropdown-submenu > a::after,
   .tb-megamenu
     .navbar
     .tb-megamenu-collapse
-    .dropdown-submenu
+    .tb-megamenu-item--has-dropdown-submenu
+    > a::after,
+  .tb-megamenu
+    .navbar
+    .tb-megamenu-collapse
+    .tb-megamenu-item--has-dropdown-submenu
     > span.tb-megamenu-no-link::after {
     display: none;
   }

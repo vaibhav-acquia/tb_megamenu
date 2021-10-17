@@ -24,7 +24,7 @@ $dropdown-width: 400px;
   position: relative;
 
   // Set up rowns and columns.
-  .row-fluid {
+  .tb-megamenu-row {
     display: flex;
     flex-direction: row;
     width: 100%;
@@ -86,12 +86,14 @@ $dropdown-width: 400px;
   }
 
   // When a row is within a submenu, it needs a negative margin.
-  .mega-inner .row-fluid {
+  .tb-megamenu-column-inner .tb-megamenu-row {
     margin-left: -10px;
     margin-right: -10px;
   }
 
-  .mega-inner .dropdown-submenu .row-fluid {
+  .tb-megamenu-column-inner
+    .tb-megamenu-item--has-dropdown-submenu
+    .tb-megamenu-row {
     margin-left: 0;
     margin-right: 0;
   }
@@ -175,8 +177,8 @@ $dropdown-width: 400px;
     }
 
     // Top level menu items that are active or open.
-    .dropdown.active,
-    .dropdown.open.active {
+    .tb-megamenu-item--has-dropdown.active,
+    .tb-megamenu-item--has-dropdown.open.active {
       > a,
       > a:hover,
       > a:focus,
@@ -206,7 +208,7 @@ $dropdown-width: 400px;
     }
 
     // Top level menu items that are open.
-    .dropdown.open {
+    .tb-megamenu-item--has-dropdown.open {
       .caret {
         border-bottom-color: $color-red;
         border-top-color: $color-red;
@@ -348,7 +350,7 @@ $dropdown-width: 400px;
   }
 
   // Any <li> that has sub-links, other than at the top level.
-  .dropdown-submenu {
+  .tb-megamenu-item--has-dropdown-submenu {
     position: relative;
 
     > a,
@@ -437,7 +439,7 @@ $dropdown-width: 400px;
   }
 
   // The wrapper around any dropdown container.
-  .mega-inner {
+  .tb-megamenu-column-inner {
     padding: 10px;
   }
 
@@ -466,9 +468,9 @@ $dropdown-width: 400px;
     margin: 0;
     padding: 0;
 
-    > .row-fluid {
+    > .tb-megamenu-row {
       > [class*='span'] {
-        > .mega-inner {
+        > .tb-megamenu-column-inner {
           padding: 0;
         }
       }
@@ -486,40 +488,42 @@ $dropdown-width: 400px;
   }
 
   // Alignment options for dropdowns.
-  .mega-align-left {
+  .tb-megamenu-left {
     > .tb-megamenu-submenu {
       left: 0;
     }
   }
 
-  .mega-align-right {
+  .tb-megamenu-right {
     > .tb-megamenu-submenu {
       left: auto;
       right: 0;
     }
   }
 
-  .mega-align-center {
+  .tb-megamenu-center {
     > .tb-megamenu-submenu {
       left: 50%;
       transform: translate(-50%);
     }
   }
 
-  .dropdown-submenu.mega-align-left {
-    > .tb-megamenu-submenu {
-      left: 100%;
+  .tb-megamenu-item--has-dropdown-submenu {
+    &.tb-megamenu-left {
+      > .tb-megamenu-submenu {
+        left: 100%;
+      }
+    }
+
+    .tb-megamenu-right {
+      > .tb-megamenu-submenu {
+        left: auto;
+        right: 100%;
+      }
     }
   }
 
-  .dropdown-submenu.mega-align-right {
-    > .tb-megamenu-submenu {
-      left: auto;
-      right: 100%;
-    }
-  }
-
-  .mega-align-justify {
+  .tb-megamenu-justify {
     position: static;
 
     > .tb-megamenu-submenu {
@@ -596,7 +600,7 @@ $dropdown-width: 400px;
         display: none !important;
       }
 
-      .dropdown-submenu {
+      .tb-megamenu-item--has-dropdown-submenu {
         > a,
         > span.tb-megamenu-no-link {
           &:after {
@@ -626,7 +630,7 @@ $dropdown-width: 400px;
       }
     }
 
-    .row-fluid {
+    .tb-megamenu-row {
       width: 100% !important;
       min-width: 100% !important;
       left: 0 !important;
@@ -746,7 +750,7 @@ $dropdown-width: 400px;
       }
     }
 
-    .mega-inner {
+    .tb-megamenu-column-inner {
       padding: 10px 20px;
     }
 

@@ -45,7 +45,9 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
         var sub = liitem.find('.nav-child:first');
         sub.css('display', 'none');
         a.removeClass('dropdown-toggle').attr('data-toggle', '');
-        liitem.removeClass('dropdown dropdown-submenu mega');
+        liitem.removeClass(
+          'tb-megamenu-item--has-dropdown tb-megamenu-item--has-dropdown-submenu',
+        );
       }
     });
 
@@ -121,9 +123,9 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       if (sub.length == 0) {
         var column = ++drupalSettings.TBMegaMenu.TBElementsCounter.column;
         sub = $(
-          '<div class="tb-megamenu-submenu nav-child"><div class="row-fluid"><div id=tb-megamenu-column-' +
+          '<div class="tb-megamenu-submenu nav-child"><div class="tb-megamenu-row"><div id=tb-megamenu-column-' +
             column +
-            ' class="span12" data-width="12"><div class="mega-inner"></div></div></div></div>',
+            ' class="span12" data-width="12"><div class="tb-megamenu-column-inner"></div></div></div></div>',
         ).appendTo(liitem);
         bindEvents(sub.find('[class*="span"]'));
       } else {
@@ -133,9 +135,11 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       liitem.attr('data-group', 0);
       currentSelected
         .addClass('dropdown-toggle')
-        .attr('data-toggle', 'dropdown');
+        .attr('data-toggle', 'tb-megamenu-item--has-dropdown');
       liitem.addClass(
-        liitem.attr('data-level') == 1 ? 'dropdown' : 'dropdown-submenu',
+        liitem.attr('data-level') == 1
+          ? 'tb-megamenu-item--has-dropdown'
+          : 'tb-megamenu-item--has-dropdown-submenu',
       );
       bindEvents(sub);
     } else {
@@ -148,7 +152,9 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       }
       liitem.attr('data-group', 0);
       currentSelected.removeClass('dropdown-toggle').attr('data-toggle', '');
-      liitem.removeClass('dropdown dropdown-submenu mega');
+      liitem.removeClass(
+        'tb-megamenu-item--has-dropdown tb-megamenu-item--has-dropdown-submenu',
+      );
     }
     update_toolbox();
   };
@@ -223,17 +229,21 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     } // Ignore for top level.
     if (parseInt(liitem.attr('data-group'))) {
       liitem.attr('data-group', 0);
-      liitem.removeClass('mega-group').addClass('dropdown-submenu');
+      liitem
+        .removeClass('mega-group')
+        .addClass('tb-megamenu-item--has-dropdown-submenu');
       currentSelected
         .addClass('dropdown-toggle')
-        .attr('data-toggle', 'dropdown');
+        .attr('data-toggle', 'tb-megamenu-item--has-dropdown');
       sub.removeClass('mega-group-ct').addClass('tb-megamenu-submenu');
       sub.css('width', sub.attr('data-width'));
       rebindEvents(sub);
     } else {
       currentSelected.removeClass('dropdown-toggle').attr('data-toggle', '');
       liitem.attr('data-group', 1);
-      liitem.removeClass('dropdown-submenu').addClass('mega-group');
+      liitem
+        .removeClass('tb-megamenu-item--has-dropdown-submenu')
+        .addClass('mega-group');
       sub.removeClass('tb-megamenu-submenu').addClass('mega-group-ct');
       sub.css('width', '');
       rebindEvents(sub);
@@ -271,9 +281,9 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     var liitem = currentSelected.closest('li');
     liitem
       .removeClass(
-        'mega-align-left mega-align-center mega-align-right mega-align-justify',
+        'tb-megamenu-left tb-megamenu-center tb-megamenu-right tb-megamenu-justify',
       )
-      .addClass('mega-align-' + actions.datas.align);
+      .addClass('tb-megamenu-' + actions.datas.align);
     if (actions.datas.align == 'justify') {
       currentSelected.addClass('span12');
       currentSelected.css('width', '');
@@ -323,7 +333,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     var $ul = $tocol.find('ul:first');
     if (!$ul.length) {
       $ul = $('<ul class="level' + level + ' tb-megamenu-subnav">').appendTo(
-        $tocol.children('.mega-inner'),
+        $tocol.children('.tb-megamenu-column-inner'),
       );
     }
     $moveitems.appendTo($ul);
@@ -348,8 +358,9 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       $rows = $col.parent().parent().children('[class*="row"]'),
       $cols = $rows.children('[class*="span"]').filter(function () {
         return (
-          $(this).children('.mega-inner').children('.tb-megamenu-block')
-            .length == 0
+          $(this)
+            .children('.tb-megamenu-column-inner')
+            .children('.tb-megamenu-block').length == 0
         );
       });
 
@@ -365,17 +376,20 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       actions.addColumn();
       ($cols = $rows.children('[class*="span"]').filter(function () {
         return (
-          $(this).children('.mega-inner').children('.tb-megamenu-block')
-            .length == 0
+          $(this)
+            .children('.tb-megamenu-column-inner')
+            .children('.tb-megamenu-block').length == 0
         );
       })),
         (currentSelected = oldSelected);
     }
     var $tocol = $($cols[colidx + 1]);
-    var $ul = $tocol.find('.mega-inner ul.tb-megamenu-subnav:first');
+    var $ul = $tocol.find(
+      '.tb-megamenu-column-inner ul.tb-megamenu-subnav:first',
+    );
     if (!$ul.length) {
       $ul = $('<ul class="level' + level + ' tb-megamenu-subnav">').appendTo(
-        $tocol.children('.mega-inner'),
+        $tocol.children('.tb-megamenu-column-inner'),
       );
     }
     $moveitems.prependTo($ul);
@@ -391,9 +405,9 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     }
     var column = ++drupalSettings.TBMegaMenu.TBElementsCounter.column;
     var $row = $(
-        '<div class="row-fluid"><div id=tb-megamenu-column-' +
+        '<div class="tb-megamenu-row"><div id=tb-megamenu-column-' +
           column +
-          ' class="span12"><div class="mega-inner"></div></div></div>',
+          ' class="span12"><div class="tb-megamenu-column-inner"></div></div></div>',
       ).appendTo(currentSelected.find('[class*="row"]:first').parent()),
       $col = $row.children();
     bindEvents($col);
@@ -405,7 +419,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     if (!currentSelected) {
       return;
     }
-    var $row = $(currentSelected.closest('.row-fluid'));
+    var $row = $(currentSelected.closest('.tb-megamenu-row'));
     var $rows = $row.parent();
     var $prevRow = $row.prev();
     if ($prevRow.length == 0) {
@@ -462,7 +476,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     var $col = $(
       '<div id=tb-megamenu-column-' +
         column +
-        '><div class="mega-inner"></div></div>',
+        '><div class="tb-megamenu-column-inner"></div></div>',
     );
     if (actions.datas.addfirst) {
       $col.prependTo(currentSelected.parent());
@@ -570,7 +584,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
               .megamenuAdmin({ menu_name: options['menu_name'] });
             // Collapse all expanded menu items.
             $('#tb-megamenu-admin-mm-container')
-              .find('.mega-inner')
+              .find('.tb-megamenu-column-inner')
               .children('span.close')
               .click(function () {
                 $(this).parent().html('');
@@ -637,7 +651,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
               }
             });
           $(this)
-            .children('.mega-inner')
+            .children('.tb-megamenu-column-inner')
             .children('.tb-megamenu-block')
             .each(function () {
               var ele = {};
@@ -929,7 +943,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       case 'col':
         $('.toolcol-block').val(
           currentSelected
-            .children('.mega-inner')
+            .children('.tb-megamenu-column-inner')
             .children('.tb-megamenu-block')
             .attr('data-block') || '',
         );
@@ -1077,7 +1091,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
               ),
             });
           } else {
-            currentSelected.find('.mega-inner').html('');
+            currentSelected.find('.tb-megamenu-column-inner').html('');
           }
           currentSelected.attr('data-' + name, value);
         }
@@ -1120,14 +1134,14 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
               var currentElement = $('#' + id);
               if (currentElement.length) {
                 currentElement
-                  .children('.mega-inner')
+                  .children('.tb-megamenu-column-inner')
                   .html('')
                   .append(close_button)
                   .append($(content))
                   .find(':input')
                   .removeAttr('name');
                 currentElement
-                  .children('.mega-inner')
+                  .children('.tb-megamenu-column-inner')
                   .children('span.close')
                   .click(function () {
                     $(this).parent().html('');

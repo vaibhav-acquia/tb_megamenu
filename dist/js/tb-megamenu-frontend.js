@@ -425,7 +425,7 @@
                 // Mega menu item has mega class and its ancestor is open, so apply appropriate ARIA attributes
                 $(this).children().attr('aria-expanded', 'true');
               }
-            } else if ($(this).is('.dropdown') || $(this).is('.dropdown-submenu')) {
+            } else if ($(this).is('.tb-megamenu-item--has-dropdown') || $(this).is('.tb-megamenu-item--has-dropdown-submenu')) {
               // Mega menu item has dropdown (it's a flyout menu)
               if (!$(this).is('.open')) {
                 // Mega menu item has dropdown class and is closed, so apply appropriate ARIA attributes
@@ -564,13 +564,13 @@
             } // If the anchor's top-level parent is not open, open it
 
 
-            if (!$(this).closest('.tb-megamenu-item.dropdown').hasClass('open') && $(this).closest('.tb-megamenu-item.dropdown').find('.tb-megamenu-submenu').length > 0) {
-              $(this).closest('.tb-megamenu-item.dropdown').addClass('open');
+            if (!$(this).closest('.tb-megamenu-item.tb-megamenu-item--has-dropdown').hasClass('open') && $(this).closest('.tb-megamenu-item.tb-megamenu-item--has-dropdown').find('.tb-megamenu-submenu').length > 0) {
+              $(this).closest('.tb-megamenu-item.tb-megamenu-item--has-dropdown').addClass('open');
               ariaCheck();
             } // If anchor's parent submenus are not open, open them
 
 
-            var parents = $(this).parents('.tb-megamenu-item.dropdown-submenu');
+            var parents = $(this).parents('.tb-megamenu-item.tb-megamenu-item--has-dropdown-submenu');
             $.each(parents, function (i, v) {
               if (!$(v).hasClass('open')) {
                 $(v).addClass('open');

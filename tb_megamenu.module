@@ -182,7 +182,6 @@ function template_preprocess_tb_megamenu_row(array &$vars) {
   $vars['attributes']['class'] = [];
   $theme_name = str_replace('_', '-', $vars['theme_hook_original']);
   $vars['attributes']['class'][] = $theme_name;
-  $vars['attributes']['class'][] = 'row-fluid';
 }
 
 /**
@@ -610,7 +609,7 @@ function template_preprocess_tb_megamenu_item(array &$vars) {
     $vars['attributes']['class'][] = $item_config['class'];
   }
   if (!empty($item_config['alignsub'])) {
-    $vars['attributes']['class'][] = "mega-align-" . $item_config['alignsub'];
+    $vars['attributes']['class'][] = "tb-megamenu-" . $item_config['alignsub'];
   }
   if ($item_config['hidewcol']) {
     $vars['attributes']['class'][] = "sub-hidden-collapse";
@@ -623,10 +622,10 @@ function template_preprocess_tb_megamenu_item(array &$vars) {
   elseif ($vars['submenu'] && !$item_config['hidesub']) {
     $vars['link']['attributes']['class'][] = 'dropdown-toggle';
     if ($level == 1) {
-      $vars['attributes']['class'][] = 'dropdown';
+      $vars['attributes']['class'][] = 'tb-megamenu-item--has-dropdown';
     }
     else {
-      $vars['attributes']['class'][] = 'dropdown-submenu';
+      $vars['attributes']['class'][] = 'tb-megamenu-item--has-dropdown-submenu';
     }
   }
 

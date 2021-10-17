@@ -349,8 +349,8 @@
                   $(this).children().attr('aria-expanded', 'true');
                 }
               } else if (
-                $(this).is('.dropdown') ||
-                $(this).is('.dropdown-submenu')
+                $(this).is('.tb-megamenu-item--has-dropdown') ||
+                $(this).is('.tb-megamenu-item--has-dropdown-submenu')
               ) {
                 // Mega menu item has dropdown (it's a flyout menu)
                 if (!$(this).is('.open')) {
@@ -532,20 +532,20 @@
                 // If the anchor's top-level parent is not open, open it
                 if (
                   !$(this)
-                    .closest('.tb-megamenu-item.dropdown')
+                    .closest('.tb-megamenu-item.tb-megamenu-item--has-dropdown')
                     .hasClass('open') &&
                   $(this)
-                    .closest('.tb-megamenu-item.dropdown')
+                    .closest('.tb-megamenu-item.tb-megamenu-item--has-dropdown')
                     .find('.tb-megamenu-submenu').length > 0
                 ) {
                   $(this)
-                    .closest('.tb-megamenu-item.dropdown')
+                    .closest('.tb-megamenu-item.tb-megamenu-item--has-dropdown')
                     .addClass('open');
                   ariaCheck();
                 }
                 // If anchor's parent submenus are not open, open them
                 var parents = $(this).parents(
-                  '.tb-megamenu-item.dropdown-submenu',
+                  '.tb-megamenu-item.tb-megamenu-item--has-dropdown-submenu',
                 );
                 $.each(parents, function (i, v) {
                   if (!$(v).hasClass('open')) {
