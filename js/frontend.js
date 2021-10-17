@@ -348,7 +348,7 @@
                 }
               } else if (
                 $(this).is('.tbm-item--has-dropdown') ||
-                $(this).is('.tbm-item--has-dropdown-submenu')
+                $(this).is('.tbm-item--has-flyout')
               ) {
                 // Mega menu item has dropdown (it's a flyout menu)
                 if (!$(this).is('.open')) {
@@ -537,9 +537,7 @@
                 ariaCheck();
               }
               // If anchor's parent submenus are not open, open them
-              var parents = $(this).parents(
-                '.tbm-item.tbm-item--has-dropdown-submenu',
-              );
+              var parents = $(this).parents('.tbm-item.tbm-item--has-flyout');
               $.each(parents, function (i, v) {
                 if (!$(v).hasClass('open')) {
                   $(v).addClass('open');

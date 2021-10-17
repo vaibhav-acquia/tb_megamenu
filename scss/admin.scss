@@ -40,7 +40,7 @@ $dropdown-width: 400px;
 
   .tbm-submenu li > a:hover,
   .tbm-submenu li > a:focus,
-  .tbm-item--has-dropdown-submenu:hover > a {
+  .tbm-item--has-flyout:hover > a {
     background: #4f4f4f;
   }
 
@@ -311,7 +311,7 @@ $dropdown-width: 400px;
   }
 
   // Show submenus on hover.
-  .tbm-item--has-dropdown-submenu:hover > .tbm-submenu {
+  .tbm-item--has-flyout:hover > .tbm-submenu {
     display: block;
   }
 
@@ -390,7 +390,7 @@ $dropdown-width: 400px;
   }
 
   // Blocks within the megamenu.
-  .tb-block {
+  .tbm-block {
     pointer-events: none;
     cursor: default;
     position: relative;
@@ -876,49 +876,5 @@ $dropdown-width: 400px;
   li > label a:focus,
   li > label a:hover {
     color: #0077bb;
-  }
-}
-
-@media (max-width: 979px) {
-  .tbm .navbar .container {
-    width: auto;
-    padding: 0;
-  }
-}
-
-@media (max-width: 480px) {
-  .tbm .btn {
-    font-size: 11px;
-    padding: 1px 4px 2px 4px;
-  }
-  .tbm .navbar .btn {
-    margin: 0;
-  }
-  .tbm .btn-toolbar > .btn-group {
-    width: 99% !important;
-  }
-  .tbm .btn-toolbar > .btn-group > .btn {
-    width: 99% !important;
-  }
-}
-
-@media (max-width: 738px) {
-  .tbm .navbar .tbm-collapse .nav > li > .tbm-submenu::before,
-  .tbm .navbar .tbm-collapse .nav > li > .tbm-submenu::after,
-  .tbm .navbar .tbm-collapse .tbm-item--has-dropdown-submenu > a::after,
-  .tbm
-    .navbar
-    .tbm-collapse
-    .tbm-item--has-dropdown-submenu
-    > span.tbm-no-link::after {
-    display: none;
-  }
-}
-
-@media (max-width: 979px) {
-  .tbm-nav > li > .tbm-submenu:before,
-  .tbm-nav > li > .tbm-submenu:after,
-  .tbm-nav > li > .tbm-submenu .divider {
-    display: none;
   }
 }

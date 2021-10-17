@@ -232,7 +232,7 @@ function template_preprocess_tb_megamenu_column(array &$vars) {
 
   $vars['attributes']['class'] = [];
   $vars['attributes']['class'][] = 'tbm-column';
-  $vars['attributes']['class'][] = 'span' . $col_config['width'];
+  $vars['attributes']['class'][] = 'span' . ($col_config['width'] ? $col_config['width'] : 12);
   if (!empty($col_config['class'])) {
     $vars['attributes']['class'][] = $col_config['class'];
   }
@@ -496,7 +496,6 @@ function template_preprocess_tb_megamenu_block(array &$vars) {
     }
     $vars['attributes'] = new Attribute();
     $vars['attributes']['class'] = [];
-    $vars['attributes']['class'][] = "tb-block";
     $vars['attributes']['class'][] = 'tbm-block';
     $vars['attributes']['data-type'] = "block";
     $vars['attributes']['data-block'] = $vars['block_id'];
@@ -617,7 +616,7 @@ function template_preprocess_tb_megamenu_item(array &$vars) {
       $vars['attributes']['class'][] = 'tbm-item--has-dropdown';
     }
     else {
-      $vars['attributes']['class'][] = 'tbm-item--has-dropdown-submenu';
+      $vars['attributes']['class'][] = 'tbm-item--has-flyout';
     }
   }
 

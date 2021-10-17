@@ -425,7 +425,7 @@
                 // Mega menu item has mega class and its ancestor is open, so apply appropriate ARIA attributes
                 $(this).children().attr('aria-expanded', 'true');
               }
-            } else if ($(this).is('.tbm-item--has-dropdown') || $(this).is('.tbm-item--has-dropdown-submenu')) {
+            } else if ($(this).is('.tbm-item--has-dropdown') || $(this).is('.tbm-item--has-flyout')) {
               // Mega menu item has dropdown (it's a flyout menu)
               if (!$(this).is('.open')) {
                 // Mega menu item has dropdown class and is closed, so apply appropriate ARIA attributes
@@ -570,7 +570,7 @@
             } // If anchor's parent submenus are not open, open them
 
 
-            var parents = $(this).parents('.tbm-item.tbm-item--has-dropdown-submenu');
+            var parents = $(this).parents('.tbm-item.tbm-item--has-flyout');
             $.each(parents, function (i, v) {
               if (!$(v).hasClass('open')) {
                 $(v).addClass('open');

@@ -69,9 +69,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
         var sub = liitem.find('.nav-child:first');
         sub.css('display', 'none');
         a.removeClass('dropdown-toggle').attr('data-toggle', '');
-        liitem.removeClass(
-          'tbm-item--has-dropdown tbm-item--has-dropdown-submenu',
-        );
+        liitem.removeClass('tbm-item--has-dropdown tbm-item--has-flyout');
       }
     });
 
@@ -163,7 +161,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       liitem.addClass(
         liitem.attr('data-level') == 1
           ? 'tbm-item--has-dropdown'
-          : 'tbm-item--has-dropdown-submenu',
+          : 'tbm-item--has-flyout',
       );
       bindEvents(sub);
     } else {
@@ -176,9 +174,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       }
       liitem.attr('data-group', 0);
       currentSelected.removeClass('dropdown-toggle').attr('data-toggle', '');
-      liitem.removeClass(
-        'tbm-item--has-dropdown tbm-item--has-dropdown-submenu',
-      );
+      liitem.removeClass('tbm-item--has-dropdown tbm-item--has-flyout');
     }
     update_toolbox();
   };
@@ -249,9 +245,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     } // Ignore for top level.
     if (parseInt(liitem.attr('data-group'))) {
       liitem.attr('data-group', 0);
-      liitem
-        .removeClass('mega-group')
-        .addClass('tbm-item--has-dropdown-submenu');
+      liitem.removeClass('mega-group').addClass('tbm-item--has-flyout');
       currentSelected
         .addClass('dropdown-toggle')
         .attr('data-toggle', 'tbm-item--has-dropdown');
@@ -261,9 +255,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     } else {
       currentSelected.removeClass('dropdown-toggle').attr('data-toggle', '');
       liitem.attr('data-group', 1);
-      liitem
-        .removeClass('tbm-item--has-dropdown-submenu')
-        .addClass('mega-group');
+      liitem.removeClass('tbm-item--has-flyout').addClass('mega-group');
       sub.removeClass('tbm-submenu').addClass('mega-group-ct');
       sub.css('width', '');
       rebindEvents(sub);

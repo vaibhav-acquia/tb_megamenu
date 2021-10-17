@@ -19,81 +19,30 @@ $color-white-75-op: rgba(255, 255, 255, 0.075);
 
 $dropdown-width: 400px;
 
+// The wrapper around everything.
 .tbm {
   background-color: $color-black;
   position: relative;
 
   // Set up rowns and columns.
   .tbm-row {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
+    column-gap: 10px;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
 
     [class*='span'] {
-      display: block;
-      width: 100%;
       min-height: 30px;
-      box-sizing: border-box;
     }
 
-    .span12 {
-      width: 100%;
+    @for $i from 1 through 12 {
+      .span#{$i} {
+        grid-column-start: span #{$i};
+      }
     }
 
-    .span11 {
-      width: 91.66666667%;
+    + .tbm-row {
+      margin-top: 10px;
     }
-
-    .span10 {
-      width: 83.33333333%;
-    }
-
-    .span9 {
-      width: 75%;
-    }
-
-    .span8 {
-      width: 66.66666667%;
-    }
-
-    .span7 {
-      width: 58.33333333%;
-    }
-
-    .span6 {
-      width: 50%;
-    }
-
-    .span5 {
-      width: 41.66666667%;
-    }
-
-    .span4 {
-      width: 33.33333333%;
-    }
-
-    .span3 {
-      width: 25%;
-    }
-
-    .span2 {
-      width: 16.66666667%;
-    }
-
-    .span1 {
-      width: 8.333333333%;
-    }
-  }
-
-  // When a row is within a submenu, it needs a negative margin.
-  .tbm-column-inner .tbm-row {
-    margin-left: -10px;
-    margin-right: -10px;
-  }
-
-  .tbm-column-inner .tbm-item--has-dropdown-submenu .tbm-row {
-    margin-left: 0;
-    margin-right: 0;
   }
 
   // Admins can add font awesome icons to menu items.
@@ -269,7 +218,8 @@ $dropdown-width: 400px;
     box-shadow: 0 5px 10px $color-black-20-op;
     display: none;
     left: 0;
-    min-width: $dropdown-width;
+    width: $dropdown-width;
+    padding: 10px;
     position: absolute;
     top: 100%;
     z-index: 1000;
@@ -348,7 +298,7 @@ $dropdown-width: 400px;
   }
 
   // Any <li> that has sub-links, other than at the top level.
-  .tbm-item--has-dropdown-submenu {
+  .tbm-item--has-flyout {
     position: relative;
 
     > a,
@@ -436,11 +386,6 @@ $dropdown-width: 400px;
     }
   }
 
-  // The wrapper around any dropdown container.
-  .tbm-column-inner {
-    padding: 10px;
-  }
-
   // Any <li> that has been designated as a "group" item (the content within
   // is not contained within a dropdown/submenu, but is instead always visible.
 
@@ -506,7 +451,7 @@ $dropdown-width: 400px;
     }
   }
 
-  .tbm-item--has-dropdown-submenu {
+  .tbm-item--has-flyout {
     &.tbm-left {
       > .tbm-submenu {
         left: 100%;
@@ -536,9 +481,7 @@ $dropdown-width: 400px;
   }
 
   // Any block that is placed in a mega menu.
-  .tb-block {
-    margin-bottom: 10px;
-
+  .tbm-block {
     .block-title {
       font-size: 12px;
       color: $color-dark-grey-1;
@@ -598,7 +541,7 @@ $dropdown-width: 400px;
         display: none !important;
       }
 
-      .tbm-item--has-dropdown-submenu {
+      .tbm-item--has-flyout {
         > a,
         > span.tbm-no-link {
           &:after {
@@ -770,7 +713,7 @@ $dropdown-width: 400px;
       }
     }
 
-    .tb-block {
+    .tbm-block {
       margin-bottom: 0;
 
       .block-title {
