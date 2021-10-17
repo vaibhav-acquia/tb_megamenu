@@ -4,8 +4,7 @@ form.configure-megamenu:
     theme:
       dist/admin.css: {}
   js:
-    js/tb-megamenu.backend.js: { scope: footer }
-    js/tb-megamenu.object.js: { scope: footer }
+    js/toolbox.js: { scope: footer }
   dependencies:
     - core/jquery
     - core/drupal
@@ -19,7 +18,7 @@ theme.tb_megamenu:
       https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css: { type: external }
       dist/style.css: {}
   js:
-    js/tb-megamenu-frontend.js: { scope: footer }
+    js/frontend.js: { scope: footer }
   dependencies:
     - core/jquery
     - core/drupal

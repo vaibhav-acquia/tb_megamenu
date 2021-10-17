@@ -81,15 +81,15 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./js/tb-megamenu-frontend.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./js/frontend.js");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./js/tb-megamenu-frontend.js":
-/*!************************************!*\
-  !*** ./js/tb-megamenu-frontend.js ***!
-  \************************************/
+/***/ "./js/frontend.js":
+/*!************************!*\
+  !*** ./js/frontend.js ***!
+  \************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -643,4 +643,4 @@
 /***/ })
 
 /******/ });
-//# sourceMappingURL=tb-megamenu-frontend.js.map
+//# sourceMappingURL=frontend.js.map
