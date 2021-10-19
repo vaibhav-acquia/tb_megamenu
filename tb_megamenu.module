@@ -220,12 +220,12 @@ function template_preprocess_tb_megamenu_column(array &$vars) {
         '#section' => $vars['section'],
         '#showblocktitle' => $col_config['showblocktitle'],
       ];
-      $vars['attributes']['data-showblocktitle'] = $col_config['showblocktitle'];
       if ($vars['section'] !== 'frontend') {
         $msg = t("Remove this block");
         $vars['close_button'] = [
           '#markup' => '<span class="close fa fa-times-circle" title="' . $msg . '">&nbsp;</span>',
         ];
+        $vars['attributes']['data-showblocktitle'] = $col_config['showblocktitle'];
       }
     }
   }
@@ -245,10 +245,9 @@ function template_preprocess_tb_megamenu_column(array &$vars) {
     $vars['attributes']['data-class'] = $col_config['class'];
     $vars['attributes']['data-width'] = $col_config['width'];
     $vars['attributes']['data-hidewcol'] = $col_config['hidewcol'];
+    $num_cols = isset($vars['block_config']['number-columns']) ? $vars['block_config']['number-columns'] : 1;
+    $vars['attributes']['id'] = \Drupal::service('tb_megamenu.menu_builder')->getIdColumn($num_cols);
   }
-
-  $num_cols = isset($vars['block_config']['number-columns']) ? $vars['block_config']['number-columns'] : 1;
-  $vars['attributes']['id'] = \Drupal::service('tb_megamenu.menu_builder')->getIdColumn($num_cols);
 }
 
 /**
@@ -355,7 +354,7 @@ function template_preprocess_tb_megamenu_submenu(array &$vars) {
     $vars['attributes']['data-class'] = $submenu_config['class'];
     $vars['attributes']['data-width'] = $submenu_config['width'];
   }
-  
+
   if (!empty($submenu_config['width'])) {
     $vars['attributes']['style'] = "width: " . $submenu_config['width'] . "px;";
   }
@@ -501,12 +500,12 @@ function template_preprocess_tb_megamenu_block(array &$vars) {
     }
     elseif ($vars['section'] == 'backend') {
       $vars['content'] = $plugin_configuration['label'];
+      $vars['attributes']['data-type'] = "block";
+      $vars['attributes']['data-block'] = $vars['block_id'];
     }
     $vars['attributes'] = new Attribute();
     $vars['attributes']['class'] = [];
     $vars['attributes']['class'][] = 'tbm-block';
-    $vars['attributes']['data-type'] = "block";
-    $vars['attributes']['data-block'] = $vars['block_id'];
   }
   else {
     $vars['content'] = NULL;
