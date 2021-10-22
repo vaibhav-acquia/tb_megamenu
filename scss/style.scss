@@ -177,7 +177,6 @@ $dropdown-width: 400px;
         overflow: visible;
         clip: auto;
         height: auto;
-        width: auto;
       }
     }
 
@@ -348,7 +347,6 @@ $dropdown-width: 400px;
         overflow: visible;
         clip: auto;
         height: auto;
-        width: auto;
       }
     }
   }
@@ -366,9 +364,7 @@ $dropdown-width: 400px;
 
     > li {
       display: block;
-      float: none;
       list-style: none;
-      margin-left: 0;
 
       &:first-child {
         > a,
