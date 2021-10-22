@@ -180,9 +180,7 @@ function template_preprocess_tb_megamenu_row(array &$vars) {
   }
   $vars['attributes'] = new Attribute();
   $vars['attributes']['class'] = [];
-  $theme_name = str_replace('_', '-', $vars['theme_hook_original']);
-  $vars['attributes']['class'][] = $theme_name;
-  $vars['attributes']['class'][] = 'row-fluid';
+  $vars['attributes']['class'][] = 'tbm-row';
 }
 
 /**
@@ -222,21 +220,19 @@ function template_preprocess_tb_megamenu_column(array &$vars) {
         '#section' => $vars['section'],
         '#showblocktitle' => $col_config['showblocktitle'],
       ];
-      $vars['attributes']['data-showblocktitle'] = $col_config['showblocktitle'];
       if ($vars['section'] !== 'frontend') {
         $msg = t("Remove this block");
         $vars['close_button'] = [
           '#markup' => '<span class="close fa fa-times-circle" title="' . $msg . '">&nbsp;</span>',
         ];
+        $vars['attributes']['data-showblocktitle'] = $col_config['showblocktitle'];
       }
     }
   }
 
   $vars['attributes']['class'] = [];
-  $theme_name = str_replace('_', '-', $vars['theme_hook_original']);
-  $vars['attributes']['class'][] = $theme_name;
-  $vars['attributes']['class'][] = 'span' . $col_config['width'];
-  $vars['attributes']['class'][] = 'mega-col-nav';
+  $vars['attributes']['class'][] = 'tbm-column';
+  $vars['attributes']['class'][] = 'span' . ($col_config['width'] ? $col_config['width'] : 12);
   if (!empty($col_config['class'])) {
     $vars['attributes']['class'][] = $col_config['class'];
   }
@@ -244,11 +240,14 @@ function template_preprocess_tb_megamenu_column(array &$vars) {
     $vars['attributes']['class'][] = $col_config['class'];
     $vars['attributes']['class'][] = 'hidden-collapse';
   }
-  $vars['attributes']['data-class'] = $col_config['class'];
-  $vars['attributes']['data-width'] = $col_config['width'];
-  $vars['attributes']['data-hidewcol'] = $col_config['hidewcol'];
-  $num_cols = isset($vars['block_config']['number-columns']) ? $vars['block_config']['number-columns'] : 1;
-  $vars['attributes']['id'] = \Drupal::service('tb_megamenu.menu_builder')->getIdColumn($num_cols);
+
+  if ($vars['section'] == 'backend') {
+    $vars['attributes']['data-class'] = $col_config['class'];
+    $vars['attributes']['data-width'] = $col_config['width'];
+    $vars['attributes']['data-hidewcol'] = $col_config['hidewcol'];
+    $num_cols = isset($vars['block_config']['number-columns']) ? $vars['block_config']['number-columns'] : 1;
+    $vars['attributes']['id'] = \Drupal::service('tb_megamenu.menu_builder')->getIdColumn($num_cols);
+  }
 }
 
 /**
@@ -299,9 +298,7 @@ function template_preprocess_tb_megamenu_subnav(array &$vars) {
 
   $vars['attributes'] = new Attribute();
   $vars['attributes']['class'] = [];
-  $theme_name = str_replace('_', '-', $vars['theme_hook_original']);
-  $vars['attributes']['class'][] = $theme_name;
-  $vars['attributes']['class'][] = "mega-nav";
+  $vars['attributes']['class'][] = 'tbm-subnav';
   $vars['attributes']['class'][] = "level-" . $level;
   $vars['attributes']['class'][] = "items-" . count($col);
 
@@ -339,22 +336,25 @@ function template_preprocess_tb_megamenu_submenu(array &$vars) {
   }
   $vars['attributes'] = new Attribute();
   $vars['attributes']['class'] = [];
-  $theme_name = str_replace('_', '-', $vars['theme_hook_original']);
-  $vars['attributes']['class'][] = $theme_name;
 
   if ($submenu_config['class'] != "") {
     $vars['attributes']['class'][] = $submenu_config['class'];
   }
+
   if ($submenu_config['group']) {
     $vars['attributes']['class'][] = 'mega-group-ct';
   }
   else {
-    $vars['attributes']['class'][] = 'dropdown-menu';
-    $vars['attributes']['class'][] = 'mega-dropdown-menu';
+    $vars['attributes']['class'][] = 'tbm-submenu';
   }
+
   $vars['attributes']['class'][] = 'nav-child';
-  $vars['attributes']['data-class'] = $submenu_config['class'];
-  $vars['attributes']['data-width'] = $submenu_config['width'];
+
+  if ($vars['section'] == 'backend') {
+    $vars['attributes']['data-class'] = $submenu_config['class'];
+    $vars['attributes']['data-width'] = $submenu_config['width'];
+  }
+
   if (!empty($submenu_config['width'])) {
     $vars['attributes']['style'] = "width: " . $submenu_config['width'] . "px;";
   }
@@ -403,9 +403,8 @@ function template_preprocess_tb_megamenu(array &$vars) {
   $vars['block_config'] = $block_config;
   $vars['attributes'] = new Attribute();
   $vars['attributes']['class'] = [];
-  $theme_name = str_replace('_', '-', $vars['theme_hook_original']);
-  $vars['attributes']['class'][] = $theme_name;
-  $vars['attributes']['class'][] = $theme_name . '-' . str_replace('_', '-', $menu_name);
+  $vars['attributes']['class'][] = 'tbm';
+  $vars['attributes']['class'][] = 'tbm' . '-' . str_replace('_', '-', $menu_name);
   if ($vars['section'] == 'frontend' && $block_config['style'] != '') {
     $vars['#attached']['library'][] = 'tb_megamenu/block_style.' . $block_config['style'];
     $vars['attributes']['class'][] = "style-" . $block_config['style'];
@@ -415,7 +414,7 @@ function template_preprocess_tb_megamenu(array &$vars) {
     $vars['attributes']['class'][] = $block_config['animation'];
     $vars['attributes']['data-duration'] = $block_config['duration'];
     $vars['attributes']['data-delay'] = $block_config['delay'];
-    $vars['attributes']['id'] = "tb-megamenu-" . str_replace('_', '-', $menu_name);
+    $vars['attributes']['id'] = "tbm-" . str_replace('_', '-', $menu_name);
   }
   $vars['content'] = [
     '#theme' => 'tb_megamenu_nav',
@@ -501,14 +500,12 @@ function template_preprocess_tb_megamenu_block(array &$vars) {
     }
     elseif ($vars['section'] == 'backend') {
       $vars['content'] = $plugin_configuration['label'];
+      $vars['attributes']['data-type'] = "block";
+      $vars['attributes']['data-block'] = $vars['block_id'];
     }
     $vars['attributes'] = new Attribute();
     $vars['attributes']['class'] = [];
-    $vars['attributes']['class'][] = "tb-block";
-    $theme_name = str_replace('_', '-', $vars['theme_hook_original']);
-    $vars['attributes']['class'][] = $theme_name;
-    $vars['attributes']['data-type'] = "block";
-    $vars['attributes']['data-block'] = $vars['block_id'];
+    $vars['attributes']['class'][] = 'tbm-block';
   }
   else {
     $vars['content'] = NULL;
@@ -556,9 +553,7 @@ function template_preprocess_tb_megamenu_nav(array &$vars) {
 
   $vars['attributes'] = new Attribute();
   $vars['attributes']['class'] = [];
-  $theme_name = str_replace('_', '-', $vars['theme_hook_original']);
-  $vars['attributes']['class'][] = $theme_name;
-  $vars['attributes']['class'][] = "nav";
+  $vars['attributes']['class'][] = "tbm-nav";
   $vars['attributes']['class'][] = "level-" . $level;
   $vars['attributes']['class'][] = "items-" . count($items);
 
@@ -606,15 +601,13 @@ function template_preprocess_tb_megamenu_item(array &$vars) {
   $vars['attributes'] = new Attribute();
   $vars['attributes']['class'] = [];
   $vars['link']['attributes']['class'] = [];
-  $theme_name = str_replace('_', '-', $vars['theme_hook_original']);
-  $vars['attributes']['class'][] = $theme_name;
+  $vars['attributes']['class'][] = 'tbm-item';
   $vars['attributes']['class'][] = 'level-' . $level;
-  $vars['attributes']['class'][] = 'mega';
   if (!empty($item_config['class'])) {
     $vars['attributes']['class'][] = $item_config['class'];
   }
   if (!empty($item_config['alignsub'])) {
-    $vars['attributes']['class'][] = "mega-align-" . $item_config['alignsub'];
+    $vars['attributes']['class'][] = "tbm-" . $item_config['alignsub'];
   }
   if ($item_config['hidewcol']) {
     $vars['attributes']['class'][] = "sub-hidden-collapse";
@@ -627,10 +620,10 @@ function template_preprocess_tb_megamenu_item(array &$vars) {
   elseif ($vars['submenu'] && !$item_config['hidesub']) {
     $vars['link']['attributes']['class'][] = 'dropdown-toggle';
     if ($level == 1) {
-      $vars['attributes']['class'][] = 'dropdown';
+      $vars['attributes']['class'][] = 'tbm-item--has-dropdown';
     }
     else {
-      $vars['attributes']['class'][] = 'dropdown-submenu';
+      $vars['attributes']['class'][] = 'tbm-item--has-flyout';
     }
   }
 
@@ -639,19 +632,20 @@ function template_preprocess_tb_megamenu_item(array &$vars) {
     $vars['attributes']['class'][] = 'active-trail';
     $vars['link']['attributes']['class'][] = 'active-trail';
   }
-  $vars['attributes']['data-id'] = $plugin_id;
-  $vars['attributes']['data-level'] = $level;
-  $vars['attributes']['data-type'] = 'menu_item';
-  $vars['attributes']['data-class'] = $item_config['class'];
-  $vars['attributes']['data-xicon'] = $item_config['xicon'];
-  $vars['attributes']['data-caption'] = $item_config['caption'];
-  $vars['attributes']['data-alignsub'] = $item_config['alignsub'];
-  $vars['attributes']['data-group'] = $item_config['group'];
-  $vars['attributes']['data-hidewcol'] = $item_config['hidewcol'];
-  $vars['attributes']['data-hidesub'] = $item_config['hidesub'];
-  $vars['attributes']['data-label'] = $item_config['label'];
+
   if ($vars['section'] == 'backend') {
     $vars['attributes']['title'] = t("Menu Item");
+    $vars['attributes']['data-id'] = $plugin_id;
+    $vars['attributes']['data-level'] = $level;
+    $vars['attributes']['data-type'] = 'menu_item';
+    $vars['attributes']['data-class'] = $item_config['class'];
+    $vars['attributes']['data-xicon'] = $item_config['xicon'];
+    $vars['attributes']['data-caption'] = $item_config['caption'];
+    $vars['attributes']['data-alignsub'] = $item_config['alignsub'];
+    $vars['attributes']['data-group'] = $item_config['group'];
+    $vars['attributes']['data-hidewcol'] = $item_config['hidewcol'];
+    $vars['attributes']['data-hidesub'] = $item_config['hidesub'];
+    $vars['attributes']['data-label'] = $item_config['label'];
   }
 
   // Add a11y attributes to list item tag.

@@ -3,9 +3,9 @@
   {% set tag = "a" %}
 {% else  %}
   {% set tag = 'span' %}
-  {% set linkAttributes = linkAttributes.addClass('tb-megamenu-no-link').setAttribute('tabindex', '0') %}
+  {% set linkAttributes = linkAttributes.addClass('tbm-no-link').setAttribute('tabindex', '0') %}
   {% if submenu is empty %}
-    {% set linkAttributes = linkAttributes.addClass('tb-megamenu-no-submenu') %}
+    {% set linkAttributes = linkAttributes.addClass('tbm-no-submenu') %}
   {% endif %}
 {% endif %}
 <li {{ attributes }} >

@@ -232,7 +232,7 @@ class TBMegaMenuBuilder implements TBMegaMenuBuilderInterface {
     elseif (!$number_columns || $value < $number_columns) {
       $value++;
     }
-    return "tb-megamenu-column-$value";
+    return "tbm-column-$value";
   }
 
   /**
