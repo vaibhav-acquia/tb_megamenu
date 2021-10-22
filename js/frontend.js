@@ -11,6 +11,8 @@
   Drupal.TBMegaMenu.oldWindowWidth = 0;
   Drupal.TBMegaMenu.displayedMenuMobile = false;
   Drupal.TBMegaMenu.supportedScreens = [980];
+  Drupal.TBMegaMenu.focusableElements =
+    'a:not([disabled]), button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), details:not([disabled]), [tabindex]:not([disabled]):not([tabindex="-1"])';
   Drupal.TBMegaMenu.menuResponsive = function () {
     var windowWidth = window.innerWidth ? window.innerWidth : $(window).width();
     var navCollapse = $('.tbm').children('.tbm-collapse');
@@ -30,17 +32,17 @@
 
   Drupal.TBMegaMenu.focusNextPrevElement = function (direction) {
     // Add all the elements we want to include in our selection
-    var focusableElements =
-      'a:not([disabled]), button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), details:not([disabled]), [tabindex]:not([disabled]):not([tabindex="-1"])';
     var $current = $(document.activeElement);
 
     if ($current.length) {
-      var $focusable = $(focusableElements).filter(function () {
-        var $this = $(this);
-        return (
-          $this.closest('.tbm-subnav').length === 0 && $this.is(':visible')
-        );
-      });
+      var $focusable = $(Drupal.TBMegaMenu.focusableElements).filter(
+        function () {
+          var $this = $(this);
+          return (
+            $this.closest('.tbm-subnav').length === 0 && $this.is(':visible')
+          );
+        },
+      );
 
       var index = $focusable.index($current);
       if (index > -1) {
@@ -87,16 +89,15 @@
                 .children('.tbm-column')
                 .each(function (j, column) {
                   // Only add to the linkArray if menu items exist.
-                  // TODO - this does not allow for tabbing to links in blocks, only menu item links.
                   if (
-                    $(column).find('.tbm-item').children('a, span').length > 0
+                    $(column).find(Drupal.TBMegaMenu.focusableElements).length >
+                    0
                   ) {
                     linkArray[i][j] = new Array();
 
                     // Each Link
                     $(column)
-                      .find('.tbm-item')
-                      .children('a, span')
+                      .find(Drupal.TBMegaMenu.focusableElements)
                       .each(function (k, sublink) {
                         // Add Link to Array
                         linkArray[i][j][k] = sublink;
@@ -110,8 +111,7 @@
 
           // Update Position on Focus
           $(this)
-            .find('.tbm-item')
-            .children('a, span')
+            .find(Drupal.TBMegaMenu.focusableElements)
             .focus(function () {
               curPos = $(this).data('coordinate');
             });
