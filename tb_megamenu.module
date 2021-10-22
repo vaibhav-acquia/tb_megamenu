@@ -500,12 +500,15 @@ function template_preprocess_tb_megamenu_block(array &$vars) {
     }
     elseif ($vars['section'] == 'backend') {
       $vars['content'] = $plugin_configuration['label'];
-      $vars['attributes']['data-type'] = "block";
-      $vars['attributes']['data-block'] = $vars['block_id'];
     }
     $vars['attributes'] = new Attribute();
     $vars['attributes']['class'] = [];
     $vars['attributes']['class'][] = 'tbm-block';
+
+    if ($vars['section'] == 'backend') {
+      $vars['attributes']['data-type'] = "block";
+      $vars['attributes']['data-block'] = $vars['block_id'];
+    }
   }
   else {
     $vars['content'] = NULL;
