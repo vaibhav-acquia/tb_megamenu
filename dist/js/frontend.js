@@ -462,7 +462,7 @@
         };
 
         var hideMenu = function ($subMenu, mm_timeout) {
-          $subMenu.children('.dropdown-toggle').attr('aria-expanded', 'false');
+          $subMenu.children('.tbm-toggle').attr('aria-expanded', 'false');
 
           if ($subMenu.hasClass('mega')) {
             $subMenu.addClass('animating');
@@ -512,7 +512,7 @@
           $('.tbm-nav > li, li.tbm-item', context).bind('mouseenter', function (event) {
             showMenu($(this), mm_timeout);
           });
-          $('.tbm-nav > li > .dropdown-toggle, li.tbm-item > .dropdown-toggle', context).bind('focus', function (event) {
+          $('.tbm-nav > li > .tbm-toggle, li.tbm-item > .tbm-toggle', context).bind('focus', function (event) {
             var $this = $(this);
             var $subMenu = $this.closest('li');
             showMenu($subMenu, mm_timeout); // If the focus moves outside of the subMenu, close it.

@@ -16,8 +16,9 @@ function getEntries(pattern) {
     entries[newfilePath] = file;
   });
 
-  entries.style = path.resolve(webpackDir, 'style.js');
   entries.admin = path.resolve(webpackDir, 'admin.js');
+  entries.base = path.resolve(webpackDir, 'base.js');
+  entries.styles = path.resolve(webpackDir, 'styles.js');
 
   return entries;
 }
@@ -27,17 +28,10 @@ module.exports = {
     errorDetails: true,
   },
   entry: getEntries(
-    path.resolve(
-      rootDir,
-      'js/**/!(*.component|*.min|*.test).js',
-    ),
+    path.resolve(rootDir, 'js/**/!(*.component|*.min|*.test).js'),
   ),
   module: {
-    rules: [
-      loaders.CSSLoader,
-      loaders.ImageLoader,
-      loaders.JSLoader,
-    ],
+    rules: [loaders.CSSLoader, loaders.ImageLoader, loaders.JSLoader],
   },
   plugins: [
     plugins.MiniCssExtractPlugin,

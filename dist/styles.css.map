@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack:///./scss/styles.scss"],"names":[],"mappings":"AAEA,KACE,qBAHgB","file":"styles.css","sourcesContent":["$color-black: #000;\n\n.tbm {\n  background-color: $color-black;\n}\n"],"sourceRoot":""}

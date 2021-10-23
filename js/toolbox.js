@@ -68,7 +68,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       if (liitem.attr('data-hidesub') == 1) {
         var sub = liitem.find('.nav-child:first');
         sub.css('display', 'none');
-        a.removeClass('dropdown-toggle').attr('data-toggle', '');
+        a.removeClass('tbm-toggle').attr('data-toggle', '');
         liitem.removeClass('tbm-item--has-dropdown tbm-item--has-flyout');
       }
     });
@@ -156,7 +156,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       }
       liitem.attr('data-group', 0);
       currentSelected
-        .addClass('dropdown-toggle')
+        .addClass('tbm-toggle')
         .attr('data-toggle', 'tbm-item--has-dropdown');
       liitem.addClass(
         liitem.attr('data-level') == 1
@@ -173,7 +173,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
         sub.remove();
       }
       liitem.attr('data-group', 0);
-      currentSelected.removeClass('dropdown-toggle').attr('data-toggle', '');
+      currentSelected.removeClass('tbm-toggle').attr('data-toggle', '');
       liitem.removeClass('tbm-item--has-dropdown tbm-item--has-flyout');
     }
     update_toolbox();
@@ -247,13 +247,13 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       liitem.attr('data-group', 0);
       liitem.removeClass('mega-group').addClass('tbm-item--has-flyout');
       currentSelected
-        .addClass('dropdown-toggle')
+        .addClass('tbm-toggle')
         .attr('data-toggle', 'tbm-item--has-dropdown');
       sub.removeClass('mega-group-ct').addClass('tbm-submenu');
       sub.css('width', sub.attr('data-width'));
       rebindEvents(sub);
     } else {
-      currentSelected.removeClass('dropdown-toggle').attr('data-toggle', '');
+      currentSelected.removeClass('tbm-toggle').attr('data-toggle', '');
       liitem.attr('data-group', 1);
       liitem.removeClass('tbm-item--has-flyout').addClass('mega-group');
       sub.removeClass('tbm-submenu').addClass('mega-group-ct');

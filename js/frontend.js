@@ -396,9 +396,7 @@
           };
 
           var hideMenu = function ($subMenu, mm_timeout) {
-            $subMenu
-              .children('.dropdown-toggle')
-              .attr('aria-expanded', 'false');
+            $subMenu.children('.tbm-toggle').attr('aria-expanded', 'false');
             if ($subMenu.hasClass('mega')) {
               $subMenu.addClass('animating');
               clearTimeout($subMenu.data('animatingTimeout'));
@@ -464,7 +462,7 @@
             );
 
             $(
-              '.tbm-nav > li > .dropdown-toggle, li.tbm-item > .dropdown-toggle',
+              '.tbm-nav > li > .tbm-toggle, li.tbm-item > .tbm-toggle',
               context,
             ).bind('focus', function (event) {
               var $this = $(this);

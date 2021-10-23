@@ -90,7 +90,7 @@ class TBMegaMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
       '#theme' => 'tb_megamenu',
       '#menu_name' => $menu_name,
       '#block_theme' => $theme_name,
-      '#attached' => ['library' => ['tb_megamenu/theme.tb_megamenu']],
+      '#attached' => ['library' => ['tb_megamenu/base', 'tb_megamenu/styles']],
       '#post_render' => ['\Drupal\tb_megamenu\Controller\TBMegaMenuController::tbMegamenuAttachNumberColumns'],
     ];
   }

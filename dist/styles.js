@@ -81,35 +81,38 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./webpack/style.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./webpack/styles.js");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./scss/style.scss":
-/*!*************************!*\
-  !*** ./scss/style.scss ***!
-  \*************************/
-/*! no exports provided */
-/***/ (function(module, exports) {
-
-throw new Error("Module build failed (from ./node_modules/mini-css-extract-plugin/dist/loader.js):\nModuleBuildError: Module build failed (from ./node_modules/sass-loader/dist/cjs.js):\nError: ENOENT: no such file or directory, open '/Users/michaelgirgis/Sites/tb-megamenu-d9/web/modules/contrib/tb_megamenu/scss/style.scss'\n    at runLoaders (/Users/michaelgirgis/Sites/tb-megamenu-d9/web/modules/contrib/tb_megamenu/node_modules/webpack/lib/NormalModule.js:316:20)\n    at /Users/michaelgirgis/Sites/tb-megamenu-d9/web/modules/contrib/tb_megamenu/node_modules/loader-runner/lib/LoaderRunner.js:367:11\n    at /Users/michaelgirgis/Sites/tb-megamenu-d9/web/modules/contrib/tb_megamenu/node_modules/loader-runner/lib/LoaderRunner.js:203:19\n    at process.nextTick (/Users/michaelgirgis/Sites/tb-megamenu-d9/web/modules/contrib/tb_megamenu/node_modules/enhanced-resolve/lib/CachedInputFileSystem.js:85:15)\n    at process._tickCallback (internal/process/next_tick.js:61:11)");
-
-/***/ }),
-
-/***/ "./webpack/style.js":
+/***/ "./scss/styles.scss":
 /*!**************************!*\
-  !*** ./webpack/style.js ***!
+  !*** ./scss/styles.scss ***!
   \**************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _scss_style_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../scss/style.scss */ "./scss/style.scss");
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "./webpack/styles.js":
+/*!***************************!*\
+  !*** ./webpack/styles.js ***!
+  \***************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _scss_styles_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../scss/styles.scss */ "./scss/styles.scss");
 
 
 /***/ })
 
 /******/ });
-//# sourceMappingURL=style.js.map
+//# sourceMappingURL=styles.js.map

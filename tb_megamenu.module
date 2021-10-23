@@ -620,7 +620,7 @@ function template_preprocess_tb_megamenu_item(array &$vars) {
     $vars['link']['attributes']['class'][] = 'mega-group-title';
   }
   elseif ($vars['submenu'] && !$item_config['hidesub']) {
-    $vars['link']['attributes']['class'][] = 'dropdown-toggle';
+    $vars['link']['attributes']['class'][] = 'tbm-toggle';
     if ($level == 1) {
       $vars['attributes']['class'][] = 'tbm-item--has-dropdown';
     }
