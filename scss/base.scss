@@ -11,7 +11,7 @@ $color-black: #000;
   // Admins can add font awesome icons to menu items.
   [class^='fa-'],
   [class*=' fa-'] {
-    margin-right: 5px;
+    margin-right: 0.25rem;
   }
 
   .hidden {
@@ -286,7 +286,7 @@ $color-black: #000;
     }
 
     .sub-hidden-collapse {
-      > .nav-child {
+      > .tbm-item-child {
         display: none !important;
       }
 
@@ -319,7 +319,7 @@ $color-black: #000;
 
     .tbm-button {
       display: block;
-      margin-bottom: 10px;
+      margin-bottom: 0.625rem;
 
       &:hover {
         cursor: pointer;
@@ -345,7 +345,7 @@ $color-black: #000;
             border-radius: 0;
             border-right: 0;
             color: $color-white;
-            font-size: 15px;
+            font-size: 1rem;
             margin-bottom: 0;
             text-shadow: none;
             font-weight: bold;

@@ -58,7 +58,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     var options = $.extend(defaultOptions, options);
     megamenu = $(this).find('.tbm');
     nav_items = megamenu.find('ul[class*="level"]>li>:first-child');
-    nav_subs = megamenu.find('.nav-child');
+    nav_subs = megamenu.find('.tbm-item-child');
     nav_cols = megamenu.find('[class*="span"]');
 
     nav_all = nav_items.add(nav_subs).add(nav_cols);
@@ -66,7 +66,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       var a = $(this);
       var liitem = a.closest('li');
       if (liitem.attr('data-hidesub') == 1) {
-        var sub = liitem.find('.nav-child:first');
+        var sub = liitem.find('.tbm-item-child:first');
         sub.css('display', 'none');
         a.removeClass('tbm-toggle').attr('data-toggle', '');
         liitem.removeClass('tbm-item--has-dropdown tbm-item--has-flyout');
@@ -137,7 +137,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       return;
     }
     var liitem = currentSelected.closest('li'),
-      sub = liitem.find('.nav-child:first');
+      sub = liitem.find('.tbm-item-child:first');
     if (parseInt(liitem.attr('data-group'))) {
       return;
     }
@@ -145,7 +145,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       if (sub.length == 0) {
         var column = ++drupalSettings.TBMegaMenu.TBElementsCounter.column;
         sub = $(
-          '<div class="tbm-submenu nav-child"><div class="tbm-row"><div id=tbm-column-' +
+          '<div class="tbm-submenu tbm-item-child"><div class="tbm-row"><div id=tbm-column-' +
             column +
             ' class="span12" data-width="12"><div class="tbm-column-inner"></div></div></div></div>',
         ).appendTo(liitem);
@@ -239,7 +239,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       return;
     }
     var liitem = currentSelected.parent();
-    var sub = liitem.find('.nav-child:first');
+    var sub = liitem.find('.tbm-item-child:first');
     if (liitem.attr('data-level') == 1) {
       return;
     } // Ignore for top level.
@@ -438,7 +438,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     // Reset all events on new structure.
     megamenu = $('#tbm-admin-mm-container').find('.tbm');
     nav_items = megamenu.find('ul[class*="level"]>li>:first-child');
-    nav_subs = megamenu.find('.nav-child');
+    nav_subs = megamenu.find('.tbm-item-child');
     nav_cols = megamenu.find('[class*="span"]');
     nav_all = nav_items.add(nav_subs).add(nav_cols);
     bindEvents(nav_all);
@@ -463,7 +463,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     // Reset all events on new structure.
     megamenu = $('#tbm-admin-mm-container').find('.tbm');
     nav_items = megamenu.find('ul[class*="level"]>li>:first-child');
-    nav_subs = megamenu.find('.nav-child');
+    nav_subs = megamenu.find('.tbm-item-child');
     nav_cols = megamenu.find('[class*="span"]');
     nav_all = nav_items.add(nav_subs).add(nav_cols);
     bindEvents(nav_all);
@@ -621,7 +621,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
         id = $this.attr('data-id'),
         rows = [];
       var level = parseInt($this.attr('data-level'));
-      var $sub = $this.find('.nav-child:first');
+      var $sub = $this.find('.tbm-item-child:first');
       var $rows = $sub
         .find('[class*="row"]:first')
         .parent()
@@ -794,7 +794,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
 
   var toolbox_type = function () {
     return currentSelected
-      ? currentSelected.hasClass('nav-child')
+      ? currentSelected.hasClass('tbm-item-child')
         ? 'sub'
         : currentSelected[0].tagName == 'DIV'
         ? 'col'
@@ -860,7 +860,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       case 'item':
         var liitem = currentSelected.closest('li'),
           liparent = liitem.parent().closest('li'),
-          sub = liitem.find('.nav-child:first');
+          sub = liitem.find('.tbm-item-child:first');
 
         $('.toolitem-exclass').val(liitem.attr('data-class'));
         $('.toolitem-xicon').val(liitem.attr('data-xicon'));

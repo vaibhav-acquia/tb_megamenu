@@ -348,7 +348,7 @@ function template_preprocess_tb_megamenu_submenu(array &$vars) {
     $vars['attributes']['class'][] = 'tbm-submenu';
   }
 
-  $vars['attributes']['class'][] = 'nav-child';
+  $vars['attributes']['class'][] = 'tbm-item-child';
 
   if ($vars['section'] == 'backend') {
     $vars['attributes']['data-class'] = $submenu_config['class'];
