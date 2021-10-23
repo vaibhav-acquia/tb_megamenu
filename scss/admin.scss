@@ -53,14 +53,14 @@ $dropdown-width: 400px;
   }
 
   a.disabled {
-    color: #999999;
+    color: $color-medium-grey;
     background-color: transparent;
     cursor: default;
     text-decoration: none;
 
     &:hover,
     &:focus {
-      color: #999999;
+      color: $color-medium-grey;
       background-color: transparent;
       cursor: default;
       text-decoration: none;
@@ -316,7 +316,7 @@ $dropdown-width: 400px;
   }
 
   // Grouped content.
-  .mega-group-ct {
+  .tbm-group-container {
     border: 1px solid #ddd;
     padding: 10px;
     margin: 10px 0 0;
@@ -357,7 +357,7 @@ $dropdown-width: 400px;
       > span {
         border-radius: 3px;
         border: 1px dotted #ddd;
-        color: #999999;
+        color: $color-medium-grey;
         display: block;
         font-size: 12px;
         font-weight: normal;
@@ -378,8 +378,8 @@ $dropdown-width: 400px;
   }
 
   // The caption attached to link items.
-  .mega-caption {
-    color: #999;
+  .tbm-caption {
+    color: $color-medium-grey;
     font-size: 11px;
     margin-top: 2px;
   }
@@ -408,7 +408,7 @@ $dropdown-width: 400px;
       text-align: center;
       font-size: 10px;
       text-transform: uppercase;
-      color: #999999;
+      color: $color-medium-grey;
     }
 
     .block-inner {
@@ -814,7 +814,7 @@ $dropdown-width: 400px;
 
   p {
     display: block;
-    color: #999999;
+    color: $color-medium-grey;
     font-size: 95%;
     overflow: hidden;
   }
@@ -830,7 +830,7 @@ $dropdown-width: 400px;
   li > label,
   li > label a {
     font-size: 11px;
-    color: #999999;
+    color: $color-medium-grey;
   }
 
   li > label a:hover,
@@ -846,7 +846,7 @@ $dropdown-width: 400px;
 #tbm-admin-mm-toolcol p,
 #tbm-admin-mm-toolsub p {
   display: block;
-  color: #999999;
+  color: $color-medium-grey;
   font-size: 95%;
   overflow: hidden;
 }
@@ -870,7 +870,7 @@ $dropdown-width: 400px;
   li > label,
   li > label a {
     font-size: 11px;
-    color: #999999;
+    color: $color-medium-grey;
   }
 
   li > label a:focus,

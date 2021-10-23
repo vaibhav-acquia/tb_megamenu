@@ -415,7 +415,7 @@
 
         var ariaCheck = function () {
           $('li.tbm-item', this).each(function () {
-            if ($(this).is('.mega-group')) {
+            if ($(this).is('.tbm-group')) {
               // Mega menu item has mega class (it's a true mega menu)
               if (!$(this).parents().is('.open')) {
                 // Mega menu item has mega class and its ancestor is closed, so apply appropriate ARIA attributes

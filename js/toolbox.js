@@ -245,18 +245,18 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     } // Ignore for top level.
     if (parseInt(liitem.attr('data-group'))) {
       liitem.attr('data-group', 0);
-      liitem.removeClass('mega-group').addClass('tbm-item--has-flyout');
+      liitem.removeClass('tbm-group').addClass('tbm-item--has-flyout');
       currentSelected
         .addClass('tbm-toggle')
         .attr('data-toggle', 'tbm-item--has-dropdown');
-      sub.removeClass('mega-group-ct').addClass('tbm-submenu');
+      sub.removeClass('tbm-group-container').addClass('tbm-submenu');
       sub.css('width', sub.attr('data-width'));
       rebindEvents(sub);
     } else {
       currentSelected.removeClass('tbm-toggle').attr('data-toggle', '');
       liitem.attr('data-group', 1);
-      liitem.removeClass('tbm-item--has-flyout').addClass('mega-group');
-      sub.removeClass('tbm-submenu').addClass('mega-group-ct');
+      liitem.removeClass('tbm-item--has-flyout').addClass('tbm-group');
+      sub.removeClass('tbm-submenu').addClass('tbm-group-container');
       sub.css('width', '');
       rebindEvents(sub);
     }
@@ -1065,11 +1065,11 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       case 'caption':
         if (type == 'item') {
           currentSelected.closest('li').attr('data-' + name, value);
-          currentSelected.find('span.mega-caption').remove();
+          currentSelected.find('span.tbm-caption').remove();
           var escapedInputText = Drupal.checkPlain(value);
           if (value) {
             currentSelected.append(
-              $('<span class="mega-caption">' + escapedInputText + '</span>'),
+              $('<span class="tbm-caption">' + escapedInputText + '</span>'),
             );
           }
         }

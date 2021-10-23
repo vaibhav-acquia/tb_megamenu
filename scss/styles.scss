@@ -1,5 +1,6 @@
 $color-light-grey-1: #ccc;
 $color-light-grey-2: #eee;
+$color-medium-grey: #999;
 $color-dark-grey: #333;
 $color-black: #000;
 $color-white: #fff;
@@ -19,7 +20,6 @@ $dropdown-width: 25rem;
   > a,
   > span.tbm-no-link {
     color: $color-white;
-    display: block;
     padding: 1rem 1.25rem;
   }
 
@@ -58,7 +58,7 @@ $dropdown-width: 25rem;
         cursor: pointer;
       }
 
-      .mega-caption {
+      .tbm-caption {
         color: $color-white;
       }
     }
@@ -69,6 +69,13 @@ $dropdown-width: 25rem;
       }
     }
   }
+}
+
+// The caption that can appear below any <li>.
+.tbm-caption {
+  color: $color-medium-grey;
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
 }
 
 // The <a> or <span> tag for any menu item that has a submenu.
@@ -182,4 +189,14 @@ $dropdown-width: 25rem;
     margin: 0;
     text-shadow: none;
   }
+}
+
+// A .tbm-group is any <li> that has been designated as a "group" item, where
+// the content within is not contained within a dropdown/submenu, but is instead
+// always visible.
+
+// The title of a .tbm-group.
+.tbm-group-title {
+  font-weight: bold;
+  text-transform: uppercase;
 }

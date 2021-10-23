@@ -1,5 +1,4 @@
 // Colors
-$color-medium-grey: #999;
 $color-dark-grey-2: #222;
 $color-red: #e54e4b;
 $color-white: #fff;
@@ -19,50 +18,11 @@ $color-black: #000;
     display: none !important;
     visibility: hidden;
   }
+}
 
-  // Any <li> that has been designated as a "group" item (the content within
-  // is not contained within a dropdown/submenu, but is instead always visible.
-
-  // The title of a .mega-group.
-  .mega-group-title {
-    background: inherit;
-    font-weight: bold;
-    padding: 0 0 0 10px;
-    margin: 0;
-    text-transform: uppercase;
-
-    &:hover,
-    &:focus,
-    &:active {
-      background: inherit;
-      color: inherit;
-    }
-  }
-
-  // The container around the content within a .mega-group. Immediately follows
-  // the .mega-group-title.
-  .mega-group-ct {
-    margin: 0;
-    padding: 0;
-
-    > .tbm-row {
-      > [class*='span'] {
-        > .tbm-column-inner {
-          padding: 0;
-        }
-      }
-    }
-  }
-
-  // The caption that can appear below any <li>.
-  .mega-caption {
-    display: block;
-    white-space: nowrap;
-    color: $color-medium-grey;
-    font-size: 12px;
-    margin-top: 3px;
-    font-weight: normal;
-  }
+// The caption that can appear below any <li>.
+.tbm-caption {
+  display: block;
 }
 
 // The <ul> around the top level menu.
@@ -113,6 +73,13 @@ $color-black: #000;
 .tbm-item.level-1 {
   position: relative;
   z-index: 1;
+
+  > a,
+  > span.tbm-no-link {
+    box-sizing: border-box;
+    display: block;
+    height: 100%;
+  }
 
   // Items that are open (ie, submenu is visible).
   &.open {
@@ -263,6 +230,25 @@ $color-black: #000;
   display: none;
   padding: 0.625rem 1rem;
   margin: 0;
+}
+
+// A .tbm-group is any <li> that has been designated as a "group" item, where
+// the content within is not contained within a dropdown/submenu, but is instead
+// always visible.
+
+// The container around the content within a .tbm-group. Immediately follows
+// the .tbm-group-title.
+.tbm-group-container {
+  margin: 0;
+  padding: 0;
+
+  > .tbm-row {
+    > [class*='span'] {
+      > .tbm-column-inner {
+        padding: 0;
+      }
+    }
+  }
 }
 
 @media (max-width: 979px) {

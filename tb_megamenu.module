@@ -342,7 +342,7 @@ function template_preprocess_tb_megamenu_submenu(array &$vars) {
   }
 
   if ($submenu_config['group']) {
-    $vars['attributes']['class'][] = 'mega-group-ct';
+    $vars['attributes']['class'][] = 'tbm-group-container';
   }
   else {
     $vars['attributes']['class'][] = 'tbm-submenu';
@@ -616,8 +616,8 @@ function template_preprocess_tb_megamenu_item(array &$vars) {
   }
 
   if ($item_config['group'] && $vars['submenu']) {
-    $vars['attributes']['class'][] = "mega-group";
-    $vars['link']['attributes']['class'][] = 'mega-group-title';
+    $vars['attributes']['class'][] = "tbm-group";
+    $vars['link']['attributes']['class'][] = 'tbm-group-title';
   }
   elseif ($vars['submenu'] && !$item_config['hidesub']) {
     $vars['link']['attributes']['class'][] = 'tbm-toggle';
