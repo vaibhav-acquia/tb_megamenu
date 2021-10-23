@@ -1,5 +1,185 @@
+$color-light-grey-1: #ccc;
+$color-light-grey-2: #eee;
+$color-dark-grey: #333;
 $color-black: #000;
+$color-white: #fff;
+$color-red: #e54e4b;
+
+// Colors with opacity.
+$color-black-20-op: rgba($color-black, 0.2);
+
+$dropdown-width: 25rem;
 
 .tbm {
   background-color: $color-black;
+}
+
+// Top level menu items.
+.tbm-item.level-1 {
+  > a,
+  > span.tbm-no-link {
+    color: $color-white;
+    display: block;
+    padding: 1rem 1.25rem;
+  }
+
+  // Items that are open (ie, submenu is visible).
+  &.open {
+    // Change the color of the immediate toggle, but not any further down the
+    // chain.
+    > .tbm-toggle {
+      background-color: $color-white;
+      color: $color-red;
+
+      .caret {
+        border-top-color: $color-red;
+      }
+    }
+  }
+
+  // Items that are active or are open and active.
+  &.active,
+  &.open.active {
+    > a,
+    > span.tbm-no-link {
+      background-color: $color-red;
+      color: $color-white;
+
+      &:hover,
+      &:focus {
+        background-color: $color-red;
+        color: $color-white;
+      }
+    }
+
+    > a {
+      &:hover,
+      &:focus {
+        cursor: pointer;
+      }
+
+      .mega-caption {
+        color: $color-white;
+      }
+    }
+
+    > .tbm-toggle {
+      .caret {
+        border-top-color: $color-white;
+      }
+    }
+  }
+}
+
+// The <a> or <span> tag for any menu item that has a submenu.
+.tbm-toggle {
+  // The top-level drodown caret.
+  .caret {
+    border-top: 0.25rem solid $color-white;
+    border-right: 0.25rem solid transparent;
+    border-left: 0.25rem solid transparent;
+  }
+}
+
+// The <div> around any submenu dropdown. This is a direct descendent child of
+// the <li>.
+.tbm-submenu {
+  background-color: $color-white;
+  border-radius: 0;
+  border-top-width: 0;
+  border: 1px solid $color-black-20-op;
+  box-shadow: 0 5px 10px $color-black-20-op;
+  width: $dropdown-width;
+  padding: 1rem;
+
+  .tbm-submenu {
+    // Anything other than the 1st dropdown menu needs the top border.
+    border-top-width: 1px;
+  }
+}
+
+// Any <li> that has sub-links, other than at the top level.
+.tbm-item--has-flyout {
+  position: relative;
+
+  // The carat that appears next to the menu item.
+  > a,
+  > span.tbm-no-link {
+    &:after {
+      border-width: 0.25rem 0 0.25rem 0.25rem;
+      border-left-color: $color-light-grey-1;
+    }
+  }
+
+  &:hover,
+  &:focus {
+    > a,
+    > span.tbm-no-link {
+      color: $color-red;
+    }
+  }
+}
+
+// Any <ul> other than the top level.
+.tbm-subnav {
+  > .tbm-item {
+    &:first-child {
+      > a,
+      > span.tbm-no-link {
+        border-top: 0;
+        margin-top: 0;
+        padding-top: 0;
+      }
+    }
+
+    > a,
+    > span.tbm-no-link {
+      border-bottom: 0;
+      border-top: 1px solid $color-light-grey-2;
+      color: $color-dark-grey;
+      display: block;
+      line-height: 1.2;
+      padding: 0.5rem 0;
+
+      &:hover,
+      &:focus {
+        color: $color-red;
+      }
+    }
+
+    // Active traillinks.
+    &.active {
+      > a,
+      > span.tbm-no-link {
+        color: $color-red;
+
+        &:hover,
+        &:focus {
+          color: $color-red;
+        }
+      }
+    }
+  }
+}
+
+// The mobile show/hide button.
+.tbm-button {
+  appearance: none;
+  border: 1px solid $color-black;
+
+  &:hover,
+  &:focus,
+  &:active,
+  &.active,
+  &.disabled,
+  &[disabled] {
+    background-color: $color-light-grey-1;
+  }
+
+  [class^='fa-'],
+  [class*=' fa-'] {
+    color: $color-dark-grey;
+    margin: 0;
+    text-shadow: none;
+  }
 }

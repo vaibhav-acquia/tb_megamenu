@@ -1,44 +1,18 @@
 // Colors
-$color-light-grey-1: #ccc;
-$color-light-grey-2: #e6e6e6;
-$color-light-grey-3: #eee;
 $color-medium-grey: #999;
-$color-dark-grey-1: #333;
 $color-dark-grey-2: #222;
 $color-red: #e54e4b;
 $color-white: #fff;
 $color-black: #000;
-$color-blue: #0081c2;
-
-// Colors with opacity.
-$color-black-10-op: rgba(0, 0, 0, 0.1);
-$color-black-20-op: rgba(0, 0, 0, 0.2);
-$color-black-25-op: rgba(0, 0, 0, 0.25);
-$color-white-10-op: rgba(255, 255, 255, 0.1);
-$color-white-75-op: rgba(255, 255, 255, 0.075);
-
-$dropdown-width: 400px;
 
 // The wrapper around everything.
 .tbm {
-  background-color: $color-black;
   position: relative;
 
   // Admins can add font awesome icons to menu items.
   [class^='fa-'],
   [class*=' fa-'] {
     margin-right: 5px;
-  }
-
-  .caret {
-    display: inline-block;
-    width: 0;
-    height: 0;
-    vertical-align: top;
-    border-top: 4px solid $color-white;
-    border-right: 4px solid transparent;
-    border-left: 4px solid transparent;
-    content: '';
   }
 
   .hidden {
@@ -116,12 +90,12 @@ $dropdown-width: 400px;
 
 // Set up rowns and columns.
 .tbm-row {
-  column-gap: 10px;
+  column-gap: 0.625rem;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
 
   [class*='span'] {
-    min-height: 30px;
+    min-height: 2rem;
   }
 
   @for $i from 1 through 12 {
@@ -131,80 +105,17 @@ $dropdown-width: 400px;
   }
 
   + .tbm-row {
-    margin-top: 10px;
+    margin-top: 0.625rem;
   }
 }
 
 // Top level menu items.
 .tbm-item.level-1 {
   position: relative;
+  z-index: 1;
 
-  > a,
-  > span.tbm-no-link {
-    border: 0;
-    box-sizing: border-box;
-    color: $color-white;
-    display: block;
-    font-weight: bold;
-    height: 100%;
-    padding: 15px 20px;
-    text-shadow: none;
-
-    &:focus,
-    &:hover {
-      background-color: $color-white;
-      color: $color-red;
-      text-decoration: none;
-      text-shadow: none;
-      outline: none;
-    }
-
-    > img {
-      max-width: none;
-    }
-  }
-}
-
-// The <a> or <span> tag for any menu item that has a submenu.
-.tbm-toggle {
-  .caret {
-    margin-left: 5px;
-    margin-top: 8px;
-  }
-
-  &:active {
-    outline: 0;
-  }
-
-  &:hover,
-  &:focus {
-    .caret {
-      border-top-color: $color-red;
-      border-bottom-color: $color-red;
-    }
-  }
-}
-
-// Top level only menu items that hav submenus.
-.tbm-item--has-dropdown {
   // Items that are open (ie, submenu is visible).
   &.open {
-    .caret {
-      border-bottom-color: $color-red;
-      border-top-color: $color-red;
-    }
-
-    .tbm-toggle {
-      outline: 0;
-    }
-
-    // Change the color of the immediate toggle, but not any further down the
-    // chain.
-    > .tbm-toggle {
-      background-color: $color-white;
-      color: $color-red;
-    }
-
     > .tbm-submenu {
       display: block;
       overflow: visible;
@@ -212,110 +123,37 @@ $dropdown-width: 400px;
       height: auto;
     }
   }
+}
 
-  // Items that are active or open and active.
-  &.active,
-  &.open.active {
-    > a,
-    > a:hover,
-    > a:focus,
-    > span.tbm-no-link,
-    > span.tbm-no-link:hover,
-    > span.tbm-no-link:focus {
-      background-color: $color-red;
-      color: $color-white;
-    }
-
-    > a {
-      &:hover,
-      &:focus {
-        cursor: pointer;
-      }
-
-      .mega-caption {
-        color: $color-white;
-      }
-    }
-
-    .caret {
-      border-top-color: $color-white;
-      border-bottom-color: $color-white;
-      opacity: 1;
-    }
+// The <a> or <span> tag for any menu item that has a submenu.
+.tbm-toggle {
+  .caret {
+    border-left: 0.25rem solid transparent;
+    border-right: 0.25rem solid transparent;
+    border-top: 0.25rem solid currentColor;
+    content: '';
+    display: inline-block;
+    height: 0;
+    margin-left: 0.25rem;
+    margin-top: 0.5rem;
+    vertical-align: top;
+    width: 0;
   }
 }
 
 // The <div> around any submenu dropdown. This is a direct descendent child of
 // the <li>.
 .tbm-submenu {
-  background-clip: padding-box;
   background-color: $color-white;
-  border-radius: 0;
-  border-top-width: 0;
-  border: 1px solid $color-black-20-op;
-  box-shadow: 0 5px 10px $color-black-20-op;
   display: none;
   left: 0;
-  width: $dropdown-width;
-  padding: 10px;
   position: absolute;
   top: 100%;
-  z-index: 1000;
-
-  .tbm-submenu {
-    // Anything other than the 1st dropdown menu needs the top border.
-    border-top-width: 1px;
-  }
-
-  li {
-    > a,
-    > span.tbm-no-link {
-      border-bottom: 0;
-      border-top: 1px solid $color-light-grey-3;
-      color: $color-dark-grey-1;
-      display: block;
-      font-weight: normal;
-      line-height: 20px;
-      padding: 3px 20px;
-      text-shadow: none;
-      white-space: nowrap;
-
-      &:hover,
-      &:focus {
-        text-decoration: none;
-        color: $color-red;
-        background-color: inherit;
-        background-image: none;
-      }
-    }
-
-    &:first-child > a,
-    &:first-child > span.tbm-no-link {
-      border-top: 0;
-    }
-  }
+  z-index: 10;
 
   // Do not display the down carat in any dropdowns.
   .caret {
     display: none;
-  }
-
-  > .active {
-    > a,
-    > span.tbm-no-link {
-      color: $color-white;
-      text-decoration: none;
-      outline: 0;
-      background-color: $color-blue;
-
-      &:hover,
-      &:focus {
-        color: $color-white;
-        text-decoration: none;
-        outline: 0;
-        background-color: $color-blue;
-      }
-    }
   }
 }
 
@@ -323,6 +161,7 @@ $dropdown-width: 400px;
 .tbm-item--has-flyout {
   position: relative;
 
+  // The carat that appears next to the menu item.
   > a,
   > span.tbm-no-link {
     &:after {
@@ -333,24 +172,9 @@ $dropdown-width: 400px;
       height: 0;
       border-color: transparent;
       border-style: solid;
-      border-width: 5px 0 5px 5px;
-      border-left-color: $color-light-grey-1;
-      margin: 5px 0 0;
-    }
-  }
-
-  &:hover,
-  &:focus {
-    > a,
-    > span.tbm-no-link {
-      text-decoration: none;
-      color: $color-red;
-      background-color: inherit;
-      background-image: none;
-
-      &:after {
-        border-left-color: $color-light-grey-3;
-      }
+      border-width: 0.25rem 0 0.25rem 0.25rem;
+      border-left-color: currentColor;
+      margin: 0.25rem 0 0;
     }
   }
 
@@ -362,8 +186,6 @@ $dropdown-width: 400px;
     border-radius: 0;
   }
 
-  &:hover,
-  &:focus,
   &.open {
     > .tbm-submenu {
       display: block;
@@ -380,23 +202,9 @@ $dropdown-width: 400px;
   padding: 0;
   list-style: none;
 
-  > li {
+  > .tbm-item {
     display: block;
     list-style: none;
-
-    &:first-child {
-      > a,
-      > span.tbm-no-link {
-        margin-top: 0;
-        padding-top: 0;
-      }
-    }
-
-    a,
-    span.tbm-no-link {
-      padding: 5px 0;
-      white-space: normal;
-    }
   }
 }
 
@@ -450,44 +258,11 @@ $dropdown-width: 400px;
   }
 }
 
-// Any block that is placed in a mega menu.
-.tbm-block {
-  .block-title {
-    font-size: 12px;
-    color: $color-dark-grey-1;
-    display: block;
-    line-height: 20px;
-    margin: 0 0 15px;
-    text-transform: uppercase;
-  }
-}
-
 // The mobile show/hide button.
 .tbm-button {
   display: none;
-  padding: 10px 14px;
+  padding: 0.625rem 1rem;
   margin: 0;
-  color: $color-white;
-  text-shadow: 0 -1px 0 $color-black-25-op;
-  background-color: $color-light-grey-2;
-  box-shadow: inset 0 1px 0 $color-white-10-op, 0 1px 0 $color-white-75-op;
-
-  &:hover,
-  &:focus,
-  &:active,
-  &.active,
-  &.disabled,
-  &[disabled] {
-    color: $color-white;
-    background-color: $color-light-grey-1;
-  }
-
-  [class^='fa-'],
-  [class*=' fa-'] {
-    color: $color-dark-grey-1;
-    margin: 0;
-    text-shadow: none;
-  }
 }
 
 @media (max-width: 979px) {
