@@ -17,8 +17,8 @@ $dropdown-width: 25rem;
 
 // Top level menu items.
 .tbm-item.level-1 {
-  > a,
-  > span.tbm-no-link {
+  > .tbm-link,
+  > .tbm-no-link {
     color: $color-white;
     padding: 1rem 1.25rem;
   }
@@ -40,8 +40,8 @@ $dropdown-width: 25rem;
   // Items that are active or are open and active.
   &.active,
   &.open.active {
-    > a,
-    > span.tbm-no-link {
+    > .tbm-link,
+    > .tbm-no-link {
       background-color: $color-red;
       color: $color-white;
 
@@ -52,7 +52,7 @@ $dropdown-width: 25rem;
       }
     }
 
-    > a {
+    > .tbm-link {
       &:hover,
       &:focus {
         cursor: pointer;
@@ -110,8 +110,8 @@ $dropdown-width: 25rem;
   position: relative;
 
   // The carat that appears next to the menu item.
-  > a,
-  > span.tbm-no-link {
+  > .tbm-link,
+  > .tbm-no-link {
     &:after {
       border-width: 0.25rem 0 0.25rem 0.25rem;
       border-left-color: $color-light-grey-1;
@@ -120,8 +120,8 @@ $dropdown-width: 25rem;
 
   &:hover,
   &:focus {
-    > a,
-    > span.tbm-no-link {
+    > .tbm-link,
+    > .tbm-no-link {
       color: $color-red;
     }
   }
@@ -131,16 +131,16 @@ $dropdown-width: 25rem;
 .tbm-subnav {
   > .tbm-item {
     &:first-child {
-      > a,
-      > span.tbm-no-link {
+      > .tbm-link,
+      > .tbm-no-link {
         border-top: 0;
         margin-top: 0;
         padding-top: 0;
       }
     }
 
-    > a,
-    > span.tbm-no-link {
+    > .tbm-link,
+    > .tbm-no-link {
       border-bottom: 0;
       border-top: 1px solid $color-light-grey-2;
       color: $color-dark-grey;
@@ -156,8 +156,8 @@ $dropdown-width: 25rem;
 
     // Active traillinks.
     &.active {
-      > a,
-      > span.tbm-no-link {
+      > .tbm-link,
+      > .tbm-no-link {
         color: $color-red;
 
         &:hover,

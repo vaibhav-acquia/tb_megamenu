@@ -3,7 +3,6 @@
   {% set tag = "a" %}
 {% else  %}
   {% set tag = 'span' %}
-  {% set linkAttributes = linkAttributes.addClass('tbm-no-link').setAttribute('tabindex', '0') %}
   {% if submenu is empty %}
     {% set linkAttributes = linkAttributes.addClass('tbm-no-submenu') %}
   {% endif %}

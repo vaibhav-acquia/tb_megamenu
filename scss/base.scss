@@ -34,7 +34,7 @@ $color-black: #000;
   padding: 0;
 
   // <nolink> menu items.
-  span.tbm-no-link {
+  .tbm-no-link {
     // When a <nolink> menu item has no submenus.
     &.tbm-no-submenu {
       &:hover {
@@ -74,8 +74,8 @@ $color-black: #000;
   position: relative;
   z-index: 1;
 
-  > a,
-  > span.tbm-no-link {
+  > .tbm-link,
+  > .tbm-no-link {
     box-sizing: border-box;
     display: block;
     height: 100%;
@@ -129,8 +129,8 @@ $color-black: #000;
   position: relative;
 
   // The carat that appears next to the menu item.
-  > a,
-  > span.tbm-no-link {
+  > .tbm-link,
+  > .tbm-no-link {
     &:after {
       display: block;
       content: '';
@@ -272,8 +272,8 @@ $color-black: #000;
       }
 
       .tbm-item--has-flyout {
-        > a,
-        > span.tbm-no-link {
+        > .tbm-link,
+        > .tbm-no-link {
           &:after {
             display: none !important;
           }
@@ -339,8 +339,8 @@ $color-black: #000;
         flex-direction: column;
 
         > li {
-          > a,
-          > span.tbm-no-link {
+          > .tbm-link,
+          > .tbm-no-link {
             border-bottom: 1px solid $color-dark-grey-2;
             border-radius: 0;
             border-right: 0;
@@ -359,8 +359,8 @@ $color-black: #000;
           }
 
           &.active {
-            > a,
-            > span.tbm-no-link {
+            > .tbm-link,
+            > .tbm-no-link {
               &:hover,
               &:focus {
                 background-color: $color-red;
@@ -385,8 +385,8 @@ $color-black: #000;
         box-shadow: none;
         width: 100% !important;
 
-        a,
-        span.tbm-no-link {
+        .tbm-link,
+        .tbm-no-link {
           border-bottom: 1px solid $color-dark-grey-2;
           border-right: 0;
           border-top: 1px solid $color-dark-grey-2;
@@ -402,8 +402,8 @@ $color-black: #000;
           }
         }
 
-        li + li a,
-        li + li span.tbm-no-link {
+        li + li .tbm-link,
+        li + li .tbm-no-link {
           margin-bottom: 0;
         }
       }
@@ -435,8 +435,8 @@ $color-black: #000;
 
     .tbm-subnav {
       > li {
-        a,
-        span.tbm-no-link {
+        .tbm-link,
+        .tbm-no-link {
           padding: 5px 0;
           margin-left: 20px;
         }

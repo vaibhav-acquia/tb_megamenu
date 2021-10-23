@@ -107,8 +107,8 @@ $dropdown-width: 400px;
     @media (max-width: 979px) {
       margin: 0 2px 0 0;
 
-      > li > a,
-      > li > span.tbm-no-link {
+      > li > .tbm-link,
+      > li > .tbm-no-link {
         padding: 6px;
       }
     }
