@@ -567,11 +567,28 @@
                 } else {
                   event.preventDefault();
 
-                  // Hide any already open menus.
-                  nav_close_megamenu();
+                  // Hide any already open menus which are not parents of the
+                  // currently clicked menu item.
+                  var $openParents = $item.parents('.open');
+                  var $allOpen = $('.tbm .open');
+
+                  // Loop through all open items and check to see if they are
+                  // parents of the clicked item.
+                  $allOpen.each(function (index, item) {
+                    if ($(item).is($openParents)) {
+                      // do nothing
+                    } else {
+                      $(item).removeClass('open');
+                    }
+                  });
+
+                  // Apply aria attributes.
+                  ariaCheck();
+
+                  // Remove any existing tmb-clicked classes.
                   $('.tbm').find('.tbm-clicked').removeClass('tbm-clicked');
 
-                  // Open the submenu.
+                  // Open the submenu and apply the tbm-clicked class.
                   $item.addClass('tbm-clicked');
                   showMenu(tbitem, mm_timeout);
                 }
