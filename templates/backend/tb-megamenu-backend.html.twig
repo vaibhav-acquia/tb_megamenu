@@ -8,6 +8,12 @@
           <h3>{{ 'MegaMenu Toolbox'|t }}</h3>
           <p>{{ 'This toolbox includes all settings of megamenu, just select menu then configure. There are 3 level of configuration: sub-megamenu setting, column setting and menu item setting.'|t }}</p>
           <ul>
+            <li title="{{ 'Mobile breakpoint'|t }} - {{ 'Specify a mobile breakpoint in pixels'|t }}">
+              <label class="hasTip">{{ 'Mobile breakpoint'|t }}</label>
+              <fieldset class="">
+                <input type="text" class="input-medium tbm-breakpoint toolbox-input" name="tbm-breakpoint" data-name="breakpoint" value="{{ block_config['breakpoint'] }}" />
+              </fieldset>
+            </li>
             <li id="tbm-style-wrapper" title="{{ 'Select style for this megamenu'|t }}">
               <label class="hasTip">{{ 'Style'|t }}</label>
               <fieldset class="btn-group">

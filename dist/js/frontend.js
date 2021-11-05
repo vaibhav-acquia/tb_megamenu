@@ -101,36 +101,17 @@
   'use strict';
 
   Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
-  Drupal.TBMegaMenu.oldWindowWidth = 0;
-  Drupal.TBMegaMenu.displayedMenuMobile = false;
-  Drupal.TBMegaMenu.supportedScreens = [980];
   Drupal.TBMegaMenu.focusableElements = 'a:not([disabled]), button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), details:not([disabled]), [tabindex]:not([disabled]):not([tabindex="-1"])';
 
   Drupal.TBMegaMenu.menuResponsive = function () {
-    var windowWidth = window.innerWidth ? window.innerWidth : $(window).width();
-    var navCollapse = $('.tbm').children('.tbm-collapse');
-
-    if (windowWidth < Drupal.TBMegaMenu.supportedScreens[0]) {
-      if (Drupal.TBMegaMenu.displayedMenuMobile) {
-        navCollapse.css({
-          height: 'auto',
-          overflow: 'visible'
-        });
-      } else {
-        navCollapse.css({
-          height: 0,
-          overflow: 'hidden'
-        });
-      }
-    } else {
-      // If width of window is greater than 980 (supported screen).
-      if (navCollapse.height() <= 0) {
-        navCollapse.css({
-          height: 'auto',
-          overflow: 'visible'
-        });
-      }
-    }
+    $('.tbm').each(function () {
+      var $thisMenu = $(this);
+      var breakpoint = parseInt($thisMenu.data('breakpoint')); // if (window.matchMedia(`(max-width: ${breakpoint}px)`).matches) {
+      //   $thisMenu.addClass('tbm--mobile');
+      // } else {
+      //   $thisMenu.removeClass('tbm--mobile');
+      // }
+    });
   };
 
   Drupal.TBMegaMenu.focusNextPrevElement = function (direction) {
@@ -161,9 +142,10 @@
       $('.tbm', context).once('tbm').each(function () {
         /* Keyboard Control Setup */
         // Semi-Global Variables
-        var navParent = document.querySelector('.tbm'),
+        var navParent = $(this),
             linkArray = new Array(),
-            curPos = new Array(-1, -1, -1); // Each Top-Level Link
+            curPos = new Array(-1, -1, -1);
+        var breakpoint = navParent.data('breakpoint'); // Each Top-Level Link
 
         $(this).find('.level-1').children('a, span').not('.mobile-only').each(function (i, toplink) {
           linkArray[i] = new Array(); // Add Link to Array
@@ -192,7 +174,7 @@
         }); // each top-level link
         // Update Position on Focus
 
-        $(this).find(Drupal.TBMegaMenu.focusableElements).focus(function () {
+        $(this).find('.tbm-nav').find(Drupal.TBMegaMenu.focusableElements).focus(function (event) {
           curPos = $(this).data('coordinate');
         }); // Key Pressed
 
@@ -485,21 +467,9 @@
         };
 
         $('.tbm-button', this).click(function () {
-          if (parseInt($(this).parent().children('.tbm-collapse').height())) {
-            $(this).parent().children('.tbm-collapse').css({
-              height: 0,
-              overflow: 'hidden'
-            });
-            Drupal.TBMegaMenu.displayedMenuMobile = false;
-          } else {
-            $(this).parent().children('.tbm-collapse').css({
-              height: 'auto',
-              overflow: 'visible'
-            });
-            Drupal.TBMegaMenu.displayedMenuMobile = true;
-          }
+          $(this).parent().toggleClass('tbm--mobile-show');
         });
-        var isTouch = window.matchMedia('(pointer: coarse)').matches;
+        var isTouch = window.matchMedia('(pointer: coarse)').matches || window.matchMedia(`(max-width: ${breakpoint}px)`).matches;
 
         if (!isTouch) {
           var mm_duration = 0;
@@ -634,17 +604,12 @@
         }
 
         $(window).on('load resize', function () {
-          var windowWidth = window.innerWidth ? window.innerWidth : $(window).width();
+          Drupal.TBMegaMenu.menuResponsive();
 
-          if (windowWidth != Drupal.TBMegaMenu.oldWindowWidth) {
-            Drupal.TBMegaMenu.oldWindowWidth = windowWidth;
-            Drupal.TBMegaMenu.menuResponsive();
-
-            if (windowWidth >= Drupal.TBMegaMenu.supportedScreens[0]) {
-              navParent.addEventListener('keydown', keydownEvent);
-            } else {
-              navParent.removeEventListener('keydown', keydownEvent);
-            }
+          if (window.matchMedia(`(max-width: ${breakpoint}px)`).matches) {
+            navParent.off('keydown', keydownEvent);
+          } else {
+            navParent.on('keydown', keydownEvent);
           }
         });
       });

@@ -17,3 +17,10 @@
     </div>
   {% endif %}
 </nav>
+
+<script>
+{# Add the .tbm--mobile class before there is a chance for a flash of unstyled content. #}
+if (window.matchMedia("(max-width: {{ block_config['breakpoint']}}px)").matches) {
+  document.getElementById("{{ attributes.id }}").classList.add('tbm--mobile')
+}
+</script>

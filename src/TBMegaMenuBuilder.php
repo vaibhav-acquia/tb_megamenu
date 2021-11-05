@@ -156,6 +156,7 @@ class TBMegaMenuBuilder implements TBMegaMenuBuilderInterface {
       'always-show-submenu' => TRUE,
       'off-canvas' => 0,
       'number-columns' => 0,
+      'breakpoint' => '980',
     ];
   }
 

@@ -405,6 +405,7 @@ function template_preprocess_tb_megamenu(array &$vars) {
   $vars['attributes']['class'] = [];
   $vars['attributes']['class'][] = 'tbm';
   $vars['attributes']['class'][] = 'tbm' . '-' . str_replace('_', '-', $menu_name);
+  $vars['attributes']['data-breakpoint'] = $block_config['breakpoint'];
   if ($vars['section'] == 'frontend' && $block_config['style'] != '') {
     $vars['#attached']['library'][] = 'tb_megamenu/block_style.' . $block_config['style'];
     $vars['attributes']['class'][] = "style-" . $block_config['style'];
