@@ -61,8 +61,11 @@
           var navParent = $(this),
             linkArray = new Array(),
             curPos = new Array(-1, -1, -1);
+          var isTouch = window.matchMedia('(pointer: coarse)').matches;
 
-          var breakpoint = navParent.data('breakpoint');
+          function isMobile() {
+            return navParent.hasClass('tbm--mobile');
+          }
 
           // Each Top-Level Link
           $(this)
@@ -427,25 +430,24 @@
             $(this).parent().toggleClass('tbm--mobile-show');
           });
 
-          var isTouch = window.matchMedia('(pointer: coarse)').matches;
-
           if (!isTouch) {
-            var mm_duration = 0;
-
-            $('.tbm', context).each(function () {
-              if ($(this).data('duration')) {
-                mm_duration = $(this).data('duration');
-              }
-            });
+            var mm_duration = navParent.data('duration')
+              ? navParent.data('duration')
+              : 0;
 
             var mm_timeout = mm_duration ? 100 + mm_duration : 500;
+
+            // Show dropdowns and flyouts on hover.
             $('.tbm-nav > li, li.tbm-item', context).bind(
               'mouseenter',
               function (event) {
-                showMenu($(this), mm_timeout);
+                if (!isMobile()) {
+                  showMenu($(this), mm_timeout);
+                }
               },
             );
 
+            // Show dropdwons and flyouts on focus.
             $(
               '.tbm-nav > li > .tbm-toggle, li.tbm-item > .tbm-toggle',
               context,
@@ -466,68 +468,11 @@
             $('.tbm-nav > li, li.tbm-item', context).bind(
               'mouseleave',
               function (event) {
-                hideMenu($(this), mm_timeout);
+                if (!isMobile()) {
+                  hideMenu($(this), mm_timeout);
+                }
               },
             );
-
-            /**
-             * Allow tabbing by appending the open class.
-             * Works in tandem with CSS changes that utilize opacity rather than
-             * display none
-             */
-            // If the selected anchor is not in the TB Megamenu, remove all "open"
-            // class occurrences
-            $('a, span').focus(function (event) {
-              if (
-                !$(this).parent().hasClass('tbm-item') &&
-                !$(this).parents('.tbm-block').length
-              ) {
-                nav_close_megamenu();
-              }
-            });
-
-            $('.tbm-nav > li > a, li.tbm-item > a').focus(function (event) {
-              // Remove all occurrences of "open" from other menu trees
-              var siblings = $(this).parents('.tbm-item').siblings();
-              // var siblings = $(this).closest('.tbm-item.level-1').siblings();
-              $.each(siblings, function (i, v) {
-                var cousins = $(v).find('.open');
-                $.each(cousins, function (index, value) {
-                  $(value).removeClass('open');
-                  ariaCheck($(this));
-                });
-                $(v).removeClass('open');
-                ariaCheck();
-              });
-              // Open the submenu if the selected item has one
-              if ($(this).next('.tbm-submenu').length > 0) {
-                if (!$(this).parent().hasClass('open')) {
-                  $(this).parent().addClass('open');
-                }
-              }
-              // If the anchor's top-level parent is not open, open it
-              if (
-                !$(this)
-                  .closest('.tbm-item.tbm-item--has-dropdown')
-                  .hasClass('open') &&
-                $(this)
-                  .closest('.tbm-item.tbm-item--has-dropdown')
-                  .find('.tbm-submenu').length > 0
-              ) {
-                $(this)
-                  .closest('.tbm-item.tbm-item--has-dropdown')
-                  .addClass('open');
-                ariaCheck();
-              }
-              // If anchor's parent submenus are not open, open them
-              var parents = $(this).parents('.tbm-item.tbm-item--has-flyout');
-              $.each(parents, function (i, v) {
-                if (!$(v).hasClass('open')) {
-                  $(v).addClass('open');
-                  ariaCheck();
-                }
-              });
-            });
           }
 
           // Define actions for touch devices.
@@ -537,45 +482,47 @@
               var tbitem = $(this).parent();
 
               $item.click(function (event) {
-                // If the menu link has already been clicked once...
-                if ($item.hasClass('tbm-clicked')) {
-                  var $uri = $item.attr('href');
+                if (isMobile() || isTouch) {
+                  // If the menu link has already been clicked once...
+                  if ($item.hasClass('tbm-clicked')) {
+                    var $uri = $item.attr('href');
 
-                  // If the menu link has a URI, go to the link.
-                  // <nolink> menu items will not have a URI.
-                  if ($uri) {
-                    window.location.href = $uri;
-                  } else {
-                    $item.removeClass('tbm-clicked');
-                    hideMenu(tbitem, mm_timeout);
-                  }
-                } else {
-                  event.preventDefault();
-
-                  // Hide any already open menus which are not parents of the
-                  // currently clicked menu item.
-                  var $openParents = $item.parents('.open');
-                  var $allOpen = $('.tbm .open');
-
-                  // Loop through all open items and check to see if they are
-                  // parents of the clicked item.
-                  $allOpen.each(function (index, item) {
-                    if ($(item).is($openParents)) {
-                      // do nothing
+                    // If the menu link has a URI, go to the link.
+                    // <nolink> menu items will not have a URI.
+                    if ($uri) {
+                      window.location.href = $uri;
                     } else {
-                      $(item).removeClass('open');
+                      $item.removeClass('tbm-clicked');
+                      hideMenu(tbitem, mm_timeout);
                     }
-                  });
+                  } else {
+                    event.preventDefault();
 
-                  // Apply aria attributes.
-                  ariaCheck();
+                    // Hide any already open menus which are not parents of the
+                    // currently clicked menu item.
+                    var $openParents = $item.parents('.open');
+                    var $allOpen = $('.tbm .open');
 
-                  // Remove any existing tmb-clicked classes.
-                  $('.tbm').find('.tbm-clicked').removeClass('tbm-clicked');
+                    // Loop through all open items and check to see if they are
+                    // parents of the clicked item.
+                    $allOpen.each(function (index, item) {
+                      if ($(item).is($openParents)) {
+                        // do nothing
+                      } else {
+                        $(item).removeClass('open');
+                      }
+                    });
 
-                  // Open the submenu and apply the tbm-clicked class.
-                  $item.addClass('tbm-clicked');
-                  showMenu(tbitem, mm_timeout);
+                    // Apply aria attributes.
+                    ariaCheck();
+
+                    // Remove any existing tmb-clicked classes.
+                    $('.tbm').find('.tbm-clicked').removeClass('tbm-clicked');
+
+                    // Open the submenu and apply the tbm-clicked class.
+                    $item.addClass('tbm-clicked');
+                    showMenu(tbitem, mm_timeout);
+                  }
                 }
               });
             });
@@ -583,26 +530,24 @@
             // Anytime there's a click outside the menu, close the menu.
             $(document).on('click', function (event) {
               if ($(event.target).closest('.tbm-nav').length === 0) {
-                nav_close_megamenu();
-                $('.tbm').find('.tbm-clicked').removeClass('tbm-clicked');
+                if (navParent.find('.open').length > 0) {
+                  nav_close_megamenu();
+                  $('.tbm').find('.tbm-clicked').removeClass('tbm-clicked');
+                }
               }
             });
           };
 
-          if (isTouch) {
-            createTouchMenu(
-              $('.tbm ul.tbm-nav li.tbm-item', context).has('.tbm-submenu'),
-            );
-          }
+          // Add touch functionality.
+          createTouchMenu(
+            $('.tbm ul.tbm-nav li.tbm-item', context).has('.tbm-submenu'),
+          );
+
+          // Add keyboard listeners.
+          navParent.on('keydown', keydownEvent);
 
           $(window).on('load resize', function () {
             Drupal.TBMegaMenu.menuResponsive();
-
-            if (window.matchMedia(`(max-width: ${breakpoint}px)`).matches) {
-              navParent.off('keydown', keydownEvent);
-            } else {
-              navParent.on('keydown', keydownEvent);
-            }
           });
         });
     },

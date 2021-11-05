@@ -368,6 +368,7 @@ $color-black: #000;
             &:hover,
             &:focus {
               background-color: $color-red;
+              color: $color-white;
             }
           }
         }
