@@ -286,7 +286,8 @@
 
           // Close Mega Menu
           function nav_close_megamenu() {
-            $('.tbm .open').removeClass('open');
+            navParent.find('.open').removeClass('open');
+            navParent.find('.tbm-clicked').removeClass('tbm-clicked');
             ariaCheck();
           }
 
@@ -427,6 +428,14 @@
           };
 
           $('.tbm-button', this).click(function () {
+            // If the menu is currently open, collapse all open dropdowns before
+            // hiding the menu.
+
+            if (navParent.hasClass('tbm--mobile-show')) {
+              nav_close_megamenu();
+            }
+
+            // Toggle the menu visibility.
             $(this).parent().toggleClass('tbm--mobile-show');
           });
 
@@ -452,17 +461,19 @@
               '.tbm-nav > li > .tbm-toggle, li.tbm-item > .tbm-toggle',
               context,
             ).bind('focus', function (event) {
-              var $this = $(this);
-              var $subMenu = $this.closest('li');
-              showMenu($subMenu, mm_timeout);
-              // If the focus moves outside of the subMenu, close it.
-              $(document).bind('focusin', function (event) {
-                if ($subMenu.has(event.target).length) {
-                  return;
-                }
-                $(document).unbind(event);
-                hideMenu($subMenu, mm_timeout);
-              });
+              if (!isMobile()) {
+                var $this = $(this);
+                var $subMenu = $this.closest('li');
+                showMenu($subMenu, mm_timeout);
+                // If the focus moves outside of the subMenu, close it.
+                $(document).bind('focusin', function (event) {
+                  if ($subMenu.has(event.target).length) {
+                    return;
+                  }
+                  $(document).unbind(event);
+                  hideMenu($subMenu, mm_timeout);
+                });
+              }
             });
 
             $('.tbm-nav > li, li.tbm-item', context).bind(
@@ -532,7 +543,6 @@
               if ($(event.target).closest('.tbm-nav').length === 0) {
                 if (navParent.find('.open').length > 0) {
                   nav_close_megamenu();
-                  $('.tbm').find('.tbm-clicked').removeClass('tbm-clicked');
                 }
               }
             });

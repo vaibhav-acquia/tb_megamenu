@@ -29,43 +29,10 @@ $dropdown-width: 25rem;
     // chain.
     > .tbm-toggle {
       background-color: $color-white;
-      color: $color-red;
+      color: $color-black;
 
       .caret {
-        border-top-color: $color-red;
-      }
-    }
-  }
-
-  // Items that are active or are open and active.
-  &.active,
-  &.open.active {
-    > .tbm-link,
-    > .tbm-no-link {
-      background-color: $color-red;
-      color: $color-white;
-
-      &:hover,
-      &:focus {
-        background-color: $color-red;
-        color: $color-white;
-      }
-    }
-
-    > .tbm-link {
-      &:hover,
-      &:focus {
-        cursor: pointer;
-      }
-
-      .tbm-caption {
-        color: $color-white;
-      }
-    }
-
-    > .tbm-toggle {
-      .caret {
-        border-top-color: $color-white;
+        border-top-color: $color-black;
       }
     }
   }
@@ -117,14 +84,6 @@ $dropdown-width: 25rem;
       border-left-color: $color-light-grey-1;
     }
   }
-
-  &:hover,
-  &:focus {
-    > .tbm-link,
-    > .tbm-no-link {
-      color: $color-red;
-    }
-  }
 }
 
 // Any <ul> other than the top level.
@@ -151,19 +110,6 @@ $dropdown-width: 25rem;
       &:hover,
       &:focus {
         color: $color-red;
-      }
-    }
-
-    // Active traillinks.
-    &.active {
-      > .tbm-link,
-      > .tbm-no-link {
-        color: $color-red;
-
-        &:hover,
-        &:focus {
-          color: $color-red;
-        }
       }
     }
   }
