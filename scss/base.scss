@@ -71,13 +71,6 @@
   position: relative;
   z-index: 1;
 
-  > .tbm-link,
-  > .tbm-no-link {
-    box-sizing: border-box;
-    display: block;
-    height: 100%;
-  }
-
   // Items that are open (ie, submenu is visible).
   &.open {
     > .tbm-submenu {
@@ -86,6 +79,16 @@
       clip: auto;
       height: auto;
     }
+  }
+}
+
+// The container around a menu item link and the submenu toggle button.
+.tbm-link-container {
+  display: flex;
+
+  > .tbm-link,
+  > .tbm-no-link {
+    flex-grow: 1;
   }
 }
 
@@ -120,13 +123,39 @@
   }
 }
 
+// The button that toggles the visibility of the submenu on mobile.
+.tbm-submenu-toggle {
+  display: none;
+  position: relative;
+
+  &:before {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    content: '';
+    left: 50%;
+    display: block;
+    border-left: 0.35rem solid transparent;
+    border-right: 0.35rem solid transparent;
+    border-top: 0.35rem solid currentColor;
+    transition: transform 400ms ease-out;
+  }
+}
+
+// The submenu toggle when the parent is open.
+.open > .tbm-link-container > .tbm-submenu-toggle {
+  &:before {
+    transform: translateY(-50%) translateX(-50%) rotate(180deg);
+  }
+}
+
 // Any <li> that has sub-links, other than at the top level.
 .tbm-item--has-flyout {
   position: relative;
 
   // The carat that appears next to the menu item.
-  > .tbm-link,
-  > .tbm-no-link {
+  .tbm-link,
+  .tbm-no-link {
     &:after {
       display: block;
       content: '';
@@ -253,6 +282,11 @@
     display: block;
   }
 
+  // Hide all carets.
+  .caret {
+    display: none;
+  }
+
   // Toggle visibility when .tbm-button is clicked.
   &.tbm--mobile-show {
     .tbm-collapse {
@@ -265,25 +299,21 @@
     .tbm-submenu {
       display: block !important;
     }
-
-    .caret {
-      display: none !important;
-    }
-
-    // Hide the caret on flyouts.
-    .tbm-item--has-flyout {
-      > .tbm-link,
-      > .tbm-no-link {
-        &:after {
-          display: none !important;
-        }
-      }
-    }
   }
 
   // Hide an entire column on mobile.
   .hidden-collapse {
     display: none !important;
+  }
+
+  // Hide the caret on flyouts.
+  .tbm-item--has-flyout {
+    .tbm-link,
+    .tbm-no-link {
+      &:after {
+        display: none !important;
+      }
+    }
   }
 
   // Hide submenu/group container on mobile.
@@ -292,14 +322,12 @@
       display: none !important;
     }
 
-    .caret {
-      display: none !important;
-    }
-
-    > .tbm-link,
-    > .tbm-no-link {
-      &:after {
-        display: none !important;
+    > .tbm-item-container {
+      > .tbm-link,
+      > .tbm-no-link {
+        &:after {
+          display: none !important;
+        }
       }
     }
   }
@@ -331,6 +359,15 @@
     padding: 0;
     border: 0;
     width: 100%;
+  }
+
+  // The button that toggles the visibility of the submenu on mobile.
+  .tbm-submenu-toggle {
+    display: block;
+    appearance: none;
+    width: 3.5rem;
+    border: 0;
+    cursor: pointer;
   }
 
   &.animate {

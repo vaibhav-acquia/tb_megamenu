@@ -521,11 +521,11 @@
 
 
         var createTouchMenu = function (items) {
-          items.children('a, span').each(function () {
+          items.children('.tbm-link-container').children('.tbm-link, .tbm-no-link').each(function () {
             var $item = $(this);
-            var tbitem = $(this).parent();
+            var tbitem = $(this).closest('.tbm-item');
             $item.click(function (event) {
-              if (isMobile() || isTouch) {
+              if (!isMobile() && isTouch) {
                 // If the menu link has already been clicked once...
                 if ($item.hasClass('tbm-clicked')) {
                   var $uri = $item.attr('href'); // If the menu link has a URI, go to the link.
@@ -573,7 +573,19 @@
         }; // Add touch functionality.
 
 
-        createTouchMenu($('.tbm ul.tbm-nav li.tbm-item', context).has('.tbm-submenu')); // Add keyboard listeners.
+        createTouchMenu($('.tbm ul.tbm-nav li.tbm-item', context).has('.tbm-submenu')); // Toggle submenus on mobile.
+
+        $('.tbm-submenu-toggle, .tbm-no-link').on('click', function () {
+          if (isMobile()) {
+            var $parentItem = $(this).closest('.tbm-item');
+
+            if ($parentItem.hasClass('open')) {
+              hideMenu($parentItem, mm_timeout);
+            } else {
+              showMenu($parentItem, mm_timeout);
+            }
+          }
+        }); // Add keyboard listeners.
 
         navParent.on('keydown', keydownEvent);
         $(window).on('load resize', function () {

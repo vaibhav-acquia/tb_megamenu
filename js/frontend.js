@@ -488,55 +488,58 @@
 
           // Define actions for touch devices.
           var createTouchMenu = function (items) {
-            items.children('a, span').each(function () {
-              var $item = $(this);
-              var tbitem = $(this).parent();
+            items
+              .children('.tbm-link-container')
+              .children('.tbm-link, .tbm-no-link')
+              .each(function () {
+                var $item = $(this);
+                var tbitem = $(this).closest('.tbm-item');
 
-              $item.click(function (event) {
-                if (isMobile() || isTouch) {
-                  // If the menu link has already been clicked once...
-                  if ($item.hasClass('tbm-clicked')) {
-                    var $uri = $item.attr('href');
+                $item.click(function (event) {
+                  if (!isMobile() && isTouch) {
+                    // If the menu link has already been clicked once...
+                    if ($item.hasClass('tbm-clicked')) {
+                      var $uri = $item.attr('href');
 
-                    // If the menu link has a URI, go to the link.
-                    // <nolink> menu items will not have a URI.
-                    if ($uri) {
-                      window.location.href = $uri;
-                    } else {
-                      $item.removeClass('tbm-clicked');
-                      hideMenu(tbitem, mm_timeout);
-                    }
-                  } else {
-                    event.preventDefault();
-
-                    // Hide any already open menus which are not parents of the
-                    // currently clicked menu item.
-                    var $openParents = $item.parents('.open');
-                    var $allOpen = $('.tbm .open');
-
-                    // Loop through all open items and check to see if they are
-                    // parents of the clicked item.
-                    $allOpen.each(function (index, item) {
-                      if ($(item).is($openParents)) {
-                        // do nothing
+                      // If the menu link has a URI, go to the link.
+                      // <nolink> menu items will not have a URI.
+                      if ($uri) {
+                        window.location.href = $uri;
                       } else {
-                        $(item).removeClass('open');
+                        $item.removeClass('tbm-clicked');
+                        hideMenu(tbitem, mm_timeout);
                       }
-                    });
+                    } else {
+                      event.preventDefault();
 
-                    // Apply aria attributes.
-                    ariaCheck();
+                      // Hide any already open menus which are not parents of the
+                      // currently clicked menu item.
+                      var $openParents = $item.parents('.open');
+                      var $allOpen = $('.tbm .open');
 
-                    // Remove any existing tmb-clicked classes.
-                    $('.tbm').find('.tbm-clicked').removeClass('tbm-clicked');
+                      // Loop through all open items and check to see if they are
+                      // parents of the clicked item.
+                      $allOpen.each(function (index, item) {
+                        if ($(item).is($openParents)) {
+                          // do nothing
+                        } else {
+                          $(item).removeClass('open');
+                        }
+                      });
 
-                    // Open the submenu and apply the tbm-clicked class.
-                    $item.addClass('tbm-clicked');
-                    showMenu(tbitem, mm_timeout);
+                      // Apply aria attributes.
+                      ariaCheck();
+
+                      // Remove any existing tmb-clicked classes.
+                      $('.tbm').find('.tbm-clicked').removeClass('tbm-clicked');
+
+                      // Open the submenu and apply the tbm-clicked class.
+                      $item.addClass('tbm-clicked');
+                      showMenu(tbitem, mm_timeout);
+                    }
                   }
-                }
+                });
               });
-            });
 
             // Anytime there's a click outside the menu, close the menu.
             $(document).on('click', function (event) {
@@ -552,6 +555,19 @@
           createTouchMenu(
             $('.tbm ul.tbm-nav li.tbm-item', context).has('.tbm-submenu'),
           );
+
+          // Toggle submenus on mobile.
+          $('.tbm-submenu-toggle, .tbm-no-link').on('click', function () {
+            if (isMobile()) {
+              var $parentItem = $(this).closest('.tbm-item');
+
+              if ($parentItem.hasClass('open')) {
+                hideMenu($parentItem, mm_timeout);
+              } else {
+                showMenu($parentItem, mm_timeout);
+              }
+            }
+          });
 
           // Add keyboard listeners.
           navParent.on('keydown', keydownEvent);
