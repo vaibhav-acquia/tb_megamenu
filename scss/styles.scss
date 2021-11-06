@@ -2,6 +2,7 @@ $color-light-grey-1: #ccc;
 $color-light-grey-2: #eee;
 $color-medium-grey: #999;
 $color-dark-grey: #333;
+$color-dark-grey-2: #222;
 $color-black: #000;
 $color-white: #fff;
 $color-red: #e54e4b;
@@ -145,4 +146,50 @@ $dropdown-width: 25rem;
 .tbm-group-title {
   font-weight: bold;
   text-transform: uppercase;
+}
+
+// Mobile styles.
+.tbm.tbm--mobile {
+  background-color: transparent;
+
+  // Colos for open top level menu items.
+  .tbm-item.level-1.open > .tbm-toggle {
+    background-color: $color-black;
+    color: $color-white;
+
+    > .caret {
+      border-top-color: $color-white;
+    }
+  }
+
+  // The wrapper around the entire menu.
+  .tbm-collapse {
+    background: $color-black;
+  }
+
+  // The <div> around any submenu dropdown. This is a direct descendent child of
+  // the <li>.
+  .tbm-submenu {
+    box-shadow: none;
+
+    .tbm-link,
+    .tbm-no-link {
+      padding: 1rem 1.25rem;
+    }
+  }
+
+  // Any <ul> other than the top level.
+  .tbm-subnav .tbm-subnav {
+    border-top: 1px solid $color-dark-grey-2;
+    margin-left: 1em;
+  }
+
+  .tbm-column-inner {
+    padding: 0.25rem 0;
+  }
+
+  .tbm-block {
+    margin-bottom: 0;
+    padding: 0 1.25rem;
+  }
 }

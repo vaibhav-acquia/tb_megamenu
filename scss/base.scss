@@ -1,8 +1,3 @@
-// Colors
-$color-dark-grey-2: #222;
-$color-white: #fff;
-$color-black: #000;
-
 // The wrapper around everything.
 .tbm {
   position: relative;
@@ -113,7 +108,6 @@ $color-black: #000;
 // The <div> around any submenu dropdown. This is a direct descendent child of
 // the <li>.
 .tbm-submenu {
-  background-color: $color-white;
   display: none;
   left: 0;
   position: absolute;
@@ -254,22 +248,20 @@ $color-black: #000;
 }
 
 .tbm.tbm--mobile {
-  background-color: inherit;
-  height: auto;
+  // The mobile menu toggle.
+  .tbm-button {
+    display: block;
+  }
 
+  // Toggle visibility when .tbm-button is clicked.
   &.tbm--mobile-show {
     .tbm-collapse {
       display: block;
     }
   }
 
+  // Always show submenus in their expanded state on mobile.
   .always-show {
-    .tbm-item {
-      > .tbm-submenu {
-        display: block !important;
-      }
-    }
-
     .tbm-submenu {
       display: block !important;
     }
@@ -278,6 +270,7 @@ $color-black: #000;
       display: none !important;
     }
 
+    // Hide the caret on flyouts.
     .tbm-item--has-flyout {
       > .tbm-link,
       > .tbm-no-link {
@@ -288,10 +281,12 @@ $color-black: #000;
     }
   }
 
+  // Hide an entire column on mobile.
   .hidden-collapse {
     display: none !important;
   }
 
+  // Hide submenu/group container on mobile.
   .sub-hidden-collapse {
     > .tbm-item-child {
       display: none !important;
@@ -301,106 +296,53 @@ $color-black: #000;
       display: none !important;
     }
 
-    > a {
+    > .tbm-link,
+    > .tbm-no-link {
       &:after {
         display: none !important;
       }
     }
   }
 
-  .tbm-item.level-1.open > .tbm-toggle {
-    background-color: $color-black;
-    color: $color-white;
-
-    > .caret {
-      border-top-color: $color-white;
-    }
-  }
-
+  // Display only one column on mobile.
   .tbm-row {
-    width: 100% !important;
-    min-width: 100% !important;
-    left: 0 !important;
-    margin-left: 0 !important;
-    transform: none !important;
-
-    [class*='span'] {
-      width: 100% !important;
-      min-width: 100% !important;
-      left: 0 !important;
-      margin-left: 0 !important;
-      transform: none !important;
-    }
-  }
-
-  .tbm-button {
     display: block;
-    margin-bottom: 0.625rem;
-
-    &:hover {
-      cursor: pointer;
-    }
   }
 
+  // The wrapper around the entire menu.
   .tbm-collapse {
-    background: $color-black;
     display: none;
     position: absolute;
     top: 100%;
     width: 100%;
     z-index: 999;
+  }
 
-    .tbm-nav {
-      flex-direction: column;
-    }
+  // The top level ul.
+  .tbm-nav {
+    flex-direction: column;
+  }
 
-    .tbm-submenu {
-      position: static;
-      margin: 0;
-      padding: 0;
-      border: 0;
+  // The <div> around any submenu dropdown. This is a direct descendent child of
+  // the <li>.
+  .tbm-submenu {
+    position: static;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    width: 100%;
+  }
 
-      .tbm-link,
-      .tbm-no-link {
-        padding: 1rem 1.25rem;
-
-        &:hover,
-        &:focus {
-          background-color: inherit;
+  &.animate {
+    // Override when submenus should always be shown.
+    .always-show {
+      .tbm-item {
+        > .tbm-submenu {
+          backface-visibility: unset;
+          opacity: 1;
         }
       }
-
-      li + li .tbm-link,
-      li + li .tbm-no-link {
-        margin-bottom: 0;
-      }
     }
-
-    .btn {
-      padding: 4px 10px;
-      font-weight: normal;
-      border-radius: 4px;
-    }
-  }
-
-  .tbm-subnav .tbm-subnav {
-    border-top: 1px solid $color-dark-grey-2;
-    margin-left: 1em;
-  }
-
-  .tbm-column-inner {
-    padding: 0.25rem 0;
-  }
-
-  .tbm-submenu {
-    width: 100%;
-    transform: none;
-    transition: none;
-  }
-
-  .tbm-block {
-    margin-bottom: 0;
-    padding: 0 1.25rem;
   }
 }
 

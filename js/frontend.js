@@ -427,10 +427,10 @@
             }
           };
 
+          // TODO -- add aria-expanded here.
           $('.tbm-button', this).click(function () {
             // If the menu is currently open, collapse all open dropdowns before
             // hiding the menu.
-
             if (navParent.hasClass('tbm--mobile-show')) {
               nav_close_megamenu();
             }

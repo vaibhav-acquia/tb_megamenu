@@ -472,7 +472,8 @@
               ariaCheck();
             }, 100));
           }
-        };
+        }; // TODO -- add aria-expanded here.
+
 
         $('.tbm-button', this).click(function () {
           // If the menu is currently open, collapse all open dropdowns before
