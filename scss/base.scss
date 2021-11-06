@@ -85,6 +85,7 @@
 // The container around a menu item link and the submenu toggle button.
 .tbm-link-container {
   display: flex;
+  height: 100%;
 
   > .tbm-link,
   > .tbm-no-link {
@@ -127,6 +128,10 @@
 .tbm-submenu-toggle {
   display: none;
   position: relative;
+  appearance: none;
+  width: 3.5rem;
+  border: 0;
+  cursor: pointer;
 
   &:before {
     position: absolute;
@@ -364,10 +369,6 @@
   // The button that toggles the visibility of the submenu on mobile.
   .tbm-submenu-toggle {
     display: block;
-    appearance: none;
-    width: 3.5rem;
-    border: 0;
-    cursor: pointer;
   }
 
   &.animate {

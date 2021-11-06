@@ -154,16 +154,22 @@
         } // Each Top-Level Link
 
 
-        $(this).find('.level-1').children('a, span').not('.mobile-only').each(function (i, toplink) {
+        $(this).find('.level-1').children('.tbm-link-container').children('.tbm-link, .tbm-no-link').each(function (i, toplink) {
           linkArray[i] = new Array(); // Add Link to Array
 
           linkArray[i][-1] = toplink; // Determine Coordinates
 
           $(toplink).data({
             coordinate: [i, -1]
+          }); // Each top level submenu toggle.
+
+          var subToggle = $(toplink).next('.tbm-submenu-toggle')[0];
+          linkArray[i][-2] = subToggle;
+          $(subToggle).data({
+            coordinate: [i, -2]
           }); // Each Column
 
-          $(toplink).next().children().children('.tbm-column').each(function (j, column) {
+          $(toplink).parent().next().children().children('.tbm-column').each(function (j, column) {
             // Only add to the linkArray if menu items exist.
             if ($(column).find(Drupal.TBMegaMenu.focusableElements).length > 0) {
               linkArray[i][j] = new Array(); // Each Link
@@ -190,13 +196,12 @@
           switch (k.keyCode) {
             // TAB
             case 9:
-              k.preventDefault();
-              nav_tab(k);
-              break;
-            // RETURN
+              // On mobile, we can follow the natural tab order.
+              if (!isMobile()) {
+                k.preventDefault();
+                nav_tab(k);
+              }
 
-            case 13:
-              nav_open_link();
               break;
             // ESC
 
@@ -263,11 +268,6 @@
               nav_down();
             }
           }
-        } // Open Link
-
-
-        function nav_open_link() {
-          linkArray[curPos[0]][curPos[1]][curPos[2]].click();
         } // Escape
 
 
@@ -319,8 +319,11 @@
           if (nav_is_toplink()) {
             nav_next_column();
           } else {
-            if (linkArray[curPos[0]][curPos[1]][curPos[2] + 1]) {
+            if (linkArray[curPos[0]][curPos[1]][curPos[2] + 1] && $(linkArray[curPos[0]][curPos[1]][curPos[2] + 1]).is(':visible')) {
               linkArray[curPos[0]][curPos[1]][curPos[2] + 1].focus();
+            } else if ( // A little bit of a workaround for the fact that .tbm-submenu-toggle is visible only on mobile.
+            linkArray[curPos[0]][curPos[1]][curPos[2] + 2] && $(linkArray[curPos[0]][curPos[1]][curPos[2] + 2]).is(':visible')) {
+              linkArray[curPos[0]][curPos[1]][curPos[2] + 2].focus();
             } else {
               nav_next_column();
             }
@@ -496,7 +499,7 @@
             }
           }); // Show dropdwons and flyouts on focus.
 
-          $('.tbm-nav > li > .tbm-toggle, li.tbm-item > .tbm-toggle', context).bind('focus', function (event) {
+          $('.tbm-toggle', context).bind('focus', function (event) {
             if (!isMobile()) {
               var $this = $(this);
               var $subMenu = $this.closest('li');
