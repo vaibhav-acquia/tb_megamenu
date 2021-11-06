@@ -367,7 +367,7 @@
           };
 
           var showMenu = function ($subMenu, mm_timeout) {
-            if ($subMenu.hasClass('mega')) {
+            if ($subMenu.hasClass('level-1')) {
               $subMenu.addClass('animating');
               clearTimeout($subMenu.data('animatingTimeout'));
               $subMenu.data(

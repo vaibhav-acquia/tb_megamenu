@@ -308,6 +308,15 @@ $color-black: #000;
     }
   }
 
+  .tbm-item.level-1.open > .tbm-toggle {
+    background-color: $color-black;
+    color: $color-white;
+
+    > .caret {
+      border-top-color: $color-white;
+    }
+  }
+
   .tbm-row {
     width: 100% !important;
     min-width: 100% !important;
@@ -347,12 +356,9 @@ $color-black: #000;
 
     .tbm-submenu {
       position: static;
-      display: none;
       margin: 0;
       padding: 0;
       border: 0;
-      border-radius: 0;
-      box-shadow: none;
 
       .tbm-link,
       .tbm-no-link {
@@ -375,12 +381,11 @@ $color-black: #000;
       font-weight: normal;
       border-radius: 4px;
     }
+  }
 
-    .open {
-      > .tbm-submenu {
-        display: block;
-      }
-    }
+  .tbm-subnav .tbm-subnav {
+    border-top: 1px solid $color-dark-grey-2;
+    margin-left: 1em;
   }
 
   .tbm-column-inner {
@@ -399,107 +404,97 @@ $color-black: #000;
   }
 }
 
-// Animations, for desktop only.
-@media (min-width: 980px) {
-  .tbm.animate {
-    .tbm-item {
+// Animations
+.tbm.animate {
+  .tbm-item {
+    > .tbm-submenu {
+      transition: all 400ms;
+      backface-visibility: hidden;
+      opacity: 0;
+    }
+  }
+
+  .tbm-item.animating {
+    > .tbm-submenu {
+      display: block !important;
+    }
+  }
+
+  .tbm-item.open {
+    > .tbm-submenu {
+      opacity: 1;
+    }
+  }
+
+  .tbm-item.animating.open {
+    > .tbm-submenu {
+      opacity: 1;
+    }
+  }
+}
+
+.tbm.animate.zoom {
+  .tbm-item {
+    > .tbm-submenu {
+      transform: scale(0, 0);
+      transform-origin: 20% 20%;
+    }
+  }
+
+  .tbm-item.open {
+    > .tbm-submenu {
+      transform: scale(1, 1);
+    }
+  }
+}
+
+.tbm.animate.elastic {
+  .level0 {
+    > .tbm-item {
       > .tbm-submenu {
+        transform: scale(1, 0);
+      }
+    }
+  }
+
+  .tbm-item {
+    > .tbm-submenu {
+      transform: scale(0, 1);
+      transform-origin: 10% 0;
+    }
+  }
+
+  .tbm-item.open {
+    > .tbm-submenu {
+      transform: scale(1, 1);
+    }
+  }
+}
+
+.tbm.animate.slide {
+  .tbm-item.animating {
+    > .tbm-submenu {
+      overflow: hidden;
+    }
+  }
+
+  .tbm-item {
+    > .tbm-submenu {
+      > div {
         transition: all 400ms;
         backface-visibility: hidden;
-        opacity: 0;
-      }
-    }
-
-    .tbm-item.animating {
-      > .tbm-submenu {
-        display: block !important;
-      }
-    }
-
-    .tbm-item.open {
-      > .tbm-submenu {
-        opacity: 1;
-      }
-    }
-
-    .tbm-item.animating.open {
-      > .tbm-submenu {
-        opacity: 1;
-      }
-    }
-  }
-
-  .tbm.animate.zoom {
-    .tbm-item {
-      > .tbm-submenu {
-        transform: scale(0, 0);
-        transform-origin: 20% 20%;
-      }
-    }
-
-    .tbm-item.open {
-      > .tbm-submenu {
-        transform: scale(1, 1);
-      }
-    }
-  }
-
-  .tbm.animate.elastic {
-    .level0 {
-      > .tbm-item {
-        > .tbm-submenu {
-          transform: scale(1, 0);
-        }
+        margin-top: -100%;
       }
     }
 
     .tbm-item {
       > .tbm-submenu {
-        transform: scale(0, 1);
-        transform-origin: 10% 0;
-      }
-    }
+        min-width: 0;
 
-    .tbm-item.open {
-      > .tbm-submenu {
-        transform: scale(1, 1);
-      }
-    }
-  }
-
-  .tbm.animate.slide {
-    .tbm-item.animating {
-      > .tbm-submenu {
-        overflow: hidden;
-      }
-    }
-
-    .tbm-item {
-      > .tbm-submenu {
         > div {
-          transition: all 400ms;
-          backface-visibility: hidden;
-          margin-top: -100%;
-        }
-      }
-
-      .tbm-item {
-        > .tbm-submenu {
-          min-width: 0;
-
-          > div {
-            min-width: 200px;
-            margin-top: 0;
-            margin-left: -500px;
-          }
-        }
-      }
-
-      .tbm-item.open {
-        > .tbm-submenu {
-          > div {
-            margin-left: 0;
-          }
+          min-width: 200px;
+          margin-top: 0;
+          margin-left: -500px;
         }
       }
     }
@@ -507,8 +502,16 @@ $color-black: #000;
     .tbm-item.open {
       > .tbm-submenu {
         > div {
-          margin-top: 0%;
+          margin-left: 0;
         }
+      }
+    }
+  }
+
+  .tbm-item.open {
+    > .tbm-submenu {
+      > div {
+        margin-top: 0%;
       }
     }
   }
