@@ -614,6 +614,8 @@ function template_preprocess_tb_megamenu_item(array &$vars) {
     $vars['link']['attributes']['tabindex'] = '0';
   }
 
+  $vars['link']['attributes']['class'][] = 'link-level-' . $level;
+
   if (!empty($item_config['class'])) {
     $vars['attributes']['class'][] = $item_config['class'];
   }

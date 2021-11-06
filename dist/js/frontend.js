@@ -101,7 +101,7 @@
   'use strict';
 
   Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
-  Drupal.TBMegaMenu.focusableElements = 'a:not([disabled]), button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), details:not([disabled]), [tabindex]:not([disabled]):not([tabindex="-1"])';
+  Drupal.TBMegaMenu.focusableElements = 'a:not([disabled]):not([tabindex="-1"]), button:not([disabled]):not([tabindex="-1"]), input:not([disabled]):not([tabindex="-1"]), select:not([disabled]):not([tabindex="-1"]), textarea:not([disabled]):not([tabindex="-1"]), details:not([disabled]):not([tabindex="-1"]), [tabindex]:not([disabled]):not([tabindex="-1"])';
 
   Drupal.TBMegaMenu.menuResponsive = function () {
     $('.tbm').each(function () {
@@ -116,27 +116,33 @@
     });
   };
 
-  Drupal.TBMegaMenu.focusNextPrevElement = function (direction) {
+  Drupal.TBMegaMenu.getNextPrevElement = function (direction, excludeSubnav = false) {
     // Add all the elements we want to include in our selection
     var $current = $(document.activeElement);
+    var nextElement = null;
 
     if ($current.length) {
       var $focusable = $(Drupal.TBMegaMenu.focusableElements).filter(function () {
         var $this = $(this);
-        return $this.closest('.tbm-subnav').length === 0 && $this.is(':visible');
+
+        if (excludeSubnav) {
+          return $this.closest('.tbm-subnav').length === 0 && $this.is(':visible');
+        }
+
+        return $this.is(':visible');
       });
       var index = $focusable.index($current);
 
       if (index > -1) {
         if (direction === 'next') {
-          var nextElement = $focusable[index + 1] || $focusable[0];
+          nextElement = $focusable[index + 1] || $focusable[0];
         } else {
-          var nextElement = $focusable[index - 1] || $focusable[0];
+          nextElement = $focusable[index - 1] || $focusable[0];
         }
-
-        nextElement.focus();
       }
     }
+
+    return nextElement;
   };
 
   Drupal.behaviors.tbMegaMenuAction = {
@@ -144,52 +150,13 @@
       $('.tbm', context).once('tbm').each(function () {
         /* Keyboard Control Setup */
         // Semi-Global Variables
-        var navParent = $(this),
-            linkArray = new Array(),
-            curPos = new Array(-1, -1, -1);
+        var navParent = $(this);
         var isTouch = window.matchMedia('(pointer: coarse)').matches;
 
         function isMobile() {
           return navParent.hasClass('tbm--mobile');
-        } // Each Top-Level Link
+        } // Key Pressed
 
-
-        $(this).find('.level-1').children('.tbm-link-container').children('.tbm-link, .tbm-no-link').each(function (i, toplink) {
-          linkArray[i] = new Array(); // Add Link to Array
-
-          linkArray[i][-1] = toplink; // Determine Coordinates
-
-          $(toplink).data({
-            coordinate: [i, -1]
-          }); // Each top level submenu toggle.
-
-          var subToggle = $(toplink).next('.tbm-submenu-toggle')[0];
-          linkArray[i][-2] = subToggle;
-          $(subToggle).data({
-            coordinate: [i, -2]
-          }); // Each Column
-
-          $(toplink).parent().next().children().children('.tbm-column').each(function (j, column) {
-            // Only add to the linkArray if menu items exist.
-            if ($(column).find(Drupal.TBMegaMenu.focusableElements).length > 0) {
-              linkArray[i][j] = new Array(); // Each Link
-
-              $(column).find(Drupal.TBMegaMenu.focusableElements).each(function (k, sublink) {
-                // Add Link to Array
-                linkArray[i][j][k] = sublink; // Determine Coordinates
-
-                $(sublink).data({
-                  coordinate: [i, j, k]
-                });
-              }); // each link
-            }
-          }); // each column
-        }); // each top-level link
-        // Update Position on Focus
-
-        $(this).find('.tbm-nav').find(Drupal.TBMegaMenu.focusableElements).focus(function () {
-          curPos = $(this).data('coordinate');
-        }); // Key Pressed
 
         function keydownEvent(k) {
           // Determine Key
@@ -198,7 +165,6 @@
             case 9:
               // On mobile, we can follow the natural tab order.
               if (!isMobile()) {
-                k.preventDefault();
                 nav_tab(k);
               }
 
@@ -212,35 +178,25 @@
 
             case 37:
               k.preventDefault();
-              nav_left();
+              nav_left(k);
               break;
             // UP
 
             case 38:
               k.preventDefault();
-              nav_up();
+              nav_up(k);
               break;
             // RIGHT
 
             case 39:
               k.preventDefault();
-              nav_right();
+              nav_right(k);
               break;
             // DOWN
 
             case 40:
               k.preventDefault();
-              nav_down();
-              break;
-            // HOME
-
-            case 36:
-              nav_home();
-              break;
-            // END
-
-            case 35:
-              nav_end();
+              nav_down(k);
               break;
             // Else
 
@@ -255,17 +211,19 @@
 
 
         function nav_tab(k) {
+          k.preventDefault();
+
           if (nav_is_toplink()) {
-            if (k.shiftKey) {
+            if (k.shiftKey || k.keyCode === 38 || k.keyCode === 37) {
               nav_prev_toplink();
             } else {
               nav_next_toplink();
             }
           } else {
-            if (k.shiftKey) {
-              nav_up();
+            if (k.shiftKey || k.keyCode === 38 || k.keyCode === 37) {
+              Drupal.TBMegaMenu.getNextPrevElement('prev').focus();
             } else {
-              nav_down();
+              Drupal.TBMegaMenu.getNextPrevElement('next').focus();
             }
           }
         } // Escape
@@ -276,75 +234,41 @@
         } // Left
 
 
-        function nav_left() {
+        function nav_left(k) {
           if (nav_is_toplink()) {
             nav_prev_toplink();
           } else {
-            nav_prev_column();
+            // TODO/NICE TO HAVE - Go to previous column
+            nav_up(k);
           }
         } // Right
 
 
-        function nav_right() {
+        function nav_right(k) {
           if (nav_is_toplink()) {
             nav_next_toplink();
           } else {
-            nav_next_column();
+            // TODO/NICE TO HAVE - Go to previous column
+            nav_down(k);
           }
         } // Up
 
 
-        function nav_up() {
-          if (nav_is_toplink()) {
-            nav_prev_toplink();
+        function nav_up(k) {
+          if (nav_is_toplink()) {// Do nothing.
           } else {
-            if (linkArray[curPos[0]][curPos[1]][curPos[2] - 1]) {
-              // If the previous link in the array is hidden (ie, it's in a
-              // submenu that is not currently expanded), then skip to the next
-              // item in the array until we find one that's visible.
-              if ($(linkArray[curPos[0]][curPos[1]][curPos[2] - 1]).is(':visible')) {
-                linkArray[curPos[0]][curPos[1]][curPos[2] - 1].focus();
-              } else {
-                curPos = [curPos[0], curPos[1], curPos[2] - 1];
-                nav_up();
-              }
-            } else {
-              nav_prev_column();
-            }
+            nav_tab(k);
           }
         } // Down
 
 
-        function nav_down() {
+        function nav_down(k) {
           if (nav_is_toplink()) {
-            nav_next_column();
+            Drupal.TBMegaMenu.getNextPrevElement('next').focus(); // nav_next_column();
+          } else if ( // If the next element takes the user out of this top level, then do nothing.
+          Drupal.TBMegaMenu.getNextPrevElement('next').closest('.tbm-item.level-1') !== document.activeElement.closest('.tbm-item.level-1')) {// Do nothing.
           } else {
-            if (linkArray[curPos[0]][curPos[1]][curPos[2] + 1] && $(linkArray[curPos[0]][curPos[1]][curPos[2] + 1]).is(':visible')) {
-              linkArray[curPos[0]][curPos[1]][curPos[2] + 1].focus();
-            } else if ( // A little bit of a workaround for the fact that .tbm-submenu-toggle is visible only on mobile.
-            linkArray[curPos[0]][curPos[1]][curPos[2] + 2] && $(linkArray[curPos[0]][curPos[1]][curPos[2] + 2]).is(':visible')) {
-              linkArray[curPos[0]][curPos[1]][curPos[2] + 2].focus();
-            } else {
-              nav_next_column();
-            }
-          }
-        } // Home Button
-
-
-        function nav_home() {
-          if (nav_is_toplink()) {
-            linkArray[0][-1].focus();
-          } else {
-            linkArray[curPos[0]][0][0].focus();
-          }
-        } // End Button
-
-
-        function nav_end() {
-          if (nav_is_toplink()) {
-            linkArray.slice(-1)[0][-1].focus();
-          } else {
-            linkArray[curPos[0]].slice(-1)[0].slice(-1)[0].focus();
+            nav_tab(k);
           }
         }
         /* Helper Functions */
@@ -352,7 +276,15 @@
 
 
         function nav_is_toplink() {
-          return curPos[1] < 0;
+          return document.activeElement.classList.contains('link-level-1');
+        }
+
+        function nav_is_last_toplink() {
+          return document.activeElement === document.querySelector('.tbm-item.level-1:last-child ').querySelector('.link-level-1');
+        }
+
+        function nav_is_first_toplink() {
+          return document.activeElement === document.querySelector('.tbm-item.level-1:first-child ').querySelector('.link-level-1');
         } // Close Mega Menu
 
 
@@ -364,46 +296,24 @@
 
 
         function nav_next_toplink() {
-          if (linkArray[curPos[0] + 1]) {
-            linkArray[curPos[0] + 1][-1].focus();
+          if (!nav_is_last_toplink()) {
+            document.activeElement.closest('.tbm-item').nextElementSibling.querySelector('.tbm-link, .tbm-no-link').focus();
           } else {
             nav_close_megamenu(); // Focus on the next element.
 
-            Drupal.TBMegaMenu.focusNextPrevElement('next');
+            Drupal.TBMegaMenu.getNextPrevElement('next', true).focus();
+            console.log(document.activeElement);
           }
         } // Previous Toplink
 
 
         function nav_prev_toplink() {
-          if (linkArray[curPos[0] - 1]) {
-            linkArray[curPos[0] - 1][-1].focus();
+          if (!nav_is_first_toplink()) {
+            document.activeElement.closest('.tbm-item').previousElementSibling.querySelector('.tbm-link, .tbm-no-link').focus();
           } else {
             // Focus on the previous element.
-            Drupal.TBMegaMenu.focusNextPrevElement('prev');
+            Drupal.TBMegaMenu.getNextPrevElement('prev', true).focus();
           }
-        } // Previous Column
-
-
-        function nav_prev_column() {
-          if (linkArray[curPos[0]][curPos[1] - 1][0]) {
-            linkArray[curPos[0]][curPos[1] - 1][0].focus();
-          } else {
-            nav_parent_toplink();
-          }
-        } // Next Column
-
-
-        function nav_next_column() {
-          if (linkArray[curPos[0]][curPos[1] + 1]) {
-            linkArray[curPos[0]][curPos[1] + 1][0].focus();
-          } else {
-            nav_parent_toplink();
-          }
-        } // Go to Parent Toplink
-
-
-        function nav_parent_toplink() {
-          linkArray[curPos[0]][-1].focus();
         }
 
         var ariaCheck = function () {
