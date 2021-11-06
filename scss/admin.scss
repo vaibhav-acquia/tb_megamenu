@@ -107,8 +107,8 @@ $dropdown-width: 400px;
     @media (max-width: 979px) {
       margin: 0 2px 0 0;
 
-      > li > .tbm-link,
-      > li > .tbm-no-link {
+      > li > .tbm-link-container > .tbm-link,
+      > li > .tbm-link-container > .tbm-no-link {
         padding: 6px;
       }
     }
@@ -208,19 +208,25 @@ $dropdown-width: 400px;
       position: relative;
       margin-right: 10px;
 
-      > a,
-      > span {
-        background: #f2f2f2;
-        border-radius: 3px;
-        border: 1px solid #ddd;
-        color: #777777;
-        display: block;
-        font-weight: bold;
-        padding: 10px 15px 10px;
-        text-decoration: none;
-        text-shadow: 0 1px 0 #ffffff;
-        transition: all 0.1s ease 0s;
+      > .tbm-link-container {
+        .tbm-link,
+        .tbm-no-link {
+          background: #f2f2f2;
+          border-radius: 3px;
+          border: 1px solid #ddd;
+          color: #777777;
+          display: block;
+          font-weight: bold;
+          padding: 10px 15px 10px;
+          text-decoration: none;
+          text-shadow: 0 1px 0 #ffffff;
+          transition: all 0.1s ease 0s;
+        }
       }
+    }
+
+    .tbm-submenu-toggle {
+      display: none;
     }
 
     // Any <li> items within the mega menu.
@@ -353,17 +359,19 @@ $dropdown-width: 400px;
       margin-bottom: 5px;
       position: relative;
 
-      > a,
-      > span {
-        border-radius: 3px;
-        border: 1px dotted #ddd;
-        color: $color-medium-grey;
-        display: block;
-        font-size: 12px;
-        font-weight: normal;
-        line-height: 18px;
-        padding: 5px 20px 5px 10px;
-        transition: all 0.1s ease 0s;
+      .tbm-link-container {
+        > .tbm-link,
+        > .tbm-no-link {
+          border-radius: 3px;
+          border: 1px dotted #ddd;
+          color: $color-medium-grey;
+          display: block;
+          font-size: 12px;
+          font-weight: normal;
+          line-height: 18px;
+          padding: 5px 20px 5px 10px;
+          transition: all 0.1s ease 0s;
+        }
       }
 
       > .tbm-submenu {
