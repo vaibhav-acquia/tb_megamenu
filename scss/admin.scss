@@ -41,7 +41,7 @@ $dropdown-width: 400px;
   .tbm-submenu li > a:hover,
   .tbm-submenu li > a:focus,
   .tbm-item--has-flyout:hover > a {
-    background: #4f4f4f;
+    border-color: #4f4f4f;
   }
 
   .tbm-submenu a:visited {
@@ -328,7 +328,7 @@ $dropdown-width: 400px;
   // The div around any submenu (beyond the first li).
   .tbm-submenu {
     border: 1px solid #ddd;
-    padding: 10px;
+    padding: 24px;
     margin-top: 10px;
     border-radius: 3px;
     transition: all 0.1s ease 0s;
@@ -386,7 +386,7 @@ $dropdown-width: 400px;
 
   // Container within a spanned column.
   .tbm-column-inner {
-    padding: 10px;
+    padding: 24px;
   }
 
   // Blocks within the megamenu.

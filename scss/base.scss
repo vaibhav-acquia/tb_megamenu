@@ -20,7 +20,8 @@
 }
 
 // The <ul> around the top level menu.
-.tbm-nav {
+.tbm-nav,
+[dir='ltr'] .tbm-nav {
   display: flex;
   flex-direction: row;
   list-style: none;

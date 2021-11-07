@@ -257,10 +257,14 @@
                 // Mega menu item has mega class (it's a true mega menu)
                 if (!$(this).parents().is('.open')) {
                   // Mega menu item has mega class and its ancestor is closed, so apply appropriate ARIA attributes
-                  $(this).children().attr('aria-expanded', 'false');
+                  $(this)
+                    .find('.tbm-toggle, .tbm-submenu-toggle')
+                    .attr('aria-expanded', 'false');
                 } else if ($(this).parents().is('.open')) {
                   // Mega menu item has mega class and its ancestor is open, so apply appropriate ARIA attributes
-                  $(this).children().attr('aria-expanded', 'true');
+                  $(this)
+                    .find('.tbm-toggle, .tbm-submenu-toggle')
+                    .attr('aria-expanded', 'true');
                 }
               } else if (
                 $(this).is('.tbm-item--has-dropdown') ||
@@ -269,14 +273,20 @@
                 // Mega menu item has dropdown (it's a flyout menu)
                 if (!$(this).is('.open')) {
                   // Mega menu item has dropdown class and is closed, so apply appropriate ARIA attributes
-                  $(this).children().attr('aria-expanded', 'false');
+                  $(this)
+                    .find('.tbm-toggle, .tbm-submenu-toggle')
+                    .attr('aria-expanded', 'false');
                 } else if ($(this).is('.open')) {
                   // Mega menu item has dropdown class and is open, so apply appropriate ARIA attributes
-                  $(this).children().attr('aria-expanded', 'true');
+                  $(this)
+                    .find('.tbm-toggle, .tbm-submenu-toggle')
+                    .attr('aria-expanded', 'true');
                 }
               } else {
                 // Mega menu item is neither a mega or dropdown class, so remove ARIA attributes (it doesn't have children)
-                $(this).children().removeAttr('aria-expanded');
+                $(this)
+                  .find('.tbm-toggle, .tbm-submenu-toggle')
+                  .removeAttr('aria-expanded');
               }
             });
           };
@@ -312,7 +322,9 @@
           };
 
           var hideMenu = function ($subMenu, mm_timeout) {
-            $subMenu.children('.tbm-toggle').attr('aria-expanded', 'false');
+            $subMenu
+              .find('.tbm-toggle, .tbm-submenu-toggle')
+              .attr('aria-expanded', 'false');
             if ($subMenu.hasClass('mega')) {
               $subMenu.addClass('animating');
               clearTimeout($subMenu.data('animatingTimeout'));
@@ -342,12 +354,14 @@
             }
           };
 
-          // TODO -- add aria-expanded here.
           $('.tbm-button', this).click(function () {
             // If the menu is currently open, collapse all open dropdowns before
             // hiding the menu.
             if (navParent.hasClass('tbm--mobile-show')) {
               nav_close_megamenu();
+              $(this).attr('aria-expanded', 'false');
+            } else {
+              $(this).attr('aria-expanded', 'true');
             }
 
             // Toggle the menu visibility.

@@ -14,3 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Simplified keyboard nav.
   ** Home/End listeners removed.
   ** Left/Right behave the same as Tab key.
+
+TODO
+
+- Fix mobile display when always show is set to true.

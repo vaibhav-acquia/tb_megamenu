@@ -8,7 +8,9 @@
   {% endif %}
 {% endif %}
 <li {{ attributes }} >
-  <div class="tbm-link-container">
+  {% if section == 'frontend' %}
+    <div class="tbm-link-container">
+  {% endif %}
     {% if tag == 'a' %}
       <{{ tag }} href="{{ link['url'] }}" {{ link['attributes'] }}>
     {% else %}
@@ -25,9 +27,11 @@
         <span class="tbm-caption">{{ item_config['caption'] }}</span>
       {% endif %}
     </{{ tag }}>
-    {% if submenu %}
-      <button class="tbm-submenu-toggle"><span class="visually-hidden">{{ 'Toggle submenu'|t }}</span></button>
-    {% endif %}
-  </div>
+  {% if section == 'frontend' %}
+      {% if submenu %}
+        <button class="tbm-submenu-toggle"><span class="visually-hidden">{{ 'Toggle submenu'|t }}</span></button>
+      {% endif %}
+    </div>
+  {% endif %}
   {{ submenu }}
 </li>
