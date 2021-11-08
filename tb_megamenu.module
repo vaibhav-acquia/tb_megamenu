@@ -443,6 +443,10 @@ function template_preprocess_tb_megamenu(array &$vars) {
   // Add a11y attributes.
   $vars['attributes']['role'] = 'navigation';
   $vars['attributes']['aria-label'] = t('Main navigation');
+
+  // Reset the getMenuItem method in case there is more than one TB menu on the
+  // same page.
+  drupal_static_reset('getMenuItem');
 }
 
 /**
