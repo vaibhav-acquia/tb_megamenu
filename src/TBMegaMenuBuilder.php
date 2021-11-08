@@ -130,7 +130,7 @@ class TBMegaMenuBuilder implements TBMegaMenuBuilderInterface {
   public function loadEntityBlock(string $block_id) {
     $block = $this->entityTypeManager->getStorage('block')->load($block_id);
     // Ensure the current user has permissions to view the block.
-    if ($block->access('view')) {
+    if ($block && $block->access('view')) {
       return $block;
     }
   }

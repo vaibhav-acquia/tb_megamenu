@@ -442,6 +442,10 @@ function template_preprocess_tb_megamenu(array &$vars) {
 
   // Add a11y attributes.
   $vars['attributes']['aria-label'] = t('@menu_name navigation', ['@menu_name' => $menu_name]);
+
+  // Reset the getMenuItem method in case there is more than one TB menu on the
+  // same page.
+  drupal_static_reset('getMenuItem');
 }
 
 /**
@@ -669,7 +673,7 @@ function template_preprocess_tb_megamenu_item(array &$vars) {
     $vars['link']['attributes']['title'] = $vars['link']['description'];
   }
   if ($vars['submenu'] != NULL) {
-    $vars['link']['attributes']['aria-expanded'] = t('false');
+    $vars['link']['attributes']['aria-expanded'] = 'false';
   }
 
   // Make other menu attributes available to TB Mega Menu Anchor Links.
