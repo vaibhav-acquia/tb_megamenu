@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [\[Unreleased\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.x)
 
+## [\[8.x-1.6\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.6) - 2021-11-08
+### Fixed
+- Issue [#3238342](https://www.drupal.org/project/tb_megamenu/issues/3238342) by knaffles, HeatherC7474, henry.odiete: Unable to tab through sub menus for ADA
+- Issue [#3221150](https://www.drupal.org/project/tb_megamenu/issues/3221150) by knaffles, mattbloomfield, themodularlab, BertVivie: Submenu not rendering
+- Issue [#3244915](https://www.drupal.org/project/tb_megamenu/issues/3244915) by nironan: Accessibility: invalid states for multilingual sites
+
 ## [\[8.x-1.5\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.5) - 2021-09-24
 ### Fixed
 - Issue [#3238679](https://www.drupal.org/project/tb_megamenu/issues/3238679) by smortimore, themodularlab: HTML entities not processed correctly
