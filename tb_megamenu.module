@@ -666,7 +666,7 @@ function template_preprocess_tb_megamenu_item(array &$vars) {
     $vars['link']['attributes']['title'] = $vars['link']['description'];
   }
   if ($vars['submenu'] != NULL) {
-    $vars['link']['attributes']['aria-expanded'] = t('false');
+    $vars['link']['attributes']['aria-expanded'] = 'false';
   }
 
   // Make other menu attributes available to TB Mega Menu Anchor Links.
