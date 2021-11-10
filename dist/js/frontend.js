@@ -116,6 +116,10 @@
     });
   };
 
+  $(window).on('load resize', function () {
+    Drupal.TBMegaMenu.menuResponsive();
+  });
+
   Drupal.TBMegaMenu.getNextPrevElement = function (direction, excludeSubnav = false) {
     // Add all the elements we want to include in our selection
     var $current = $(document.activeElement);
@@ -302,7 +306,6 @@
             nav_close_megamenu(); // Focus on the next element.
 
             Drupal.TBMegaMenu.getNextPrevElement('next', true).focus();
-            console.log(document.activeElement);
           }
         } // Previous Toplink
 
@@ -405,13 +408,13 @@
           var mm_duration = navParent.data('duration') ? navParent.data('duration') : 0;
           var mm_timeout = mm_duration ? 100 + mm_duration : 500; // Show dropdowns and flyouts on hover.
 
-          $('.tbm-nav > li, li.tbm-item', context).bind('mouseenter', function (event) {
+          $('.tbm-item', this).bind('mouseenter', function (event) {
             if (!isMobile()) {
               showMenu($(this), mm_timeout);
             }
           }); // Show dropdwons and flyouts on focus.
 
-          $('.tbm-toggle', context).bind('focus', function (event) {
+          $('.tbm-toggle', this).bind('focus', function (event) {
             if (!isMobile()) {
               var $this = $(this);
               var $subMenu = $this.closest('li');
@@ -427,7 +430,7 @@
               });
             }
           });
-          $('.tbm-nav > li, li.tbm-item', context).bind('mouseleave', function (event) {
+          $('.tbm-item', this).bind('mouseleave', function (event) {
             if (!isMobile()) {
               hideMenu($(this), mm_timeout);
             }
@@ -469,7 +472,7 @@
 
                   ariaCheck(); // Remove any existing tmb-clicked classes.
 
-                  $('.tbm').find('.tbm-clicked').removeClass('tbm-clicked'); // Open the submenu and apply the tbm-clicked class.
+                  navParent.find('.tbm-clicked').removeClass('tbm-clicked'); // Open the submenu and apply the tbm-clicked class.
 
                   $item.addClass('tbm-clicked');
                   showMenu(tbitem, mm_timeout);
@@ -488,9 +491,9 @@
         }; // Add touch functionality.
 
 
-        createTouchMenu($('.tbm ul.tbm-nav li.tbm-item', context).has('.tbm-submenu')); // Toggle submenus on mobile.
+        createTouchMenu($('.tbm-item', this).has('.tbm-submenu')); // Toggle submenus on mobile.
 
-        $('.tbm-submenu-toggle, .tbm-no-link').on('click', function () {
+        $('.tbm-submenu-toggle, .tbm-no-link', this).on('click', function () {
           if (isMobile()) {
             var $parentItem = $(this).closest('.tbm-item');
 
@@ -503,9 +506,6 @@
         }); // Add keyboard listeners.
 
         navParent.on('keydown', keydownEvent);
-        $(window).on('load resize', function () {
-          Drupal.TBMegaMenu.menuResponsive();
-        });
       });
     }
   };

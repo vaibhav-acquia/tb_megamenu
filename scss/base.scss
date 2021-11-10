@@ -2,6 +2,13 @@
 .tbm {
   position: relative;
 
+  // When anything in the menu has focus, bump up the z-index. This ensures that
+  // when there is more than one mega menu on the page, they don't overlap with
+  // each other.
+  &:focus-within {
+    z-index: 999;
+  }
+
   // Admins can add font awesome icons to menu items.
   [class^='fa-'],
   [class*=' fa-'] {
