@@ -25,14 +25,12 @@ function tb_megamenu_help($route_name, RouteMatchInterface $route_match) {
       $output = '<h3>' . t('About') . '</h3>';
       $output .= '<p>' . t('TB Mega Menu allows you to create a mega menu with an innovative back-end user interface and synchronized with Drupal core menu.') . '</p>';
       $output .= '<h3>' . t('Uses') . '</h3>';
-      $output .= '<p>' . t('TB Mega Menu is developed following Drupal standards and best practices. Along with those must-have functions of a mega menu: display not just menu items but image, slideshow, video, article and customize any of them upon your favour...; below are the most noticeable features that TB Mega Menu has:') . '</p>';
+      $output .= '<p>' . t('TB Mega Menu is developed following Drupal standards and best practices, and includes the following features:') . '</p>';
       $output .= '<ul>';
       $output .= '<li>' . t('Synchronized with Drupal core menu, auto updated if there is any change with Drupal core menu') . '</li>';
-      $output .= '<li>' . t('Bootstrap framework') . '</li>';
       $output .= '<li>' . t('Responsive ready') . '</li>';
-      $output .= '<li>' . t('Multiple built-in styles designed with years of theming experience') . '</li>';
-      $output .= '<li>' . t('Visual and friendly user interface - what you see is what you get') . '</li>';
-      $output .= '<li>' . t('Custom style for each element of your mega menu, just input extra css class name') . '</li>';
+      $output .= '<li>' . t('Friendly user interface - what you see is what you get') . '</li>';
+      $output .= '<li>' . t('Add custom styles for each element of your mega menu') . '</li>';
       $output .= '<li>' . t('Multiple built-in CSS3 animated effects') . '</li>';
       $output .= '<li>' . t('Work independently with themes') . '</li>';
       $output .= '</ul>';
@@ -405,17 +403,13 @@ function template_preprocess_tb_megamenu(array &$vars) {
   $vars['attributes']['class'] = [];
   $vars['attributes']['class'][] = 'tbm';
   $vars['attributes']['class'][] = 'tbm' . '-' . str_replace('_', '-', $menu_name);
+  $vars['attributes']['id'] = "tbm-" . str_replace('_', '-', $menu_name);
   $vars['attributes']['data-breakpoint'] = $block_config['breakpoint'];
-  if ($vars['section'] == 'frontend' && $block_config['style'] != '') {
-    $vars['#attached']['library'][] = 'tb_megamenu/block_style.' . $block_config['style'];
-    $vars['attributes']['class'][] = "style-" . $block_config['style'];
-  }
   if ($block_config['animation'] != 'none') {
     $vars['attributes']['class'][] = "animate";
     $vars['attributes']['class'][] = $block_config['animation'];
     $vars['attributes']['data-duration'] = $block_config['duration'];
     $vars['attributes']['data-delay'] = $block_config['delay'];
-    $vars['attributes']['id'] = "tbm-" . str_replace('_', '-', $menu_name);
   }
   $vars['content'] = [
     '#theme' => 'tb_megamenu_nav',
@@ -469,7 +463,6 @@ function template_preprocess_tb_megamenu_backend(array &$vars) {
   ];
   $vars['block_config'] = $block_config;
   $vars['animation_options'] = $menu_builder->createAnimationOptions($block_config);
-  $vars['style_options'] = $menu_builder->createStyleOptions($block_config);
   $vars['edit_links'] = Url::fromRoute('entity.menu.edit_form', ['menu' => $menu_name])->toString();
 
   // Attach this to init TB Mega Menu (Importance).

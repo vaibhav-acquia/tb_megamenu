@@ -149,7 +149,6 @@ class TBMegaMenuBuilder implements TBMegaMenuBuilderInterface {
   public function editBlockConfig(array &$block_config) {
     $block_config += [
       'animation' => 'none',
-      'style' => '',
       'auto-arrow' => TRUE,
       'duration' => 400,
       'delay' => 200,
@@ -271,18 +270,6 @@ class TBMegaMenuBuilder implements TBMegaMenuBuilderInterface {
       'slide' => $this->t('Slide'),
       'zoom' => $this->t('Zoom'),
       'elastic' => $this->t('Elastic'),
-    ];
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function createStyleOptions(array $block_config) {
-    return [
-      '' => $this->t('Default'),
-      'black' => $this->t('Black'),
-      'blue' => $this->t('Blue'),
-      'green' => $this->t('Green'),
     ];
   }
 
