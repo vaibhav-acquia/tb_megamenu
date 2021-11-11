@@ -14,7 +14,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Simplified keyboard nav.
   ** Home/End listeners removed.
   ** Left/Right behave the same as Tab key.
+- Added support for clickable dropdowns to show/hide submenus.
 
 TODO
 
 - Fix mobile display when always show is set to true.
+- Revisit keyboard functionality on touch devices and mobile, both with and without auto arrows.
