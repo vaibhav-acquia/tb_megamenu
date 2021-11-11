@@ -406,6 +406,11 @@ function template_preprocess_tb_megamenu(array &$vars) {
   $vars['attributes']['id'] = $menu_id;
   $vars['attributes']['data-breakpoint'] = $block_config['breakpoint'];
   $vars['#attached']['drupalSettings']['TBMegaMenu'][$menu_id]['arrows'] = $block_config['auto-arrow'];
+  if ($block_config['auto-arrow'] === '1') {
+    $vars['attributes']['class'][] = 'tbm-arrows';
+  } else {
+    $vars['attributes']['class'][] = 'tbm-no-arrows';
+  }
   
   if ($block_config['animation'] != 'none') {
     $vars['attributes']['class'][] = "animate";

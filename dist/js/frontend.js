@@ -191,6 +191,11 @@
               }
 
               break;
+            // ENTER
+
+            case 13:
+              nav_enter();
+              break;
             // ESC
 
             case 27:
@@ -253,6 +258,13 @@
 
         function nav_esc() {
           nav_close_megamenu();
+        } // Enter
+
+
+        function nav_enter() {
+          if ($(document.activeElement).hasClass('no-link')) {
+            $(document.activeElement).trigger('click');
+          }
         } // Left
 
 
@@ -474,8 +486,9 @@
             var $item = $(this);
             var tbitem = $(this).closest('.tbm-item');
             $item.click(function (event) {
-              if (!isMobile() && isTouch) {
-                // If the menu link has already been clicked once...
+              if (!isMobile() && isTouch && !hasArrows) {
+                console.log('clicked touch'); // If the menu link has already been clicked once...
+
                 if ($item.hasClass('tbm-clicked')) {
                   var $uri = $item.attr('href'); // If the menu link has a URI, go to the link.
                   // <nolink> menu items will not have a URI.
@@ -535,7 +548,8 @@
             }
           }
 
-          if (!isMobile() && hasArrows) {
+          if (!isMobile() && !(isTouch && !hasArrows && $(this).hasClass('no-link'))) {
+            console.log('doing toggle');
             var $parentItem = $(this).closest('.tbm-item');
 
             if ($parentItem.hasClass('open')) {

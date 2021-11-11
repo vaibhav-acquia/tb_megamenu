@@ -113,6 +113,11 @@
                 }
                 break;
 
+              // ENTER
+              case 13:
+                nav_enter();
+                break;
+
               // ESC
               case 27:
                 nav_esc();
@@ -171,6 +176,13 @@
           // Escape
           function nav_esc() {
             nav_close_megamenu();
+          }
+
+          // Enter
+          function nav_enter() {
+            if ($(document.activeElement).hasClass('no-link')) {
+              $(document.activeElement).trigger('click');
+            }
           }
 
           // Left
@@ -442,7 +454,8 @@
                 var tbitem = $(this).closest('.tbm-item');
 
                 $item.click(function (event) {
-                  if (!isMobile() && isTouch) {
+                  if (!isMobile() && isTouch && !hasArrows) {
+                    console.log('clicked touch');
                     // If the menu link has already been clicked once...
                     if ($item.hasClass('tbm-clicked')) {
                       var $uri = $item.attr('href');
@@ -514,7 +527,11 @@
                 }
               }
 
-              if (!isMobile() && hasArrows) {
+              if (
+                !isMobile() &&
+                !(isTouch && !hasArrows && $(this).hasClass('no-link'))
+              ) {
+                console.log('doing toggle');
                 var $parentItem = $(this).closest('.tbm-item');
 
                 if ($parentItem.hasClass('open')) {
