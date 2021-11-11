@@ -368,8 +368,8 @@ function template_preprocess_tb_megamenu_submenu(array &$vars) {
  *   Variables are declared in theme.
  */
 function template_preprocess_tb_megamenu(array &$vars) {
-
   $menu_name = $vars['menu_name'];
+  $menu_id = "tbm-" . str_replace('_', '-', $menu_name);
   $theme = $vars['block_theme'];
   $vars['#attached']['drupalSettings']['TBMegaMenu']['theme'] = $theme;
 
@@ -403,8 +403,10 @@ function template_preprocess_tb_megamenu(array &$vars) {
   $vars['attributes']['class'] = [];
   $vars['attributes']['class'][] = 'tbm';
   $vars['attributes']['class'][] = 'tbm' . '-' . str_replace('_', '-', $menu_name);
-  $vars['attributes']['id'] = "tbm-" . str_replace('_', '-', $menu_name);
+  $vars['attributes']['id'] = $menu_id;
   $vars['attributes']['data-breakpoint'] = $block_config['breakpoint'];
+  $vars['#attached']['drupalSettings']['TBMegaMenu'][$menu_id]['arrows'] = $block_config['auto-arrow'];
+  
   if ($block_config['animation'] != 'none') {
     $vars['attributes']['class'][] = "animate";
     $vars['attributes']['class'][] = $block_config['animation'];

@@ -20,16 +20,13 @@
         <i class="{{ item_config['xicon'] }}"></i>
       {% endif %}
       {{ link.title_translate }}
-      {% if submenu and block_config['auto-arrow'] %}
-        <span class="caret"></span>
-      {% endif %}
       {% if item_config['caption'] %}
         <span class="tbm-caption">{{ item_config['caption'] }}</span>
       {% endif %}
     </{{ tag }}>
   {% if section == 'frontend' %}
       {% if submenu %}
-        <button class="tbm-submenu-toggle"><span class="visually-hidden">{{ 'Toggle submenu'|t }}</span></button>
+        <button class="tbm-submenu-toggle{% if block_config['auto-arrow'] %} always-show{% endif %}"><span class="visually-hidden">{{ 'Toggle submenu'|t }}</span></button>
       {% endif %}
     </div>
   {% endif %}

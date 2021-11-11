@@ -102,17 +102,32 @@
 
   Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
   Drupal.TBMegaMenu.focusableElements = 'a:not([disabled]):not([tabindex="-1"]), button:not([disabled]):not([tabindex="-1"]), input:not([disabled]):not([tabindex="-1"]), select:not([disabled]):not([tabindex="-1"]), textarea:not([disabled]):not([tabindex="-1"]), details:not([disabled]):not([tabindex="-1"]), [tabindex]:not([disabled]):not([tabindex="-1"])';
+  Drupal.TBMegaMenu.$focusable = $(Drupal.TBMegaMenu.focusableElements);
 
   Drupal.TBMegaMenu.menuResponsive = function () {
     $('.tbm').each(function () {
       var $thisMenu = $(this);
+      var menuId = $thisMenu.attr('id');
+      Drupal.TBMegaMenu[menuId] = {};
       var breakpoint = parseInt($thisMenu.data('breakpoint'));
 
       if (window.matchMedia(`(max-width: ${breakpoint}px)`).matches) {
         $thisMenu.addClass('tbm--mobile');
       } else {
         $thisMenu.removeClass('tbm--mobile');
-      }
+      } // Build the list of tabbable elements as these may change between mobile
+      // and desktop.
+
+
+      var $focusable = $thisMenu.find(Drupal.TBMegaMenu.focusableElements);
+      $focusable = $focusable.filter(function (index, item) {
+        return $(item).is(':visible');
+      });
+      var $topLevel = $focusable.filter((index, item) => {
+        return $(item).is('.link-level-1, .link-level-1 + .tbm-submenu-toggle');
+      });
+      Drupal.TBMegaMenu[menuId]['focusable'] = $focusable;
+      Drupal.TBMegaMenu[menuId]['topLevel'] = $topLevel;
     });
   };
 
@@ -155,7 +170,10 @@
         /* Keyboard Control Setup */
         // Semi-Global Variables
         var navParent = $(this);
+        var menuId = navParent.attr('id');
+        var menuSettings = drupalSettings['TBMegaMenu'][menuId];
         var isTouch = window.matchMedia('(pointer: coarse)').matches;
+        var hasArrows = menuSettings['arrows'] === '1'; // We have to define this as a function because it can change as the browser resizes.
 
         function isMobile() {
           return navParent.hasClass('tbm--mobile');
@@ -280,15 +298,18 @@
 
 
         function nav_is_toplink() {
-          return document.activeElement.classList.contains('link-level-1');
+          var $topLevel = Drupal.TBMegaMenu[menuId]['topLevel'];
+          return $topLevel.index(document.activeElement) > -1;
         }
 
         function nav_is_last_toplink() {
-          return document.activeElement === document.querySelector('.tbm-item.level-1:last-child ').querySelector('.link-level-1');
+          var $topLevel = Drupal.TBMegaMenu[menuId]['topLevel'];
+          return $topLevel.index(document.activeElement) === $topLevel.length - 1;
         }
 
         function nav_is_first_toplink() {
-          return document.activeElement === document.querySelector('.tbm-item.level-1:first-child ').querySelector('.link-level-1');
+          var $topLevel = Drupal.TBMegaMenu[menuId]['topLevel'];
+          return $topLevel.index(document.activeElement) === 0;
         } // Close Mega Menu
 
 
@@ -301,7 +322,12 @@
 
         function nav_next_toplink() {
           if (!nav_is_last_toplink()) {
-            document.activeElement.closest('.tbm-item').nextElementSibling.querySelector('.tbm-link, .tbm-no-link').focus();
+            var $topLevel = Drupal.TBMegaMenu[menuId]['topLevel'];
+            var index = $topLevel.index(document.activeElement);
+
+            if (index > -1) {
+              $topLevel[index + 1].focus();
+            }
           } else {
             nav_close_megamenu(); // Focus on the next element.
 
@@ -312,7 +338,12 @@
 
         function nav_prev_toplink() {
           if (!nav_is_first_toplink()) {
-            document.activeElement.closest('.tbm-item').previousElementSibling.querySelector('.tbm-link, .tbm-no-link').focus();
+            var $topLevel = Drupal.TBMegaMenu[menuId]['topLevel'];
+            var index = $topLevel.index(document.activeElement);
+
+            if (index > -1) {
+              $topLevel[index - 1].focus();
+            }
           } else {
             // Focus on the previous element.
             Drupal.TBMegaMenu.getNextPrevElement('prev', true).focus();
@@ -408,19 +439,19 @@
           var mm_duration = navParent.data('duration') ? navParent.data('duration') : 0;
           var mm_timeout = mm_duration ? 100 + mm_duration : 500; // Show dropdowns and flyouts on hover.
 
-          $('.tbm-item', this).bind('mouseenter', function (event) {
-            if (!isMobile()) {
+          $('.tbm-item', this).on('mouseenter', function (event) {
+            if (!isMobile() && !hasArrows) {
               showMenu($(this), mm_timeout);
             }
           }); // Show dropdwons and flyouts on focus.
 
-          $('.tbm-toggle', this).bind('focus', function (event) {
-            if (!isMobile()) {
+          $('.tbm-toggle', this).on('focus', function (event) {
+            if (!isMobile() && !hasArrows) {
               var $this = $(this);
               var $subMenu = $this.closest('li');
               showMenu($subMenu, mm_timeout); // If the focus moves outside of the subMenu, close it.
 
-              $(document).bind('focusin', function (event) {
+              $(document).on('focusin', function (event) {
                 if ($subMenu.has(event.target).length) {
                   return;
                 }
@@ -430,8 +461,8 @@
               });
             }
           });
-          $('.tbm-item', this).bind('mouseleave', function (event) {
-            if (!isMobile()) {
+          $('.tbm-item', this).on('mouseleave', function (event) {
+            if (!isMobile() && !hasArrows) {
               hideMenu($(this), mm_timeout);
             }
           });
@@ -491,7 +522,7 @@
         }; // Add touch functionality.
 
 
-        createTouchMenu($('.tbm-item', this).has('.tbm-submenu')); // Toggle submenus on mobile.
+        createTouchMenu($('.tbm-item', this).has('.tbm-submenu')); // Toggle submenus.
 
         $('.tbm-submenu-toggle, .tbm-no-link', this).on('click', function () {
           if (isMobile()) {
@@ -501,6 +532,31 @@
               hideMenu($parentItem, mm_timeout);
             } else {
               showMenu($parentItem, mm_timeout);
+            }
+          }
+
+          if (!isMobile() && hasArrows) {
+            var $parentItem = $(this).closest('.tbm-item');
+
+            if ($parentItem.hasClass('open')) {
+              hideMenu($parentItem, mm_timeout); // Hide any children.
+
+              $parentItem.find('.open').each(function (index, item) {
+                var $this = $(this);
+                hideMenu($this, mm_timeout);
+              });
+            } else {
+              showMenu($parentItem, mm_timeout); // Find any siblings and close them.
+
+              $parentItem.siblings().each(function (index, item) {
+                var $this = $(this);
+                hideMenu($this, mm_timeout); // Hide any children.
+
+                $this.find('.open').each(function (index, item) {
+                  var $this = $(this);
+                  hideMenu($this, mm_timeout);
+                });
+              });
             }
           }
         }); // Add keyboard listeners.
