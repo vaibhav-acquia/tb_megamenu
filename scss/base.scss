@@ -36,7 +36,7 @@
   padding: 0;
 
   // <nolink> menu items.
-  .tbm-no-link {
+  .tbm-link.no-link {
     // When a <nolink> menu item has no submenus.
     &.tbm-no-submenu {
       &:hover,
@@ -79,16 +79,6 @@
   position: relative;
   z-index: 1;
 
-  // The container around a menu item link and the submenu toggle button.
-  > .tbm-link-container {
-    > .tbm-link,
-    > .tbm-no-link {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-  }
-
   // Items that are open (ie, submenu is visible).
   &.open {
     > .tbm-submenu {
@@ -100,14 +90,20 @@
   }
 }
 
+// Top level links.
+.tbm-link.level-1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 // The container around a menu item link and the submenu toggle button.
 .tbm-link-container {
   align-items: stretch;
   display: flex;
   height: 100%;
 
-  > .tbm-link,
-  > .tbm-no-link {
+  > .tbm-link {
     flex-grow: 1;
   }
 }
@@ -312,8 +308,7 @@
 
   // Hide the caret on flyouts.
   .tbm-item--has-flyout {
-    .tbm-link,
-    .tbm-no-link {
+    .tbm-link {
       &:after {
         display: none !important;
       }
@@ -336,8 +331,7 @@
     }
 
     > .tbm-item-container {
-      > .tbm-link,
-      > .tbm-no-link {
+      > .tbm-link {
         &:after {
           display: none !important;
         }

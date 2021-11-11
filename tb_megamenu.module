@@ -605,15 +605,13 @@ function template_preprocess_tb_megamenu_item(array &$vars) {
   $vars['link']['attributes']['class'] = [];
   $vars['attributes']['class'][] = 'tbm-item';
   $vars['attributes']['class'][] = 'level-' . $level;
+  $vars['link']['attributes']['class'][] = 'tbm-link';
+  $vars['link']['attributes']['class'][] = 'level-' . $level;
 
-  if (!empty($vars['link']['url'])) {
-    $vars['link']['attributes']['class'][] = 'tbm-link';
-  } else {
-    $vars['link']['attributes']['class'][] = 'tbm-no-link';
+  if (empty($vars['link']['url'])) {
+    $vars['link']['attributes']['class'][] = 'no-link';
     $vars['link']['attributes']['tabindex'] = '0';
   }
-
-  $vars['link']['attributes']['class'][] = 'link-level-' . $level;
 
   if (!empty($item_config['class'])) {
     $vars['attributes']['class'][] = $item_config['class'];

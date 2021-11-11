@@ -34,7 +34,9 @@
       });
 
       var $topLevel = $focusable.filter((index, item) => {
-        return $(item).is('.link-level-1, .link-level-1 + .tbm-submenu-toggle');
+        return $(item).is(
+          '.tbm-link.level-1, .tbm-link.level-1 + .tbm-submenu-toggle',
+        );
       });
 
       Drupal.TBMegaMenu[menuId]['focusable'] = $focusable;
@@ -434,7 +436,7 @@
           var createTouchMenu = function (items) {
             items
               .children('.tbm-link-container')
-              .children('.tbm-link, .tbm-no-link')
+              .children('.tbm-link')
               .each(function () {
                 var $item = $(this);
                 var tbitem = $(this).closest('.tbm-item');
@@ -499,48 +501,51 @@
           createTouchMenu($('.tbm-item', this).has('.tbm-submenu'));
 
           // Toggle submenus.
-          $('.tbm-submenu-toggle, .tbm-no-link', this).on('click', function () {
-            if (isMobile()) {
-              var $parentItem = $(this).closest('.tbm-item');
+          $('.tbm-submenu-toggle, .tbm-link.no-link', this).on(
+            'click',
+            function () {
+              if (isMobile()) {
+                var $parentItem = $(this).closest('.tbm-item');
 
-              if ($parentItem.hasClass('open')) {
-                hideMenu($parentItem, mm_timeout);
-              } else {
-                showMenu($parentItem, mm_timeout);
+                if ($parentItem.hasClass('open')) {
+                  hideMenu($parentItem, mm_timeout);
+                } else {
+                  showMenu($parentItem, mm_timeout);
+                }
               }
-            }
 
-            if (!isMobile() && hasArrows) {
-              var $parentItem = $(this).closest('.tbm-item');
+              if (!isMobile() && hasArrows) {
+                var $parentItem = $(this).closest('.tbm-item');
 
-              if ($parentItem.hasClass('open')) {
-                hideMenu($parentItem, mm_timeout);
-
-                // Hide any children.
-                $parentItem.find('.open').each(function (index, item) {
-                  var $this = $(this);
-
-                  hideMenu($this, mm_timeout);
-                });
-              } else {
-                showMenu($parentItem, mm_timeout);
-
-                // Find any siblings and close them.
-                $parentItem.siblings().each(function (index, item) {
-                  var $this = $(this);
-
-                  hideMenu($this, mm_timeout);
+                if ($parentItem.hasClass('open')) {
+                  hideMenu($parentItem, mm_timeout);
 
                   // Hide any children.
-                  $this.find('.open').each(function (index, item) {
+                  $parentItem.find('.open').each(function (index, item) {
                     var $this = $(this);
 
                     hideMenu($this, mm_timeout);
                   });
-                });
+                } else {
+                  showMenu($parentItem, mm_timeout);
+
+                  // Find any siblings and close them.
+                  $parentItem.siblings().each(function (index, item) {
+                    var $this = $(this);
+
+                    hideMenu($this, mm_timeout);
+
+                    // Hide any children.
+                    $this.find('.open').each(function (index, item) {
+                      var $this = $(this);
+
+                      hideMenu($this, mm_timeout);
+                    });
+                  });
+                }
               }
-            }
-          });
+            },
+          );
 
           // Add keyboard listeners.
           navParent.on('keydown', keydownEvent);

@@ -18,18 +18,16 @@ $dropdown-width: 25rem;
 // Top level menu items.
 .tbm-item.level-1 {
   border-right: 1px solid $color-borders;
+}
 
-  > .tbm-link-container {
-    > .tbm-link,
-    > .tbm-no-link {
-      color: $color-text;
-      padding: 1rem 1.25rem;
+// Top level links.
+.tbm-link.level-1 {
+  color: $color-text;
+  padding: 1rem 1.25rem;
 
-      &:hover,
-      &:focus {
-        background-color: darken($color-background, 5%);
-      }
-    }
+  &:hover,
+  &:focus {
+    background-color: darken($color-background, 5%);
   }
 }
 
@@ -73,8 +71,7 @@ $dropdown-width: 25rem;
   position: relative;
 
   // The carat that appears next to the menu item.
-  .tbm-link,
-  .tbm-no-link {
+  .tbm-link {
     &:after {
       border-width: 0.25rem 0 0.25rem 0.25rem;
       border-left-color: $color-text;
@@ -98,16 +95,14 @@ $dropdown-width: 25rem;
   > .tbm-item {
     &:first-child {
       > .tbm-link-container {
-        > .tbm-link,
-        > .tbm-no-link {
+        > .tbm-link {
           border-top: 0;
         }
       }
     }
 
     > .tbm-link-container {
-      > .tbm-link,
-      > .tbm-no-link {
+      > .tbm-link {
         color: $color-text;
         display: block;
         padding: 0.5rem 0;
@@ -188,8 +183,7 @@ $dropdown-width: 25rem;
     box-shadow: none;
     border-top: 1px solid $color-borders;
 
-    .tbm-link,
-    .tbm-no-link {
+    .tbm-link {
       padding: 1rem 1.25rem;
     }
 

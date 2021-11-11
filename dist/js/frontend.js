@@ -124,7 +124,7 @@
         return $(item).is(':visible');
       });
       var $topLevel = $focusable.filter((index, item) => {
-        return $(item).is('.link-level-1, .link-level-1 + .tbm-submenu-toggle');
+        return $(item).is('.tbm-link.level-1, .tbm-link.level-1 + .tbm-submenu-toggle');
       });
       Drupal.TBMegaMenu[menuId]['focusable'] = $focusable;
       Drupal.TBMegaMenu[menuId]['topLevel'] = $topLevel;
@@ -470,7 +470,7 @@
 
 
         var createTouchMenu = function (items) {
-          items.children('.tbm-link-container').children('.tbm-link, .tbm-no-link').each(function () {
+          items.children('.tbm-link-container').children('.tbm-link').each(function () {
             var $item = $(this);
             var tbitem = $(this).closest('.tbm-item');
             $item.click(function (event) {
@@ -524,7 +524,7 @@
 
         createTouchMenu($('.tbm-item', this).has('.tbm-submenu')); // Toggle submenus.
 
-        $('.tbm-submenu-toggle, .tbm-no-link', this).on('click', function () {
+        $('.tbm-submenu-toggle, .tbm-link.no-link', this).on('click', function () {
           if (isMobile()) {
             var $parentItem = $(this).closest('.tbm-item');
 
