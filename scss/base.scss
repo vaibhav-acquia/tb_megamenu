@@ -196,8 +196,7 @@
   .tbm-no-arrows & {
     // The carat that appears next to the menu item.
     > .tbm-link-container {
-      .tbm-link,
-      .tbm-no-link {
+      .tbm-link {
         &:after {
           display: block;
           content: '';
