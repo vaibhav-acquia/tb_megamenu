@@ -24,6 +24,7 @@ base:
     - core/drupal
     - core/drupalSettings
     - core/jquery.once
+    - core/underscore
 
 styles:
   version: 1.x

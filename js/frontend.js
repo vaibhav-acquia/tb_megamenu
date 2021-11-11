@@ -8,12 +8,10 @@
 
   Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
 
-  Drupal.TBMegaMenu.focusableElements =
+  var focusableSelector =
     'a:not([disabled]):not([tabindex="-1"]), button:not([disabled]):not([tabindex="-1"]), input:not([disabled]):not([tabindex="-1"]), select:not([disabled]):not([tabindex="-1"]), textarea:not([disabled]):not([tabindex="-1"]), details:not([disabled]):not([tabindex="-1"]), [tabindex]:not([disabled]):not([tabindex="-1"])';
 
-  Drupal.TBMegaMenu.$focusable = $(Drupal.TBMegaMenu.focusableElements);
-
-  Drupal.TBMegaMenu.menuResponsive = function () {
+  function responsiveMenu() {
     $('.tbm').each(function () {
       var $thisMenu = $(this);
       var menuId = $thisMenu.attr('id');
@@ -28,7 +26,7 @@
 
       // Build the list of tabbable elements as these may change between mobile
       // and desktop.
-      var $focusable = $thisMenu.find(Drupal.TBMegaMenu.focusableElements);
+      var $focusable = $thisMenu.find(focusableSelector);
       $focusable = $focusable.filter(function (index, item) {
         return $(item).is(':visible');
       });
@@ -42,33 +40,28 @@
       Drupal.TBMegaMenu[menuId]['focusable'] = $focusable;
       Drupal.TBMegaMenu[menuId]['topLevel'] = $topLevel;
     });
-  };
+  }
 
-  $(window).on('load resize', function () {
-    Drupal.TBMegaMenu.menuResponsive();
-  });
+  var throttled = _.throttle(responsiveMenu, 100);
 
-  Drupal.TBMegaMenu.getNextPrevElement = function (
-    direction,
-    excludeSubnav = false,
-  ) {
+  $(window).on('load resize', throttled);
+
+  function getNextPrevElement(direction, excludeSubnav = false) {
     // Add all the elements we want to include in our selection
     var $current = $(document.activeElement);
     var nextElement = null;
 
     if ($current.length) {
-      var $focusable = $(Drupal.TBMegaMenu.focusableElements).filter(
-        function () {
-          var $this = $(this);
-          if (excludeSubnav) {
-            return (
-              $this.closest('.tbm-subnav').length === 0 && $this.is(':visible')
-            );
-          }
+      var $focusable = $(focusableSelector).filter(function () {
+        var $this = $(this);
+        if (excludeSubnav) {
+          return (
+            $this.closest('.tbm-subnav').length === 0 && $this.is(':visible')
+          );
+        }
 
-          return $this.is(':visible');
-        },
-      );
+        return $this.is(':visible');
+      });
 
       var index = $focusable.index($current);
       if (index > -1) {
@@ -81,7 +74,7 @@
     }
 
     return nextElement;
-  };
+  }
 
   Drupal.behaviors.tbMegaMenuAction = {
     attach: function (context, settings) {
@@ -166,9 +159,9 @@
               }
             } else {
               if (k.shiftKey || k.keyCode === 38 || k.keyCode === 37) {
-                Drupal.TBMegaMenu.getNextPrevElement('prev').focus();
+                getNextPrevElement('prev').focus();
               } else {
-                Drupal.TBMegaMenu.getNextPrevElement('next').focus();
+                getNextPrevElement('next').focus();
               }
             }
           }
@@ -217,13 +210,12 @@
           // Down
           function nav_down(k) {
             if (nav_is_toplink()) {
-              Drupal.TBMegaMenu.getNextPrevElement('next').focus();
+              getNextPrevElement('next').focus();
               // nav_next_column();
             } else if (
               // If the next element takes the user out of this top level, then do nothing.
-              Drupal.TBMegaMenu.getNextPrevElement('next').closest(
-                '.tbm-item.level-1',
-              ) !== document.activeElement.closest('.tbm-item.level-1')
+              getNextPrevElement('next').closest('.tbm-item.level-1') !==
+              document.activeElement.closest('.tbm-item.level-1')
             ) {
               // Do nothing.
             } else {
@@ -270,7 +262,7 @@
               nav_close_megamenu();
 
               // Focus on the next element.
-              Drupal.TBMegaMenu.getNextPrevElement('next', true).focus();
+              getNextPrevElement('next', true).focus();
             }
           }
 
@@ -285,7 +277,7 @@
               }
             } else {
               // Focus on the previous element.
-              Drupal.TBMegaMenu.getNextPrevElement('prev', true).focus();
+              getNextPrevElement('prev', true).focus();
             }
           }
 
@@ -455,7 +447,6 @@
 
                 $item.click(function (event) {
                   if (!isMobile() && isTouch && !hasArrows) {
-                    console.log('clicked touch');
                     // If the menu link has already been clicked once...
                     if ($item.hasClass('tbm-clicked')) {
                       var $uri = $item.attr('href');
@@ -527,11 +518,13 @@
                 }
               }
 
+              // Do not add a click listener if we are on a touch device with no
+              // arrows and the element is a no-link element. In that case, we
+              // want to use touch menu handler.
               if (
                 !isMobile() &&
                 !(isTouch && !hasArrows && $(this).hasClass('no-link'))
               ) {
-                console.log('doing toggle');
                 var $parentItem = $(this).closest('.tbm-item');
 
                 if ($parentItem.hasClass('open')) {
