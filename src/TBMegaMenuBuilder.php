@@ -130,7 +130,7 @@ class TBMegaMenuBuilder implements TBMegaMenuBuilderInterface {
   public function loadEntityBlock(string $block_id) {
     $block = $this->entityTypeManager->getStorage('block')->load($block_id);
     // Ensure the current user has permissions to view the block.
-    if ($block->access('view')) {
+    if ($block && $block->access('view')) {
       return $block;
     }
   }
@@ -149,13 +149,13 @@ class TBMegaMenuBuilder implements TBMegaMenuBuilderInterface {
   public function editBlockConfig(array &$block_config) {
     $block_config += [
       'animation' => 'none',
-      'style' => '',
       'auto-arrow' => TRUE,
       'duration' => 400,
       'delay' => 200,
       'always-show-submenu' => TRUE,
       'off-canvas' => 0,
       'number-columns' => 0,
+      'breakpoint' => '980',
     ];
   }
 
@@ -270,18 +270,6 @@ class TBMegaMenuBuilder implements TBMegaMenuBuilderInterface {
       'slide' => $this->t('Slide'),
       'zoom' => $this->t('Zoom'),
       'elastic' => $this->t('Elastic'),
-    ];
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function createStyleOptions(array $block_config) {
-    return [
-      '' => $this->t('Default'),
-      'black' => $this->t('Black'),
-      'blue' => $this->t('Blue'),
-      'green' => $this->t('Green'),
     ];
   }
 

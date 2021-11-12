@@ -15,7 +15,6 @@ base:
   version: 1.x
   css:
     theme:
-      https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css: { type: external }
       dist/base.css: {}
   js:
     js/frontend.js: { scope: footer }
@@ -24,15 +23,10 @@ base:
     - core/drupal
     - core/drupalSettings
     - core/jquery.once
+    - core/underscore
 
 styles:
   version: 1.x
   css:
     theme:
       dist/styles.css: {}
-
-form.font-awesome:
-  version: 4.3.0
-  css:
-    theme:
-      https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css: { type: external }

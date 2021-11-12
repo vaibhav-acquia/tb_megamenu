@@ -771,7 +771,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     block_config['animation'] = $('select[name="tbm-animation"]').val();
     block_config['duration'] = parseInt($('input[name="tbm-duration"]').val());
     block_config['delay'] = parseInt($('input[name="tbm-delay"]').val());
-    block_config['style'] = $('select[name="tbm-style"]').val();
+    block_config['breakpoint'] = parseInt($('input[name="tbm-breakpoint"]').val());
     block_config['auto-arrow'] = $('#tbm-admin-mm-intro .toolitem-auto-arrow').attr('data-auto-arrow');
     block_config['always-show-submenu'] = $('#tbm-admin-mm-intro .toolitem-always-show-submenu').attr('data-always-show-submenu');
     block_config['number-columns'] = drupalSettings.TBMegaMenu.TBElementsCounter.column;

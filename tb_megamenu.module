@@ -25,14 +25,12 @@ function tb_megamenu_help($route_name, RouteMatchInterface $route_match) {
       $output = '<h3>' . t('About') . '</h3>';
       $output .= '<p>' . t('TB Mega Menu allows you to create a mega menu with an innovative back-end user interface and synchronized with Drupal core menu.') . '</p>';
       $output .= '<h3>' . t('Uses') . '</h3>';
-      $output .= '<p>' . t('TB Mega Menu is developed following Drupal standards and best practices. Along with those must-have functions of a mega menu: display not just menu items but image, slideshow, video, article and customize any of them upon your favour...; below are the most noticeable features that TB Mega Menu has:') . '</p>';
+      $output .= '<p>' . t('TB Mega Menu is developed following Drupal standards and best practices, and includes the following features:') . '</p>';
       $output .= '<ul>';
       $output .= '<li>' . t('Synchronized with Drupal core menu, auto updated if there is any change with Drupal core menu') . '</li>';
-      $output .= '<li>' . t('Bootstrap framework') . '</li>';
       $output .= '<li>' . t('Responsive ready') . '</li>';
-      $output .= '<li>' . t('Multiple built-in styles designed with years of theming experience') . '</li>';
-      $output .= '<li>' . t('Visual and friendly user interface - what you see is what you get') . '</li>';
-      $output .= '<li>' . t('Custom style for each element of your mega menu, just input extra css class name') . '</li>';
+      $output .= '<li>' . t('Friendly user interface - what you see is what you get') . '</li>';
+      $output .= '<li>' . t('Add custom styles for each element of your mega menu') . '</li>';
       $output .= '<li>' . t('Multiple built-in CSS3 animated effects') . '</li>';
       $output .= '<li>' . t('Work independently with themes') . '</li>';
       $output .= '</ul>';
@@ -142,7 +140,9 @@ function tb_megamenu_theme($existing, $type, $theme, $path) {
     'path' => $path . '/templates/backend',
   ];
   $items['tb_megamenu_item_toolbox'] = [
-    'variables' => [],
+    'variables' => [
+      'fontawesome' => NULL,
+    ],
     'path' => $path . '/templates/backend',
   ];
   $items['tb_megamenu_submenu_toolbox'] = [
@@ -370,8 +370,8 @@ function template_preprocess_tb_megamenu_submenu(array &$vars) {
  *   Variables are declared in theme.
  */
 function template_preprocess_tb_megamenu(array &$vars) {
-
   $menu_name = $vars['menu_name'];
+  $menu_id = "tbm-" . str_replace('_', '-', $menu_name);
   $theme = $vars['block_theme'];
   $vars['#attached']['drupalSettings']['TBMegaMenu']['theme'] = $theme;
 
@@ -405,16 +405,20 @@ function template_preprocess_tb_megamenu(array &$vars) {
   $vars['attributes']['class'] = [];
   $vars['attributes']['class'][] = 'tbm';
   $vars['attributes']['class'][] = 'tbm' . '-' . str_replace('_', '-', $menu_name);
-  if ($vars['section'] == 'frontend' && $block_config['style'] != '') {
-    $vars['#attached']['library'][] = 'tb_megamenu/block_style.' . $block_config['style'];
-    $vars['attributes']['class'][] = "style-" . $block_config['style'];
+  $vars['attributes']['id'] = $menu_id;
+  $vars['attributes']['data-breakpoint'] = $block_config['breakpoint'];
+  $vars['#attached']['drupalSettings']['TBMegaMenu'][$menu_id]['arrows'] = $block_config['auto-arrow'];
+  if ($block_config['auto-arrow'] === '1') {
+    $vars['attributes']['class'][] = 'tbm-arrows';
+  } else {
+    $vars['attributes']['class'][] = 'tbm-no-arrows';
   }
+  
   if ($block_config['animation'] != 'none') {
     $vars['attributes']['class'][] = "animate";
     $vars['attributes']['class'][] = $block_config['animation'];
     $vars['attributes']['data-duration'] = $block_config['duration'];
     $vars['attributes']['data-delay'] = $block_config['delay'];
-    $vars['attributes']['id'] = "tbm-" . str_replace('_', '-', $menu_name);
   }
   $vars['content'] = [
     '#theme' => 'tb_megamenu_nav',
@@ -441,6 +445,10 @@ function template_preprocess_tb_megamenu(array &$vars) {
 
   // Add a11y attributes.
   $vars['attributes']['aria-label'] = t('@menu_name navigation', ['@menu_name' => $menu_name]);
+
+  // Reset the getMenuItem method in case there is more than one TB menu on the
+  // same page.
+  drupal_static_reset('getMenuItem');
 }
 
 /**
@@ -456,7 +464,15 @@ function template_preprocess_tb_megamenu_backend(array &$vars) {
   $block_config = $menu_builder->getBlockConfig($menu_name, $theme);
   $menu_builder->editBlockConfig($block_config);
   $vars['menu_content'] = $menu_builder->renderBlock($menu_name, $theme);
-  $vars['item_toolbox'] = ['#theme' => 'tb_megamenu_item_toolbox'];
+
+  // Determine if fontawesome is installed.
+  $moduleHandler = \Drupal::service('module_handler');
+  $fontawesome = $moduleHandler->moduleExists('fontawesome');
+  $vars['item_toolbox'] = [
+    '#theme' => 'tb_megamenu_item_toolbox',
+    '#fontawesome' => $fontawesome,
+  ];
+
   $vars['submenu_toolbox'] = ['#theme' => 'tb_megamenu_submenu_toolbox'];
   $vars['column_toolbox'] = [
     '#theme' => 'tb_megamenu_column_toolbox',
@@ -464,7 +480,6 @@ function template_preprocess_tb_megamenu_backend(array &$vars) {
   ];
   $vars['block_config'] = $block_config;
   $vars['animation_options'] = $menu_builder->createAnimationOptions($block_config);
-  $vars['style_options'] = $menu_builder->createStyleOptions($block_config);
   $vars['edit_links'] = Url::fromRoute('entity.menu.edit_form', ['menu' => $menu_name])->toString();
 
   // Attach this to init TB Mega Menu (Importance).
@@ -582,6 +597,11 @@ function template_preprocess_tb_megamenu_item(array &$vars) {
   $menu_builder = \Drupal::service('tb_megamenu.menu_builder');
   $menu_builder->editItemConfig($item_config);
   $vars['item_config'] = $item_config;
+
+  // Determine if fontawesome is installed.
+  $moduleHandler = \Drupal::service('module_handler');
+  $vars['fontawesome'] = $moduleHandler->moduleExists('fontawesome');
+
   if (!empty($menu_config[$plugin_id]['rows_content']) &&
       ($vars['section'] == 'backend' || !$item_config['hidesub'])) {
 
@@ -605,11 +625,11 @@ function template_preprocess_tb_megamenu_item(array &$vars) {
   $vars['link']['attributes']['class'] = [];
   $vars['attributes']['class'][] = 'tbm-item';
   $vars['attributes']['class'][] = 'level-' . $level;
+  $vars['link']['attributes']['class'][] = 'tbm-link';
+  $vars['link']['attributes']['class'][] = 'level-' . $level;
 
-  if (!empty($vars['link']['url'])) {
-    $vars['link']['attributes']['class'][] = 'tbm-link';
-  } else {
-    $vars['link']['attributes']['class'][] = 'tbm-no-link';
+  if (empty($vars['link']['url'])) {
+    $vars['link']['attributes']['class'][] = 'no-link';
     $vars['link']['attributes']['tabindex'] = '0';
   }
 
@@ -666,7 +686,7 @@ function template_preprocess_tb_megamenu_item(array &$vars) {
     $vars['link']['attributes']['title'] = $vars['link']['description'];
   }
   if ($vars['submenu'] != NULL) {
-    $vars['link']['attributes']['aria-expanded'] = t('false');
+    $vars['link']['attributes']['aria-expanded'] = 'false';
   }
 
   // Make other menu attributes available to TB Mega Menu Anchor Links.

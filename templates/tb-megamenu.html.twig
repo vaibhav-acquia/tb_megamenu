@@ -8,7 +8,12 @@
 <nav {{ attributes }}>
   {% if section == 'frontend' %}
     <button class="tbm-button" type="button">
-      <i class="fa fa-reorder"></i>
+      <span class="tbm-button-container">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </span>
     </button>
     <div class="tbm-collapse {{ block_config['always-show-submenu'] ? ' always-show' : '' }}">
   {% endif %}
@@ -17,3 +22,10 @@
     </div>
   {% endif %}
 </nav>
+
+<script>
+{# Add the .tbm--mobile class before there is a chance for a flash of unstyled content. #}
+if (window.matchMedia("(max-width: {{ block_config['breakpoint']}}px)").matches) {
+  document.getElementById("{{ attributes.id }}").classList.add('tbm--mobile')
+}
+</script>

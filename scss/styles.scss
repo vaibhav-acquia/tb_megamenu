@@ -1,91 +1,52 @@
-$color-light-grey-1: #ccc;
-$color-light-grey-2: #eee;
-$color-medium-grey: #999;
-$color-dark-grey: #333;
+$color-grey: #ccc;
 $color-black: #000;
 $color-white: #fff;
-$color-red: #e54e4b;
+$color-accent: #1197f0;
+$color-background: #f5f5f5;
+$color-text: #222;
+$color-caption: #444;
 
 // Colors with opacity.
-$color-black-20-op: rgba($color-black, 0.2);
+$color-borders: rgba($color-black, 0.2);
 
 $dropdown-width: 25rem;
 
 .tbm {
-  background-color: $color-black;
+  background-color: $color-background;
 }
 
 // Top level menu items.
 .tbm-item.level-1 {
-  > .tbm-link,
-  > .tbm-no-link {
-    color: $color-white;
-    padding: 1rem 1.25rem;
+  border-right: 1px solid $color-borders;
+}
+
+// Top level links.
+.tbm-link.level-1 {
+  color: $color-text;
+  padding: 1rem 1.25rem;
+
+  &:hover,
+  &:focus {
+    background-color: darken($color-background, 5%);
   }
+}
 
-  // Items that are open (ie, submenu is visible).
-  &.open {
-    // Change the color of the immediate toggle, but not any further down the
-    // chain.
-    > .tbm-toggle {
-      background-color: $color-white;
-      color: $color-red;
+// The button that toggles the visibility of the submenu on mobile.
+.tbm-submenu-toggle {
+  background-color: $color-background;
+  color: $color-text;
 
-      .caret {
-        border-top-color: $color-red;
-      }
-    }
-  }
-
-  // Items that are active or are open and active.
-  &.active,
-  &.open.active {
-    > .tbm-link,
-    > .tbm-no-link {
-      background-color: $color-red;
-      color: $color-white;
-
-      &:hover,
-      &:focus {
-        background-color: $color-red;
-        color: $color-white;
-      }
-    }
-
-    > .tbm-link {
-      &:hover,
-      &:focus {
-        cursor: pointer;
-      }
-
-      .tbm-caption {
-        color: $color-white;
-      }
-    }
-
-    > .tbm-toggle {
-      .caret {
-        border-top-color: $color-white;
-      }
-    }
+  &:hover,
+  &:focus {
+    background-color: darken($color-background, 5%);
   }
 }
 
 // The caption that can appear below any <li>.
 .tbm-caption {
-  color: $color-medium-grey;
+  color: $color-caption;
   font-size: 0.75rem;
   margin-top: 0.25rem;
-}
-
-// The <a> or <span> tag for any menu item that has a submenu.
-.tbm-toggle {
-  // The top-level drodown caret.
-  .caret {
-    border-top: 0.25rem solid $color-white;
-    border-right: 0.25rem solid transparent;
-    border-left: 0.25rem solid transparent;
-  }
 }
 
 // The <div> around any submenu dropdown. This is a direct descendent child of
@@ -94,10 +55,10 @@ $dropdown-width: 25rem;
   background-color: $color-white;
   border-radius: 0;
   border-top-width: 0;
-  border: 1px solid $color-black-20-op;
-  box-shadow: 0 5px 10px $color-black-20-op;
-  width: $dropdown-width;
+  border: 1px solid $color-borders;
+  box-shadow: 0 5px 10px $color-borders;
   padding: 1rem;
+  width: $dropdown-width;
 
   .tbm-submenu {
     // Anything other than the 1st dropdown menu needs the top border.
@@ -107,22 +68,14 @@ $dropdown-width: 25rem;
 
 // Any <li> that has sub-links, other than at the top level.
 .tbm-item--has-flyout {
-  position: relative;
+  .tbm-submenu-toggle {
+    &:hover,
+    &:focus {
+      background-color: transparent;
 
-  // The carat that appears next to the menu item.
-  > .tbm-link,
-  > .tbm-no-link {
-    &:after {
-      border-width: 0.25rem 0 0.25rem 0.25rem;
-      border-left-color: $color-light-grey-1;
-    }
-  }
-
-  &:hover,
-  &:focus {
-    > .tbm-link,
-    > .tbm-no-link {
-      color: $color-red;
+      &:before {
+        border-left-color: $color-accent;
+      }
     }
   }
 }
@@ -131,38 +84,22 @@ $dropdown-width: 25rem;
 .tbm-subnav {
   > .tbm-item {
     &:first-child {
-      > .tbm-link,
-      > .tbm-no-link {
-        border-top: 0;
-        margin-top: 0;
-        padding-top: 0;
+      > .tbm-link-container {
+        > .tbm-link {
+          border-top: 0;
+        }
       }
     }
 
-    > .tbm-link,
-    > .tbm-no-link {
-      border-bottom: 0;
-      border-top: 1px solid $color-light-grey-2;
-      color: $color-dark-grey;
-      display: block;
-      line-height: 1.2;
-      padding: 0.5rem 0;
-
-      &:hover,
-      &:focus {
-        color: $color-red;
-      }
-    }
-
-    // Active traillinks.
-    &.active {
-      > .tbm-link,
-      > .tbm-no-link {
-        color: $color-red;
+    > .tbm-link-container {
+      > .tbm-link {
+        color: $color-text;
+        display: block;
+        padding: 0.5rem 0;
 
         &:hover,
         &:focus {
-          color: $color-red;
+          color: $color-accent;
         }
       }
     }
@@ -172,23 +109,8 @@ $dropdown-width: 25rem;
 // The mobile show/hide button.
 .tbm-button {
   appearance: none;
-  border: 1px solid $color-black;
-
-  &:hover,
-  &:focus,
-  &:active,
-  &.active,
-  &.disabled,
-  &[disabled] {
-    background-color: $color-light-grey-1;
-  }
-
-  [class^='fa-'],
-  [class*=' fa-'] {
-    color: $color-dark-grey;
-    margin: 0;
-    text-shadow: none;
-  }
+  background-color: $color-background;
+  border: 1px solid $color-borders;
 }
 
 // A .tbm-group is any <li> that has been designated as a "group" item, where
@@ -199,4 +121,71 @@ $dropdown-width: 25rem;
 .tbm-group-title {
   font-weight: bold;
   text-transform: uppercase;
+}
+
+// Mobile styles.
+.tbm.tbm--mobile {
+  background-color: transparent;
+
+  // Borders for menu items.
+  .tbm-item {
+    border-top: 1px solid $color-borders;
+  }
+
+  // Colos for open top level menu items.
+  .tbm-item.level-1 {
+    &.open > .tbm-toggle {
+      background-color: $color-black;
+      color: $color-white;
+    }
+  }
+
+  // The wrapper around the entire menu.
+  .tbm-collapse {
+    background: $color-white;
+    padding-top: 1rem;
+  }
+
+  // The top level ul.
+  .tbm-nav {
+    background: $color-background;
+  }
+
+  // The <div> around any submenu dropdown. This is a direct descendent child of
+  // the <li>.
+  .tbm-submenu {
+    box-shadow: none;
+    border-top: 1px solid $color-borders;
+
+    .tbm-link {
+      padding: 1rem 1.25rem;
+    }
+
+    // The button that toggles the visibility of the submenu on mobile.
+    .tbm-submenu-toggle {
+      background-color: $color-white;
+      color: currentColor;
+    }
+  }
+
+  .tbm-submenu-toggle {
+    border-left: 1px solid $color-borders;
+    border-right: 0;
+  }
+
+  // Any <ul> other than the top level.
+  .tbm-subnav {
+    .tbm-item:first-child {
+      border-top: 0;
+    }
+
+    .tbm-subnav {
+      margin-left: 1rem;
+    }
+  }
+
+  .tbm-block {
+    margin-bottom: 0;
+    padding: 0 1.25rem;
+  }
 }
