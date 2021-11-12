@@ -16,8 +16,8 @@
     {% else %}
       <{{ tag }}{{ link['attributes'] }}>
     {% endif %}
-      {% if item_config['xicon'] %}
-        <i class="{{ item_config['xicon'] }}"></i>
+      {% if fontawesome and item_config['xicon'] %}
+        <span class="{{ item_config['xicon'] }}"></span>
       {% endif %}
       {{ link.title_translate }}
       {% if item_config['caption'] %}

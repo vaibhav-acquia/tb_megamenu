@@ -465,6 +465,7 @@ function template_preprocess_tb_megamenu_backend(array &$vars) {
   $menu_builder->editBlockConfig($block_config);
   $vars['menu_content'] = $menu_builder->renderBlock($menu_name, $theme);
 
+  // Determine if fontawesome is installed.
   $moduleHandler = \Drupal::service('module_handler');
   $fontawesome = $moduleHandler->moduleExists('fontawesome');
   $vars['item_toolbox'] = [
@@ -596,6 +597,11 @@ function template_preprocess_tb_megamenu_item(array &$vars) {
   $menu_builder = \Drupal::service('tb_megamenu.menu_builder');
   $menu_builder->editItemConfig($item_config);
   $vars['item_config'] = $item_config;
+
+  // Determine if fontawesome is installed.
+  $moduleHandler = \Drupal::service('module_handler');
+  $vars['fontawesome'] = $moduleHandler->moduleExists('fontawesome');
+
   if (!empty($menu_config[$plugin_id]['rows_content']) &&
       ($vars['section'] == 'backend' || !$item_config['hidesub'])) {
 

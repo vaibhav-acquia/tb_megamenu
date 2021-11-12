@@ -5,19 +5,19 @@
     <div>
       <label class="hasTip" title="{{ 'Add/remove Column'|t }} - {{ 'Click + to add a new column on the right of the selected column. Click - to remove the selected column'|t }}">{{ 'Add/remove Column'|t }}</label>
       <fieldset class="btn-group">
-        <a href="" class="btn toolcol-addcol toolbox-action first" data-action="addColumn" title="{{ 'Add a new column on the right of the selected column'|t }}"><i class="fa fa-plus"></i></a>
-        <a href="" class="btn toolcol-removecol toolbox-action last" data-action="removeColumn" title="{{ 'Remove the selected column'|t }}"><i class="fa fa-minus"></i></a>
+        <a href="" class="btn toolcol-addcol toolbox-action first" data-action="addColumn" title="{{ 'Add a new column on the right of the selected column'|t }}">&plus;</a>
+        <a href="" class="btn toolcol-removecol toolbox-action last" data-action="removeColumn" title="{{ 'Remove the selected column'|t }}">&minus;</a>
       </fieldset>
     </div>
     <div>
       <label class="hasTip" title="{{ 'Move Row up/down'|t }} - {{ 'Click up arrow to move the selected row up. Click down arrow to move the selected row down'|t }}">{{ 'Move Row up/down'|t }}</label>
       <fieldset class="btn-group">
-        <a href="" class="btn toolcol-addcol toolbox-action first" data-action="rowUp" title="{{ 'Move the selected row up'|t }}"><i class="fa fa-arrow-up"></i></a>
-        <a href="" class="btn toolcol-removecol toolbox-action last" data-action="rowDown" title="{{ 'Move the selected row downn'|t }}"><i class="fa fa-arrow-down"></i></a>
+        <a href="" class="btn toolcol-addcol toolbox-action first" data-action="rowUp" title="{{ 'Move the selected row up'|t }}">&uarr;</a>
+        <a href="" class="btn toolcol-removecol toolbox-action last" data-action="rowDown" title="{{ 'Move the selected row downn'|t }}">&darr;</a>
       </fieldset>
     </div>
     <div>
-      <label class="hasTip" title="{{ 'Hide when collapse'|t }} - {{ 'Hide this column when the menu is collapsed on small screen'|t }}">{{ 'Hide when collapse'|t }}</label>
+      <label class="hasTip" title="{{ 'Hide on mobile'|t }} - {{ 'Hide this column below the mobile breakpoint'|t }}">{{ 'Hide on mobile'|t }}</label>
       <fieldset class="radio btn-group toolcol-hidewhencollapse">
         <input type="radio" id="toggleHideWhenCollapse0" class="toolbox-toggle" data-action="hideWhenCollapse" name="toggleHideWhenCollapse" value="0" checked="checked"/>
         <label for="toggleHideWhenCollapse0" title="{{ 'Keep showing this column when the menu is collapsed on small screen'|t }}">{{ 'No'|t }}</label>

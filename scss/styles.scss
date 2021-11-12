@@ -111,22 +111,6 @@ $dropdown-width: 25rem;
   appearance: none;
   background-color: $color-background;
   border: 1px solid $color-borders;
-
-  &:hover,
-  &:focus,
-  &:active,
-  &.active,
-  &.disabled,
-  &[disabled] {
-    background-color: $color-grey;
-  }
-
-  [class^='fa-'],
-  [class*=' fa-'] {
-    color: $color-text;
-    margin: 0;
-    text-shadow: none;
-  }
 }
 
 // A .tbm-group is any <li> that has been designated as a "group" item, where
