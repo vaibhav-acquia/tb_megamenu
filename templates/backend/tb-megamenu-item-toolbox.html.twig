@@ -31,12 +31,21 @@
       <label class="hasTip" title="{{ 'Extra class'|t }} - {{ 'Add extra class to style megamenu.'|t }}">{{ 'Extra class'|t }}</label>
       <input type="text" class="input-medium toolitem-exclass toolbox-input" name="toolitem-exclass" data-name="class" value="" />
     </div>
-    <div>      
-      <label class="hasTip" title="{{ 'Icon'|t }} - {{ 'Add Icon for Menu Item. Click Icon label to visit Bootstrap icons page and get Icon Class. E.g.: fa-search'|t }}">
-        <a href="http://twitter.github.com/bootstrap/base-css.html#icons" target="_blank"><i class="fa fa-search"></i> {{ 'Icon'|t }}</a>
-      </label>
-      <input type="text" class="input-medium toolitem-xicon toolbox-input" name="toolitem-xicon" data-name="xicon" value="" />
-    </div>
+    {% if fontawesome %}
+      <div>
+        <label class="hasTip" title="{{ 'Icon'|t }} - {{ 'Add an icon for this menu item, such as \'fa fa-search\'.'|t }}">
+          {{ 'Icon'|t }}
+        </label>
+        <input type="text" class="input-medium toolitem-xicon toolbox-input" name="toolitem-xicon" data-name="xicon" value="" />
+      </div>
+    {% else %}
+      <div>
+        <label class="hasTip label--disabled" title="{{ 'Icon'|t }} - {{ 'You must enable the fontawesome module in order to add icons.'|t }}">
+          {{ 'Icon'|t }}
+        </label>
+        <input disabled type="text" class="input-medium toolitem-xicon toolbox-input" name="toolitem-xicon" data-name="xicon" value="" />
+      </div>
+    {% endif %}
     <div>
       <label class="hasTip">
         {{ 'Item caption'|t }}

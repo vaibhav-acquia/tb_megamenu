@@ -140,7 +140,9 @@ function tb_megamenu_theme($existing, $type, $theme, $path) {
     'path' => $path . '/templates/backend',
   ];
   $items['tb_megamenu_item_toolbox'] = [
-    'variables' => [],
+    'variables' => [
+      'fontawesome' => NULL,
+    ],
     'path' => $path . '/templates/backend',
   ];
   $items['tb_megamenu_submenu_toolbox'] = [
@@ -462,7 +464,14 @@ function template_preprocess_tb_megamenu_backend(array &$vars) {
   $block_config = $menu_builder->getBlockConfig($menu_name, $theme);
   $menu_builder->editBlockConfig($block_config);
   $vars['menu_content'] = $menu_builder->renderBlock($menu_name, $theme);
-  $vars['item_toolbox'] = ['#theme' => 'tb_megamenu_item_toolbox'];
+
+  $moduleHandler = \Drupal::service('module_handler');
+  $fontawesome = $moduleHandler->moduleExists('fontawesome');
+  $vars['item_toolbox'] = [
+    '#theme' => 'tb_megamenu_item_toolbox',
+    '#fontawesome' => $fontawesome,
+  ];
+
   $vars['submenu_toolbox'] = ['#theme' => 'tb_megamenu_submenu_toolbox'];
   $vars['column_toolbox'] = [
     '#theme' => 'tb_megamenu_column_toolbox',

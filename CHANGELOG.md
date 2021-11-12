@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   ** Home/End listeners removed.
   ** Left/Right behave the same as Tab key.
 - Added support for clickable dropdowns to show/hide submenus.
+- Removed fontawesome library and added optional dependency on the fontawesome module.
 
 TODO
 
