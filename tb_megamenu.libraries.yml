@@ -17,6 +17,7 @@ base:
     theme:
       dist/base.css: {}
   js:
+    js/plugin.js: { scope: footer }
     js/frontend.js: { scope: footer }
   dependencies:
     - core/jquery
