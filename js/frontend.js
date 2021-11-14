@@ -82,6 +82,8 @@
         .once('tbm')
         .each(function () {
           var TBMega = new TBMegaMenu($(this).attr('id'));
+
+          TBMega.init();
         });
     },
   };

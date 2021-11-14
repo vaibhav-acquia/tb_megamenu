@@ -1,15 +1,10 @@
 class TBMegaMenu {
   constructor(id) {
-    // console.log(jQuery);
     this.id = id;
-    this.init();
   }
 
   init() {
-    /* Keyboard Control Setup */
-    // Semi-Global Variables
     const _this = this;
-
     var navParent = jQuery('#' + this.id);
     var menuId = navParent.attr('id');
     var menuSettings = drupalSettings['TBMegaMenu'][menuId];
@@ -208,7 +203,7 @@ class TBMegaMenu {
     }
 
     var ariaCheck = function () {
-      jQuery('li.tbm-item', this).each(function () {
+      jQuery('li.tbm-item', navParent).each(function () {
         if (jQuery(this).is('.tbm-group')) {
           // Mega menu item has mega class (it's a true mega menu)
           if (!jQuery(this).parents().is('.open')) {
@@ -311,6 +306,7 @@ class TBMegaMenu {
     };
 
     jQuery('.tbm-button').click(function () {
+      console.log('clicked');
       // If the menu is currently open, collapse all open dropdowns before
       // hiding the menu.
       if (navParent.hasClass('tbm--mobile-show')) {
@@ -332,14 +328,15 @@ class TBMegaMenu {
       var mm_timeout = mm_duration ? 100 + mm_duration : 500;
 
       // Show dropdowns and flyouts on hover.
-      jQuery('.tbm-item', this).on('mouseenter', function (event) {
+      jQuery('.tbm-item', navParent).on('mouseenter', function (event) {
+        console.log(this);
         if (!isMobile() && !hasArrows) {
           showMenu(jQuery(this), mm_timeout);
         }
       });
 
       // Show dropdwons and flyouts on focus.
-      jQuery('.tbm-toggle', this).on('focus', function (event) {
+      jQuery('.tbm-toggle', navParent).on('focus', function (event) {
         if (!isMobile() && !hasArrows) {
           var $this = jQuery(this);
           var $subMenu = $this.closest('li');
@@ -355,7 +352,7 @@ class TBMegaMenu {
         }
       });
 
-      jQuery('.tbm-item', this).on('mouseleave', function (event) {
+      jQuery('.tbm-item', navParent).on('mouseleave', function (event) {
         if (!isMobile() && !hasArrows) {
           hideMenu(jQuery(this), mm_timeout);
         }
@@ -428,10 +425,10 @@ class TBMegaMenu {
     };
 
     // Add touch functionality.
-    createTouchMenu(jQuery('.tbm-item', this).has('.tbm-submenu'));
+    createTouchMenu(jQuery('.tbm-item', navParent).has('.tbm-submenu'));
 
     // Toggle submenus.
-    jQuery('.tbm-submenu-toggle, .tbm-link.no-link', this).on(
+    jQuery('.tbm-submenu-toggle, .tbm-link.no-link', navParent).on(
       'click',
       function () {
         if (isMobile()) {
