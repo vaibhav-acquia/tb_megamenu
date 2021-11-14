@@ -9,64 +9,58 @@ class TBMegaMenu {
     return this.navParent.hasClass('tbm--mobile');
   }
 
-  init() {
+  keyDownHandler(k) {
     const _this = this;
     var menuId = this.navParent.attr('id');
-    var menuSettings = drupalSettings['TBMegaMenu'][menuId];
-    var isTouch = window.matchMedia('(pointer: coarse)').matches;
-    var hasArrows = menuSettings['arrows'] === '1';
 
-    // Key Pressed
-    function keydownEvent(k) {
-      // Determine Key
-      switch (k.keyCode) {
-        // TAB
-        case 9:
-          // On mobile, we can follow the natural tab order.
-          if (!_this.isMobile) {
-            nav_tab(k);
-          }
-          break;
+    // Determine Key
+    switch (k.keyCode) {
+      // TAB
+      case 9:
+        // On mobile, we can follow the natural tab order.
+        if (!_this.isMobile) {
+          nav_tab(k);
+        }
+        break;
 
-        // ENTER
-        case 13:
-          nav_enter();
-          break;
+      // ENTER
+      case 13:
+        nav_enter();
+        break;
 
-        // ESC
-        case 27:
-          nav_esc();
-          break;
+      // ESC
+      case 27:
+        nav_esc();
+        break;
 
-        // LEFT
-        case 37:
-          k.preventDefault();
-          nav_left(k);
-          break;
+      // LEFT
+      case 37:
+        k.preventDefault();
+        nav_left(k);
+        break;
 
-        // UP
-        case 38:
-          k.preventDefault();
-          nav_up(k);
-          break;
+      // UP
+      case 38:
+        k.preventDefault();
+        nav_up(k);
+        break;
 
-        // RIGHT
-        case 39:
-          k.preventDefault();
-          nav_right(k);
-          break;
+      // RIGHT
+      case 39:
+        k.preventDefault();
+        nav_right(k);
+        break;
 
-        // DOWN
-        case 40:
-          k.preventDefault();
-          nav_down(k);
-          break;
+      // DOWN
+      case 40:
+        k.preventDefault();
+        nav_down(k);
+        break;
 
-        // Else
-        default:
-        // Do nothing
-      } // determine key
-    } // keydownEvent
+      // Else
+      default:
+      // Do nothing
+    }
 
     /* Keypress Functions */
     // Tab
@@ -81,9 +75,9 @@ class TBMegaMenu {
         }
       } else {
         if (k.shiftKey || k.keyCode === 38 || k.keyCode === 37) {
-          getNextPrevElement('prev').focus();
+          Drupal.TBMegaMenu.getNextPrevElement('prev').focus();
         } else {
-          getNextPrevElement('next').focus();
+          Drupal.TBMegaMenu.getNextPrevElement('next').focus();
         }
       }
     }
@@ -132,12 +126,13 @@ class TBMegaMenu {
     // Down
     function nav_down(k) {
       if (nav_is_toplink()) {
-        getNextPrevElement('next').focus();
+        Drupal.TBMegaMenu.getNextPrevElement('next').focus();
         // nav_next_column();
       } else if (
         // If the next element takes the user out of this top level, then do nothing.
-        getNextPrevElement('next').closest('.tbm-item.level-1') !==
-        document.activeElement.closest('.tbm-item.level-1')
+        Drupal.TBMegaMenu.getNextPrevElement('next').closest(
+          '.tbm-item.level-1',
+        ) !== document.activeElement.closest('.tbm-item.level-1')
       ) {
         // Do nothing.
       } else {
@@ -166,7 +161,7 @@ class TBMegaMenu {
     function nav_close_megamenu() {
       _this.navParent.find('.open').removeClass('open');
       _this.navParent.find('.tbm-clicked').removeClass('tbm-clicked');
-      ariaCheck();
+      _this.ariaCheck();
     }
 
     // Next Toplink
@@ -182,7 +177,7 @@ class TBMegaMenu {
         nav_close_megamenu();
 
         // Focus on the next element.
-        getNextPrevElement('next', true).focus();
+        Drupal.TBMegaMenu.getNextPrevElement('next', true).focus();
       }
     }
 
@@ -197,49 +192,57 @@ class TBMegaMenu {
         }
       } else {
         // Focus on the previous element.
-        getNextPrevElement('prev', true).focus();
+        Drupal.TBMegaMenu.getNextPrevElement('prev', true).focus();
       }
     }
+  }
 
-    var ariaCheck = function () {
-      jQuery('li.tbm-item', _this.navParent).each(function () {
-        if (jQuery(this).is('.tbm-group')) {
-          // Mega menu item has mega class (it's a true mega menu)
-          if (!jQuery(this).parents().is('.open')) {
-            // Mega menu item has mega class and its ancestor is closed, so apply appropriate ARIA attributes
-            jQuery(this)
-              .find('.tbm-toggle, .tbm-submenu-toggle')
-              .attr('aria-expanded', 'false');
-          } else if (jQuery(this).parents().is('.open')) {
-            // Mega menu item has mega class and its ancestor is open, so apply appropriate ARIA attributes
-            jQuery(this)
-              .find('.tbm-toggle, .tbm-submenu-toggle')
-              .attr('aria-expanded', 'true');
-          }
-        } else if (
-          jQuery(this).is('.tbm-item--has-dropdown') ||
-          jQuery(this).is('.tbm-item--has-flyout')
-        ) {
-          // Mega menu item has dropdown (it's a flyout menu)
-          if (!jQuery(this).is('.open')) {
-            // Mega menu item has dropdown class and is closed, so apply appropriate ARIA attributes
-            jQuery(this)
-              .find('.tbm-toggle, .tbm-submenu-toggle')
-              .attr('aria-expanded', 'false');
-          } else if (jQuery(this).is('.open')) {
-            // Mega menu item has dropdown class and is open, so apply appropriate ARIA attributes
-            jQuery(this)
-              .find('.tbm-toggle, .tbm-submenu-toggle')
-              .attr('aria-expanded', 'true');
-          }
-        } else {
-          // Mega menu item is neither a mega or dropdown class, so remove ARIA attributes (it doesn't have children)
+  ariaCheck() {
+    jQuery('li.tbm-item', this.navParent).each(function () {
+      if (jQuery(this).is('.tbm-group')) {
+        // Mega menu item has mega class (it's a true mega menu)
+        if (!jQuery(this).parents().is('.open')) {
+          // Mega menu item has mega class and its ancestor is closed, so apply appropriate ARIA attributes
           jQuery(this)
             .find('.tbm-toggle, .tbm-submenu-toggle')
-            .removeAttr('aria-expanded');
+            .attr('aria-expanded', 'false');
+        } else if (jQuery(this).parents().is('.open')) {
+          // Mega menu item has mega class and its ancestor is open, so apply appropriate ARIA attributes
+          jQuery(this)
+            .find('.tbm-toggle, .tbm-submenu-toggle')
+            .attr('aria-expanded', 'true');
         }
-      });
-    };
+      } else if (
+        jQuery(this).is('.tbm-item--has-dropdown') ||
+        jQuery(this).is('.tbm-item--has-flyout')
+      ) {
+        // Mega menu item has dropdown (it's a flyout menu)
+        if (!jQuery(this).is('.open')) {
+          // Mega menu item has dropdown class and is closed, so apply appropriate ARIA attributes
+          jQuery(this)
+            .find('.tbm-toggle, .tbm-submenu-toggle')
+            .attr('aria-expanded', 'false');
+        } else if (jQuery(this).is('.open')) {
+          // Mega menu item has dropdown class and is open, so apply appropriate ARIA attributes
+          jQuery(this)
+            .find('.tbm-toggle, .tbm-submenu-toggle')
+            .attr('aria-expanded', 'true');
+        }
+      } else {
+        // Mega menu item is neither a mega or dropdown class, so remove ARIA attributes (it doesn't have children)
+        jQuery(this)
+          .find('.tbm-toggle, .tbm-submenu-toggle')
+          .removeAttr('aria-expanded');
+      }
+    });
+  }
+
+  init() {
+    const _this = this;
+    var menuId = this.navParent.attr('id');
+    var menuSettings = drupalSettings['TBMegaMenu'][menuId];
+    var isTouch = window.matchMedia('(pointer: coarse)').matches;
+    var hasArrows = menuSettings['arrows'] === '1';
 
     var showMenu = function ($subMenu, mm_timeout) {
       if ($subMenu.hasClass('level-1')) {
@@ -256,7 +259,7 @@ class TBMegaMenu {
           'hoverTimeout',
           setTimeout(function () {
             $subMenu.addClass('open');
-            ariaCheck();
+            _this.ariaCheck();
           }, 100),
         );
       } else {
@@ -265,7 +268,7 @@ class TBMegaMenu {
           'hoverTimeout',
           setTimeout(function () {
             $subMenu.addClass('open');
-            ariaCheck();
+            _this.ariaCheck();
           }, 100),
         );
       }
@@ -289,7 +292,7 @@ class TBMegaMenu {
           'hoverTimeout',
           setTimeout(function () {
             $subMenu.removeClass('open');
-            ariaCheck();
+            _this.ariaCheck();
           }, 100),
         );
       } else {
@@ -298,7 +301,7 @@ class TBMegaMenu {
           'hoverTimeout',
           setTimeout(function () {
             $subMenu.removeClass('open');
-            ariaCheck();
+            _this.ariaCheck();
           }, 100),
         );
       }
@@ -398,7 +401,7 @@ class TBMegaMenu {
                 });
 
                 // Apply aria attributes.
-                ariaCheck();
+                _this.ariaCheck();
 
                 // Remove any existing tmb-clicked classes.
                 _this.navParent.find('.tbm-clicked').removeClass('tbm-clicked');
@@ -478,6 +481,6 @@ class TBMegaMenu {
     );
 
     // Add keyboard listeners.
-    this.navParent.on('keydown', keydownEvent);
+    this.navParent.on('keydown', this.keyDownHandler.bind(this));
   }
 }

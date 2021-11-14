@@ -46,7 +46,10 @@
 
   $(window).on('load resize', throttled);
 
-  function getNextPrevElement(direction, excludeSubnav = false) {
+  Drupal.TBMegaMenu.getNextPrevElement = function (
+    direction,
+    excludeSubnav = false,
+  ) {
     // Add all the elements we want to include in our selection
     var $current = $(document.activeElement);
     var nextElement = null;
@@ -74,7 +77,7 @@
     }
 
     return nextElement;
-  }
+  };
 
   Drupal.behaviors.tbMegaMenuAction = {
     attach: function (context, settings) {
