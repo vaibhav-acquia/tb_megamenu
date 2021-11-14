@@ -96,22 +96,21 @@
 class TBMegaMenu {
   constructor(id) {
     this.id = id;
+    this.navParent = jQuery('#' + this.id);
+  } // We have to define this as a getter because it can change as the browser resizes.
+
+
+  get isMobile() {
+    return this.navParent.hasClass('tbm--mobile');
   }
 
   init() {
     const _this = this;
 
-    var navParent = jQuery('#' + this.id);
-    var menuId = navParent.attr('id');
-    var menuSettings = drupalSettings['TBMegaMenu'][menuId]; // console.log(menuSettings);
-
+    var menuId = this.navParent.attr('id');
+    var menuSettings = drupalSettings['TBMegaMenu'][menuId];
     var isTouch = window.matchMedia('(pointer: coarse)').matches;
-    var hasArrows = menuSettings['arrows'] === '1'; // We have to define this as a function because it can change as the browser resizes.
-
-    function isMobile() {
-      return navParent.hasClass('tbm--mobile');
-    } // Key Pressed
-
+    var hasArrows = menuSettings['arrows'] === '1'; // Key Pressed
 
     function keydownEvent(k) {
       // Determine Key
@@ -119,7 +118,7 @@ class TBMegaMenu {
         // TAB
         case 9:
           // On mobile, we can follow the natural tab order.
-          if (!isMobile()) {
+          if (!_this.isMobile) {
             nav_tab(k);
           }
 
@@ -259,8 +258,10 @@ class TBMegaMenu {
 
 
     function nav_close_megamenu() {
-      navParent.find('.open').removeClass('open');
-      navParent.find('.tbm-clicked').removeClass('tbm-clicked');
+      _this.navParent.find('.open').removeClass('open');
+
+      _this.navParent.find('.tbm-clicked').removeClass('tbm-clicked');
+
       ariaCheck();
     } // Next Toplink
 
@@ -296,7 +297,7 @@ class TBMegaMenu {
     }
 
     var ariaCheck = function () {
-      jQuery('li.tbm-item', navParent).each(function () {
+      jQuery('li.tbm-item', _this.navParent).each(function () {
         if (jQuery(this).is('.tbm-group')) {
           // Mega menu item has mega class (it's a true mega menu)
           if (!jQuery(this).parents().is('.open')) {
@@ -367,10 +368,9 @@ class TBMegaMenu {
     };
 
     jQuery('.tbm-button').click(function () {
-      console.log('clicked'); // If the menu is currently open, collapse all open dropdowns before
+      // If the menu is currently open, collapse all open dropdowns before
       // hiding the menu.
-
-      if (navParent.hasClass('tbm--mobile-show')) {
+      if (_this.navParent.hasClass('tbm--mobile-show')) {
         nav_close_megamenu();
         jQuery(this).attr('aria-expanded', 'false');
       } else {
@@ -382,19 +382,17 @@ class TBMegaMenu {
     });
 
     if (!isTouch) {
-      var mm_duration = navParent.data('duration') ? navParent.data('duration') : 0;
+      var mm_duration = this.navParent.data('duration') ? this.navParent.data('duration') : 0;
       var mm_timeout = mm_duration ? 100 + mm_duration : 500; // Show dropdowns and flyouts on hover.
 
-      jQuery('.tbm-item', navParent).on('mouseenter', function (event) {
-        console.log(this);
-
-        if (!isMobile() && !hasArrows) {
+      jQuery('.tbm-item', this.navParent).on('mouseenter', function (event) {
+        if (!_this.isMobile && !hasArrows) {
           showMenu(jQuery(this), mm_timeout);
         }
       }); // Show dropdwons and flyouts on focus.
 
-      jQuery('.tbm-toggle', navParent).on('focus', function (event) {
-        if (!isMobile() && !hasArrows) {
+      jQuery('.tbm-toggle', this.navParent).on('focus', function (event) {
+        if (!_this.isMobile && !hasArrows) {
           var $this = jQuery(this);
           var $subMenu = $this.closest('li');
           showMenu($subMenu, mm_timeout); // If the focus moves outside of the subMenu, close it.
@@ -409,8 +407,8 @@ class TBMegaMenu {
           });
         }
       });
-      jQuery('.tbm-item', navParent).on('mouseleave', function (event) {
-        if (!isMobile() && !hasArrows) {
+      jQuery('.tbm-item', this.navParent).on('mouseleave', function (event) {
+        if (!_this.isMobile && !hasArrows) {
           hideMenu(jQuery(this), mm_timeout);
         }
       });
@@ -422,7 +420,7 @@ class TBMegaMenu {
         var $item = jQuery(this);
         var tbitem = jQuery(this).closest('.tbm-item');
         $item.click(function (event) {
-          if (!isMobile() && isTouch && !hasArrows) {
+          if (!_this.isMobile && isTouch && !hasArrows) {
             // If the menu link has already been clicked once...
             if ($item.hasClass('tbm-clicked')) {
               var $uri = $item.attr('href'); // If the menu link has a URI, go to the link.
@@ -451,7 +449,8 @@ class TBMegaMenu {
 
               ariaCheck(); // Remove any existing tmb-clicked classes.
 
-              navParent.find('.tbm-clicked').removeClass('tbm-clicked'); // Open the submenu and apply the tbm-clicked class.
+              _this.navParent.find('.tbm-clicked').removeClass('tbm-clicked'); // Open the submenu and apply the tbm-clicked class.
+
 
               $item.addClass('tbm-clicked');
               showMenu(tbitem, mm_timeout);
@@ -462,7 +461,7 @@ class TBMegaMenu {
 
       jQuery(document).on('click', function (event) {
         if (jQuery(event.target).closest('.tbm-nav').length === 0) {
-          if (navParent.find('.open').length > 0) {
+          if (_this.navParent.find('.open').length > 0) {
             nav_close_megamenu();
           }
         }
@@ -470,10 +469,10 @@ class TBMegaMenu {
     }; // Add touch functionality.
 
 
-    createTouchMenu(jQuery('.tbm-item', navParent).has('.tbm-submenu')); // Toggle submenus.
+    createTouchMenu(jQuery('.tbm-item', this.navParent).has('.tbm-submenu')); // Toggle submenus.
 
-    jQuery('.tbm-submenu-toggle, .tbm-link.no-link', navParent).on('click', function () {
-      if (isMobile()) {
+    jQuery('.tbm-submenu-toggle, .tbm-link.no-link', this.navParent).on('click', function () {
+      if (_this.isMobile) {
         var $parentItem = jQuery(this).closest('.tbm-item');
 
         if ($parentItem.hasClass('open')) {
@@ -486,7 +485,7 @@ class TBMegaMenu {
       // want to use touch menu handler.
 
 
-      if (!isMobile() && !(isTouch && !hasArrows && jQuery(this).hasClass('no-link'))) {
+      if (!_this.isMobile && !(isTouch && !hasArrows && jQuery(this).hasClass('no-link'))) {
         var $parentItem = jQuery(this).closest('.tbm-item');
 
         if ($parentItem.hasClass('open')) {
@@ -512,7 +511,7 @@ class TBMegaMenu {
       }
     }); // Add keyboard listeners.
 
-    navParent.on('keydown', keydownEvent);
+    this.navParent.on('keydown', keydownEvent);
   }
 
 }
