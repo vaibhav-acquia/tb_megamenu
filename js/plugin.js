@@ -1,4 +1,4 @@
-class TBMegaMenu {
+export class TBMegaMenu {
   constructor(id) {
     this.id = id;
     this.navParent = jQuery('#' + this.id);

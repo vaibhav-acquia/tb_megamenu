@@ -1,3 +1,5 @@
+import { TBMegaMenu } from './plugin.js';
+
 /**
  * @file
  * Defines Javascript behaviors for MegaMenu frontend.
