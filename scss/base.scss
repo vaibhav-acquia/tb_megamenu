@@ -201,7 +201,7 @@
     // The carat that appears next to the menu item.
     > .tbm-link-container {
       .tbm-link {
-        &:after {
+        &:before {
           display: block;
           content: '';
           float: right;

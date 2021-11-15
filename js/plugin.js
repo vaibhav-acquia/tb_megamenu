@@ -84,7 +84,7 @@ class TBMegaMenu {
 
     // Escape
     function nav_esc() {
-      nav_close_megamenu();
+      _this.closeMenu();
     }
 
     // Enter
@@ -157,13 +157,6 @@ class TBMegaMenu {
       return $topLevel.index(document.activeElement) === 0;
     }
 
-    // Close Mega Menu
-    function nav_close_megamenu() {
-      _this.navParent.find('.open').removeClass('open');
-      _this.navParent.find('.tbm-clicked').removeClass('tbm-clicked');
-      _this.ariaCheck();
-    }
-
     // Next Toplink
     function nav_next_toplink() {
       if (!nav_is_last_toplink()) {
@@ -174,7 +167,7 @@ class TBMegaMenu {
           $topLevel[index + 1].focus();
         }
       } else {
-        nav_close_megamenu();
+        _this.closeMenu();
 
         // Focus on the next element.
         Drupal.TBMegaMenu.getNextPrevElement('next', true).focus();
@@ -195,6 +188,13 @@ class TBMegaMenu {
         Drupal.TBMegaMenu.getNextPrevElement('prev', true).focus();
       }
     }
+  }
+
+  // Close Mega Menu
+  closeMenu() {
+    this.navParent.find('.open').removeClass('open');
+    this.navParent.find('.tbm-clicked').removeClass('tbm-clicked');
+    this.ariaCheck();
   }
 
   ariaCheck() {
@@ -237,6 +237,73 @@ class TBMegaMenu {
     });
   }
 
+  showMenu($subMenu, mm_timeout) {
+    const _this = this;
+
+    if ($subMenu.hasClass('level-1')) {
+      $subMenu.addClass('animating');
+      clearTimeout($subMenu.data('animatingTimeout'));
+      $subMenu.data(
+        'animatingTimeout',
+        setTimeout(function () {
+          $subMenu.removeClass('animating');
+        }, mm_timeout),
+      );
+      clearTimeout($subMenu.data('hoverTimeout'));
+      $subMenu.data(
+        'hoverTimeout',
+        setTimeout(function () {
+          $subMenu.addClass('open');
+          _this.ariaCheck();
+        }, 100),
+      );
+    } else {
+      clearTimeout($subMenu.data('hoverTimeout'));
+      $subMenu.data(
+        'hoverTimeout',
+        setTimeout(function () {
+          $subMenu.addClass('open');
+          _this.ariaCheck();
+        }, 100),
+      );
+    }
+  }
+
+  hideMenu($subMenu, mm_timeout) {
+    const _this = this;
+
+    $subMenu
+      .find('.tbm-toggle, .tbm-submenu-toggle')
+      .attr('aria-expanded', 'false');
+    if ($subMenu.hasClass('level-1')) {
+      $subMenu.addClass('animating');
+      clearTimeout($subMenu.data('animatingTimeout'));
+      $subMenu.data(
+        'animatingTimeout',
+        setTimeout(function () {
+          $subMenu.removeClass('animating');
+        }, mm_timeout),
+      );
+      clearTimeout($subMenu.data('hoverTimeout'));
+      $subMenu.data(
+        'hoverTimeout',
+        setTimeout(function () {
+          $subMenu.removeClass('open');
+          _this.ariaCheck();
+        }, 100),
+      );
+    } else {
+      clearTimeout($subMenu.data('hoverTimeout'));
+      $subMenu.data(
+        'hoverTimeout',
+        setTimeout(function () {
+          $subMenu.removeClass('open');
+          _this.ariaCheck();
+        }, 100),
+      );
+    }
+  }
+
   init() {
     const _this = this;
     var menuId = this.navParent.attr('id');
@@ -244,74 +311,11 @@ class TBMegaMenu {
     var isTouch = window.matchMedia('(pointer: coarse)').matches;
     var hasArrows = menuSettings['arrows'] === '1';
 
-    var showMenu = function ($subMenu, mm_timeout) {
-      if ($subMenu.hasClass('level-1')) {
-        $subMenu.addClass('animating');
-        clearTimeout($subMenu.data('animatingTimeout'));
-        $subMenu.data(
-          'animatingTimeout',
-          setTimeout(function () {
-            $subMenu.removeClass('animating');
-          }, mm_timeout),
-        );
-        clearTimeout($subMenu.data('hoverTimeout'));
-        $subMenu.data(
-          'hoverTimeout',
-          setTimeout(function () {
-            $subMenu.addClass('open');
-            _this.ariaCheck();
-          }, 100),
-        );
-      } else {
-        clearTimeout($subMenu.data('hoverTimeout'));
-        $subMenu.data(
-          'hoverTimeout',
-          setTimeout(function () {
-            $subMenu.addClass('open');
-            _this.ariaCheck();
-          }, 100),
-        );
-      }
-    };
-
-    var hideMenu = function ($subMenu, mm_timeout) {
-      $subMenu
-        .find('.tbm-toggle, .tbm-submenu-toggle')
-        .attr('aria-expanded', 'false');
-      if ($subMenu.hasClass('mega')) {
-        $subMenu.addClass('animating');
-        clearTimeout($subMenu.data('animatingTimeout'));
-        $subMenu.data(
-          'animatingTimeout',
-          setTimeout(function () {
-            $subMenu.removeClass('animating');
-          }, mm_timeout),
-        );
-        clearTimeout($subMenu.data('hoverTimeout'));
-        $subMenu.data(
-          'hoverTimeout',
-          setTimeout(function () {
-            $subMenu.removeClass('open');
-            _this.ariaCheck();
-          }, 100),
-        );
-      } else {
-        clearTimeout($subMenu.data('hoverTimeout'));
-        $subMenu.data(
-          'hoverTimeout',
-          setTimeout(function () {
-            $subMenu.removeClass('open');
-            _this.ariaCheck();
-          }, 100),
-        );
-      }
-    };
-
     jQuery('.tbm-button').click(function () {
       // If the menu is currently open, collapse all open dropdowns before
       // hiding the menu.
       if (_this.navParent.hasClass('tbm--mobile-show')) {
-        nav_close_megamenu();
+        _this.closeMenu();
         jQuery(this).attr('aria-expanded', 'false');
       } else {
         jQuery(this).attr('aria-expanded', 'true');
@@ -331,7 +335,7 @@ class TBMegaMenu {
       // Show dropdowns and flyouts on hover.
       jQuery('.tbm-item', this.navParent).on('mouseenter', function (event) {
         if (!_this.isMobile && !hasArrows) {
-          showMenu(jQuery(this), mm_timeout);
+          _this.showMenu(jQuery(this), mm_timeout);
         }
       });
 
@@ -340,21 +344,21 @@ class TBMegaMenu {
         if (!_this.isMobile && !hasArrows) {
           var $this = jQuery(this);
           var $subMenu = $this.closest('li');
-          showMenu($subMenu, mm_timeout);
+          _this.showMenu($subMenu, mm_timeout);
           // If the focus moves outside of the subMenu, close it.
           jQuery(document).on('focusin', function (event) {
             if ($subMenu.has(event.target).length) {
               return;
             }
             jQuery(document).unbind(event);
-            hideMenu($subMenu, mm_timeout);
+            _this.hideMenu($subMenu, mm_timeout);
           });
         }
       });
 
       jQuery('.tbm-item', this.navParent).on('mouseleave', function (event) {
         if (!_this.isMobile && !hasArrows) {
-          hideMenu(jQuery(this), mm_timeout);
+          _this.hideMenu(jQuery(this), mm_timeout);
         }
       });
     }
@@ -380,7 +384,7 @@ class TBMegaMenu {
                   window.location.href = $uri;
                 } else {
                   $item.removeClass('tbm-clicked');
-                  hideMenu(tbitem, mm_timeout);
+                  _this.hideMenu(tbitem, mm_timeout);
                 }
               } else {
                 event.preventDefault();
@@ -408,7 +412,7 @@ class TBMegaMenu {
 
                 // Open the submenu and apply the tbm-clicked class.
                 $item.addClass('tbm-clicked');
-                showMenu(tbitem, mm_timeout);
+                _this.showMenu(tbitem, mm_timeout);
               }
             }
           });
@@ -418,7 +422,7 @@ class TBMegaMenu {
       jQuery(document).on('click', function (event) {
         if (jQuery(event.target).closest('.tbm-nav').length === 0) {
           if (_this.navParent.find('.open').length > 0) {
-            nav_close_megamenu();
+            _this.closeMenu();
           }
         }
       });
@@ -435,9 +439,9 @@ class TBMegaMenu {
           var $parentItem = jQuery(this).closest('.tbm-item');
 
           if ($parentItem.hasClass('open')) {
-            hideMenu($parentItem, mm_timeout);
+            _this.hideMenu($parentItem, mm_timeout);
           } else {
-            showMenu($parentItem, mm_timeout);
+            _this.showMenu($parentItem, mm_timeout);
           }
         }
 
@@ -451,28 +455,28 @@ class TBMegaMenu {
           var $parentItem = jQuery(this).closest('.tbm-item');
 
           if ($parentItem.hasClass('open')) {
-            hideMenu($parentItem, mm_timeout);
+            _this.hideMenu($parentItem, mm_timeout);
 
             // Hide any children.
             $parentItem.find('.open').each(function (index, item) {
               var $this = jQuery(this);
 
-              hideMenu($this, mm_timeout);
+              _this.hideMenu($this, mm_timeout);
             });
           } else {
-            showMenu($parentItem, mm_timeout);
+            _this.showMenu($parentItem, mm_timeout);
 
             // Find any siblings and close them.
             $parentItem.siblings().each(function (index, item) {
               var $this = jQuery(this);
 
-              hideMenu($this, mm_timeout);
+              _this.hideMenu($this, mm_timeout);
 
               // Hide any children.
               $this.find('.open').each(function (index, item) {
                 var $this = jQuery(this);
 
-                hideMenu($this, mm_timeout);
+                _this.hideMenu($this, mm_timeout);
               });
             });
           }
