@@ -196,6 +196,12 @@ var TBMegaMenu = function () {
 
     this.id = id;
     this.navParent = jQuery('#' + this.id);
+    this.isTouch = window.matchMedia('(pointer: coarse)').matches;
+    var menuId = this.navParent.attr('id');
+    var menuSettings = drupalSettings['TBMegaMenu'][menuId];
+    this.hasArrows = menuSettings['arrows'] === '1';
+    var mm_duration = this.navParent.data('duration') ? this.navParent.data('duration') : 0;
+    this.mm_timeout = mm_duration ? 100 + mm_duration : 500;
   }
 
   _createClass(TBMegaMenu, [{
@@ -351,6 +357,55 @@ var TBMegaMenu = function () {
       }
     }
   }, {
+    key: "handleTouch",
+    value: function handleTouch(items) {
+      var _this = this;
+
+      items.children('.tbm-link-container').children('.tbm-link').each(function () {
+        var $item = jQuery(this);
+        var tbitem = jQuery(this).closest('.tbm-item');
+        $item.click(function (event) {
+          if (!_this.isMobile && _this.isTouch && !_this.hasArrows) {
+            if ($item.hasClass('tbm-clicked')) {
+              var $uri = $item.attr('href');
+
+              if ($uri) {
+                window.location.href = $uri;
+              } else {
+                $item.removeClass('tbm-clicked');
+
+                _this.hideMenu(tbitem, _this.mm_timeout);
+              }
+            } else {
+              event.preventDefault();
+              var $openParents = $item.parents('.open');
+              var $allOpen = jQuery('.tbm .open');
+              $allOpen.each(function (index, item) {
+                if (jQuery(item).is($openParents)) {} else {
+                  jQuery(item).removeClass('open');
+                }
+              });
+
+              _this.ariaCheck();
+
+              _this.navParent.find('.tbm-clicked').removeClass('tbm-clicked');
+
+              $item.addClass('tbm-clicked');
+
+              _this.showMenu(tbitem, _this.mm_timeout);
+            }
+          }
+        });
+      });
+      jQuery(document).on('click', function (event) {
+        if (jQuery(event.target).closest('.tbm-nav').length === 0) {
+          if (_this.navParent.find('.open').length > 0) {
+            _this.closeMenu();
+          }
+        }
+      });
+    }
+  }, {
     key: "closeMenu",
     value: function closeMenu() {
       this.navParent.find('.open').removeClass('open');
@@ -437,10 +492,6 @@ var TBMegaMenu = function () {
     value: function init() {
       var _this = this;
 
-      var menuId = this.navParent.attr('id');
-      var menuSettings = drupalSettings['TBMegaMenu'][menuId];
-      var isTouch = window.matchMedia('(pointer: coarse)').matches;
-      var hasArrows = menuSettings['arrows'] === '1';
       jQuery('.tbm-button').click(function () {
         if (_this.navParent.hasClass('tbm--mobile-show')) {
           _this.closeMenu();
@@ -453,20 +504,18 @@ var TBMegaMenu = function () {
         jQuery(this).parent().toggleClass('tbm--mobile-show');
       });
 
-      if (!isTouch) {
-        var mm_duration = this.navParent.data('duration') ? this.navParent.data('duration') : 0;
-        var mm_timeout = mm_duration ? 100 + mm_duration : 500;
+      if (!this.isTouch) {
         jQuery('.tbm-item', this.navParent).on('mouseenter', function (event) {
-          if (!_this.isMobile && !hasArrows) {
-            _this.showMenu(jQuery(this), mm_timeout);
+          if (!_this.isMobile && !_this.hasArrows) {
+            _this.showMenu(jQuery(this), _this.mm_timeout);
           }
         });
         jQuery('.tbm-toggle', this.navParent).on('focus', function (event) {
-          if (!_this.isMobile && !hasArrows) {
+          if (!_this.isMobile && !_this.hasArrows) {
             var $this = jQuery(this);
             var $subMenu = $this.closest('li');
 
-            _this.showMenu($subMenu, mm_timeout);
+            _this.showMenu($subMenu, _this.mm_timeout);
 
             jQuery(document).on('focusin', function (event) {
               if ($subMenu.has(event.target).length) {
@@ -475,98 +524,52 @@ var TBMegaMenu = function () {
 
               jQuery(document).unbind(event);
 
-              _this.hideMenu($subMenu, mm_timeout);
+              _this.hideMenu($subMenu, _this.mm_timeout);
             });
           }
         });
         jQuery('.tbm-item', this.navParent).on('mouseleave', function (event) {
-          if (!_this.isMobile && !hasArrows) {
-            _this.hideMenu(jQuery(this), mm_timeout);
+          if (!_this.isMobile && !_this.hasArrows) {
+            _this.hideMenu(jQuery(this), _this.mm_timeout);
           }
         });
       }
 
-      var createTouchMenu = function createTouchMenu(items) {
-        items.children('.tbm-link-container').children('.tbm-link').each(function () {
-          var $item = jQuery(this);
-          var tbitem = jQuery(this).closest('.tbm-item');
-          $item.click(function (event) {
-            if (!_this.isMobile && isTouch && !hasArrows) {
-              if ($item.hasClass('tbm-clicked')) {
-                var $uri = $item.attr('href');
-
-                if ($uri) {
-                  window.location.href = $uri;
-                } else {
-                  $item.removeClass('tbm-clicked');
-
-                  _this.hideMenu(tbitem, mm_timeout);
-                }
-              } else {
-                event.preventDefault();
-                var $openParents = $item.parents('.open');
-                var $allOpen = jQuery('.tbm .open');
-                $allOpen.each(function (index, item) {
-                  if (jQuery(item).is($openParents)) {} else {
-                    jQuery(item).removeClass('open');
-                  }
-                });
-
-                _this.ariaCheck();
-
-                _this.navParent.find('.tbm-clicked').removeClass('tbm-clicked');
-
-                $item.addClass('tbm-clicked');
-
-                _this.showMenu(tbitem, mm_timeout);
-              }
-            }
-          });
-        });
-        jQuery(document).on('click', function (event) {
-          if (jQuery(event.target).closest('.tbm-nav').length === 0) {
-            if (_this.navParent.find('.open').length > 0) {
-              _this.closeMenu();
-            }
-          }
-        });
-      };
-
-      createTouchMenu(jQuery('.tbm-item', this.navParent).has('.tbm-submenu'));
+      this.handleTouch(jQuery('.tbm-item', this.navParent).has('.tbm-submenu'));
       jQuery('.tbm-submenu-toggle, .tbm-link.no-link', this.navParent).on('click', function () {
         if (_this.isMobile) {
           var $parentItem = jQuery(this).closest('.tbm-item');
 
           if ($parentItem.hasClass('open')) {
-            _this.hideMenu($parentItem, mm_timeout);
+            _this.hideMenu($parentItem, _this.mm_timeout);
           } else {
-            _this.showMenu($parentItem, mm_timeout);
+            _this.showMenu($parentItem, _this.mm_timeout);
           }
         }
 
-        if (!_this.isMobile && !(isTouch && !hasArrows && jQuery(this).hasClass('no-link'))) {
+        if (!_this.isMobile && !(_this.isTouch && !_this.hasArrows && jQuery(this).hasClass('no-link'))) {
           var $parentItem = jQuery(this).closest('.tbm-item');
 
           if ($parentItem.hasClass('open')) {
-            _this.hideMenu($parentItem, mm_timeout);
+            _this.hideMenu($parentItem, _this.mm_timeout);
 
             $parentItem.find('.open').each(function (index, item) {
               var $this = jQuery(this);
 
-              _this.hideMenu($this, mm_timeout);
+              _this.hideMenu($this, _this.mm_timeout);
             });
           } else {
-            _this.showMenu($parentItem, mm_timeout);
+            _this.showMenu($parentItem, _this.mm_timeout);
 
             $parentItem.siblings().each(function (index, item) {
               var $this = jQuery(this);
 
-              _this.hideMenu($this, mm_timeout);
+              _this.hideMenu($this, _this.mm_timeout);
 
               $this.find('.open').each(function (index, item) {
                 var $this = jQuery(this);
 
-                _this.hideMenu($this, mm_timeout);
+                _this.hideMenu($this, _this.mm_timeout);
               });
             });
           }

@@ -2,6 +2,17 @@ export class TBMegaMenu {
   constructor(id) {
     this.id = id;
     this.navParent = jQuery('#' + this.id);
+    this.isTouch = window.matchMedia('(pointer: coarse)').matches;
+
+    const menuId = this.navParent.attr('id');
+    const menuSettings = drupalSettings['TBMegaMenu'][menuId];
+    this.hasArrows = menuSettings['arrows'] === '1';
+
+    const mm_duration = this.navParent.data('duration')
+      ? this.navParent.data('duration')
+      : 0;
+
+    this.mm_timeout = mm_duration ? 100 + mm_duration : 500;
   }
 
   // We have to define this as a getter because it can change as the browser resizes.
@@ -11,7 +22,7 @@ export class TBMegaMenu {
 
   keyDownHandler(k) {
     const _this = this;
-    var menuId = this.navParent.attr('id');
+    const menuId = this.navParent.attr('id');
 
     // Determine Key
     switch (k.keyCode) {
@@ -190,6 +201,73 @@ export class TBMegaMenu {
     }
   }
 
+  // Define actions for touch devices.
+  handleTouch(items) {
+    const _this = this;
+
+    items
+      .children('.tbm-link-container')
+      .children('.tbm-link')
+      .each(function () {
+        var $item = jQuery(this);
+        var tbitem = jQuery(this).closest('.tbm-item');
+
+        $item.click(function (event) {
+          if (!_this.isMobile && _this.isTouch && !_this.hasArrows) {
+            // If the menu link has already been clicked once...
+            if ($item.hasClass('tbm-clicked')) {
+              var $uri = $item.attr('href');
+
+              // If the menu link has a URI, go to the link.
+              // <nolink> menu items will not have a URI.
+              if ($uri) {
+                window.location.href = $uri;
+              } else {
+                $item.removeClass('tbm-clicked');
+                _this.hideMenu(tbitem, _this.mm_timeout);
+              }
+            } else {
+              event.preventDefault();
+
+              // Hide any already open menus which are not parents of the
+              // currently clicked menu item.
+              var $openParents = $item.parents('.open');
+              var $allOpen = jQuery('.tbm .open');
+
+              // Loop through all open items and check to see if they are
+              // parents of the clicked item.
+              $allOpen.each(function (index, item) {
+                if (jQuery(item).is($openParents)) {
+                  // do nothing
+                } else {
+                  jQuery(item).removeClass('open');
+                }
+              });
+
+              // Apply aria attributes.
+              _this.ariaCheck();
+
+              // Remove any existing tmb-clicked classes.
+              _this.navParent.find('.tbm-clicked').removeClass('tbm-clicked');
+
+              // Open the submenu and apply the tbm-clicked class.
+              $item.addClass('tbm-clicked');
+              _this.showMenu(tbitem, _this.mm_timeout);
+            }
+          }
+        });
+      });
+
+    // Anytime there's a click outside the menu, close the menu.
+    jQuery(document).on('click', function (event) {
+      if (jQuery(event.target).closest('.tbm-nav').length === 0) {
+        if (_this.navParent.find('.open').length > 0) {
+          _this.closeMenu();
+        }
+      }
+    });
+  }
+
   // Close Mega Menu
   closeMenu() {
     this.navParent.find('.open').removeClass('open');
@@ -306,10 +384,6 @@ export class TBMegaMenu {
 
   init() {
     const _this = this;
-    var menuId = this.navParent.attr('id');
-    var menuSettings = drupalSettings['TBMegaMenu'][menuId];
-    var isTouch = window.matchMedia('(pointer: coarse)').matches;
-    var hasArrows = menuSettings['arrows'] === '1';
 
     jQuery('.tbm-button').click(function () {
       // If the menu is currently open, collapse all open dropdowns before
@@ -325,111 +399,40 @@ export class TBMegaMenu {
       jQuery(this).parent().toggleClass('tbm--mobile-show');
     });
 
-    if (!isTouch) {
-      var mm_duration = this.navParent.data('duration')
-        ? this.navParent.data('duration')
-        : 0;
-
-      var mm_timeout = mm_duration ? 100 + mm_duration : 500;
-
+    if (!this.isTouch) {
       // Show dropdowns and flyouts on hover.
       jQuery('.tbm-item', this.navParent).on('mouseenter', function (event) {
-        if (!_this.isMobile && !hasArrows) {
-          _this.showMenu(jQuery(this), mm_timeout);
+        if (!_this.isMobile && !_this.hasArrows) {
+          _this.showMenu(jQuery(this), _this.mm_timeout);
         }
       });
 
       // Show dropdwons and flyouts on focus.
       jQuery('.tbm-toggle', this.navParent).on('focus', function (event) {
-        if (!_this.isMobile && !hasArrows) {
+        if (!_this.isMobile && !_this.hasArrows) {
           var $this = jQuery(this);
           var $subMenu = $this.closest('li');
-          _this.showMenu($subMenu, mm_timeout);
+          _this.showMenu($subMenu, _this.mm_timeout);
           // If the focus moves outside of the subMenu, close it.
           jQuery(document).on('focusin', function (event) {
             if ($subMenu.has(event.target).length) {
               return;
             }
             jQuery(document).unbind(event);
-            _this.hideMenu($subMenu, mm_timeout);
+            _this.hideMenu($subMenu, _this.mm_timeout);
           });
         }
       });
 
       jQuery('.tbm-item', this.navParent).on('mouseleave', function (event) {
-        if (!_this.isMobile && !hasArrows) {
-          _this.hideMenu(jQuery(this), mm_timeout);
+        if (!_this.isMobile && !_this.hasArrows) {
+          _this.hideMenu(jQuery(this), _this.mm_timeout);
         }
       });
     }
 
-    // Define actions for touch devices.
-    var createTouchMenu = function (items) {
-      items
-        .children('.tbm-link-container')
-        .children('.tbm-link')
-        .each(function () {
-          var $item = jQuery(this);
-          var tbitem = jQuery(this).closest('.tbm-item');
-
-          $item.click(function (event) {
-            if (!_this.isMobile && isTouch && !hasArrows) {
-              // If the menu link has already been clicked once...
-              if ($item.hasClass('tbm-clicked')) {
-                var $uri = $item.attr('href');
-
-                // If the menu link has a URI, go to the link.
-                // <nolink> menu items will not have a URI.
-                if ($uri) {
-                  window.location.href = $uri;
-                } else {
-                  $item.removeClass('tbm-clicked');
-                  _this.hideMenu(tbitem, mm_timeout);
-                }
-              } else {
-                event.preventDefault();
-
-                // Hide any already open menus which are not parents of the
-                // currently clicked menu item.
-                var $openParents = $item.parents('.open');
-                var $allOpen = jQuery('.tbm .open');
-
-                // Loop through all open items and check to see if they are
-                // parents of the clicked item.
-                $allOpen.each(function (index, item) {
-                  if (jQuery(item).is($openParents)) {
-                    // do nothing
-                  } else {
-                    jQuery(item).removeClass('open');
-                  }
-                });
-
-                // Apply aria attributes.
-                _this.ariaCheck();
-
-                // Remove any existing tmb-clicked classes.
-                _this.navParent.find('.tbm-clicked').removeClass('tbm-clicked');
-
-                // Open the submenu and apply the tbm-clicked class.
-                $item.addClass('tbm-clicked');
-                _this.showMenu(tbitem, mm_timeout);
-              }
-            }
-          });
-        });
-
-      // Anytime there's a click outside the menu, close the menu.
-      jQuery(document).on('click', function (event) {
-        if (jQuery(event.target).closest('.tbm-nav').length === 0) {
-          if (_this.navParent.find('.open').length > 0) {
-            _this.closeMenu();
-          }
-        }
-      });
-    };
-
     // Add touch functionality.
-    createTouchMenu(jQuery('.tbm-item', this.navParent).has('.tbm-submenu'));
+    this.handleTouch(jQuery('.tbm-item', this.navParent).has('.tbm-submenu'));
 
     // Toggle submenus.
     jQuery('.tbm-submenu-toggle, .tbm-link.no-link', this.navParent).on(
@@ -439,9 +442,9 @@ export class TBMegaMenu {
           var $parentItem = jQuery(this).closest('.tbm-item');
 
           if ($parentItem.hasClass('open')) {
-            _this.hideMenu($parentItem, mm_timeout);
+            _this.hideMenu($parentItem, _this.mm_timeout);
           } else {
-            _this.showMenu($parentItem, mm_timeout);
+            _this.showMenu($parentItem, _this.mm_timeout);
           }
         }
 
@@ -450,33 +453,37 @@ export class TBMegaMenu {
         // want to use touch menu handler.
         if (
           !_this.isMobile &&
-          !(isTouch && !hasArrows && jQuery(this).hasClass('no-link'))
+          !(
+            _this.isTouch &&
+            !_this.hasArrows &&
+            jQuery(this).hasClass('no-link')
+          )
         ) {
           var $parentItem = jQuery(this).closest('.tbm-item');
 
           if ($parentItem.hasClass('open')) {
-            _this.hideMenu($parentItem, mm_timeout);
+            _this.hideMenu($parentItem, _this.mm_timeout);
 
             // Hide any children.
             $parentItem.find('.open').each(function (index, item) {
               var $this = jQuery(this);
 
-              _this.hideMenu($this, mm_timeout);
+              _this.hideMenu($this, _this.mm_timeout);
             });
           } else {
-            _this.showMenu($parentItem, mm_timeout);
+            _this.showMenu($parentItem, _this.mm_timeout);
 
             // Find any siblings and close them.
             $parentItem.siblings().each(function (index, item) {
               var $this = jQuery(this);
 
-              _this.hideMenu($this, mm_timeout);
+              _this.hideMenu($this, _this.mm_timeout);
 
               // Hide any children.
               $this.find('.open').each(function (index, item) {
                 var $this = jQuery(this);
 
-                _this.hideMenu($this, mm_timeout);
+                _this.hideMenu($this, _this.mm_timeout);
               });
             });
           }
