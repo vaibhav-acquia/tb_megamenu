@@ -279,41 +279,43 @@ export class TBMegaMenu {
   }
 
   ariaCheck() {
-    jQuery('li.tbm-item', this.navParent).each(function () {
-      if (jQuery(this).is('.tbm-group')) {
+    const toggleElement = (element, value) => {
+      element
+        .querySelectorAll('.tbm-toggle, .tbm-submenu-toggle')
+        .forEach((toggle) => {
+          toggle.setAttribute('aria-expanded', value);
+        });
+    };
+
+    this.navParent.querySelectorAll('.tbm-item').forEach((element) => {
+      if (element.classList.contains('tbm-group')) {
         // Mega menu item has mega class (it's a true mega menu)
-        if (!jQuery(this).parents().is('.open')) {
+        if (!element.closest('.open')) {
           // Mega menu item has mega class and its ancestor is closed, so apply appropriate ARIA attributes
-          jQuery(this)
-            .find('.tbm-toggle, .tbm-submenu-toggle')
-            .attr('aria-expanded', 'false');
-        } else if (jQuery(this).parents().is('.open')) {
+          toggleElement(element, 'false');
+        } else if (element.closest('.open')) {
           // Mega menu item has mega class and its ancestor is open, so apply appropriate ARIA attributes
-          jQuery(this)
-            .find('.tbm-toggle, .tbm-submenu-toggle')
-            .attr('aria-expanded', 'true');
+          toggleElement(element, 'true');
         }
       } else if (
-        jQuery(this).is('.tbm-item--has-dropdown') ||
-        jQuery(this).is('.tbm-item--has-flyout')
+        element.classList.contains('tbm-item--has-dropdown') ||
+        element.classList.contains('tbm-item--has-flyout')
       ) {
         // Mega menu item has dropdown (it's a flyout menu)
-        if (!jQuery(this).is('.open')) {
+        if (!element.classList.contains('open')) {
           // Mega menu item has dropdown class and is closed, so apply appropriate ARIA attributes
-          jQuery(this)
-            .find('.tbm-toggle, .tbm-submenu-toggle')
-            .attr('aria-expanded', 'false');
-        } else if (jQuery(this).is('.open')) {
+          toggleElement(element, 'false');
+        } else if (element.classList.contains('open')) {
           // Mega menu item has dropdown class and is open, so apply appropriate ARIA attributes
-          jQuery(this)
-            .find('.tbm-toggle, .tbm-submenu-toggle')
-            .attr('aria-expanded', 'true');
+          toggleElement(element, 'true');
         }
       } else {
         // Mega menu item is neither a mega or dropdown class, so remove ARIA attributes (it doesn't have children)
-        jQuery(this)
-          .find('.tbm-toggle, .tbm-submenu-toggle')
-          .removeAttr('aria-expanded');
+        element
+          .querySelectorAll('.tbm-toggle, .tbm-submenu-toggle')
+          .forEach((toggle) => {
+            toggle.removeAttribute('aria-expanded');
+          });
       }
     });
   }

@@ -418,21 +418,29 @@ var TBMegaMenu = function () {
   }, {
     key: "ariaCheck",
     value: function ariaCheck() {
-      jQuery('li.tbm-item', this.navParent).each(function () {
-        if (jQuery(this).is('.tbm-group')) {
-          if (!jQuery(this).parents().is('.open')) {
-            jQuery(this).find('.tbm-toggle, .tbm-submenu-toggle').attr('aria-expanded', 'false');
-          } else if (jQuery(this).parents().is('.open')) {
-            jQuery(this).find('.tbm-toggle, .tbm-submenu-toggle').attr('aria-expanded', 'true');
+      var toggleElement = function toggleElement(element, value) {
+        element.querySelectorAll('.tbm-toggle, .tbm-submenu-toggle').forEach(function (toggle) {
+          toggle.setAttribute('aria-expanded', value);
+        });
+      };
+
+      this.navParent.querySelectorAll('.tbm-item').forEach(function (element) {
+        if (element.classList.contains('tbm-group')) {
+          if (!element.closest('.open')) {
+            toggleElement(element, 'false');
+          } else if (element.closest('.open')) {
+            toggleElement(element, 'true');
           }
-        } else if (jQuery(this).is('.tbm-item--has-dropdown') || jQuery(this).is('.tbm-item--has-flyout')) {
-          if (!jQuery(this).is('.open')) {
-            jQuery(this).find('.tbm-toggle, .tbm-submenu-toggle').attr('aria-expanded', 'false');
-          } else if (jQuery(this).is('.open')) {
-            jQuery(this).find('.tbm-toggle, .tbm-submenu-toggle').attr('aria-expanded', 'true');
+        } else if (element.classList.contains('tbm-item--has-dropdown') || element.classList.contains('tbm-item--has-flyout')) {
+          if (!element.classList.contains('open')) {
+            toggleElement(element, 'false');
+          } else if (element.classList.contains('open')) {
+            toggleElement(element, 'true');
           }
         } else {
-          jQuery(this).find('.tbm-toggle, .tbm-submenu-toggle').removeAttr('aria-expanded');
+          element.querySelectorAll('.tbm-toggle, .tbm-submenu-toggle').forEach(function (toggle) {
+            toggle.removeAttribute('aria-expanded');
+          });
         }
       });
     }
