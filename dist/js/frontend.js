@@ -460,30 +460,32 @@ var TBMegaMenu = function () {
     }
   }, {
     key: "hideMenu",
-    value: function hideMenu($subMenu, mm_timeout) {
+    value: function hideMenu(listItem, mm_timeout) {
       var _this = this;
 
-      $subMenu.find('.tbm-toggle, .tbm-submenu-toggle').attr('aria-expanded', 'false');
+      listItem.querySelectorAll('.tbm-toggle, .tbm-submenu-toggle').forEach(function (element) {
+        element.setAttribute('aria-expanded', false);
+      });
 
-      if ($subMenu.hasClass('level-1')) {
-        $subMenu.addClass('animating');
-        clearTimeout($subMenu.data('animatingTimeout'));
-        $subMenu.data('animatingTimeout', setTimeout(function () {
-          $subMenu.removeClass('animating');
-        }, mm_timeout));
-        clearTimeout($subMenu.data('hoverTimeout'));
-        $subMenu.data('hoverTimeout', setTimeout(function () {
-          $subMenu.removeClass('open');
+      if (listItem.classList.contains('level-1')) {
+        listItem.classList.add('animating');
+        clearTimeout(listItem.animatingTimeout);
+        listItem.animatingTimeout = setTimeout(function () {
+          listItem.classList.remove('animating');
+        }, mm_timeout);
+        clearTimeout(listItem.hoverTimeout);
+        listItem.hoverTimeout = setTimeout(function () {
+          listItem.classList.remove('open');
 
           _this.ariaCheck();
-        }, 100));
+        }, 100);
       } else {
-        clearTimeout($subMenu.data('hoverTimeout'));
-        $subMenu.data('hoverTimeout', setTimeout(function () {
-          $subMenu.removeClass('open');
+        clearTimeout(listItem.hoverTimeout);
+        listItem.hoverTimeout = setTimeout(function () {
+          listItem.classList.remove('open');
 
           _this.ariaCheck();
-        }, 100));
+        }, 100);
       }
     }
   }, {
@@ -512,6 +514,11 @@ var TBMegaMenu = function () {
               _this.showMenu(element, _this.mm_timeout);
             }
           });
+          element.addEventListener('mouseleave', function (event) {
+            if (!_this.isMobile && !_this.hasArrows) {
+              _this.hideMenu(element, _this.mm_timeout);
+            }
+          });
         });
         jQuery('.tbm-toggle', this.navParent).on('focus', function (event) {
           if (!_this.isMobile && !_this.hasArrows) {
@@ -529,11 +536,6 @@ var TBMegaMenu = function () {
 
               _this.hideMenu($subMenu, _this.mm_timeout);
             });
-          }
-        });
-        jQuery('.tbm-item', this.navParent).on('mouseleave', function (event) {
-          if (!_this.isMobile && !_this.hasArrows) {
-            _this.hideMenu(jQuery(this), _this.mm_timeout);
           }
         });
       }
