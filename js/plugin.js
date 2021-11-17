@@ -21,7 +21,7 @@ export class TBMegaMenu {
 
   keyDownHandler(k) {
     const _this = this;
-    const menuId = this.navParent.attr('id');
+    const menuId = this.id;
 
     // Determine Key
     switch (k.keyCode) {
@@ -99,8 +99,8 @@ export class TBMegaMenu {
 
     // Enter
     function nav_enter() {
-      if (jQuery(document.activeElement).hasClass('no-link')) {
-        jQuery(document.activeElement).trigger('click');
+      if (document.activeElement.classList.contains('no-link')) {
+        document.activeElement.click();
       }
     }
 
@@ -258,9 +258,9 @@ export class TBMegaMenu {
       });
 
     // Anytime there's a click outside the menu, close the menu.
-    jQuery(document).on('click', function (event) {
-      if (jQuery(event.target).closest('.tbm-nav').length === 0) {
-        if (_this.navParent.find('.open').length > 0) {
+    document.addEventListener('click', (event) => {
+      if (!event.target.closest('.tbm-nav')) {
+        if (_this.navParent.querySelectorAll('.open').length > 0) {
           _this.closeMenu();
         }
       }
@@ -269,8 +269,12 @@ export class TBMegaMenu {
 
   // Close Mega Menu
   closeMenu() {
-    this.navParent.find('.open').removeClass('open');
-    this.navParent.find('.tbm-clicked').removeClass('tbm-clicked');
+    this.navParent.querySelectorAll('.open').forEach((element) => {
+      element.classList.remove('open');
+    });
+    this.navParent.querySelectorAll('.tbm-clicked').forEach((element) => {
+      element.classList.remove('tbm-clicked');
+    });
     this.ariaCheck();
   }
 
@@ -403,20 +407,24 @@ export class TBMegaMenu {
       });
 
       // Show dropdwons and flyouts on focus.
-      jQuery('.tbm-toggle', this.navParent).on('focus', function (event) {
-        if (!_this.isMobile && !_this.hasArrows) {
-          var $this = jQuery(this);
-          var $subMenu = $this.closest('li');
-          _this.showMenu($subMenu, _this.mm_timeout);
-          // If the focus moves outside of the subMenu, close it.
-          jQuery(document).on('focusin', function (event) {
-            if ($subMenu.has(event.target).length) {
-              return;
-            }
-            jQuery(document).unbind(event);
-            _this.hideMenu($subMenu, _this.mm_timeout);
-          });
-        }
+      this.navParent.querySelectorAll('.tbm-toggle').forEach((element) => {
+        element.addEventListener('focus', (event) => {
+          if (!_this.isMobile && !_this.hasArrows) {
+            var listItem = event.currentTarget.closest('li');
+            _this.showMenu(listItem, _this.mm_timeout);
+
+            // If the focus moves outside of the subMenu, close it.
+            document.addEventListener('focusin', (event) => {
+              if (
+                event.target !== listItem &&
+                !listItem.contains(event.target)
+              ) {
+                document.removeEventListener('focusin', event);
+                _this.hideMenu(listItem, _this.mm_timeout);
+              }
+            });
+          }
+        });
       });
     }
 
@@ -481,6 +489,6 @@ export class TBMegaMenu {
     );
 
     // Add keyboard listeners.
-    this.navParent.on('keydown', this.keyDownHandler.bind(this));
+    this.navParent.addEventListener('keydown', this.keyDownHandler.bind(this));
   }
 }

@@ -213,7 +213,7 @@ var TBMegaMenu = function () {
     value: function keyDownHandler(k) {
       var _this = this;
 
-      var menuId = this.navParent.attr('id');
+      var menuId = this.id;
 
       switch (k.keyCode) {
         case 9:
@@ -277,8 +277,8 @@ var TBMegaMenu = function () {
       }
 
       function nav_enter() {
-        if (jQuery(document.activeElement).hasClass('no-link')) {
-          jQuery(document.activeElement).trigger('click');
+        if (document.activeElement.classList.contains('no-link')) {
+          document.activeElement.click();
         }
       }
 
@@ -396,9 +396,9 @@ var TBMegaMenu = function () {
           }
         });
       });
-      jQuery(document).on('click', function (event) {
-        if (jQuery(event.target).closest('.tbm-nav').length === 0) {
-          if (_this.navParent.find('.open').length > 0) {
+      document.addEventListener('click', function (event) {
+        if (!event.target.closest('.tbm-nav')) {
+          if (_this.navParent.querySelectorAll('.open').length > 0) {
             _this.closeMenu();
           }
         }
@@ -407,8 +407,12 @@ var TBMegaMenu = function () {
   }, {
     key: "closeMenu",
     value: function closeMenu() {
-      this.navParent.find('.open').removeClass('open');
-      this.navParent.find('.tbm-clicked').removeClass('tbm-clicked');
+      this.navParent.querySelectorAll('.open').forEach(function (element) {
+        element.classList.remove('open');
+      });
+      this.navParent.querySelectorAll('.tbm-clicked').forEach(function (element) {
+        element.classList.remove('tbm-clicked');
+      });
       this.ariaCheck();
     }
   }, {
@@ -520,23 +524,22 @@ var TBMegaMenu = function () {
             }
           });
         });
-        jQuery('.tbm-toggle', this.navParent).on('focus', function (event) {
-          if (!_this.isMobile && !_this.hasArrows) {
-            var $this = jQuery(this);
-            var $subMenu = $this.closest('li');
+        this.navParent.querySelectorAll('.tbm-toggle').forEach(function (element) {
+          element.addEventListener('focus', function (event) {
+            if (!_this.isMobile && !_this.hasArrows) {
+              var listItem = event.currentTarget.closest('li');
 
-            _this.showMenu($subMenu, _this.mm_timeout);
+              _this.showMenu(listItem, _this.mm_timeout);
 
-            jQuery(document).on('focusin', function (event) {
-              if ($subMenu.has(event.target).length) {
-                return;
-              }
+              document.addEventListener('focusin', function (event) {
+                if (event.target !== listItem && !listItem.contains(event.target)) {
+                  document.removeEventListener('focusin', event);
 
-              jQuery(document).unbind(event);
-
-              _this.hideMenu($subMenu, _this.mm_timeout);
-            });
-          }
+                  _this.hideMenu(listItem, _this.mm_timeout);
+                }
+              });
+            }
+          });
         });
       }
 
@@ -580,7 +583,7 @@ var TBMegaMenu = function () {
           }
         }
       });
-      this.navParent.on('keydown', this.keyDownHandler.bind(this));
+      this.navParent.addEventListener('keydown', this.keyDownHandler.bind(this));
     }
   }]);
 
