@@ -1,15 +1,14 @@
 export class TBMegaMenu {
   constructor(id) {
     this.id = id;
-    this.navParent = jQuery('#' + this.id);
+    this.navParent = document.getElementById(this.id);
     this.isTouch = window.matchMedia('(pointer: coarse)').matches;
 
-    const menuId = this.navParent.attr('id');
-    const menuSettings = drupalSettings['TBMegaMenu'][menuId];
+    const menuSettings = drupalSettings['TBMegaMenu'][this.id];
     this.hasArrows = menuSettings['arrows'] === '1';
 
-    const mm_duration = this.navParent.data('duration')
-      ? this.navParent.data('duration')
+    const mm_duration = this.navParent.getAttribute('data-duration')
+      ? parseInt(this.navParent.getAttribute('data-duration'))
       : 0;
 
     this.mm_timeout = mm_duration ? 100 + mm_duration : 500;
@@ -17,7 +16,7 @@ export class TBMegaMenu {
 
   // We have to define this as a getter because it can change as the browser resizes.
   get isMobile() {
-    return this.navParent.hasClass('tbm--mobile');
+    return this.navParent.classList.contains('tbm--mobile');
   }
 
   keyDownHandler(k) {
@@ -315,35 +314,26 @@ export class TBMegaMenu {
     });
   }
 
-  showMenu($subMenu, mm_timeout) {
+  showMenu(listItem, mm_timeout) {
     const _this = this;
 
-    if ($subMenu.hasClass('level-1')) {
-      $subMenu.addClass('animating');
-      clearTimeout($subMenu.data('animatingTimeout'));
-      $subMenu.data(
-        'animatingTimeout',
-        setTimeout(function () {
-          $subMenu.removeClass('animating');
-        }, mm_timeout),
-      );
-      clearTimeout($subMenu.data('hoverTimeout'));
-      $subMenu.data(
-        'hoverTimeout',
-        setTimeout(function () {
-          $subMenu.addClass('open');
-          _this.ariaCheck();
-        }, 100),
-      );
+    if (listItem.classList.contains('level-1')) {
+      listItem.classList.add('animating');
+      clearTimeout(listItem.animatingTimeout);
+      listItem.animatingTimeout = setTimeout(function () {
+        listItem.classList.remove('animating');
+      }, mm_timeout);
+      clearTimeout(listItem.hoverTimeout);
+      listItem.hoverTimeout = setTimeout(function () {
+        listItem.classList.add('open');
+        _this.ariaCheck();
+      }, 100);
     } else {
-      clearTimeout($subMenu.data('hoverTimeout'));
-      $subMenu.data(
-        'hoverTimeout',
-        setTimeout(function () {
-          $subMenu.addClass('open');
-          _this.ariaCheck();
-        }, 100),
-      );
+      clearTimeout(listItem.hoverTimeout);
+      listItem.hoverTimeout = setTimeout(function () {
+        listItem.classList.add('open');
+        _this.ariaCheck();
+      }, 100);
     }
   }
 
@@ -385,26 +375,31 @@ export class TBMegaMenu {
   init() {
     const _this = this;
 
-    jQuery('.tbm-button').click(function () {
-      // If the menu is currently open, collapse all open dropdowns before
-      // hiding the menu.
-      if (_this.navParent.hasClass('tbm--mobile-show')) {
-        _this.closeMenu();
-        jQuery(this).attr('aria-expanded', 'false');
-      } else {
-        jQuery(this).attr('aria-expanded', 'true');
-      }
+    // Open and close the menu when the hamburger is clicked.
+    document.querySelectorAll('.tbm-button').forEach((element) => {
+      element.addEventListener('click', (event) => {
+        // If the menu is currently open, collapse all open dropdowns before
+        // hiding the menu.
+        if (_this.navParent.classList.contains('tbm--mobile-show')) {
+          _this.closeMenu();
+          event.currentTarget.setAttribute('aria-expanded', 'false');
+        } else {
+          event.currentTarget.setAttribute('aria-expanded', 'true');
+        }
 
-      // Toggle the menu visibility.
-      jQuery(this).parent().toggleClass('tbm--mobile-show');
+        // Toggle the menu visibility.
+        _this.navParent.classList.toggle('tbm--mobile-show');
+      });
     });
 
     if (!this.isTouch) {
       // Show dropdowns and flyouts on hover.
-      jQuery('.tbm-item', this.navParent).on('mouseenter', function (event) {
-        if (!_this.isMobile && !_this.hasArrows) {
-          _this.showMenu(jQuery(this), _this.mm_timeout);
-        }
+      this.navParent.querySelectorAll('.tbm-item').forEach((element) => {
+        element.addEventListener('mouseenter', (event) => {
+          if (!_this.isMobile && !_this.hasArrows) {
+            _this.showMenu(element, _this.mm_timeout);
+          }
+        });
       });
 
       // Show dropdwons and flyouts on focus.

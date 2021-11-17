@@ -195,19 +195,18 @@ var TBMegaMenu = function () {
     _classCallCheck(this, TBMegaMenu);
 
     this.id = id;
-    this.navParent = jQuery('#' + this.id);
+    this.navParent = document.getElementById(this.id);
     this.isTouch = window.matchMedia('(pointer: coarse)').matches;
-    var menuId = this.navParent.attr('id');
-    var menuSettings = drupalSettings['TBMegaMenu'][menuId];
+    var menuSettings = drupalSettings['TBMegaMenu'][this.id];
     this.hasArrows = menuSettings['arrows'] === '1';
-    var mm_duration = this.navParent.data('duration') ? this.navParent.data('duration') : 0;
+    var mm_duration = this.navParent.getAttribute('data-duration') ? parseInt(this.navParent.getAttribute('data-duration')) : 0;
     this.mm_timeout = mm_duration ? 100 + mm_duration : 500;
   }
 
   _createClass(TBMegaMenu, [{
     key: "isMobile",
     get: function get() {
-      return this.navParent.hasClass('tbm--mobile');
+      return this.navParent.classList.contains('tbm--mobile');
     }
   }, {
     key: "keyDownHandler",
@@ -435,28 +434,28 @@ var TBMegaMenu = function () {
     }
   }, {
     key: "showMenu",
-    value: function showMenu($subMenu, mm_timeout) {
+    value: function showMenu(listItem, mm_timeout) {
       var _this = this;
 
-      if ($subMenu.hasClass('level-1')) {
-        $subMenu.addClass('animating');
-        clearTimeout($subMenu.data('animatingTimeout'));
-        $subMenu.data('animatingTimeout', setTimeout(function () {
-          $subMenu.removeClass('animating');
-        }, mm_timeout));
-        clearTimeout($subMenu.data('hoverTimeout'));
-        $subMenu.data('hoverTimeout', setTimeout(function () {
-          $subMenu.addClass('open');
+      if (listItem.classList.contains('level-1')) {
+        listItem.classList.add('animating');
+        clearTimeout(listItem.animatingTimeout);
+        listItem.animatingTimeout = setTimeout(function () {
+          listItem.classList.remove('animating');
+        }, mm_timeout);
+        clearTimeout(listItem.hoverTimeout);
+        listItem.hoverTimeout = setTimeout(function () {
+          listItem.classList.add('open');
 
           _this.ariaCheck();
-        }, 100));
+        }, 100);
       } else {
-        clearTimeout($subMenu.data('hoverTimeout'));
-        $subMenu.data('hoverTimeout', setTimeout(function () {
-          $subMenu.addClass('open');
+        clearTimeout(listItem.hoverTimeout);
+        listItem.hoverTimeout = setTimeout(function () {
+          listItem.classList.add('open');
 
           _this.ariaCheck();
-        }, 100));
+        }, 100);
       }
     }
   }, {
@@ -492,23 +491,27 @@ var TBMegaMenu = function () {
     value: function init() {
       var _this = this;
 
-      jQuery('.tbm-button').click(function () {
-        if (_this.navParent.hasClass('tbm--mobile-show')) {
-          _this.closeMenu();
+      document.querySelectorAll('.tbm-button').forEach(function (element) {
+        element.addEventListener('click', function (event) {
+          if (_this.navParent.classList.contains('tbm--mobile-show')) {
+            _this.closeMenu();
 
-          jQuery(this).attr('aria-expanded', 'false');
-        } else {
-          jQuery(this).attr('aria-expanded', 'true');
-        }
+            event.currentTarget.setAttribute('aria-expanded', 'false');
+          } else {
+            event.currentTarget.setAttribute('aria-expanded', 'true');
+          }
 
-        jQuery(this).parent().toggleClass('tbm--mobile-show');
+          _this.navParent.classList.toggle('tbm--mobile-show');
+        });
       });
 
       if (!this.isTouch) {
-        jQuery('.tbm-item', this.navParent).on('mouseenter', function (event) {
-          if (!_this.isMobile && !_this.hasArrows) {
-            _this.showMenu(jQuery(this), _this.mm_timeout);
-          }
+        this.navParent.querySelectorAll('.tbm-item').forEach(function (element) {
+          element.addEventListener('mouseenter', function (event) {
+            if (!_this.isMobile && !_this.hasArrows) {
+              _this.showMenu(element, _this.mm_timeout);
+            }
+          });
         });
         jQuery('.tbm-toggle', this.navParent).on('focus', function (event) {
           if (!_this.isMobile && !_this.hasArrows) {
