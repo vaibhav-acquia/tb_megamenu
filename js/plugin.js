@@ -203,13 +203,10 @@ export class TBMegaMenu {
   // Define actions for touch devices.
   handleTouch(item) {
     const _this = this;
-
     const link = item
       .querySelector(':scope > .tbm-link-container')
       .querySelector(':scope > .tbm-link');
-
-    // var $item = jQuery(this);
-    var tbitem = link.closest('.tbm-item');
+    const tbitem = link.closest('.tbm-item');
 
     link.addEventListener('click', (event) => {
       if (!_this.isMobile && _this.isTouch && !_this.hasArrows) {
@@ -440,64 +437,73 @@ export class TBMegaMenu {
       }
     });
 
-    // this.handleTouch(jQuery('.tbm-item', this.navParent).has('.tbm-submenu'));
-
     // Toggle submenus.
-    jQuery('.tbm-submenu-toggle, .tbm-link.no-link', this.navParent).on(
-      'click',
-      function () {
-        if (_this.isMobile) {
-          var $parentItem = jQuery(this).closest('.tbm-item');
+    this.navParent
+      .querySelectorAll('.tbm-submenu-toggle, .tbm-link.no-link')
+      .forEach((toggleElement) => {
+        toggleElement.addEventListener('click', (event) => {
+          if (_this.isMobile) {
+            const parentItem = event.currentTarget.closest('.tbm-item');
 
-          if ($parentItem.hasClass('open')) {
-            _this.hideMenu($parentItem, _this.mm_timeout);
-          } else {
-            _this.showMenu($parentItem, _this.mm_timeout);
+            if (parentItem.classList.contains('open')) {
+              _this.hideMenu(parentItem, _this.mm_timeout);
+            } else {
+              _this.showMenu(parentItem, _this.mm_timeout);
+            }
           }
-        }
 
-        // Do not add a click listener if we are on a touch device with no
-        // arrows and the element is a no-link element. In that case, we
-        // want to use touch menu handler.
-        if (
-          !_this.isMobile &&
-          !(
-            _this.isTouch &&
-            !_this.hasArrows &&
-            jQuery(this).hasClass('no-link')
-          )
-        ) {
-          var $parentItem = jQuery(this).closest('.tbm-item');
+          // Do not add a click listener if we are on a touch device with no
+          // arrows and the element is a no-link element. In that case, we
+          // want to use touch menu handler.
+          if (
+            !_this.isMobile &&
+            !(
+              _this.isTouch &&
+              !_this.hasArrows &&
+              event.currentTarget.classList.contains('no-link')
+            )
+          ) {
+            console.log('in it');
+            const parentItem = event.currentTarget.closest('.tbm-item');
 
-          if ($parentItem.hasClass('open')) {
-            _this.hideMenu($parentItem, _this.mm_timeout);
-
-            // Hide any children.
-            $parentItem.find('.open').each(function (index, item) {
-              var $this = jQuery(this);
-
-              _this.hideMenu($this, _this.mm_timeout);
-            });
-          } else {
-            _this.showMenu($parentItem, _this.mm_timeout);
-
-            // Find any siblings and close them.
-            $parentItem.siblings().each(function (index, item) {
-              var $this = jQuery(this);
-
-              _this.hideMenu($this, _this.mm_timeout);
+            if (parentItem.classList.contains('open')) {
+              _this.hideMenu(parentItem, _this.mm_timeout);
 
               // Hide any children.
-              $this.find('.open').each(function (index, item) {
-                var $this = jQuery(this);
-
-                _this.hideMenu($this, _this.mm_timeout);
+              parentItem.querySelectorAll('.open').forEach((element) => {
+                _this.hideMenu(element, _this.mm_timeout);
               });
-            });
+            } else {
+              _this.showMenu(parentItem, _this.mm_timeout);
+
+              // Find any siblings and close them.
+              let prevSibling = parentItem.previousElementSibling;
+              while (prevSibling) {
+                _this.hideMenu(prevSibling, _this.mm_timeout);
+
+                // Hide any children.
+                prevSibling.querySelectorAll('.open').forEach((item) => {
+                  _this.hideMenu(item, _this.mm_timeout);
+                });
+
+                prevSibling = prevSibling.previousElementSibling;
+              }
+
+              let nextSibling = parentItem.nextElementSibling;
+              while (nextSibling) {
+                _this.hideMenu(nextSibling, _this.mm_timeout);
+
+                // Hide any children.
+                nextSibling.querySelectorAll('.open').forEach((item) => {
+                  _this.hideMenu(item, _this.mm_timeout);
+                });
+
+                nextSibling = nextSibling.nextElementSibling;
+              }
+            }
           }
-        }
-      },
-    );
+        });
+      });
 
     // Add keyboard listeners.
     this.navParent.addEventListener('keydown', this.keyDownHandler.bind(this));

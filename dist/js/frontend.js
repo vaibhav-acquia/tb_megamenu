@@ -557,44 +557,56 @@ var TBMegaMenu = function () {
           _this.handleTouch(item);
         }
       });
-      jQuery('.tbm-submenu-toggle, .tbm-link.no-link', this.navParent).on('click', function () {
-        if (_this.isMobile) {
-          var $parentItem = jQuery(this).closest('.tbm-item');
+      this.navParent.querySelectorAll('.tbm-submenu-toggle, .tbm-link.no-link').forEach(function (toggleElement) {
+        toggleElement.addEventListener('click', function (event) {
+          if (_this.isMobile) {
+            var parentItem = event.currentTarget.closest('.tbm-item');
 
-          if ($parentItem.hasClass('open')) {
-            _this.hideMenu($parentItem, _this.mm_timeout);
-          } else {
-            _this.showMenu($parentItem, _this.mm_timeout);
+            if (parentItem.classList.contains('open')) {
+              _this.hideMenu(parentItem, _this.mm_timeout);
+            } else {
+              _this.showMenu(parentItem, _this.mm_timeout);
+            }
           }
-        }
 
-        if (!_this.isMobile && !(_this.isTouch && !_this.hasArrows && jQuery(this).hasClass('no-link'))) {
-          var $parentItem = jQuery(this).closest('.tbm-item');
+          if (!_this.isMobile && !(_this.isTouch && !_this.hasArrows && event.currentTarget.classList.contains('no-link'))) {
+            console.log('in it');
 
-          if ($parentItem.hasClass('open')) {
-            _this.hideMenu($parentItem, _this.mm_timeout);
+            var _parentItem = event.currentTarget.closest('.tbm-item');
 
-            $parentItem.find('.open').each(function (index, item) {
-              var $this = jQuery(this);
+            if (_parentItem.classList.contains('open')) {
+              _this.hideMenu(_parentItem, _this.mm_timeout);
 
-              _this.hideMenu($this, _this.mm_timeout);
-            });
-          } else {
-            _this.showMenu($parentItem, _this.mm_timeout);
-
-            $parentItem.siblings().each(function (index, item) {
-              var $this = jQuery(this);
-
-              _this.hideMenu($this, _this.mm_timeout);
-
-              $this.find('.open').each(function (index, item) {
-                var $this = jQuery(this);
-
-                _this.hideMenu($this, _this.mm_timeout);
+              _parentItem.querySelectorAll('.open').forEach(function (element) {
+                _this.hideMenu(element, _this.mm_timeout);
               });
-            });
+            } else {
+              _this.showMenu(_parentItem, _this.mm_timeout);
+
+              var prevSibling = _parentItem.previousElementSibling;
+
+              while (prevSibling) {
+                _this.hideMenu(prevSibling, _this.mm_timeout);
+
+                prevSibling.querySelectorAll('.open').forEach(function (item) {
+                  _this.hideMenu(item, _this.mm_timeout);
+                });
+                prevSibling = prevSibling.previousElementSibling;
+              }
+
+              var nextSibling = _parentItem.nextElementSibling;
+
+              while (nextSibling) {
+                _this.hideMenu(nextSibling, _this.mm_timeout);
+
+                nextSibling.querySelectorAll('.open').forEach(function (item) {
+                  _this.hideMenu(item, _this.mm_timeout);
+                });
+                nextSibling = nextSibling.nextElementSibling;
+              }
+            }
           }
-        }
+        });
       });
       this.navParent.addEventListener('keydown', this.keyDownHandler.bind(this));
     }
