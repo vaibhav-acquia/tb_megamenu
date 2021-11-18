@@ -357,44 +357,45 @@ var TBMegaMenu = function () {
     }
   }, {
     key: "handleTouch",
-    value: function handleTouch(items) {
+    value: function handleTouch(item) {
       var _this = this;
 
-      items.children('.tbm-link-container').children('.tbm-link').each(function () {
-        var $item = jQuery(this);
-        var tbitem = jQuery(this).closest('.tbm-item');
-        $item.click(function (event) {
-          if (!_this.isMobile && _this.isTouch && !_this.hasArrows) {
-            if ($item.hasClass('tbm-clicked')) {
-              var $uri = $item.attr('href');
+      var link = item.querySelector(':scope > .tbm-link-container').querySelector(':scope > .tbm-link');
+      var tbitem = link.closest('.tbm-item');
+      link.addEventListener('click', function (event) {
+        if (!_this.isMobile && _this.isTouch && !_this.hasArrows) {
+          if (link.classList.contains('tbm-clicked')) {
+            var uri = link.getAttribute('href');
 
-              if ($uri) {
-                window.location.href = $uri;
-              } else {
-                $item.removeClass('tbm-clicked');
-
-                _this.hideMenu(tbitem, _this.mm_timeout);
-              }
+            if (uri) {
+              window.location.href = uri;
             } else {
-              event.preventDefault();
-              var $openParents = $item.parents('.open');
-              var $allOpen = jQuery('.tbm .open');
-              $allOpen.each(function (index, item) {
-                if (jQuery(item).is($openParents)) {} else {
-                  jQuery(item).removeClass('open');
-                }
-              });
+              link.classList.remove('tbm-clicked');
 
-              _this.ariaCheck();
-
-              _this.navParent.find('.tbm-clicked').removeClass('tbm-clicked');
-
-              $item.addClass('tbm-clicked');
-
-              _this.showMenu(tbitem, _this.mm_timeout);
+              _this.hideMenu(tbitem, _this.mm_timeout);
             }
+          } else {
+            event.preventDefault();
+
+            var allOpen = _this.navParent.querySelectorAll('.open');
+
+            allOpen.forEach(function (element) {
+              if (element.contains(link)) {} else {
+                element.classList.remove('open');
+              }
+            });
+
+            _this.ariaCheck();
+
+            _this.navParent.querySelectorAll('.tbm-clicked').forEach(function (element) {
+              element.classList.remove('tbm-clicked');
+            });
+
+            link.classList.add('tbm-clicked');
+
+            _this.showMenu(tbitem, _this.mm_timeout);
           }
-        });
+        }
       });
       document.addEventListener('click', function (event) {
         if (!event.target.closest('.tbm-nav')) {
@@ -551,7 +552,11 @@ var TBMegaMenu = function () {
         });
       }
 
-      this.handleTouch(jQuery('.tbm-item', this.navParent).has('.tbm-submenu'));
+      this.navParent.querySelectorAll('.tbm-item').forEach(function (item) {
+        if (item.querySelector(':scope > .tbm-submenu')) {
+          _this.handleTouch(item);
+        }
+      });
       jQuery('.tbm-submenu-toggle, .tbm-link.no-link', this.navParent).on('click', function () {
         if (_this.isMobile) {
           var $parentItem = jQuery(this).closest('.tbm-item');

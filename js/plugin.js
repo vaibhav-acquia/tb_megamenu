@@ -201,61 +201,64 @@ export class TBMegaMenu {
   }
 
   // Define actions for touch devices.
-  handleTouch(items) {
+  handleTouch(item) {
     const _this = this;
 
-    items
-      .children('.tbm-link-container')
-      .children('.tbm-link')
-      .each(function () {
-        var $item = jQuery(this);
-        var tbitem = jQuery(this).closest('.tbm-item');
+    const link = item
+      .querySelector(':scope > .tbm-link-container')
+      .querySelector(':scope > .tbm-link');
 
-        $item.click(function (event) {
-          if (!_this.isMobile && _this.isTouch && !_this.hasArrows) {
-            // If the menu link has already been clicked once...
-            if ($item.hasClass('tbm-clicked')) {
-              var $uri = $item.attr('href');
+    // var $item = jQuery(this);
+    var tbitem = link.closest('.tbm-item');
 
-              // If the menu link has a URI, go to the link.
-              // <nolink> menu items will not have a URI.
-              if ($uri) {
-                window.location.href = $uri;
-              } else {
-                $item.removeClass('tbm-clicked');
-                _this.hideMenu(tbitem, _this.mm_timeout);
-              }
-            } else {
-              event.preventDefault();
+    link.addEventListener('click', (event) => {
+      if (!_this.isMobile && _this.isTouch && !_this.hasArrows) {
+        // If the menu link has already been clicked once...
+        if (link.classList.contains('tbm-clicked')) {
+          const uri = link.getAttribute('href');
 
-              // Hide any already open menus which are not parents of the
-              // currently clicked menu item.
-              var $openParents = $item.parents('.open');
-              var $allOpen = jQuery('.tbm .open');
-
-              // Loop through all open items and check to see if they are
-              // parents of the clicked item.
-              $allOpen.each(function (index, item) {
-                if (jQuery(item).is($openParents)) {
-                  // do nothing
-                } else {
-                  jQuery(item).removeClass('open');
-                }
-              });
-
-              // Apply aria attributes.
-              _this.ariaCheck();
-
-              // Remove any existing tmb-clicked classes.
-              _this.navParent.find('.tbm-clicked').removeClass('tbm-clicked');
-
-              // Open the submenu and apply the tbm-clicked class.
-              $item.addClass('tbm-clicked');
-              _this.showMenu(tbitem, _this.mm_timeout);
-            }
+          // If the menu link has a URI, go to the link.
+          // <nolink> menu items will not have a URI.
+          if (uri) {
+            window.location.href = uri;
+          } else {
+            link.classList.remove('tbm-clicked');
+            _this.hideMenu(tbitem, _this.mm_timeout);
           }
-        });
-      });
+        } else {
+          event.preventDefault();
+
+          // Hide any already open menus which are not parents of the
+          // currently clicked menu item.
+          // const openParents = item.parents('.open');
+          var allOpen = _this.navParent.querySelectorAll('.open');
+
+          // Loop through all open items and check to see if they are
+          // parents of the clicked item.
+          allOpen.forEach(function (element) {
+            if (element.contains(link)) {
+              // do nothing
+            } else {
+              element.classList.remove('open');
+            }
+          });
+
+          // Apply aria attributes.
+          _this.ariaCheck();
+
+          // Remove any existing tmb-clicked classes.
+          _this.navParent
+            .querySelectorAll('.tbm-clicked')
+            .forEach((element) => {
+              element.classList.remove('tbm-clicked');
+            });
+
+          // Open the submenu and apply the tbm-clicked class.
+          link.classList.add('tbm-clicked');
+          _this.showMenu(tbitem, _this.mm_timeout);
+        }
+      }
+    });
 
     // Anytime there's a click outside the menu, close the menu.
     document.addEventListener('click', (event) => {
@@ -431,7 +434,13 @@ export class TBMegaMenu {
     }
 
     // Add touch functionality.
-    this.handleTouch(jQuery('.tbm-item', this.navParent).has('.tbm-submenu'));
+    this.navParent.querySelectorAll('.tbm-item').forEach((item) => {
+      if (item.querySelector(':scope > .tbm-submenu')) {
+        _this.handleTouch(item);
+      }
+    });
+
+    // this.handleTouch(jQuery('.tbm-item', this.navParent).has('.tbm-submenu'));
 
     // Toggle submenus.
     jQuery('.tbm-submenu-toggle, .tbm-link.no-link', this.navParent).on(
