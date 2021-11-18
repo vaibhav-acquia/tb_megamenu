@@ -167,17 +167,6 @@ interface TBMegaMenuBuilderInterface {
   public function createAnimationOptions(array $block_config);
 
   /**
-   * Create options for styles.
-   *
-   * @param array $block_config
-   *   The block configuration.
-   *
-   * @return array
-   *   The options array.
-   */
-  public function createStyleOptions(array $block_config);
-
-  /**
    * Builds the page trail for marking active items.
    *
    * @param \Drupal\Core\Menu\MenuLinkTreeElement[] $menu_items

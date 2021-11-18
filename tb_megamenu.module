@@ -25,14 +25,12 @@ function tb_megamenu_help($route_name, RouteMatchInterface $route_match) {
       $output = '<h3>' . t('About') . '</h3>';
       $output .= '<p>' . t('TB Mega Menu allows you to create a mega menu with an innovative back-end user interface and synchronized with Drupal core menu.') . '</p>';
       $output .= '<h3>' . t('Uses') . '</h3>';
-      $output .= '<p>' . t('TB Mega Menu is developed following Drupal standards and best practices. Along with those must-have functions of a mega menu: display not just menu items but image, slideshow, video, article and customize any of them upon your favour...; below are the most noticeable features that TB Mega Menu has:') . '</p>';
+      $output .= '<p>' . t('TB Mega Menu is developed following Drupal standards and best practices, and includes the following features:') . '</p>';
       $output .= '<ul>';
       $output .= '<li>' . t('Synchronized with Drupal core menu, auto updated if there is any change with Drupal core menu') . '</li>';
-      $output .= '<li>' . t('Bootstrap framework') . '</li>';
       $output .= '<li>' . t('Responsive ready') . '</li>';
-      $output .= '<li>' . t('Multiple built-in styles designed with years of theming experience') . '</li>';
-      $output .= '<li>' . t('Visual and friendly user interface - what you see is what you get') . '</li>';
-      $output .= '<li>' . t('Custom style for each element of your mega menu, just input extra css class name') . '</li>';
+      $output .= '<li>' . t('Friendly user interface - what you see is what you get') . '</li>';
+      $output .= '<li>' . t('Add custom styles for each element of your mega menu') . '</li>';
       $output .= '<li>' . t('Multiple built-in CSS3 animated effects') . '</li>';
       $output .= '<li>' . t('Work independently with themes') . '</li>';
       $output .= '</ul>';
@@ -142,7 +140,9 @@ function tb_megamenu_theme($existing, $type, $theme, $path) {
     'path' => $path . '/templates/backend',
   ];
   $items['tb_megamenu_item_toolbox'] = [
-    'variables' => [],
+    'variables' => [
+      'fontawesome' => NULL,
+    ],
     'path' => $path . '/templates/backend',
   ];
   $items['tb_megamenu_submenu_toolbox'] = [
@@ -180,9 +180,7 @@ function template_preprocess_tb_megamenu_row(array &$vars) {
   }
   $vars['attributes'] = new Attribute();
   $vars['attributes']['class'] = [];
-  $theme_name = str_replace('_', '-', $vars['theme_hook_original']);
-  $vars['attributes']['class'][] = $theme_name;
-  $vars['attributes']['class'][] = 'row-fluid';
+  $vars['attributes']['class'][] = 'tbm-row';
 }
 
 /**
@@ -222,21 +220,19 @@ function template_preprocess_tb_megamenu_column(array &$vars) {
         '#section' => $vars['section'],
         '#showblocktitle' => $col_config['showblocktitle'],
       ];
-      $vars['attributes']['data-showblocktitle'] = $col_config['showblocktitle'];
       if ($vars['section'] !== 'frontend') {
         $msg = t("Remove this block");
         $vars['close_button'] = [
           '#markup' => '<span class="close fa fa-times-circle" title="' . $msg . '">&nbsp;</span>',
         ];
+        $vars['attributes']['data-showblocktitle'] = $col_config['showblocktitle'];
       }
     }
   }
 
   $vars['attributes']['class'] = [];
-  $theme_name = str_replace('_', '-', $vars['theme_hook_original']);
-  $vars['attributes']['class'][] = $theme_name;
-  $vars['attributes']['class'][] = 'span' . $col_config['width'];
-  $vars['attributes']['class'][] = 'mega-col-nav';
+  $vars['attributes']['class'][] = 'tbm-column';
+  $vars['attributes']['class'][] = 'span' . ($col_config['width'] ? $col_config['width'] : 12);
   if (!empty($col_config['class'])) {
     $vars['attributes']['class'][] = $col_config['class'];
   }
@@ -244,11 +240,14 @@ function template_preprocess_tb_megamenu_column(array &$vars) {
     $vars['attributes']['class'][] = $col_config['class'];
     $vars['attributes']['class'][] = 'hidden-collapse';
   }
-  $vars['attributes']['data-class'] = $col_config['class'];
-  $vars['attributes']['data-width'] = $col_config['width'];
-  $vars['attributes']['data-hidewcol'] = $col_config['hidewcol'];
-  $num_cols = isset($vars['block_config']['number-columns']) ? $vars['block_config']['number-columns'] : 1;
-  $vars['attributes']['id'] = \Drupal::service('tb_megamenu.menu_builder')->getIdColumn($num_cols);
+
+  if ($vars['section'] == 'backend') {
+    $vars['attributes']['data-class'] = $col_config['class'];
+    $vars['attributes']['data-width'] = $col_config['width'];
+    $vars['attributes']['data-hidewcol'] = $col_config['hidewcol'];
+    $num_cols = isset($vars['block_config']['number-columns']) ? $vars['block_config']['number-columns'] : 1;
+    $vars['attributes']['id'] = \Drupal::service('tb_megamenu.menu_builder')->getIdColumn($num_cols);
+  }
 }
 
 /**
@@ -299,9 +298,7 @@ function template_preprocess_tb_megamenu_subnav(array &$vars) {
 
   $vars['attributes'] = new Attribute();
   $vars['attributes']['class'] = [];
-  $theme_name = str_replace('_', '-', $vars['theme_hook_original']);
-  $vars['attributes']['class'][] = $theme_name;
-  $vars['attributes']['class'][] = "mega-nav";
+  $vars['attributes']['class'][] = 'tbm-subnav';
   $vars['attributes']['class'][] = "level-" . $level;
   $vars['attributes']['class'][] = "items-" . count($col);
 
@@ -339,22 +336,25 @@ function template_preprocess_tb_megamenu_submenu(array &$vars) {
   }
   $vars['attributes'] = new Attribute();
   $vars['attributes']['class'] = [];
-  $theme_name = str_replace('_', '-', $vars['theme_hook_original']);
-  $vars['attributes']['class'][] = $theme_name;
 
   if ($submenu_config['class'] != "") {
     $vars['attributes']['class'][] = $submenu_config['class'];
   }
+
   if ($submenu_config['group']) {
-    $vars['attributes']['class'][] = 'mega-group-ct';
+    $vars['attributes']['class'][] = 'tbm-group-container';
   }
   else {
-    $vars['attributes']['class'][] = 'dropdown-menu';
-    $vars['attributes']['class'][] = 'mega-dropdown-menu';
+    $vars['attributes']['class'][] = 'tbm-submenu';
   }
-  $vars['attributes']['class'][] = 'nav-child';
-  $vars['attributes']['data-class'] = $submenu_config['class'];
-  $vars['attributes']['data-width'] = $submenu_config['width'];
+
+  $vars['attributes']['class'][] = 'tbm-item-child';
+
+  if ($vars['section'] == 'backend') {
+    $vars['attributes']['data-class'] = $submenu_config['class'];
+    $vars['attributes']['data-width'] = $submenu_config['width'];
+  }
+
   if (!empty($submenu_config['width'])) {
     $vars['attributes']['style'] = "width: " . $submenu_config['width'] . "px;";
   }
@@ -370,8 +370,8 @@ function template_preprocess_tb_megamenu_submenu(array &$vars) {
  *   Variables are declared in theme.
  */
 function template_preprocess_tb_megamenu(array &$vars) {
-
   $menu_name = $vars['menu_name'];
+  $menu_id = "tbm-" . str_replace('_', '-', $menu_name);
   $theme = $vars['block_theme'];
   $vars['#attached']['drupalSettings']['TBMegaMenu']['theme'] = $theme;
 
@@ -403,19 +403,22 @@ function template_preprocess_tb_megamenu(array &$vars) {
   $vars['block_config'] = $block_config;
   $vars['attributes'] = new Attribute();
   $vars['attributes']['class'] = [];
-  $theme_name = str_replace('_', '-', $vars['theme_hook_original']);
-  $vars['attributes']['class'][] = $theme_name;
-  $vars['attributes']['class'][] = $theme_name . '-' . str_replace('_', '-', $menu_name);
-  if ($vars['section'] == 'frontend' && $block_config['style'] != '') {
-    $vars['#attached']['library'][] = 'tb_megamenu/block_style.' . $block_config['style'];
-    $vars['attributes']['class'][] = "style-" . $block_config['style'];
+  $vars['attributes']['class'][] = 'tbm';
+  $vars['attributes']['class'][] = 'tbm' . '-' . str_replace('_', '-', $menu_name);
+  $vars['attributes']['id'] = $menu_id;
+  $vars['attributes']['data-breakpoint'] = $block_config['breakpoint'];
+  $vars['#attached']['drupalSettings']['TBMegaMenu'][$menu_id]['arrows'] = $block_config['auto-arrow'];
+  if ($block_config['auto-arrow'] === '1') {
+    $vars['attributes']['class'][] = 'tbm-arrows';
+  } else {
+    $vars['attributes']['class'][] = 'tbm-no-arrows';
   }
+  
   if ($block_config['animation'] != 'none') {
     $vars['attributes']['class'][] = "animate";
     $vars['attributes']['class'][] = $block_config['animation'];
     $vars['attributes']['data-duration'] = $block_config['duration'];
     $vars['attributes']['data-delay'] = $block_config['delay'];
-    $vars['attributes']['id'] = "tb-megamenu-" . str_replace('_', '-', $menu_name);
   }
   $vars['content'] = [
     '#theme' => 'tb_megamenu_nav',
@@ -441,8 +444,11 @@ function template_preprocess_tb_megamenu(array &$vars) {
   }
 
   // Add a11y attributes.
-  $vars['attributes']['role'] = 'navigation';
-  $vars['attributes']['aria-label'] = t('Main navigation');
+  $vars['attributes']['aria-label'] = t('@menu_name navigation', ['@menu_name' => $menu_name]);
+
+  // Reset the getMenuItem method in case there is more than one TB menu on the
+  // same page.
+  drupal_static_reset('getMenuItem');
 }
 
 /**
@@ -458,7 +464,15 @@ function template_preprocess_tb_megamenu_backend(array &$vars) {
   $block_config = $menu_builder->getBlockConfig($menu_name, $theme);
   $menu_builder->editBlockConfig($block_config);
   $vars['menu_content'] = $menu_builder->renderBlock($menu_name, $theme);
-  $vars['item_toolbox'] = ['#theme' => 'tb_megamenu_item_toolbox'];
+
+  // Determine if fontawesome is installed.
+  $moduleHandler = \Drupal::service('module_handler');
+  $fontawesome = $moduleHandler->moduleExists('fontawesome');
+  $vars['item_toolbox'] = [
+    '#theme' => 'tb_megamenu_item_toolbox',
+    '#fontawesome' => $fontawesome,
+  ];
+
   $vars['submenu_toolbox'] = ['#theme' => 'tb_megamenu_submenu_toolbox'];
   $vars['column_toolbox'] = [
     '#theme' => 'tb_megamenu_column_toolbox',
@@ -466,7 +480,6 @@ function template_preprocess_tb_megamenu_backend(array &$vars) {
   ];
   $vars['block_config'] = $block_config;
   $vars['animation_options'] = $menu_builder->createAnimationOptions($block_config);
-  $vars['style_options'] = $menu_builder->createStyleOptions($block_config);
   $vars['edit_links'] = Url::fromRoute('entity.menu.edit_form', ['menu' => $menu_name])->toString();
 
   // Attach this to init TB Mega Menu (Importance).
@@ -504,11 +517,12 @@ function template_preprocess_tb_megamenu_block(array &$vars) {
     }
     $vars['attributes'] = new Attribute();
     $vars['attributes']['class'] = [];
-    $vars['attributes']['class'][] = "tb-block";
-    $theme_name = str_replace('_', '-', $vars['theme_hook_original']);
-    $vars['attributes']['class'][] = $theme_name;
-    $vars['attributes']['data-type'] = "block";
-    $vars['attributes']['data-block'] = $vars['block_id'];
+    $vars['attributes']['class'][] = 'tbm-block';
+
+    if ($vars['section'] == 'backend') {
+      $vars['attributes']['data-type'] = "block";
+      $vars['attributes']['data-block'] = $vars['block_id'];
+    }
   }
   else {
     $vars['content'] = NULL;
@@ -556,9 +570,7 @@ function template_preprocess_tb_megamenu_nav(array &$vars) {
 
   $vars['attributes'] = new Attribute();
   $vars['attributes']['class'] = [];
-  $theme_name = str_replace('_', '-', $vars['theme_hook_original']);
-  $vars['attributes']['class'][] = $theme_name;
-  $vars['attributes']['class'][] = "nav";
+  $vars['attributes']['class'][] = "tbm-nav";
   $vars['attributes']['class'][] = "level-" . $level;
   $vars['attributes']['class'][] = "items-" . count($items);
 
@@ -585,6 +597,11 @@ function template_preprocess_tb_megamenu_item(array &$vars) {
   $menu_builder = \Drupal::service('tb_megamenu.menu_builder');
   $menu_builder->editItemConfig($item_config);
   $vars['item_config'] = $item_config;
+
+  // Determine if fontawesome is installed.
+  $moduleHandler = \Drupal::service('module_handler');
+  $vars['fontawesome'] = $moduleHandler->moduleExists('fontawesome');
+
   if (!empty($menu_config[$plugin_id]['rows_content']) &&
       ($vars['section'] == 'backend' || !$item_config['hidesub'])) {
 
@@ -606,31 +623,37 @@ function template_preprocess_tb_megamenu_item(array &$vars) {
   $vars['attributes'] = new Attribute();
   $vars['attributes']['class'] = [];
   $vars['link']['attributes']['class'] = [];
-  $theme_name = str_replace('_', '-', $vars['theme_hook_original']);
-  $vars['attributes']['class'][] = $theme_name;
+  $vars['attributes']['class'][] = 'tbm-item';
   $vars['attributes']['class'][] = 'level-' . $level;
-  $vars['attributes']['class'][] = 'mega';
+  $vars['link']['attributes']['class'][] = 'tbm-link';
+  $vars['link']['attributes']['class'][] = 'level-' . $level;
+
+  if (empty($vars['link']['url'])) {
+    $vars['link']['attributes']['class'][] = 'no-link';
+    $vars['link']['attributes']['tabindex'] = '0';
+  }
+
   if (!empty($item_config['class'])) {
     $vars['attributes']['class'][] = $item_config['class'];
   }
   if (!empty($item_config['alignsub'])) {
-    $vars['attributes']['class'][] = "mega-align-" . $item_config['alignsub'];
+    $vars['attributes']['class'][] = "tbm-" . $item_config['alignsub'];
   }
   if ($item_config['hidewcol']) {
     $vars['attributes']['class'][] = "sub-hidden-collapse";
   }
 
   if ($item_config['group'] && $vars['submenu']) {
-    $vars['attributes']['class'][] = "mega-group";
-    $vars['link']['attributes']['class'][] = 'mega-group-title';
+    $vars['attributes']['class'][] = "tbm-group";
+    $vars['link']['attributes']['class'][] = 'tbm-group-title';
   }
   elseif ($vars['submenu'] && !$item_config['hidesub']) {
-    $vars['link']['attributes']['class'][] = 'dropdown-toggle';
+    $vars['link']['attributes']['class'][] = 'tbm-toggle';
     if ($level == 1) {
-      $vars['attributes']['class'][] = 'dropdown';
+      $vars['attributes']['class'][] = 'tbm-item--has-dropdown';
     }
     else {
-      $vars['attributes']['class'][] = 'dropdown-submenu';
+      $vars['attributes']['class'][] = 'tbm-item--has-flyout';
     }
   }
 
@@ -639,19 +662,20 @@ function template_preprocess_tb_megamenu_item(array &$vars) {
     $vars['attributes']['class'][] = 'active-trail';
     $vars['link']['attributes']['class'][] = 'active-trail';
   }
-  $vars['attributes']['data-id'] = $plugin_id;
-  $vars['attributes']['data-level'] = $level;
-  $vars['attributes']['data-type'] = 'menu_item';
-  $vars['attributes']['data-class'] = $item_config['class'];
-  $vars['attributes']['data-xicon'] = $item_config['xicon'];
-  $vars['attributes']['data-caption'] = $item_config['caption'];
-  $vars['attributes']['data-alignsub'] = $item_config['alignsub'];
-  $vars['attributes']['data-group'] = $item_config['group'];
-  $vars['attributes']['data-hidewcol'] = $item_config['hidewcol'];
-  $vars['attributes']['data-hidesub'] = $item_config['hidesub'];
-  $vars['attributes']['data-label'] = $item_config['label'];
+
   if ($vars['section'] == 'backend') {
     $vars['attributes']['title'] = t("Menu Item");
+    $vars['attributes']['data-id'] = $plugin_id;
+    $vars['attributes']['data-level'] = $level;
+    $vars['attributes']['data-type'] = 'menu_item';
+    $vars['attributes']['data-class'] = $item_config['class'];
+    $vars['attributes']['data-xicon'] = $item_config['xicon'];
+    $vars['attributes']['data-caption'] = $item_config['caption'];
+    $vars['attributes']['data-alignsub'] = $item_config['alignsub'];
+    $vars['attributes']['data-group'] = $item_config['group'];
+    $vars['attributes']['data-hidewcol'] = $item_config['hidewcol'];
+    $vars['attributes']['data-hidesub'] = $item_config['hidesub'];
+    $vars['attributes']['data-label'] = $item_config['label'];
   }
 
   // Add a11y attributes to list item tag.
@@ -662,7 +686,7 @@ function template_preprocess_tb_megamenu_item(array &$vars) {
     $vars['link']['attributes']['title'] = $vars['link']['description'];
   }
   if ($vars['submenu'] != NULL) {
-    $vars['link']['attributes']['aria-expanded'] = t('false');
+    $vars['link']['attributes']['aria-expanded'] = 'false';
   }
 
   // Make other menu attributes available to TB Mega Menu Anchor Links.

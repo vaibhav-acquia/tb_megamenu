@@ -347,10 +347,6 @@ class TBMegaMenuAdminController extends ControllerBase {
    * This is a menu page. To edit Mega Menu.
    */
   public function configMegaMenu(ConfigEntityInterface $tb_megamenu, Request $request) {
-    // Add font-awesome library.
-    $page['#attached']['library'][] = 'tb_megamenu/form.font-awesome';
-    // Add chosen library.
-    $page['#attached']['library'][] = 'tb_megamenu/form.chosen';
     // Add a custom library.
     $page['#attached']['library'][] = 'tb_megamenu/form.configure-megamenu';
 

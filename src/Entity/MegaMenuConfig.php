@@ -123,12 +123,15 @@ class MegaMenuConfig extends ConfigEntityBase implements MegaMenuConfigInterface
     }
     $config = isset($this->block_config) ? Json::decode($this->block_config) : [];
 
-    // Ensure that the delay and duration values are only integers.
+    // Ensure that the delay, duration and breakpoint values are only integers.
     if (isset($config['delay']) && !is_int($config['delay'])) {
       $config['delay'] = '';
     }
     if (isset($config['duration']) && !is_int($config['duration'])) {
       $config['duration'] = '';
+    }
+    if (isset($config['breakpoint']) && !is_int($config['breakpoint'])) {
+      $config['breakpoint'] = '';
     }
 
     if ($config === NULL) {
