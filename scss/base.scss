@@ -216,6 +216,13 @@
       }
     }
   }
+
+  // Always hide the carets on mobile.
+  .tbm--mobile & {
+    .tbm-link:before {
+      display: none !important;
+    }
+  }
 }
 
 // Any <ul> other than the top level.
@@ -449,7 +456,7 @@
     margin: 0;
     padding: 0;
     border: 0;
-    width: 100%;
+    width: 100% !important; // Override inline styles applied by the column width config setting.
   }
 
   // The button that toggles the visibility of the submenu on mobile.

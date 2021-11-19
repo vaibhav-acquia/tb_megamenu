@@ -96,65 +96,75 @@
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _plugin_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./plugin.js */ "./js/plugin.js");
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 
-(function ($, Drupal, drupalSettings) {
+
+(function (Drupal) {
   'use strict';
 
   Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
   var focusableSelector = 'a:not([disabled]):not([tabindex="-1"]), button:not([disabled]):not([tabindex="-1"]), input:not([disabled]):not([tabindex="-1"]), select:not([disabled]):not([tabindex="-1"]), textarea:not([disabled]):not([tabindex="-1"]), details:not([disabled]):not([tabindex="-1"]), [tabindex]:not([disabled]):not([tabindex="-1"])';
 
-  function responsiveMenu() {
-    $('.tbm').each(function () {
-      var $thisMenu = $(this);
-      var menuId = $thisMenu.attr('id');
+  var responsiveMenu = function responsiveMenu() {
+    document.querySelectorAll('.tbm').forEach(function (thisMenu) {
+      var menuId = thisMenu.getAttribute('id');
       Drupal.TBMegaMenu[menuId] = {};
-      var breakpoint = parseInt($thisMenu.data('breakpoint'));
+      var breakpoint = parseInt(thisMenu.getAttribute('data-breakpoint'));
 
       if (window.matchMedia("(max-width: ".concat(breakpoint, "px)")).matches) {
-        $thisMenu.addClass('tbm--mobile');
+        thisMenu.classList.add('tbm--mobile');
       } else {
-        $thisMenu.removeClass('tbm--mobile');
+        thisMenu.classList.remove('tbm--mobile');
       }
 
-      var $focusable = $thisMenu.find(focusableSelector);
-      $focusable = $focusable.filter(function (index, item) {
-        return $(item).is(':visible');
+      var topLevel = thisMenu.querySelectorAll('.tbm-link.level-1, .tbm-link.level-1 + .tbm-submenu-toggle');
+      topLevel = _toConsumableArray(topLevel);
+      topLevel = topLevel.filter(function (element) {
+        return element.offsetWidth > 0 && element.offsetHeight > 0;
       });
-      var $topLevel = $focusable.filter(function (index, item) {
-        return $(item).is('.tbm-link.level-1, .tbm-link.level-1 + .tbm-submenu-toggle');
-      });
-      Drupal.TBMegaMenu[menuId]['focusable'] = $focusable;
-      Drupal.TBMegaMenu[menuId]['topLevel'] = $topLevel;
+      Drupal.TBMegaMenu[menuId]['topLevel'] = topLevel;
     });
-  }
+  };
 
   var throttled = _.throttle(responsiveMenu, 100);
 
-  $(window).on('load resize', throttled);
+  ['load', 'resize'].forEach(function (event) {
+    window.addEventListener(event, throttled);
+  });
 
   Drupal.TBMegaMenu.getNextPrevElement = function (direction) {
     var excludeSubnav = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-    var $current = $(document.activeElement);
+    var current = document.activeElement;
     var nextElement = null;
 
-    if ($current.length) {
-      var $focusable = $(focusableSelector).filter(function () {
-        var $this = $(this);
-
+    if (current) {
+      var focusable = document.querySelectorAll(focusableSelector);
+      focusable = _toConsumableArray(focusable);
+      focusable = focusable.filter(function (element) {
         if (excludeSubnav) {
-          return $this.closest('.tbm-subnav').length === 0 && $this.is(':visible');
+          return !element.closest('.tbm-subnav') && element.offsetWidth > 0 && element.offsetHeight > 0;
         }
 
-        return $this.is(':visible');
+        return element.offsetWidth > 0 && element.offsetHeight > 0;
       });
-      var index = $focusable.index($current);
+      var index = focusable.indexOf(current);
 
       if (index > -1) {
         if (direction === 'next') {
-          nextElement = $focusable[index + 1] || $focusable[0];
+          nextElement = focusable[index + 1] || focusable[0];
         } else {
-          nextElement = $focusable[index - 1] || $focusable[0];
+          nextElement = focusable[index - 1] || focusable[0];
         }
       }
     }
@@ -162,15 +172,17 @@ __webpack_require__.r(__webpack_exports__);
     return nextElement;
   };
 
-  Drupal.behaviors.tbMegaMenuAction = {
+  Drupal.behaviors.tbMegaMenu = {
     attach: function attach(context, settings) {
-      $('.tbm', context).once('tbm').each(function () {
-        var TBMega = new _plugin_js__WEBPACK_IMPORTED_MODULE_0__["TBMegaMenu"]($(this).attr('id'));
-        TBMega.init();
-      });
+      if (context === document) {
+        document.querySelectorAll('.tbm').forEach(function (menu) {
+          var tbMega = new _plugin_js__WEBPACK_IMPORTED_MODULE_0__["TBMegaMenu"](menu.getAttribute('id'));
+          tbMega.init();
+        });
+      }
     }
   };
-})(jQuery, Drupal, drupalSettings);
+})(Drupal);
 
 /***/ }),
 
@@ -190,9 +202,13 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var TBMegaMenu = function () {
   function TBMegaMenu(id) {
     _classCallCheck(this, TBMegaMenu);
+
+    _defineProperty(this, 'use strict', void 0);
 
     this.id = id;
     this.navParent = document.getElementById(this.id);
@@ -313,27 +329,27 @@ var TBMegaMenu = function () {
       }
 
       function nav_is_toplink() {
-        var $topLevel = Drupal.TBMegaMenu[menuId]['topLevel'];
-        return $topLevel.index(document.activeElement) > -1;
+        var topLevel = Drupal.TBMegaMenu[menuId]['topLevel'];
+        return topLevel.indexOf(document.activeElement) > -1;
       }
 
       function nav_is_last_toplink() {
-        var $topLevel = Drupal.TBMegaMenu[menuId]['topLevel'];
-        return $topLevel.index(document.activeElement) === $topLevel.length - 1;
+        var topLevel = Drupal.TBMegaMenu[menuId]['topLevel'];
+        return topLevel.indexOf(document.activeElement) === topLevel.length - 1;
       }
 
       function nav_is_first_toplink() {
-        var $topLevel = Drupal.TBMegaMenu[menuId]['topLevel'];
-        return $topLevel.index(document.activeElement) === 0;
+        var topLevel = Drupal.TBMegaMenu[menuId]['topLevel'];
+        return topLevel.indexOf(document.activeElement) === 0;
       }
 
       function nav_next_toplink() {
         if (!nav_is_last_toplink()) {
-          var $topLevel = Drupal.TBMegaMenu[menuId]['topLevel'];
-          var index = $topLevel.index(document.activeElement);
+          var topLevel = Drupal.TBMegaMenu[menuId]['topLevel'];
+          var index = topLevel.indexOf(document.activeElement);
 
           if (index > -1) {
-            $topLevel[index + 1].focus();
+            topLevel[index + 1].focus();
           }
         } else {
           _this.closeMenu();
@@ -344,11 +360,11 @@ var TBMegaMenu = function () {
 
       function nav_prev_toplink() {
         if (!nav_is_first_toplink()) {
-          var $topLevel = Drupal.TBMegaMenu[menuId]['topLevel'];
-          var index = $topLevel.index(document.activeElement);
+          var topLevel = Drupal.TBMegaMenu[menuId]['topLevel'];
+          var index = topLevel.indexOf(document.activeElement);
 
           if (index > -1) {
-            $topLevel[index - 1].focus();
+            topLevel[index - 1].focus();
           }
         } else {
           Drupal.TBMegaMenu.getNextPrevElement('prev', true).focus();
@@ -570,8 +586,6 @@ var TBMegaMenu = function () {
           }
 
           if (!_this.isMobile && !(_this.isTouch && !_this.hasArrows && event.currentTarget.classList.contains('no-link'))) {
-            console.log('in it');
-
             var _parentItem = event.currentTarget.closest('.tbm-item');
 
             if (_parentItem.classList.contains('open')) {

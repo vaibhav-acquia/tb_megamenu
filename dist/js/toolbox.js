@@ -577,7 +577,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     $cols = $cols.add($col);
     bindEvents($col);
     $cols.each(function (i) {
-      $(this).removeClass('span' + $(this).attr('data-width')).addClass('span' + colwidths[i]).attr('data-width', colwidths[i]);
+      $(this).removeClass('span' + $(this).attr('data-width')).addClass('tbm-column span' + colwidths[i]).attr('data-width', colwidths[i]);
     });
     show_toolbox($col);
   };

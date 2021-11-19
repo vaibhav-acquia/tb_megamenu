@@ -494,7 +494,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     $cols.each(function (i) {
       $(this)
         .removeClass('span' + $(this).attr('data-width'))
-        .addClass('span' + colwidths[i])
+        .addClass('tbm-column span' + colwidths[i])
         .attr('data-width', colwidths[i]);
     });
     show_toolbox($col);
