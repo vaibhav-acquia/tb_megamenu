@@ -12,12 +12,12 @@
         </fieldset>
     </div>
     <div id="toogle-group-wrapper">
-      <label class="hasTip" title="{{ 'Group'|t }} - {{ 'Configure how this item’s submenu display'|t }}">{{ 'Group'|t }}</label>
+      <label class="hasTip" title="{{ 'Submenu as flyout?'|t }} - {{ 'Configure how this item’s submenu display'|t }}">{{ 'Submenu as flyout?'|t }}</label>
       <fieldset class="radio btn-group toolitem-group">
-        <input type="radio" id="toggleGroup0" class="toolbox-toggle" data-action="toggleGroup" name="toggleGroup" value="0" checked="checked"/>
-        <label for="toggleGroup0" title="{{ 'Submenu items show only when hover/click on this tem.'|t }}">{{ 'No'|t }}</label>
-        <input type="radio" id="toggleGroup1" class="toolbox-toggle" data-action="toggleGroup" name="toggleGroup" value="1"/>
-        <label for="toggleGroup1" title="{{ 'Submenu items are visible under this item.'|t }} ">{{ 'Yes'|t }}</label>
+        <input type="radio" id="toggleGroup0" class="toolbox-toggle" data-action="toggleGroup" name="toggleGroup" value="0"/>
+        <label for="toggleGroup0" title="{{ 'Submenu items show only when the user hovers or clicks on this item.'|t }}">{{ 'Yes'|t }}</label>
+        <input type="radio" id="toggleGroup1" class="toolbox-toggle" data-action="toggleGroup" name="toggleGroup" value="1" checked="checked"/>
+        <label for="toggleGroup1" title="{{ 'Submenu items are always visible under this item.'|t }} ">{{ 'No'|t }}</label>
       </fieldset>
     </div>
     <div id="toogle-break-column-wrapper">

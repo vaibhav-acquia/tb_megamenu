@@ -76,9 +76,6 @@
 
 // Top level menu items.
 .tbm-item.level-1 {
-  position: relative;
-  z-index: 1;
-
   // Items that are open (ie, submenu is visible).
   &.open {
     > .tbm-submenu {
@@ -115,10 +112,12 @@
 // The <div> around any submenu dropdown. This is a direct descendent child of
 // the <li>.
 .tbm-submenu {
+  box-sizing: border-box;
   display: none;
   left: 0;
   position: absolute;
   top: 100%;
+  width: 100%;
   z-index: 10;
 }
 
@@ -163,7 +162,7 @@
 
   > .tbm-submenu {
     top: 0;
-    left: 102%;
+    left: calc(100% + 5px);
     margin-top: -6px;
     margin-left: -1px;
     border-radius: 0;
@@ -214,6 +213,13 @@
           margin: 0.25rem 0 0;
         }
       }
+    }
+  }
+
+  // Always hide the carets on mobile.
+  .tbm--mobile & {
+    .tbm-link:before {
+      display: none !important;
     }
   }
 }
@@ -449,7 +455,7 @@
     margin: 0;
     padding: 0;
     border: 0;
-    width: 100%;
+    width: 100% !important; // Override inline styles applied by the column width config setting.
   }
 
   // The button that toggles the visibility of the submenu on mobile.

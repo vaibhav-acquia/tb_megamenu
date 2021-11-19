@@ -319,7 +319,7 @@ function template_preprocess_tb_megamenu_submenu(array &$vars) {
   $item_config = isset($menu_config[$plugin_id]) ? $menu_config[$plugin_id] : [];
   $submenu_config = isset($item_config['submenu_config']) ? $item_config['submenu_config'] : [];
   $vars['submenu_config'] = $submenu_config;
-  \Drupal::service('tb_megamenu.menu_builder')->editSubMenuConfig($submenu_config);
+  \Drupal::service('tb_megamenu.menu_builder')->editSubMenuConfig($submenu_config, $vars['level']);
   $vars['rows'] = [];
   foreach ($item_config['rows_content'] as $row) {
     $vars['rows'][] = [
@@ -595,7 +595,7 @@ function template_preprocess_tb_megamenu_item(array &$vars) {
   $vars['link']['title_translate'] = htmlspecialchars_decode(Xss::filter(t($item->link->getTitle())));
   $trail = $vars['trail'];
   $menu_builder = \Drupal::service('tb_megamenu.menu_builder');
-  $menu_builder->editItemConfig($item_config);
+  $menu_builder->editItemConfig($item_config, $level);
   $vars['item_config'] = $item_config;
 
   // Determine if fontawesome is installed.
@@ -619,6 +619,7 @@ function template_preprocess_tb_megamenu_item(array &$vars) {
   else {
     $vars['submenu'] = NULL;
   }
+  $vars['group'] = false;
   $vars['link']['attributes'] = new Attribute();
   $vars['attributes'] = new Attribute();
   $vars['attributes']['class'] = [];
@@ -644,6 +645,7 @@ function template_preprocess_tb_megamenu_item(array &$vars) {
   }
 
   if ($item_config['group'] && $vars['submenu']) {
+    $vars['group'] = true;
     $vars['attributes']['class'][] = "tbm-group";
     $vars['link']['attributes']['class'][] = 'tbm-group-title';
   }

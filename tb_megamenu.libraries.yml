@@ -19,10 +19,7 @@ base:
   js:
     dist/js/frontend.js: { scope: footer }
   dependencies:
-    - core/jquery
     - core/drupal
-    - core/drupalSettings
-    - core/jquery.once
     - core/underscore
 
 styles:

@@ -1,4 +1,6 @@
 export class TBMegaMenu {
+  'use strict';
+
   constructor(id) {
     this.id = id;
     this.navParent = document.getElementById(this.id);
@@ -137,7 +139,6 @@ export class TBMegaMenu {
     function nav_down(k) {
       if (nav_is_toplink()) {
         Drupal.TBMegaMenu.getNextPrevElement('next').focus();
-        // nav_next_column();
       } else if (
         // If the next element takes the user out of this top level, then do nothing.
         Drupal.TBMegaMenu.getNextPrevElement('next').closest(
@@ -153,32 +154,30 @@ export class TBMegaMenu {
     /* Helper Functions */
     // Determine Link Level
     function nav_is_toplink() {
-      var $topLevel = Drupal.TBMegaMenu[menuId]['topLevel'];
-      return $topLevel.index(document.activeElement) > -1;
+      const topLevel = Drupal.TBMegaMenu[menuId]['topLevel'];
+      return topLevel.indexOf(document.activeElement) > -1;
     }
 
     function nav_is_last_toplink() {
-      var $topLevel = Drupal.TBMegaMenu[menuId]['topLevel'];
-      return $topLevel.index(document.activeElement) === $topLevel.length - 1;
+      const topLevel = Drupal.TBMegaMenu[menuId]['topLevel'];
+      return topLevel.indexOf(document.activeElement) === topLevel.length - 1;
     }
 
     function nav_is_first_toplink() {
-      var $topLevel = Drupal.TBMegaMenu[menuId]['topLevel'];
-      return $topLevel.index(document.activeElement) === 0;
+      const topLevel = Drupal.TBMegaMenu[menuId]['topLevel'];
+      return topLevel.indexOf(document.activeElement) === 0;
     }
 
     // Next Toplink
     function nav_next_toplink() {
       if (!nav_is_last_toplink()) {
-        var $topLevel = Drupal.TBMegaMenu[menuId]['topLevel'];
-        var index = $topLevel.index(document.activeElement);
+        const topLevel = Drupal.TBMegaMenu[menuId]['topLevel'];
+        const index = topLevel.indexOf(document.activeElement);
 
         if (index > -1) {
-          $topLevel[index + 1].focus();
+          topLevel[index + 1].focus();
         }
       } else {
-        _this.closeMenu();
-
         // Focus on the next element.
         Drupal.TBMegaMenu.getNextPrevElement('next', true).focus();
       }
@@ -187,11 +186,11 @@ export class TBMegaMenu {
     // Previous Toplink
     function nav_prev_toplink() {
       if (!nav_is_first_toplink()) {
-        var $topLevel = Drupal.TBMegaMenu[menuId]['topLevel'];
-        var index = $topLevel.index(document.activeElement);
+        const topLevel = Drupal.TBMegaMenu[menuId]['topLevel'];
+        const index = topLevel.indexOf(document.activeElement);
 
         if (index > -1) {
-          $topLevel[index - 1].focus();
+          topLevel[index - 1].focus();
         }
       } else {
         // Focus on the previous element.
@@ -228,11 +227,11 @@ export class TBMegaMenu {
           // Hide any already open menus which are not parents of the
           // currently clicked menu item.
           // const openParents = item.parents('.open');
-          var allOpen = _this.navParent.querySelectorAll('.open');
+          const allOpen = _this.navParent.querySelectorAll('.open');
 
           // Loop through all open items and check to see if they are
           // parents of the clicked item.
-          allOpen.forEach(function (element) {
+          allOpen.forEach((element) => {
             if (element.contains(link)) {
               // do nothing
             } else {
@@ -265,10 +264,21 @@ export class TBMegaMenu {
         }
       }
     });
+
+    // When focus lands outside the menu close the menu.
+    document.addEventListener('focusin', (event) => {
+      if (!event.target.closest('.tbm')) {
+        _this.closeMenu();
+      }
+    });
   }
 
   // Close Mega Menu
   closeMenu() {
+    this.navParent.classList.remove('tbm--mobile-show');
+    this.navParent
+      .querySelector('.tbm-button')
+      .setAttribute('aria-expanded', 'false');
     this.navParent.querySelectorAll('.open').forEach((element) => {
       element.classList.remove('open');
     });
@@ -382,13 +392,11 @@ export class TBMegaMenu {
         // hiding the menu.
         if (_this.navParent.classList.contains('tbm--mobile-show')) {
           _this.closeMenu();
-          event.currentTarget.setAttribute('aria-expanded', 'false');
         } else {
+          // Toggle the menu visibility.
+          _this.navParent.classList.add('tbm--mobile-show');
           event.currentTarget.setAttribute('aria-expanded', 'true');
         }
-
-        // Toggle the menu visibility.
-        _this.navParent.classList.toggle('tbm--mobile-show');
       });
     });
 
@@ -412,17 +420,19 @@ export class TBMegaMenu {
       this.navParent.querySelectorAll('.tbm-toggle').forEach((element) => {
         element.addEventListener('focus', (event) => {
           if (!_this.isMobile && !_this.hasArrows) {
-            var listItem = event.currentTarget.closest('li');
+            const listItem = event.currentTarget.closest('li');
             _this.showMenu(listItem, _this.mm_timeout);
 
             // If the focus moves outside of the subMenu, close it.
             document.addEventListener('focusin', (event) => {
-              if (
-                event.target !== listItem &&
-                !listItem.contains(event.target)
-              ) {
-                document.removeEventListener('focusin', event);
-                _this.hideMenu(listItem, _this.mm_timeout);
+              if (!_this.isMobile && !_this.hasArrows) {
+                if (
+                  event.target !== listItem &&
+                  !listItem.contains(event.target)
+                ) {
+                  document.removeEventListener('focusin', event);
+                  _this.hideMenu(listItem, _this.mm_timeout);
+                }
               }
             });
           }
@@ -463,7 +473,6 @@ export class TBMegaMenu {
               event.currentTarget.classList.contains('no-link')
             )
           ) {
-            console.log('in it');
             const parentItem = event.currentTarget.closest('.tbm-item');
 
             if (parentItem.classList.contains('open')) {

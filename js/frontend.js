@@ -5,75 +5,82 @@ import { TBMegaMenu } from './plugin.js';
  * Defines Javascript behaviors for MegaMenu frontend.
  */
 
-(function ($, Drupal, drupalSettings) {
+(function (Drupal) {
   'use strict';
 
   Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
 
-  var focusableSelector =
+  const focusableSelector =
     'a:not([disabled]):not([tabindex="-1"]), button:not([disabled]):not([tabindex="-1"]), input:not([disabled]):not([tabindex="-1"]), select:not([disabled]):not([tabindex="-1"]), textarea:not([disabled]):not([tabindex="-1"]), details:not([disabled]):not([tabindex="-1"]), [tabindex]:not([disabled]):not([tabindex="-1"])';
 
-  function responsiveMenu() {
-    $('.tbm').each(function () {
-      var $thisMenu = $(this);
-      var menuId = $thisMenu.attr('id');
+  // On load and on resize set the mobile class and get the list of top level links.
+  const updateTBMenus = () => {
+    document.querySelectorAll('.tbm').forEach((thisMenu) => {
+      const menuId = thisMenu.getAttribute('id');
       Drupal.TBMegaMenu[menuId] = {};
-      var breakpoint = parseInt($thisMenu.data('breakpoint'));
+      const breakpoint = parseInt(thisMenu.getAttribute('data-breakpoint'));
 
       if (window.matchMedia(`(max-width: ${breakpoint}px)`).matches) {
-        $thisMenu.addClass('tbm--mobile');
+        thisMenu.classList.add('tbm--mobile');
       } else {
-        $thisMenu.removeClass('tbm--mobile');
+        thisMenu.classList.remove('tbm--mobile');
       }
 
       // Build the list of tabbable elements as these may change between mobile
       // and desktop.
-      var $focusable = $thisMenu.find(focusableSelector);
-      $focusable = $focusable.filter(function (index, item) {
-        return $(item).is(':visible');
+      let focusable = document.querySelectorAll(focusableSelector);
+      focusable = [...focusable];
+
+      let topLevel = thisMenu.querySelectorAll(
+        '.tbm-link.level-1, .tbm-link.level-1 + .tbm-submenu-toggle',
+      );
+      topLevel = [...topLevel];
+      topLevel = topLevel.filter((element) => {
+        // Check if the element is visible.
+        return element.offsetWidth > 0 && element.offsetHeight > 0;
       });
 
-      var $topLevel = $focusable.filter((index, item) => {
-        return $(item).is(
-          '.tbm-link.level-1, .tbm-link.level-1 + .tbm-submenu-toggle',
-        );
-      });
-
-      Drupal.TBMegaMenu[menuId]['focusable'] = $focusable;
-      Drupal.TBMegaMenu[menuId]['topLevel'] = $topLevel;
+      Drupal.TBMegaMenu['focusable'] = focusable;
+      Drupal.TBMegaMenu[menuId]['topLevel'] = topLevel;
     });
-  }
+  };
 
-  var throttled = _.throttle(responsiveMenu, 100);
+  const throttled = _.throttle(updateTBMenus, 100);
 
-  $(window).on('load resize', throttled);
+  // Run the the throttled code on load and on resize.
+  ['load', 'resize'].forEach((event) => {
+    window.addEventListener(event, throttled);
+  });
 
-  Drupal.TBMegaMenu.getNextPrevElement = function (
-    direction,
-    excludeSubnav = false,
-  ) {
+  Drupal.TBMegaMenu.getNextPrevElement = (direction, excludeSubnav = false) => {
     // Add all the elements we want to include in our selection
-    var $current = $(document.activeElement);
-    var nextElement = null;
+    const current = document.activeElement;
+    let nextElement = null;
 
-    if ($current.length) {
-      var $focusable = $(focusableSelector).filter(function () {
-        var $this = $(this);
+    if (current) {
+      let focusable = document.querySelectorAll(focusableSelector);
+      focusable = [...focusable];
+
+      focusable = Drupal.TBMegaMenu['focusable'].filter((element) => {
         if (excludeSubnav) {
           return (
-            $this.closest('.tbm-subnav').length === 0 && $this.is(':visible')
+            !element.closest('.tbm-subnav') &&
+            element.offsetWidth > 0 &&
+            element.offsetHeight > 0
           );
         }
 
-        return $this.is(':visible');
+        // Check if the element is visible.
+        return element.offsetWidth > 0 && element.offsetHeight > 0;
       });
 
-      var index = $focusable.index($current);
+      const index = focusable.indexOf(current);
+
       if (index > -1) {
         if (direction === 'next') {
-          nextElement = $focusable[index + 1] || $focusable[0];
+          nextElement = focusable[index + 1] || focusable[0];
         } else {
-          nextElement = $focusable[index - 1] || $focusable[0];
+          nextElement = focusable[index - 1] || focusable[0];
         }
       }
     }
@@ -81,15 +88,26 @@ import { TBMegaMenu } from './plugin.js';
     return nextElement;
   };
 
-  Drupal.behaviors.tbMegaMenuAction = {
-    attach: function (context, settings) {
-      $('.tbm', context)
-        .once('tbm')
-        .each(function () {
-          var TBMega = new TBMegaMenu($(this).attr('id'));
+  Drupal.behaviors.tbMegaMenuInit = {
+    attach: (context) => {
+      context.querySelectorAll('.tbm').forEach((menu) => {
+        // Look for an initialized attribute so that we do not have to worry
+        // about attaching once() or jQuery.once().
+        if (!menu.getAttribute('data-initialized')) {
+          menu.setAttribute('data-initialized', 'true');
 
-          TBMega.init();
-        });
+          const tbMega = new TBMegaMenu(menu.getAttribute('id'));
+          tbMega.init();
+        }
+      });
     },
   };
-})(jQuery, Drupal, drupalSettings);
+
+  // Add a behavior to call updateTBMenus so that anytime the DOM is updated,
+  // the list of tabbable links is rebuilt.
+  Drupal.behaviors.tbMegaMenuRespond = {
+    attach: (context) => {
+      updateTBMenus();
+    },
+  };
+})(Drupal);

@@ -25,7 +25,7 @@
       {% endif %}
     </{{ tag }}>
   {% if section == 'frontend' %}
-      {% if submenu %}
+      {% if submenu and not group%}
         <button class="tbm-submenu-toggle{% if block_config['auto-arrow'] %} always-show{% endif %}"><span class="visually-hidden">{{ 'Toggle submenu'|t }}</span></button>
       {% endif %}
     </div>
