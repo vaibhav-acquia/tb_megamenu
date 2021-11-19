@@ -162,7 +162,7 @@
 
   > .tbm-submenu {
     top: 0;
-    left: 102%;
+    left: calc(100% + 5px);
     margin-top: -6px;
     margin-left: -1px;
     border-radius: 0;
