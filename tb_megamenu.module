@@ -619,6 +619,7 @@ function template_preprocess_tb_megamenu_item(array &$vars) {
   else {
     $vars['submenu'] = NULL;
   }
+  $vars['group'] = false;
   $vars['link']['attributes'] = new Attribute();
   $vars['attributes'] = new Attribute();
   $vars['attributes']['class'] = [];
@@ -644,6 +645,7 @@ function template_preprocess_tb_megamenu_item(array &$vars) {
   }
 
   if ($item_config['group'] && $vars['submenu']) {
+    $vars['group'] = true;
     $vars['attributes']['class'][] = "tbm-group";
     $vars['link']['attributes']['class'][] = 'tbm-group-title';
   }

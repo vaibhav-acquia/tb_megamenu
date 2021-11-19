@@ -114,7 +114,12 @@ $color-borders: rgba($color-black, 0.2);
 // the content within is not contained within a dropdown/submenu, but is instead
 // always visible.
 
-// The title of a .tbm-group.
+// The group container.
+.tbm-group-container {
+  border-top: 1px solid $color-borders;
+}
+
+// The group title.
 .tbm-group-title {
   font-weight: bold;
   text-transform: uppercase;
