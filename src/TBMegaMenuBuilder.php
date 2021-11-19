@@ -162,24 +162,30 @@ class TBMegaMenuBuilder implements TBMegaMenuBuilderInterface {
   /**
    * {@inheritdoc}
    */
-  public function editSubMenuConfig(array &$submenu_config) {
+  public function editSubMenuConfig(array &$submenu_config, int $level) {
+    // Top level submenus should always have group set to 0;
+    $groupValue = $level > 1 ? 1 : 0;
+
     $submenu_config += [
       'width' => '',
       'class' => '',
-      'group' => '',
+      'group' => $groupValue
     ];
   }
 
   /**
    * {@inheritdoc}
    */
-  public function editItemConfig(array &$item_config) {
+  public function editItemConfig(array &$item_config, int $level) {
+    // Top level menu items should always have group set to 0;
+    $groupValue = $level > 1 ? 1 : 0;
+
     $attributes = [
       'xicon' => '',
       'class' => '',
       'caption' => '',
       'alignsub' => '',
-      'group' => 0,
+      'group' => $groupValue,
       'hidewcol' => 0,
       'hidesub' => 0,
       'label' => '',

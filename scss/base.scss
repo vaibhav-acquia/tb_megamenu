@@ -112,12 +112,13 @@
 // The <div> around any submenu dropdown. This is a direct descendent child of
 // the <li>.
 .tbm-submenu {
+  box-sizing: border-box;
   display: none;
   left: 0;
   position: absolute;
   top: 100%;
-  z-index: 10;
   width: 100%;
+  z-index: 10;
 }
 
 // The button that toggles the visibility of the submenu on mobile.

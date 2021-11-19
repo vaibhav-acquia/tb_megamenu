@@ -100,7 +100,7 @@ interface TBMegaMenuBuilderInterface {
    * @param array $submenu_config
    *   The array to fill with default values.
    */
-  public function editSubMenuConfig(array &$submenu_config);
+  public function editSubMenuConfig(array &$submenu_config, int $level);
 
   /**
    * Set the default values to configuration in TB Megamenu item if it's empty.
@@ -108,7 +108,7 @@ interface TBMegaMenuBuilderInterface {
    * @param array $item_config
    *   The array to fill with default values.
    */
-  public function editItemConfig(array &$item_config);
+  public function editItemConfig(array &$item_config, int $level);
 
   /**
    * Set the default values to configuration in columns if it's empty.
