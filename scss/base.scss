@@ -76,9 +76,6 @@
 
 // Top level menu items.
 .tbm-item.level-1 {
-  position: relative;
-  z-index: 1;
-
   // Items that are open (ie, submenu is visible).
   &.open {
     > .tbm-submenu {
@@ -120,6 +117,7 @@
   position: absolute;
   top: 100%;
   z-index: 10;
+  width: 100%;
 }
 
 // The button that toggles the visibility of the submenu on mobile.

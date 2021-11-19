@@ -116,7 +116,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
   Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
   var focusableSelector = 'a:not([disabled]):not([tabindex="-1"]), button:not([disabled]):not([tabindex="-1"]), input:not([disabled]):not([tabindex="-1"]), select:not([disabled]):not([tabindex="-1"]), textarea:not([disabled]):not([tabindex="-1"]), details:not([disabled]):not([tabindex="-1"]), [tabindex]:not([disabled]):not([tabindex="-1"])';
 
-  var responsiveMenu = function responsiveMenu() {
+  var updateTBMenus = function updateTBMenus() {
     document.querySelectorAll('.tbm').forEach(function (thisMenu) {
       var menuId = thisMenu.getAttribute('id');
       Drupal.TBMegaMenu[menuId] = {};
@@ -128,16 +128,19 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         thisMenu.classList.remove('tbm--mobile');
       }
 
+      var focusable = document.querySelectorAll(focusableSelector);
+      focusable = _toConsumableArray(focusable);
       var topLevel = thisMenu.querySelectorAll('.tbm-link.level-1, .tbm-link.level-1 + .tbm-submenu-toggle');
       topLevel = _toConsumableArray(topLevel);
       topLevel = topLevel.filter(function (element) {
         return element.offsetWidth > 0 && element.offsetHeight > 0;
       });
+      Drupal.TBMegaMenu['focusable'] = focusable;
       Drupal.TBMegaMenu[menuId]['topLevel'] = topLevel;
     });
   };
 
-  var throttled = _.throttle(responsiveMenu, 100);
+  var throttled = _.throttle(updateTBMenus, 100);
 
   ['load', 'resize'].forEach(function (event) {
     window.addEventListener(event, throttled);
@@ -151,7 +154,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     if (current) {
       var focusable = document.querySelectorAll(focusableSelector);
       focusable = _toConsumableArray(focusable);
-      focusable = focusable.filter(function (element) {
+      focusable = Drupal.TBMegaMenu['focusable'].filter(function (element) {
         if (excludeSubnav) {
           return !element.closest('.tbm-subnav') && element.offsetWidth > 0 && element.offsetHeight > 0;
         }
@@ -172,14 +175,20 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     return nextElement;
   };
 
-  Drupal.behaviors.tbMegaMenu = {
-    attach: function attach(context, settings) {
-      if (context === document) {
-        document.querySelectorAll('.tbm').forEach(function (menu) {
+  Drupal.behaviors.tbMegaMenuInit = {
+    attach: function attach(context) {
+      context.querySelectorAll('.tbm').forEach(function (menu) {
+        if (!menu.getAttribute('data-initialized')) {
+          menu.setAttribute('data-initialized', 'true');
           var tbMega = new _plugin_js__WEBPACK_IMPORTED_MODULE_0__["TBMegaMenu"](menu.getAttribute('id'));
           tbMega.init();
-        });
-      }
+        }
+      });
+    }
+  };
+  Drupal.behaviors.tbMegaMenuRespond = {
+    attach: function attach(context) {
+      updateTBMenus();
     }
   };
 })(Drupal);
@@ -352,8 +361,6 @@ var TBMegaMenu = function () {
             topLevel[index + 1].focus();
           }
         } else {
-          _this.closeMenu();
-
           Drupal.TBMegaMenu.getNextPrevElement('next', true).focus();
         }
       }
@@ -420,10 +427,17 @@ var TBMegaMenu = function () {
           }
         }
       });
+      document.addEventListener('focusin', function (event) {
+        if (!event.target.closest('.tbm')) {
+          _this.closeMenu();
+        }
+      });
     }
   }, {
     key: "closeMenu",
     value: function closeMenu() {
+      this.navParent.classList.remove('tbm--mobile-show');
+      this.navParent.querySelector('.tbm-button').setAttribute('aria-expanded', 'false');
       this.navParent.querySelectorAll('.open').forEach(function (element) {
         element.classList.remove('open');
       });
@@ -526,13 +540,11 @@ var TBMegaMenu = function () {
         element.addEventListener('click', function (event) {
           if (_this.navParent.classList.contains('tbm--mobile-show')) {
             _this.closeMenu();
-
-            event.currentTarget.setAttribute('aria-expanded', 'false');
           } else {
+            _this.navParent.classList.add('tbm--mobile-show');
+
             event.currentTarget.setAttribute('aria-expanded', 'true');
           }
-
-          _this.navParent.classList.toggle('tbm--mobile-show');
         });
       });
 
@@ -557,10 +569,12 @@ var TBMegaMenu = function () {
               _this.showMenu(listItem, _this.mm_timeout);
 
               document.addEventListener('focusin', function (event) {
-                if (event.target !== listItem && !listItem.contains(event.target)) {
-                  document.removeEventListener('focusin', event);
+                if (!_this.isMobile && !_this.hasArrows) {
+                  if (event.target !== listItem && !listItem.contains(event.target)) {
+                    document.removeEventListener('focusin', event);
 
-                  _this.hideMenu(listItem, _this.mm_timeout);
+                    _this.hideMenu(listItem, _this.mm_timeout);
+                  }
                 }
               });
             }

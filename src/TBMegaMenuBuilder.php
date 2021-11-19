@@ -149,13 +149,13 @@ class TBMegaMenuBuilder implements TBMegaMenuBuilderInterface {
   public function editBlockConfig(array &$block_config) {
     $block_config += [
       'animation' => 'none',
-      'auto-arrow' => TRUE,
+      'auto-arrow' => FALSE,
       'duration' => 400,
       'delay' => 200,
-      'always-show-submenu' => TRUE,
+      'always-show-submenu' => FALSE,
       'off-canvas' => 0,
       'number-columns' => 0,
-      'breakpoint' => '980',
+      'breakpoint' => '1200',
     ];
   }
 

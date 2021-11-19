@@ -9,8 +9,6 @@ $color-caption: #444;
 // Colors with opacity.
 $color-borders: rgba($color-black, 0.2);
 
-$dropdown-width: 25rem;
-
 .tbm {
   background-color: $color-background;
 }
@@ -58,7 +56,6 @@ $dropdown-width: 25rem;
   border: 1px solid $color-borders;
   box-shadow: 0 5px 10px $color-borders;
   padding: 1rem;
-  width: $dropdown-width;
 
   .tbm-submenu {
     // Anything other than the 1st dropdown menu needs the top border.

@@ -14,7 +14,7 @@ import { TBMegaMenu } from './plugin.js';
     'a:not([disabled]):not([tabindex="-1"]), button:not([disabled]):not([tabindex="-1"]), input:not([disabled]):not([tabindex="-1"]), select:not([disabled]):not([tabindex="-1"]), textarea:not([disabled]):not([tabindex="-1"]), details:not([disabled]):not([tabindex="-1"]), [tabindex]:not([disabled]):not([tabindex="-1"])';
 
   // On load and on resize set the mobile class and get the list of top level links.
-  const responsiveMenu = () => {
+  const updateTBMenus = () => {
     document.querySelectorAll('.tbm').forEach((thisMenu) => {
       const menuId = thisMenu.getAttribute('id');
       Drupal.TBMegaMenu[menuId] = {};
@@ -28,6 +28,9 @@ import { TBMegaMenu } from './plugin.js';
 
       // Build the list of tabbable elements as these may change between mobile
       // and desktop.
+      let focusable = document.querySelectorAll(focusableSelector);
+      focusable = [...focusable];
+
       let topLevel = thisMenu.querySelectorAll(
         '.tbm-link.level-1, .tbm-link.level-1 + .tbm-submenu-toggle',
       );
@@ -37,11 +40,12 @@ import { TBMegaMenu } from './plugin.js';
         return element.offsetWidth > 0 && element.offsetHeight > 0;
       });
 
+      Drupal.TBMegaMenu['focusable'] = focusable;
       Drupal.TBMegaMenu[menuId]['topLevel'] = topLevel;
     });
   };
 
-  const throttled = _.throttle(responsiveMenu, 100);
+  const throttled = _.throttle(updateTBMenus, 100);
 
   // Run the the throttled code on load and on resize.
   ['load', 'resize'].forEach((event) => {
@@ -57,7 +61,7 @@ import { TBMegaMenu } from './plugin.js';
       let focusable = document.querySelectorAll(focusableSelector);
       focusable = [...focusable];
 
-      focusable = focusable.filter((element) => {
+      focusable = Drupal.TBMegaMenu['focusable'].filter((element) => {
         if (excludeSubnav) {
           return (
             !element.closest('.tbm-subnav') &&
@@ -84,15 +88,26 @@ import { TBMegaMenu } from './plugin.js';
     return nextElement;
   };
 
-  Drupal.behaviors.tbMegaMenu = {
-    attach: function (context, settings) {
-      if (context === document) {
-        document.querySelectorAll('.tbm').forEach((menu) => {
-          const tbMega = new TBMegaMenu(menu.getAttribute('id'));
+  Drupal.behaviors.tbMegaMenuInit = {
+    attach: (context) => {
+      context.querySelectorAll('.tbm').forEach((menu) => {
+        // Look for an initialized attribute so that we do not have to worry
+        // about attaching once() or jQuery.once().
+        if (!menu.getAttribute('data-initialized')) {
+          menu.setAttribute('data-initialized', 'true');
 
+          const tbMega = new TBMegaMenu(menu.getAttribute('id'));
           tbMega.init();
-        });
-      }
+        }
+      });
+    },
+  };
+
+  // Add a behavior to call updateTBMenus so that anytime the DOM is updated,
+  // the list of tabbable links is rebuilt.
+  Drupal.behaviors.tbMegaMenuRespond = {
+    attach: (context) => {
+      updateTBMenus();
     },
   };
 })(Drupal);

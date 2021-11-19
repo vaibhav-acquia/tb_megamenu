@@ -178,8 +178,6 @@ export class TBMegaMenu {
           topLevel[index + 1].focus();
         }
       } else {
-        _this.closeMenu();
-
         // Focus on the next element.
         Drupal.TBMegaMenu.getNextPrevElement('next', true).focus();
       }
@@ -266,10 +264,21 @@ export class TBMegaMenu {
         }
       }
     });
+
+    // When focus lands outside the menu close the menu.
+    document.addEventListener('focusin', (event) => {
+      if (!event.target.closest('.tbm')) {
+        _this.closeMenu();
+      }
+    });
   }
 
   // Close Mega Menu
   closeMenu() {
+    this.navParent.classList.remove('tbm--mobile-show');
+    this.navParent
+      .querySelector('.tbm-button')
+      .setAttribute('aria-expanded', 'false');
     this.navParent.querySelectorAll('.open').forEach((element) => {
       element.classList.remove('open');
     });
@@ -383,13 +392,11 @@ export class TBMegaMenu {
         // hiding the menu.
         if (_this.navParent.classList.contains('tbm--mobile-show')) {
           _this.closeMenu();
-          event.currentTarget.setAttribute('aria-expanded', 'false');
         } else {
+          // Toggle the menu visibility.
+          _this.navParent.classList.add('tbm--mobile-show');
           event.currentTarget.setAttribute('aria-expanded', 'true');
         }
-
-        // Toggle the menu visibility.
-        _this.navParent.classList.toggle('tbm--mobile-show');
       });
     });
 
@@ -418,12 +425,14 @@ export class TBMegaMenu {
 
             // If the focus moves outside of the subMenu, close it.
             document.addEventListener('focusin', (event) => {
-              if (
-                event.target !== listItem &&
-                !listItem.contains(event.target)
-              ) {
-                document.removeEventListener('focusin', event);
-                _this.hideMenu(listItem, _this.mm_timeout);
+              if (!_this.isMobile && !_this.hasArrows) {
+                if (
+                  event.target !== listItem &&
+                  !listItem.contains(event.target)
+                ) {
+                  document.removeEventListener('focusin', event);
+                  _this.hideMenu(listItem, _this.mm_timeout);
+                }
               }
             });
           }
