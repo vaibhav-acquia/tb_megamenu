@@ -35,6 +35,7 @@ module.exports = {
   },
   plugins: [
     plugins.MiniCssExtractPlugin,
+    plugins.RemovePlugin,
     plugins.ImageminPlugin,
     plugins.ProgressPlugin,
     plugins.CleanWebpackPlugin,
