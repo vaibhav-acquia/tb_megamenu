@@ -356,6 +356,7 @@ function template_preprocess_tb_megamenu_submenu(array &$vars) {
   }
 
   if (!empty($submenu_config['width'])) {
+    $vars['attributes']['class'][] = 'tbm-has-width';
     $vars['attributes']['style'] = "width: " . $submenu_config['width'] . "px;";
   }
 
