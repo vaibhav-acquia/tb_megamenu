@@ -652,8 +652,9 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       }),
       complete: function complete(r) {
         switch (r.status) {
+          case 0:
           case 500:
-            var statusMsg = r.responseText;
+            var statusMsg = r.responseText || "".concat(r.statusText, " reverting changes.");
             break;
 
           default:
@@ -773,7 +774,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
         block_config: block_config
       }),
       complete: function complete(r) {
-        var statusMsg = r.responseText;
+        var statusMsg = r.responseText || "".concat(r.statusText, " reverting changes.");
         status_modal(r.status, statusMsg);
         Drupal.TBMegaMenu.releaseAjax();
       }
@@ -785,6 +786,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     $('#tbm-admin-mm-tb #toolbox-message').html('').hide();
 
     switch (code) {
+      case 0:
       case 500:
         var msgClass = 'messages--error';
         break;
@@ -1137,7 +1139,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
 
               $('#tbm-admin-mm-tb #toolbox-loading').hide();
             } else {
-              var statusMsg = msg.responseText;
+              var statusMsg = msg.responseText || "".concat(msg.statusText, " performing ajax calls.");
               status_modal(msg.status, statusMsg);
             }
 

@@ -580,8 +580,9 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       complete: function (r) {
         switch (r.status) {
           // If an error occurred only set a status message.
+          case 0:
           case 500:
-            var statusMsg = r.responseText;
+            var statusMsg = r.responseText || `${r.statusText} reverting changes.`;
             break;
           // When successful revert the configuration displayed in the UI.
           default:
@@ -750,7 +751,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       }),
       complete: function (r) {
         // Set the status message based on the response.
-        var statusMsg = r.responseText;
+        var statusMsg = r.responseText || `${r.statusText} reverting changes.`;
         // Show the status message modal.
         status_modal(r.status, statusMsg);
 
@@ -765,6 +766,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     $('#tbm-admin-mm-tb #toolbox-message').html('').hide();
     // Set the message container class based on the status code.
     switch (code) {
+      case 0:
       case 500:
         var msgClass = 'messages--error';
         break;
@@ -1151,7 +1153,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
             }
             // If no JSON was received display an error in the modal.
             else {
-              var statusMsg = msg.responseText;
+              var statusMsg = msg.responseText || `${msg.statusText} performing ajax calls.`;
               status_modal(msg.status, statusMsg);
             }
 
