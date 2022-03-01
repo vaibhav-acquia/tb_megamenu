@@ -36,10 +36,6 @@ $color-black-25-op: rgba(0, 0, 0, 0.25);
     border-color: #4f4f4f;
   }
 
-  .tbm-submenu a:visited {
-    color: #666;
-  }
-
   hr {
     margin: 0;
   }
@@ -359,7 +355,7 @@ $color-black-25-op: rgba(0, 0, 0, 0.25);
       > span {
         border-radius: 3px;
         border: 1px dotted #ddd;
-        color: $color-medium-grey;
+        color: $color-dark-grey-2;
         display: block;
         font-size: 12px;
         font-weight: normal;
