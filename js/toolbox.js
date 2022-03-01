@@ -582,7 +582,9 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
           // If an error occurred only set a status message.
           case 0:
           case 500:
-            var statusMsg = r.responseText || `${r.statusText} reverting changes.`;
+            var statusMsg =
+              r.responseText ||
+              `${capitalize(r.statusText)} reverting changes.`;
             break;
           // When successful revert the configuration displayed in the UI.
           default:
@@ -751,7 +753,8 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       }),
       complete: function (r) {
         // Set the status message based on the response.
-        var statusMsg = r.responseText || `${r.statusText} reverting changes.`;
+        var statusMsg =
+          r.responseText || `${capitalize(r.statusText)} saving changes.`;
         // Show the status message modal.
         status_modal(r.status, statusMsg);
 
@@ -1153,7 +1156,9 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
             }
             // If no JSON was received display an error in the modal.
             else {
-              var statusMsg = msg.responseText || `${msg.statusText} performing ajax calls.`;
+              var statusMsg =
+                msg.responseText ||
+                `${capitalize(msg.statusText)} performing ajax calls.`;
               status_modal(msg.status, statusMsg);
             }
 
@@ -1222,6 +1227,10 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
   var rebindEvents = function (els) {
     unbindEvents(els);
     bindEvents(els);
+  };
+
+  var capitalize = function (text) {
+    return text.charAt(0).toUpperCase() + text.slice(1);
   };
 
   $.extend(Drupal.TBMegaMenu, {
