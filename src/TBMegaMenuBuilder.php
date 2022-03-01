@@ -529,8 +529,8 @@ class TBMegaMenuBuilder implements TBMegaMenuBuilderInterface {
         $idx = key($col_content);
       }
     }
-    for ($col = count($col_content); $col > $idx; $col--) {
-      $col_content[$col] = $col_content[$col - 1];
+    for ($counter = count($col_content); $counter > $idx; $counter--) {
+      $col_content[$counter] = $col_content[$counter - 1];
     }
     $col_content[$idx] = [
       'plugin_id' => $item->link->getPluginId(),
