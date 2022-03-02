@@ -584,7 +584,9 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
           case 500:
             var statusMsg =
               r.responseText ||
-              `${capitalize(r.statusText)} reverting changes.`;
+              Drupal.t('@status reverting changes.', {
+                '@status': capitalize(r.statusText),
+              });
             break;
           // When successful revert the configuration displayed in the UI.
           default:
@@ -754,7 +756,10 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       complete: function (r) {
         // Set the status message based on the response.
         var statusMsg =
-          r.responseText || `${capitalize(r.statusText)} saving changes.`;
+          r.responseText ||
+          Drupal.t('@status saving changes.', {
+            '@status': capitalize(r.statusText),
+          });
         // Show the status message modal.
         status_modal(r.status, statusMsg);
 
@@ -1158,7 +1163,9 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
             else {
               var statusMsg =
                 msg.responseText ||
-                `${capitalize(msg.statusText)} performing ajax calls.`;
+                Drupal.t('@status performaing ajax calls.', {
+                  '@status': capitalize(msg.statusText),
+                });
               status_modal(msg.status, statusMsg);
             }
 

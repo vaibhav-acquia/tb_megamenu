@@ -654,7 +654,9 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
         switch (r.status) {
           case 0:
           case 500:
-            var statusMsg = r.responseText || "".concat(r.statusText, " reverting changes.");
+            var statusMsg = r.responseText || Drupal.t('@status reverting changes.', {
+              '@status': capitalize(r.statusText)
+            });
             break;
 
           default:
@@ -774,7 +776,9 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
         block_config: block_config
       }),
       complete: function complete(r) {
-        var statusMsg = r.responseText || "".concat(r.statusText, " reverting changes.");
+        var statusMsg = r.responseText || Drupal.t('@status saving changes.', {
+          '@status': capitalize(r.statusText)
+        });
         status_modal(r.status, statusMsg);
         Drupal.TBMegaMenu.releaseAjax();
       }
@@ -1139,7 +1143,9 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
 
               $('#tbm-admin-mm-tb #toolbox-loading').hide();
             } else {
-              var statusMsg = msg.responseText || "".concat(msg.statusText, " performing ajax calls.");
+              var statusMsg = msg.responseText || Drupal.t('@status performaing ajax calls.', {
+                '@status': capitalize(msg.statusText)
+              });
               status_modal(msg.status, statusMsg);
             }
 
@@ -1208,6 +1214,10 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
   var rebindEvents = function rebindEvents(els) {
     unbindEvents(els);
     bindEvents(els);
+  };
+
+  var capitalize = function capitalize(text) {
+    return text.charAt(0).toUpperCase() + text.slice(1);
   };
 
   $.extend(Drupal.TBMegaMenu, {
