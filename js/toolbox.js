@@ -580,8 +580,13 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       complete: function (r) {
         switch (r.status) {
           // If an error occurred only set a status message.
+          case 0:
           case 500:
-            var statusMsg = r.responseText;
+            var statusMsg =
+              r.responseText ||
+              Drupal.t('@status reverting changes.', {
+                '@status': capitalize(r.statusText),
+              });
             break;
           // When successful revert the configuration displayed in the UI.
           default:
@@ -750,7 +755,11 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
       }),
       complete: function (r) {
         // Set the status message based on the response.
-        var statusMsg = r.responseText;
+        var statusMsg =
+          r.responseText ||
+          Drupal.t('@status saving changes.', {
+            '@status': capitalize(r.statusText),
+          });
         // Show the status message modal.
         status_modal(r.status, statusMsg);
 
@@ -765,6 +774,7 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
     $('#tbm-admin-mm-tb #toolbox-message').html('').hide();
     // Set the message container class based on the status code.
     switch (code) {
+      case 0:
       case 500:
         var msgClass = 'messages--error';
         break;
@@ -1151,7 +1161,11 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
             }
             // If no JSON was received display an error in the modal.
             else {
-              var statusMsg = msg.responseText;
+              var statusMsg =
+                msg.responseText ||
+                Drupal.t('@status performaing ajax calls.', {
+                  '@status': capitalize(msg.statusText),
+                });
               status_modal(msg.status, statusMsg);
             }
 
@@ -1220,6 +1234,10 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
   var rebindEvents = function (els) {
     unbindEvents(els);
     bindEvents(els);
+  };
+
+  var capitalize = function (text) {
+    return text.charAt(0).toUpperCase() + text.slice(1);
   };
 
   $.extend(Drupal.TBMegaMenu, {
