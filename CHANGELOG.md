@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [\[Unreleased\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.x)
 
+## [\[8.x-1.7\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.7) - 2022-03-25
+### Fixed
+- Issue [#3259541](https://www.drupal.org/project/tb_megamenu/issues/3259541) by knaffles, crasx, Lokeshwari, imclean, rbrownell, emb03: Menu Structure Breaks and shows duplicate links when adding new menu links after building the entire Mega menu
+- Issue [#3255891](https://www.drupal.org/project/tb_megamenu/issues/3255891) by knaffles, cpierce42: Submenu overwrites and duplicates column
+
 ## [\[8.x-1.6\]](https://www.drupal.org/project/tb_megamenu/releases/8.x-1.6) - 2021-11-08
 ### Fixed
 - Issue [#3238342](https://www.drupal.org/project/tb_megamenu/issues/3238342) by knaffles, HeatherC7474, henry.odiete: Unable to tab through sub menus for ADA
