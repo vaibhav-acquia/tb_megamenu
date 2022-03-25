@@ -14,6 +14,18 @@ that combine Drupal menu items with rich media content. Your menu can include
 internal and external links, images, videos and anything else that can appear
 in a Drupal block.
 
+Version 2.x includes the following changes from the 8.x version:
+
+- Added source SCSS.
+- Removed dependencies on Bootstrap, Chosen and jQuery.
+- Removed support for menu themes.
+- Simplified keyboard nav.
+  - Home/End listeners removed.
+  - Left/Right behave the same as Tab key.
+- Added support for clickable dropdowns to show/hide submenus.
+- Removed fontawesome library and added optional dependency on the fontawesome module.
+- Submenus take up the full width on the nav container by default.
+
 ## FEATURES
 
 - Synchronizes with Drupal core menus
