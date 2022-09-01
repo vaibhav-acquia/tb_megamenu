@@ -258,10 +258,11 @@ export class TBMegaMenu {
 
     // Anytime there's a click outside the menu, close the menu.
     document.addEventListener('click', (event) => {
-      if (!event.target.closest('.tbm-nav')) {
-        if (_this.navParent.querySelectorAll('.open').length > 0) {
-          _this.closeMenu();
-        }
+      if (
+        !event.target.closest('.tbm') &&
+        _this.navParent.classList.contains('tbm--mobile-show')
+      ) {
+        _this.closeMenu();
       }
     });
 

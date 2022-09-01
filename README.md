@@ -94,5 +94,8 @@ Version 2.x includes the following changes from the 8.x version:
 
 To build the front-end assets:
 
-1. Run `yarn install`
-2. Run `yarn develop`
+1. Install NVM (see https://github.com/nvm-sh/nvm#installing-and-updating).
+2. Run `nvm install 10.19.0`. You only need to do this the first time.
+3. Run `nvm use`.
+4. Run `yarn install`.
+5. Run `yarn develop`.
