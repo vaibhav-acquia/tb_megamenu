@@ -158,10 +158,16 @@ class MegaMenuConfig extends ConfigEntityBase implements MegaMenuConfigInterface
     // vulnerable to XSS attacks.
     foreach ($config as $key => $value) {
       $config[$key]['submenu_config']['class'] = isset($value['submenu_config']['class']) ? Html::escape($value['submenu_config']['class']) : '';
-      $config[$key]['item_config']['caption'] = isset($value['item_config']['caption']) ? Html::escape($value['item_config']['caption']) : '';
       $config[$key]['item_config']['class'] = isset($value['item_config']['class']) ? Html::escape($value['item_config']['class']) : '';
       $config[$key]['item_config']['xicon'] = isset($value['item_config']['xicon']) ? Html::escape($value['item_config']['xicon']) : '';
       $config[$key]['item_config']['label'] = isset($value['item_config']['label']) ? Html::escape($value['item_config']['label']) : '';
+
+      // Because the caption gets rendered on the frontend and may include
+      // special characters, we add it to a plain text render array. Any
+      // insecure tags will be autoescaped by twig.
+      $config[$key]['item_config']['caption'] = [
+        '#plain_text' => $value['item_config']['caption'],
+      ];
     }
 
     if ($config === NULL) {
