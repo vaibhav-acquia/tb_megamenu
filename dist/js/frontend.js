@@ -423,8 +423,6 @@ var TBMegaMenu = function () {
       document.addEventListener('click', function (event) {
         if (!event.target.closest('.tbm') && _this.navParent.classList.contains('tbm--mobile-show')) {
           _this.closeMenu();
-
-          console.log('oops i did it again');
         }
       });
       document.addEventListener('focusin', function (event) {
