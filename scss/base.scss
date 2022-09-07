@@ -381,6 +381,11 @@
     display: block;
   }
 
+  // Always hide on mobile.
+  &.tbm--mobile-hide {
+    display: none;
+  }
+
   // Toggle visibility when .tbm-button is clicked.
   &.tbm--mobile-show {
     .tbm-collapse {
