@@ -13,7 +13,7 @@ form.configure-megamenu:
     - core/jquery
     - core/drupal
     - core/drupalSettings
-    - core/jquery.once
+    - core/once
 
 theme.tb_megamenu:
   version: 1.x

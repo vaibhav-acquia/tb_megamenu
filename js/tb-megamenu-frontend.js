@@ -3,7 +3,7 @@
  * Defines Javascript behaviors for MegaMenu frontend.
  */
 
-(function ($, Drupal, drupalSettings) {
+(function ($, Drupal, drupalSettings, once) {
   "use strict";
 
   Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
@@ -61,7 +61,7 @@
   Drupal.behaviors.tbMegaMenuAction = {
     attach: function (context, settings) {
 
-      $('.tb-megamenu', context).once('tb-megamenu').each(function () {
+      $(once('tb-megamenu', '.tb-megamenu', context)).each(function () {
 
         /* Keyboard Control Setup */
         // Semi-Global Variables
@@ -577,4 +577,4 @@
 
     }
   }
-})(jQuery, Drupal, drupalSettings);
+})(jQuery, Drupal, drupalSettings, once);
