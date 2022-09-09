@@ -28,4 +28,19 @@
 if (window.matchMedia("(max-width: {{ block_config['breakpoint']}}px)").matches) {
   document.getElementById("{{ attributes.id }}").classList.add('tbm--mobile')
 }
+function showSubmenuArrow() {
+  const toggleElement = document.querySelector(".tbm-submenu-toggle.always-show");
+  if (window.matchMedia("(max-width: {{ block_config['breakpoint']}}px)").matches) {
+    if ({{ block_config['always-show-submenu'] == 1 }}) {
+      toggleElement.style.display = 'none' // Hides the toggle in mobile
+    }
+  } else {
+    if ({{ block_config['always-show-submenu'] == 1 }}) {
+      toggleElement.style.display = 'block' // Shows the toggle in mobile
+    }
+  }
+}
+["load", "resize"].forEach(function (evt) {
+  window.addEventListener(evt, showSubmenuArrow);
+});
 </script>
