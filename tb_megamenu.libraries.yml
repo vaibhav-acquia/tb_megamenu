@@ -9,7 +9,6 @@ form.configure-megamenu:
     - core/jquery
     - core/drupal
     - core/drupalSettings
-    - core/jquery.once
 
 base:
   version: 1.x
