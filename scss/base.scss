@@ -385,6 +385,15 @@
   &.tbm--mobile-show {
     .tbm-collapse {
       display: block;
+
+      // Hide submenu toggle arrows in mobile when submenu is shown
+      &.always-show {
+        @media only screen and (max-width: 1200px) {
+          .tbm-submenu-toggle {
+            display: none;
+          }
+        }
+      }
     }
   }
 
