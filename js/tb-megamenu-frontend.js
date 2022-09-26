@@ -517,8 +517,14 @@
             var tbitem = $(this).parent();
 
             $item.click(function (event) {
-              // If the menu link has already been clicked once...
-              if ($item.hasClass("tb-megamenu-clicked")) {
+              var windowWidth = window.innerWidth ? window.innerWidth : $(window).width();
+
+              // If we are on mobile and the submenu is hidden, then just go straight to the link.
+              if (tbitem.hasClass('sub-hidden-collapse') && windowWidth < Drupal.TBMegaMenu.supportedScreens[0]) {
+                // Do nothing
+              }
+              // Else if the menu link has already been clicked once...
+              else if ($item.hasClass("tb-megamenu-clicked")) {
                 var $uri = $item.attr("href");
 
                 // If the menu link has a URI, go to the link.
@@ -532,11 +538,29 @@
                 }
               }
               else {
+              // Otherwise, this is the first click on a menu item which has a submenu.
                 event.preventDefault();
 
-                // Hide any already open menus.
-                nav_close_megamenu();
-                $(".tb-megamenu").find(".tb-megamenu-clicked").removeClass("tb-megamenu-clicked");
+                // If a top level link was clicked, hide all open menus and reset all clicked classes.
+                if (tbitem.hasClass('level-1')) {
+                  nav_close_megamenu();
+                  $(".tb-megamenu").find(".tb-megamenu-clicked").removeClass("tb-megamenu-clicked");
+                } else {
+                  // Get an array of all the open parents of the clicked item.
+                  var parents = $item.parents('.open');
+
+                  // Loop through all the open menu items in the entire menu.
+                  // If an open menu item is not in the parent trail of the clicked item, then close it.
+                  $(".tb-megamenu").find(".open").each(function (index, menuItem) {
+                    var $menuItem = $(menuItem);
+                    if (parents.find(menuItem).length > 0) {
+                      hideMenu($menuItem, mm_timeout);
+
+                      // Reset the clicked status of all menu items within the closed menu item.
+                      $menuItem.find(".tb-megamenu-clicked").removeClass("tb-megamenu-clicked");
+                    }
+                  });
+                }
 
                 // Open the submenu.
                 $item.addClass("tb-megamenu-clicked");
