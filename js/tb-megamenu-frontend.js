@@ -547,13 +547,13 @@
                   $(".tb-megamenu").find(".tb-megamenu-clicked").removeClass("tb-megamenu-clicked");
                 } else {
                   // Get an array of all the open parents of the clicked item.
-                  var parents = $item.parents('.open');
+                  var $parents = $item.parents('.open');
 
                   // Loop through all the open menu items in the entire menu.
                   // If an open menu item is not in the parent trail of the clicked item, then close it.
                   $(".tb-megamenu").find(".open").each(function (index, menuItem) {
                     var $menuItem = $(menuItem);
-                    if (parents.find(menuItem).length > 0) {
+                    if (!$menuItem.is($parents)) {
                       hideMenu($menuItem, mm_timeout);
 
                       // Reset the clicked status of all menu items within the closed menu item.
