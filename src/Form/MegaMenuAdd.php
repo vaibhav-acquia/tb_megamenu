@@ -58,7 +58,8 @@ class MegaMenuAdd extends EntityForm {
   public function form(array $form, FormStateInterface $form_state) {
     $form = parent::form($form, $form_state);
 
-    $menus = menu_ui_get_menus();
+    $menus = $menu_list = array_map(function ($menu) { return $menu->label(); }, \Drupal\system\Entity\Menu::loadMultiple());
+    asort($menu_list);
 
     $info = $this->themeHandler->listInfo();
     $themes = [];
